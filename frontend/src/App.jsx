@@ -2,25 +2,30 @@ import {BrowserRouter} from "react-router-dom"
 import Route from "components/Route"
 import {useEffect} from "react";
 import {axiosRequest} from "utils/axios"
-import {requests} from "./utils/requests";
-function App() {
+import {requests} from "utils/requests";
+import {useDispatch} from "react-redux";
+import {setDataPosts} from "redux/post";
+import {useDataPosts} from "redux/post/hook";
+import BaseLayout from "components/Layout/BaseLayout";
 
-    useEffect(()=> {
-        axiosRequest("get", requests.fetchAllPosts)
-            .then(console.log)
-    }, [])
+function App() {
+    const dispatch = useDispatch()
+    const data = useDataPosts()
+
+    useEffect(() => {
+        if (data.length === 0) {
+            axiosRequest("get", requests.fetchAllPosts)
+                .then(res => dispatch(setDataPosts(res)))
+        }
+    }, [data])
 
     return (
         <BrowserRouter>
-            <div className="head">
-                Header
-            </div>
-            <Route/>
-            <div className="footer">
-                Footer
-            </div>
+            <BaseLayout>
+                <Route/>
+            </BaseLayout>
         </BrowserRouter>
-    );
+    )
 }
 
 export default App;

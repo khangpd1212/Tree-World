@@ -1,0 +1,28 @@
+user: home,product, detail, cart, admin home, login, giới thiệu, liên hệ, tin tức, thanh toán.
+
+FE: 
+khang: home(slide, câu chuyện thương hiệu, sp mới, sp bán chạy, dịch vụ khác), login
+linh: product(show sp chính, show sp tương tự), comment
+dat: detail(ảnh chính, ảnh phụ, thông tin sp, mô tả, đánh giá, sp tương tự) , tin tức
+thông: liên hệ, giới thiệu
+vân: cart, thanh toán
+hoàng: comment, admin
+
+BE:
+Chia theo trang mà mọi người làm
+Khang: viết API user :login (đăng kí, quên mật khẩu, xác minh tài khoản qua email, token để sau)
+Linh: API product : lấy dữ liệu product, lấy dữ liệu product theo catalog. API catalog: lấy dữ liệu catalog
+Đạt: API product: lấy dữ liệu chi tiết 1 product, làm bảng tin tức
+Vân: API order: lưu đơn hàng lên database(thêm mới)
+thông: làm bảng giới thiệu
+hoàng: làm chức năng comment
+
+
+
+Word:
+Thông: giới thiệu tree world, quản lí loại sản phẩm, bảng giới thiệu
+Đạt: Yêu cầu hệ thống, quản lí tin tức, bảng tin tức
+Khang: lập kế hoạch dự án, sơ đồ triển khai và yêu cầu hệ thống
+Hoàng: sơ đồ use case, quản lý bình luận, bảng bình luận
+Linh: quản lý sản phẩm, bảng sản phẩm, bảng loại sản phẩm
+Vân: quản lý giỏ hàng, bảng hóa đơn, bảng hóa đơn chi tiết

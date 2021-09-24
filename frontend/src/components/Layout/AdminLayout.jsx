@@ -1,12 +1,23 @@
-import "styles/admin.scss"
-export default function AdminLayout({children}) {
+import { Layout } from 'antd';
+import React, { useState } from "react";
+import "styles/admin.scss";
+import HeaderAdmin from "../Admin/HeaderAdmin";
+import SideComponent from "../Admin/SideComponent";
+
+const { Content } = Layout;
+
+export default function AdminLayout() {
+    const [isOpen, setIsOpen] = useState(false)
+
     return <div className="root-admin">
-        <div className="head">
-            Header
-        </div>
-        {children}
-        <div className="footer">
-            Footer
-        </div>
+        <Layout>
+            <SideComponent isOpen={isOpen} />
+            <Layout className="site-layout">
+                <HeaderAdmin isOpen={isOpen} setIsOpen={setIsOpen} />
+                <Content>
+                    <h2 className="content-title">Dashboard</h2>
+                </Content>
+            </Layout>
+        </Layout>
     </div>
 }

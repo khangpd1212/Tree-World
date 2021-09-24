@@ -1,9 +1,16 @@
-export default function BaseLayout({children}) {
+import { Link, Route } from "react-router-dom";
+import { Home, Users } from "../../pages";
+
+export default function BaseLayout() {
     return <div className="root-base">
         <div className="head">
-            Header
+            <h2>HOME</h2>
+            <Link to={'/'}>home</Link>
+            <Link to={'/admin'}>admin</Link>
+            <Link to={'/users'}>login</Link>
         </div>
-        {children}
+        <Route path="/" component={Home}/>
+        <Route path="/users" component={Users}/>
         <div className="footer">
             Footer
         </div>

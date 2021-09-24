@@ -5,7 +5,10 @@ const instance = axios.create({
 })
 
 // methods { "get" || "post" .... }
-export const axiosRequest = (methods, requests) => {
+export const axiosRequest = (methods, requests, data) => {
+    if (data) {
+        return instance[methods](requests, data).then(({data}) => data)
+    }
     return instance[methods](requests).then(({data}) => data)
 }
 

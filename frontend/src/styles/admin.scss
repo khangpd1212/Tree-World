@@ -1,0 +1,83 @@
+.root-admin {
+  $primary-color: #368978;
+  $danger-color: #c84823;
+  $warning-color: #f3c130;
+  $success-color: #4dc267;
+  $secondary-color: #6d6875;
+  $light-color: #ffffff;
+
+  .ant-layout {
+    min-height: 100vh;
+
+    &-sider {
+      background-color: $light-color;
+      min-width: 300px !important;
+      max-width: 300px !important;
+      &-collapsed{
+        max-width: 85px !important;
+        min-width: 85px !important;
+      }
+      .ant-menu {
+        background-color: transparent;
+        border: unset;
+        &-item {
+          min-height: 65px;
+          line-height: 65px;
+          padding-left: 40px;
+          @media (max-width: 600px) {
+            padding-left: 10px;
+          }
+
+          .anticon{
+            font-size: 1.5rem;
+            color: $secondary-color;
+          }
+
+          .ant-menu-title-content{
+            padding-left: 20px;
+            font-weight: 700;
+            color: $secondary-color;
+            font-size: 1.2rem;
+          }
+
+
+        }
+      }
+      .logo-desktop {
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+      }
+    }
+
+    &-header {
+      background-color: $light-color;
+      box-shadow: 0 0 3px black;
+      min-height: 94px;
+      line-height: 94px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .trigger {
+        margin-left: 24px;
+        font-size: 1.5rem;
+        color: $primary-color;
+      }
+      .profile {
+        padding-right: 20px;
+      }
+    }
+
+    &-content {
+      background-color: $light-color;
+      padding: 8px 21px;
+    }
+
+    main {
+      .content-title {
+        font-weight: bold;
+        font-size: 2rem;
+      }
+    }
+  }
+}

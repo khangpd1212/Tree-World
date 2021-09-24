@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 //routes
 const testRoute = require("./routes/test");
 const productRoute = require("./routes/product");
+const catalogRoute = require("./routes/catalog");
 
 const app = express();
 //bodyParser middlewares
@@ -26,6 +27,7 @@ app.use(cors());
 
 app.use("/", testRoute);
 app.use("/product", productRoute);
+app.use("/catalog", catalogRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

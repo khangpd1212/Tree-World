@@ -4,14 +4,14 @@ import {Home, Panel, Users} from "pages";
 export default function RoutePage() {
     return <div className="main">
         <Switch>
-            <Route path="/about">
-                <Home/>
+            <Route path="/admin">
+               <Panel/>
             </Route>
             <Route path="/users">
                 <Users/>
             </Route>
             <Route path="/">
-                <Panel/>
+                <Home/>
             </Route>
         </Switch>
     </div>

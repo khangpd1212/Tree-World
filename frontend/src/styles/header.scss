@@ -35,21 +35,18 @@
           padding: 0 20px;
           line-height: 1.4;
           font-family: $font-SFRMeta !important;
-          font-size: 14px;
-          text-transform: uppercase;
+          font-size: 25px;
+
           &:hover {
             color: #368978;
           }
           @include desktop {
             padding: 0 10px;
+            font-size: 16px;
           }
           @include tablet {
             padding: 0 10px;
-            // text-transform: capitalize;
-          }
-
-          @include tablet-plus {
-            text-transform: capitalize;
+            font-size: 14px;
           }
         }
       }

@@ -1,0 +1,92 @@
+@import "media-queries";
+@import "fonts";
+.root-base {
+  .ant-layout-header {
+    background: #ffffff !important;
+    width: 100%;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+
+    // @include desktop {
+    //   padding: 0 25px !important;
+    // }
+    @include tablet {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+    }
+    .logo {
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+    .mobileHidden {
+      @include tablet-sm {
+        display: none;
+      }
+      .ant-anchor {
+        display: flex;
+        justify-content: flex-end;
+        .ant-anchor-ink {
+          display: none;
+        }
+        a {
+          color: rgba(0, 0, 0, 0.85);
+          padding: 0 20px;
+          line-height: 1.4;
+          font-family: $font-SFRMeta !important;
+          font-size: 25px;
+
+          &:hover {
+            color: #368978;
+          }
+          @include desktop {
+            padding: 0 10px;
+            font-size: 16px;
+          }
+          @include tablet {
+            padding: 0 10px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .mobileVisible {
+      display: none;
+      text-align: right;
+      @include tablet-sm {
+        display: block;
+      }
+      .ant-btn {
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        &:hover {
+          color: #9ec0e7;
+        }
+      }
+    }
+  }
+}
+.ant-drawer-body {
+  .ant-anchor {
+    .ant-anchor-ink {
+      display: none;
+    }
+    .navbar__link {
+      display: flex;
+      flex-direction: column;
+      a {
+        color: rgba(0, 0, 0, 0.85);
+        padding: 15px 20px;
+        line-height: 1.4;
+        font-family: $font-SFRMeta !important;
+        font-size: 14px;
+        &:hover {
+          color: #368978;
+        }
+      }
+    }
+  }
+}

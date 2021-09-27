@@ -1,8 +1,11 @@
 @import "media-queries";
 @import "fonts";
+@import "colors";
 .root-base {
+  background-color: $screen-color;
   .ant-layout-header {
-    background: #ffffff !important;
+    background: transparent !important;
+    height: auto !important;
     width: 100%;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
@@ -31,14 +34,14 @@
           display: none;
         }
         a {
-          color: rgba(0, 0, 0, 0.85);
+          color: $black-color;
           padding: 0 20px;
           line-height: 1.4;
           font-family: $font-SFRMeta !important;
           font-size: 25px;
 
           &:hover {
-            color: #368978;
+            color: $primary-color;
           }
           @include desktop {
             padding: 0 10px;
@@ -59,32 +62,37 @@
         display: block;
       }
       .ant-btn {
+        background-color: transparent !important;
+
         border: none;
         box-shadow: none;
         font-size: 16px;
         &:hover {
-          color: #9ec0e7;
+          color: $primary-color;
         }
       }
     }
   }
 }
-.ant-drawer-body {
-  .ant-anchor {
-    .ant-anchor-ink {
-      display: none;
-    }
-    .navbar__link {
-      display: flex;
-      flex-direction: column;
-      a {
-        color: rgba(0, 0, 0, 0.85);
-        padding: 15px 20px;
-        line-height: 1.4;
-        font-family: $font-SFRMeta !important;
-        font-size: 14px;
-        &:hover {
-          color: #368978;
+.ant-drawer-content {
+  background-color: $screen-color !important;
+  .ant-drawer-body {
+    .ant-anchor {
+      .ant-anchor-ink {
+        display: none;
+      }
+      .navbar__link {
+        display: flex;
+        flex-direction: column;
+        a {
+          color: $black-color;
+          padding: 15px 20px;
+          line-height: 1.4;
+          font-family: $font-SFRMeta !important;
+          font-size: 14px;
+          &:hover {
+            color: $primary-color;
+          }
         }
       }
     }

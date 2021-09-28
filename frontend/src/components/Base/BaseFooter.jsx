@@ -9,7 +9,7 @@ function BaseFooter() {
         <Col span={24}>
           <div className="subscribe__section">
             <Row justify="center" align="middle">
-              <Col xs={24} sm={24} md={12} xl={16}>
+              <Col xs={24} sm={24} md={12} lg={16} xl={16}>
                 <div className="subscribe__section--content">
                   <h3>
                     <strong>subscribe</strong> to our special offers
@@ -17,7 +17,7 @@ function BaseFooter() {
                   <p>lorem ipsum dolor sit amet, consectetur, adipiscing ut</p>
                 </div>
               </Col>
-              <Col xs={24} sm={24} md={12} xl={8}>
+              <Col xs={24} sm={24} md={12} lg={8} xl={8}>
                 <div className="subscribe__section--form">
                   <Input placeholder="Your email" />
                   <Button>
@@ -31,7 +31,7 @@ function BaseFooter() {
         <Col span={24}>
           <div className="footer__section">
             <Row>
-              <Col xs={24} sm={24} md={8} xl={8}>
+              <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                 <div className="footer__section--logo">
                   <img src="/logo.png" alt="logo" />
                   <p>
@@ -39,7 +39,7 @@ function BaseFooter() {
                   </p>
                 </div>
               </Col>
-              <Col xs={24} sm={24} md={8} xl={8}>
+              <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                 <div className="footer__section--address">
                   <p>
                     usa - los angeles, 910 east e street, hihi, ca 90744
@@ -60,7 +60,7 @@ function BaseFooter() {
                   <img src="/images/lazada-icon.png" alt="lazada" />
                 </div>
               </Col>
-              <Col xs={24} sm={24} md={8} xl={8}>
+              <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                 <div className="footer__section--schedule">
                   <h3>
                     tuesday - friday

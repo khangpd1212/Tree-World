@@ -1,6 +1,29 @@
 @font-face {
-  font-family: 'SFUMetaCaps';
-  src: local('SFUMetaCaps'),
-  url(../fonts/SFUMetaCaps.TTF) format('opentype');
+  font-family: "SFUMetaCaps";
+  src: local("SFUMetaCaps"), url(../fonts/SFUMetaCaps.TTF) format("opentype");
 }
+@font-face {
+  font-family: "SFUHelveticaLight";
+  src: local("SFUHelveticaLight"),
+    url(../fonts/SFUHelveticaLight.TTF) format("opentype");
+}
+@font-face {
+  font-family: "SFUToledoBold";
+  src: local("SFUToledoBold"),
+    url(../fonts/SFUToledoBold.TTF) format("opentype");
+}
+@font-face {
+  font-family: "SFUMetaBold";
+  src: local("SFUMetaBold"), url(../fonts/SFUMetaBold.TTF) format("opentype");
+}
+@font-face {
+  font-family: "FuturaSCTOT";
+  src: local("FuturaSCTOT"),
+    url(../fonts/Futura-SC-T-OT-Book_19037.ttf) format("opentype");
+}
+
 $font-SFRMeta: "SFUMetaCaps";
+$font-SFUHelveticaLight: "SFUHelveticaLight";
+$font-SFUToledoBold: "SFUToledoBold";
+$font-SFUMetaBold: "SFUMetaBold";
+$font-FuturaSCTOT: "FuturaSCTOT";

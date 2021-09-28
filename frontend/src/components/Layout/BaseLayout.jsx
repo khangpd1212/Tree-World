@@ -1,3 +1,4 @@
+import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import { Link, Route } from "react-router-dom";
 import { Home, Users } from "../../pages";
@@ -14,7 +15,7 @@ export default function BaseLayout() {
       </div>
       <Route path="/" component={Home} />
       <Route path="/users" component={Users} />
-      <div className="footer">Footer</div>
+      <BaseFooter />
     </div>
   );
 }

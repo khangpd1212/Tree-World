@@ -3,7 +3,6 @@ import { Layout, Anchor, Button, Drawer, Row, Col } from "antd";
 import React, { useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
 import "styles/header.scss";
-const { Link } = Anchor;
 function BaseHeader() {
   const { Header } = Layout;
   const [visible, setVisible] = useState(false);

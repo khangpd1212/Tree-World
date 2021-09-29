@@ -13,6 +13,11 @@
     url(../fonts/SFUToledoBold.TTF) format("opentype");
 }
 @font-face {
+  font-family: "SFUToledoMedium";
+  src: local("SFUToledoMedium"),
+    url(../fonts/SFUToledoMedium.TTF) format("opentype");
+}
+@font-face {
   font-family: "SFUMetaBold";
   src: local("SFUMetaBold"), url(../fonts/SFUMetaBold.TTF) format("opentype");
 }
@@ -25,5 +30,6 @@
 $font-SFRMeta: "SFUMetaCaps";
 $font-SFUHelveticaLight: "SFUHelveticaLight";
 $font-SFUToledoBold: "SFUToledoBold";
+$font-SFUToledoMedium: "SFUToledoMedium";
 $font-SFUMetaBold: "SFUMetaBold";
 $font-FuturaSCTOT: "FuturaSCTOT";

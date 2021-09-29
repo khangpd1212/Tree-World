@@ -9,14 +9,12 @@ export default function BaseLayout() {
     <Layout>
       <div className="root-base">
         <BaseHeader />
-        <Content style={{ padding: "0 50px", marginTop: 120 }}>
+        <Content style={{ marginTop: 120 }}>
           <div className="head">
-            <h2>HOME</h2>
-            <Route path="/" component={Home} />
-            <Route path="/users" component={Users} />
+            <Route path="/" exact component={Home} />
+            <Route path="/users" exact component={Users} />
           </div>
         </Content>
-
         <BaseFooter />
       </div>
     </Layout>

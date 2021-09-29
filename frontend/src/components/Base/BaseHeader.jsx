@@ -62,12 +62,12 @@ function BaseHeader() {
             >
               <Anchor>
                 <div className="navbar__link">
-                  <LinkRoute to={"/"}>Home</LinkRoute>
-                  <LinkRoute to={"/"}>About Us</LinkRoute>
-                  <LinkRoute to={"/product"}>Product</LinkRoute>
-                  <LinkRoute to={"/"}>Blog</LinkRoute>
-                  <LinkRoute to={"/"}>Contact Us</LinkRoute>
-                  <LinkRoute to={"/users"}>Login</LinkRoute>
+                  <LinkRoute to={"/"} onClick={onClose}>Home</LinkRoute>
+                  <LinkRoute to={"/"} onClick={onClose}>About Us</LinkRoute>
+                  <LinkRoute to={"/product"} onClick={onClose}>Product</LinkRoute>
+                  <LinkRoute to={"/"} onClick={onClose}>Blog</LinkRoute>
+                  <LinkRoute to={"/"} onClick={onClose}>Contact Us</LinkRoute>
+                  <LinkRoute to={"/users"} onClick={onClose}>Login</LinkRoute>
                   <LinkRoute to={"/admin"}>Admin</LinkRoute>
                 </div>
               </Anchor>

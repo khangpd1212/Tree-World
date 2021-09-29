@@ -33,17 +33,17 @@ function BaseHeader() {
       style={{ position: "fixed", zIndex: 999, width: "100%" }}
     >
       <Row justify="space-between" align="middle">
-        <Col className="gutter-row" xs={16} sm={6} md={6} xl={6}>
+        <Col className="gutter-row" xs={16} sm={7} md={6} xl={6}>
           <div className="logo">
             <img src="/logo.png" alt="tree-world-logo" />
           </div>
         </Col>
-        <Col className="gutter-row" xs={8} sm={18} md={18} xl={18}>
+        <Col className="gutter-row" xs={8} sm={17} md={18} xl={18}>
           <div className="mobileHidden">
             <Anchor affix={false}>
               <LinkRoute to={"/"}>Home</LinkRoute>
               <LinkRoute to={"/"}>About Us</LinkRoute>
-              <LinkRoute to={"/"}>Product</LinkRoute>
+              <LinkRoute to={"/product"}>Product</LinkRoute>
               <LinkRoute to={"/"}>Blog</LinkRoute>
               <LinkRoute to={"/"}>Contact Us</LinkRoute>
               <LinkRoute to={"/users"}>Login</LinkRoute>

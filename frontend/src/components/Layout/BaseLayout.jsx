@@ -1,8 +1,9 @@
 import { Layout } from "antd";
+import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
-import { Link, Route } from "react-router-dom";
-import { Home, Users } from "../../pages";
+import { Route } from "react-router-dom";
+import { Home, Users, Product } from "../../pages";
 const { Content } = Layout;
 export default function BaseLayout() {
   return (
@@ -13,9 +14,11 @@ export default function BaseLayout() {
           <div className="head">
             <Route path="/" exact component={Home} />
             <Route path="/users" exact component={Users} />
+            <Route path="/product" exact component={Product} />
           </div>
         </Content>
         <BaseFooter />
+        <Backtop />
       </div>
     </Layout>
   );

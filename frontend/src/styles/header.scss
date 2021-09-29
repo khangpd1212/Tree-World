@@ -43,13 +43,15 @@
           color: $black-color;
           padding: 0 20px;
           line-height: 1.4;
+          text-transform: uppercase;
           font-family: $font-SFRMeta !important;
-          font-size: 25px;
+          font-size: 24px;
 
           &:hover {
             color: $primary-color;
           }
           @include desktop {
+            text-transform: capitalize;
             padding: 0 10px;
             font-size: 16px;
           }

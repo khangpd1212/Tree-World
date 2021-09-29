@@ -64,7 +64,7 @@ function BaseHeader() {
                 <div className="navbar__link">
                   <LinkRoute to={"/"}>Home</LinkRoute>
                   <LinkRoute to={"/"}>About Us</LinkRoute>
-                  <LinkRoute to={"/"}>Product</LinkRoute>
+                  <LinkRoute to={"/product"}>Product</LinkRoute>
                   <LinkRoute to={"/"}>Blog</LinkRoute>
                   <LinkRoute to={"/"}>Contact Us</LinkRoute>
                   <LinkRoute to={"/users"}>Login</LinkRoute>

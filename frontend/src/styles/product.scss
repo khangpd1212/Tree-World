@@ -1,5 +1,6 @@
 @import "colors";
 @import "media-queries";
+@import "fonts";
 .product {
   margin: 0 50px;
   position: relative;
@@ -72,6 +73,78 @@
       display: none;
       @include tablet1 {
         display: block;
+      }
+    }
+  }
+  &__section {
+    padding-top: 30px;
+    &--title {
+      width: 230px;
+      height: 40px;
+      background: $light-color;
+      line-height: 40px;
+      text-align: center;
+      border: 1px solid $light-gray-color;
+      margin-bottom: 10px;
+      h3 {
+        font-family: $font-SFRMeta;
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+    }
+    .ant-layout-sider {
+      max-width: 230px !important;
+      min-width: 230px !important;
+      background: $light-color;
+      border: 1px solid $light-gray-color;
+      padding: 15px 0;
+
+      .side__title {
+        font-family: $font-SFRMeta;
+        font-size: 20px;
+        padding-left: 40px;
+        text-transform: uppercase;
+        font-weight: 400;
+        color: $black-color;
+      }
+      .ant-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+        &-solid {
+          .ant-radio-button-wrapper {
+            border: none;
+            font-size: 20px;
+            padding-left: 40px;
+            color: $secondary-color;
+            font-family: $font-SFRMeta;
+            text-transform: capitalize;
+            &:hover {
+              color: $light-color;
+              background: $orange-color;
+            }
+            &:first-child {
+              border: none;
+              border-radius: 0;
+            }
+            &:not(:first-child)::before {
+              content: unset;
+            }
+            &-checked:not(.ant-radio-button-wrapper-disabled) {
+              background: $orange-color;
+              border-color: $orange-color;
+              color: $light-color;
+              border-radius: 0;
+              &:focus-within {
+                box-shadow: none;
+              }
+              &::before {
+                background: $orange-color;
+              }
+            }
+          }
+        }
       }
     }
   }

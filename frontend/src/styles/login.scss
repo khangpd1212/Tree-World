@@ -1,0 +1,114 @@
+@import "media-queries";
+@import "colors";
+@import "fonts";
+.ant-modal-close{
+    display: none;
+}
+.ant-modal{
+    width: 34% !important;
+}
+.ant-modal-body{
+    padding: 0 !important;
+}
+.img-login{
+    .logo-login{
+        padding: 4px;
+        width: 40%;
+    }
+    .bg-login{
+        height: 90%;
+        width: 100%;
+    }
+}
+.title-login{
+    position: absolute;
+    top: 12%;
+    left: 30%;
+    color: #246356;
+    font-size: 3.5vw;
+    font-family: $font-SFUToledoMedium;
+}
+.content-login{
+    font-family: $font-SFUHelveticaLight;
+    position: absolute;
+    left: 22%;
+    top: 36%;
+    .re-fe{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .ant-checkbox-wrapper{
+            align-items: center;
+            span{
+                font-size: 1.2vw;
+                color: #C5B267;
+            }
+            .ant-checkbox{
+                top: 0 !important;
+                .ant-checkbox-inner{
+                    width: 1vw !important;
+                    height: 1vw !important;
+                }
+            }
+        }
+    }
+    a{
+        text-decoration: none;
+    }
+    input{
+        font-size: 1.2vw;
+        color: white;
+        border-left: none;
+        border-top: none;
+        border-right: none;
+        border-bottom: 1px solid white;
+        display: block;
+        width: 20vw;
+        background: transparent;
+        outline: none;
+        padding: 4px;
+        margin-bottom: 2.5vw;
+        &::placeholder{
+            color: #BFDAD5;
+        }
+    }
+    .login-btn_submit{
+    font-size: 1.2vw;
+    margin-left: 26%;
+    margin-top: 10%;
+    padding: 0.4vw 2.8vw !important;
+    display: block;
+    border-radius: 30px;
+    background-color: transparent;
+    color: #F1EFEF;
+    border: 1px solid white;
+    font-family: "SFUMetaCaps";
+    }
+    .login-forget{
+        color: #BFDAD5;
+        font-size: 1.2vw;
+    }
+}
+.footer-login{
+    padding: 0.8vw 1.6vw;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .icon-login{
+        a{
+            padding-right: 10px;
+            img{
+                width: 1.5vw;
+            }
+        }
+    }
+    .add-account{
+        a{
+            font-size: 1.1vw;
+            color: #7CACC2;
+        }
+    }
+}

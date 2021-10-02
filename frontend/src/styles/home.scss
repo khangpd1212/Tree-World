@@ -33,7 +33,8 @@
             }
             h1{
                 font-size: 48px;
-                color: $primary-color;
+                font-weight: normal;
+                color: #296A5D;
                 @include desktop-plus{
                     font-size: 38px;
                 }

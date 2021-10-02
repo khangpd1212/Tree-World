@@ -1,4 +1,4 @@
-import { Row, Col,Space, Typography } from "antd";
+import { Row, Col, Typography } from "antd";
 import "styles/home.scss";
 import "styles/button.scss";
 const { Title,Paragraph } = Typography;
@@ -16,7 +16,7 @@ export default function Home(){
                 </div>
                 <div className="slider-right_content">
                     <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing telit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Paragraph>
-                    <button type="submit">
+                    <button type="submit" class="btn-home">
                         See more
                     </button>
                 </div>

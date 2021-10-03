@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { AdminLayout, BaseLayout } from "./components/Layout";
+import { AdminLayout, BaseLayout, LoginLayout } from "./components/Layout";
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <Route path="/" exact component={BaseLayout} />
         <Route path="/users" exact component={BaseLayout} />
         <Route path="/product" exact component={BaseLayout} />
-        <Route path="/login" exact component={BaseLayout} />
+        <Route path="/login" exact component={LoginLayout} />
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />
       </Switch>

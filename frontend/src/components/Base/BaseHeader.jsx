@@ -82,7 +82,7 @@ function BaseHeader() {
                   <LinkRoute to={"/product"} onClick={onClose}>Product</LinkRoute>
                   <LinkRoute to={"/"} onClick={onClose}>Blog</LinkRoute>
                   <LinkRoute to={"/"} onClick={onClose}>Contact Us</LinkRoute>
-                  <LinkRoute to={"/"} onClick={onClose}>Login</LinkRoute>
+                  <LinkRoute to={"/login"} onClick={onClose}>Login</LinkRoute>
                   <LinkRoute to={"/admin"}>Admin</LinkRoute>
                 </div>
               </Anchor>
@@ -101,7 +101,7 @@ function BaseHeader() {
           <form className="content-login">
             <input type="text" placeholder="Username*"/>
             <input type="password" placeholder="Password*"/>
-            <div className="re-fe">
+            <div className="wrapper-remember_forgot">
               <Checkbox>Remember</Checkbox>
               <a href="#" className="login-forget">Forget Password?</a>
             </div>
@@ -113,7 +113,7 @@ function BaseHeader() {
                   <img src="images/icon-fb_login.png" alt="icon-fb_login" />
                 </a>
                 <a href="#">
-                  <img src="images/icon-twice_login.png" alt="icon-twice_login" />
+                  <img src="images/icon-twitter_login.png" alt="icon-twitter_login" />
                 </a>
                 <a href="#">
                   <img src="images/icon-gg_login.png" alt="icon-gg_login" />

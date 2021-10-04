@@ -1,7 +1,11 @@
 @import "colors";
 @import "fonts";
 .btn-home{
-    padding: 8px 20px;
+    @media screen and (max-width: 576px) {
+        font-size: 0.8rem
+    }
+    font-size: 1.2vw;
+    padding: 0.8vw 1.6vw;
     background-color: transparent;
     border: 1px solid $primary-color;
     color: $primary-color !important;

@@ -3,7 +3,9 @@
 @import "fonts";
 .ant-layout-footer {
   background: transparent !important;
-
+  @media screen and (max-width: 576px) {
+    padding: 0vw 8vw !important;
+  }
   .subscribe__section {
     background: $forth-color;
     padding: 50px;

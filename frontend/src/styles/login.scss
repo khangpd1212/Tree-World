@@ -5,7 +5,7 @@
     display: none;
 }
 .ant-modal{
-    width: 34% !important;
+    width: 40vw !important;
 }
 .ant-modal-body{
     padding: 0 !important;
@@ -13,10 +13,9 @@
 .img-login{
     .logo-login{
         padding: 4px;
-        width: 40%;
+        width: 36%;
     }
     .bg-login{
-        height: 90%;
         width: 100%;
     }
 }
@@ -29,6 +28,7 @@
     font-family: $font-SFUToledoMedium;
 }
 .content-login{
+    width: 22vw;
     font-family: $font-SFUHelveticaLight;
     position: absolute;
     left: 22%;
@@ -63,7 +63,7 @@
         border-right: none;
         border-bottom: 1px solid white;
         display: block;
-        width: 20vw;
+        width: 100%;
         background: transparent;
         outline: none;
         padding: 4px;
@@ -124,7 +124,7 @@
     }
     .add-account{
         a{
-            font-size: 1.1vw;
+            font-size: 1.2vw;
             color: #7CACC2;
         }
     }

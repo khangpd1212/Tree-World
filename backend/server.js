@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 //routes
-const testRoute = require("./routes/test");
 const productRoute = require("./routes/product");
 const catalogRoute = require("./routes/catalog");
+const authRoute = require("./routes/auth");
 
 const app = express();
 //bodyParser middlewares
@@ -25,7 +25,7 @@ mongoose
 // enable CORS requests
 app.use(cors());
 
-app.use("/", testRoute);
+app.use("/auth", authRoute);
 app.use("/product", productRoute);
 app.use("/catalog", catalogRoute);
 

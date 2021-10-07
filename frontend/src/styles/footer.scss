@@ -2,9 +2,16 @@
 @import "colors";
 @import "fonts";
 .ant-layout-footer {
-  padding: 24px 5vw !important;
-  background: transparent !important;
+  background: $screen-color !important;
+  margin-top: 100px;
+  padding: 0 5vw !important;
+  position: relative;
   .subscribe__section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translate(0%, -50%);
     background: $forth-color;
     padding: 50px;
     @include desktop {
@@ -104,7 +111,7 @@
     }
   }
   .footer__section {
-    padding: 50px 0;
+    padding: 150px 0 50px;
     &--logo {
       margin-left: -18px;
       font-family: $font-FuturaSCTOT;

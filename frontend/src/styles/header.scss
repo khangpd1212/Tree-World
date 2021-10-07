@@ -2,13 +2,14 @@
 @import "fonts";
 @import "colors";
 .root-base {
+  background-color: $screen-color;
   .ant-layout-header {
-    background: $screen-color;
+    background: transparent !important;
     height: auto !important;
     width: 100%;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
-
+    
     @include tablet {
       padding-left: 25px !important;
       padding-right: 25px !important;
@@ -60,7 +61,7 @@
             font-size: 14px;
           }
         }
-        div {
+        div{
           color: $black-color;
           padding: 0 20px;
           line-height: 1.4;

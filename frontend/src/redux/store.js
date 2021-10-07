@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userReducer from "./users"
-import postReducer from "./post"
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./users";
+import postReducer from "./post";
+import layoutReducer from "./layout";
 
 export const store = configureStore({
-    reducer: {
-        usersState: userReducer,
-        postsState: postReducer
-    }
-})
+  reducer: {
+    usersState: userReducer,
+    postsState: postReducer,
+    layoutState: layoutReducer,
+  },
+});

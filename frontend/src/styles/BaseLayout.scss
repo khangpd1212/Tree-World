@@ -1,0 +1,10 @@
+@import "media-queries";
+.ant-layout-content{
+    margin-top: 10vw;
+    @include tablet-sm{
+        margin-top: 15vw;
+    }
+    @include mobile{
+        margin-top: 25vw;
+    }
+}

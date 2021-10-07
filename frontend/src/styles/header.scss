@@ -9,10 +9,7 @@
     width: 100%;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
-
-    // @include desktop {
-    //   padding: 0 25px !important;
-    // }
+    
     @include tablet {
       padding-left: 25px !important;
       padding-right: 25px !important;

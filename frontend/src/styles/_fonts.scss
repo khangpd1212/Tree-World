@@ -26,6 +26,11 @@
   src: local("FuturaSCTOT"),
     url(../fonts/Futura-SC-T-OT-Book_19037.ttf) format("opentype");
 }
+@font-face {
+  font-family: "SVNNewton";
+  src: local("SVNNewton"),
+    url(../fonts/SVN-Newton.ttf) format("opentype");
+}
 
 $font-SFRMeta: "SFUMetaCaps";
 $font-SFUHelveticaLight: "SFUHelveticaLight";
@@ -33,3 +38,4 @@ $font-SFUToledoBold: "SFUToledoBold";
 $font-SFUToledoMedium: "SFUToledoMedium";
 $font-SFUMetaBold: "SFUMetaBold";
 $font-FuturaSCTOT: "FuturaSCTOT";
+$font-SVNNewton: "SVNNewton";

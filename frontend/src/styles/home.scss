@@ -108,11 +108,20 @@
     }
   }
   .h_product-main {
+    margin-right: 0 !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
     font-family: $font-SFRMeta;
     background-color: $light--white-color;
     padding: 0px 5vw;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar{
+      display: none;
+    }
     .h_product-flex_wrap {
-      padding: 8px;
+      scroll-snap-align: center;
       @include mobile {
         width: 100%;
       }

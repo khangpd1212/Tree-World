@@ -45,36 +45,64 @@ export default function Home() {
             </div>
           </Col>
         </Row>
-        <Row className="h_product-main" justify="space-between">
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
-            <img src="/images/img_product.png" alt="img_product" />
-            <div className="h_product-flex_wrap-content">
-              <p>lorem ipsum</p>
-              <span>$ 25.00</span>
-            </div>
-          </Col>
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
-            <img src="/images/img_product.png" alt="img_product" />
-            <div className="h_product-flex_wrap-content">
-              <p>lorem ipsum</p>
-              <span>$ 25.00</span>
-            </div>
-          </Col>
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
-            <img src="/images/img_product.png" alt="img_product" />
-            <div className="h_product-flex_wrap-content">
-              <p>lorem ipsum</p>
-              <span>$ 25.00</span>
-            </div>
-          </Col>
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
-            <img src="/images/img_product.png" alt="img_product" />
-            <div className="h_product-flex_wrap-content">
-              <p>lorem ipsum</p>
-              <span>$ 25.00</span>
-            </div>
-          </Col>
-        </Row>
+          <Row className="h_product-main" wrap={false} justify="space-between" gutter={[16, 16]}>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+            <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <img src="/images/img_product.png" alt="img_product" />
+              <div className="h_product-flex_wrap-content">
+                <p>lorem ipsum</p>
+                <span>$ 25.00</span>
+              </div>
+            </Col>
+          </Row>
       </div>
     </>
   );

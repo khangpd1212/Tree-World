@@ -1,15 +1,6 @@
 @import "media-queries";
 @import "colors";
 @import "fonts";
-.ant-modal-close{
-    display: none;
-}
-.ant-modal{
-    width: 40vw !important;
-}
-.ant-modal-body{
-    padding: 0 !important;
-}
 .img-login{
     .logo-login{
         padding: 4px;
@@ -132,7 +123,17 @@
 
 
 // login mobile
-.login {
+.login_mobile {
+    position: relative;
+    &-icon{
+        color: white;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        &:hover{
+            color: #C5B267
+        }
+    }
     .login_mobile-bg{
         width: 100%;
         height: 70vh;

@@ -1,9 +1,14 @@
 import React from 'react';
 import { Checkbox } from "antd";
+import { CloseOutlined } from '@ant-design/icons';
 import "styles/login.scss";
+import { Link } from 'react-router-dom';
 export default function Login() {
     return (
-        <div className="login">
+        <div className="login_mobile">
+          <Link to="/" className="login_mobile-icon">
+            <CloseOutlined />
+          </Link>
           <img src="/images/bg_login-mobile.png" alt="bg_login-mobile.png" className="login_mobile-bg"/>
           <h1 className="login_mobile-title">Welcome!</h1>
           <form className="login_mobile-content">

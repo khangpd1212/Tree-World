@@ -92,7 +92,7 @@ function BaseHeader() {
       </Row>
 
       {/* login */}
-      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal width={"40vw"} bodyStyle={{ padding: 0 }} closable={false} wrapClassName="modal" footer={null} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
           <div className="img-login">
             <img src="/logo.png" alt="tree-world-logo" className="logo-login"/>
             <img src="images/bg_login.png" alt="bg-login" className="bg-login"/>

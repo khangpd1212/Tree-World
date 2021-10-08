@@ -8,6 +8,10 @@
     margin-top: 10vw;
     padding-top: 5vw;
   }
+  @include mobile-plus {
+    margin-top: 19vw;
+    padding-top: 5vw;
+  }
   @include mobile {
     margin-top: 20vw;
     padding-top: 5vw;

@@ -1,0 +1,78 @@
+@import "colors";
+@import "media-queries";
+.head {
+  .form__search {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(1%, 33%);
+    @include tablet-plus {
+      transform: translate(1%, 25%);
+    }
+    @include tablet-sm {
+      transform: translate(1%, 15%);
+    }
+    @include mobile {
+      transform: translate(10%, -10%);
+    }
+    .ant-input-group {
+      .ant-input {
+        height: 40px;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+        border-color: $dark-color;
+        border-width: 2px;
+        border-right-width: 1px;
+        &:focus {
+          outline: none;
+          border-right: 0;
+          box-shadow: none;
+        }
+      }
+      .ant-input-group-addon {
+        background-color: transparent !important;
+      }
+      .ant-input-search-button {
+        width: 40px;
+        height: 40px;
+        border-width: 2px;
+        border-left-width: 1px;
+        border-color: $dark-color;
+        border-left-color: $screen-color;
+        border-bottom-right-radius: 20px !important;
+        border-top-right-radius: 20px !important;
+        color: $dark-color !important;
+        &:hover {
+          color: $primary-color !important;
+        }
+      }
+    }
+    &--mobileHidden {
+      width: 250px;
+      @include mobile {
+        display: none;
+      }
+    }
+    &--mobileVisible {
+      display: none;
+      @include mobile {
+        display: block;
+      }
+      .ant-btn-primary {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        outline: none;
+        box-shadow: none;
+        color: $dark-color !important;
+        font-size: 16px;
+        &:hover {
+          color: $primary-color !important;
+        }
+      }
+    }
+  }
+}
+.ant-modal-footer {
+  display: none;
+}

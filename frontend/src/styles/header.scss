@@ -1,0 +1,133 @@
+@import "media-queries";
+@import "fonts";
+@import "colors";
+.root-base {
+  .ant-layout-header {
+    background: $screen-color;
+    height: auto !important;
+    width: 100%;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+
+    @include tablet {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+    &.bg__change {
+      background: $light-color !important;
+      transition: all 0.6s ease;
+    }
+    .logo {
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+    .mobileHidden {
+      @include tablet-sm {
+        display: none;
+      }
+      .ant-anchor {
+        display: flex;
+        justify-content: flex-end;
+        .ant-anchor-ink {
+          display: none;
+        }
+        a {
+          color: $black-color;
+          padding: 0 20px;
+          line-height: 1.4;
+          text-transform: uppercase;
+          font-family: $font-SFRMeta !important;
+          font-size: 24px;
+
+          &:hover {
+            color: $primary-color;
+          }
+          @include desktop-plus {
+            padding: 0 15px;
+            font-size: 20px;
+          }
+          @include desktop {
+            text-transform: capitalize;
+            padding: 0 10px;
+            font-size: 16px;
+          }
+          @include tablet {
+            padding: 0 10px;
+            font-size: 14px;
+          }
+        }
+        div {
+          color: $black-color;
+          padding: 0 20px;
+          line-height: 1.4;
+          text-transform: uppercase;
+          font-family: $font-SFRMeta !important;
+          font-size: 24px;
+          cursor: pointer;
+          &:hover {
+            color: $primary-color;
+          }
+          @include desktop-plus {
+            padding: 0 15px;
+            font-size: 20px;
+          }
+          @include desktop {
+            text-transform: capitalize;
+            padding: 0 10px;
+            font-size: 16px;
+          }
+          @include tablet {
+            padding: 0 10px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .mobileVisible {
+      display: none;
+      text-align: right;
+      @include tablet-sm {
+        display: block;
+      }
+      .ant-btn {
+        background-color: transparent !important;
+        color: $black-color !important;
+        border: none;
+        box-shadow: none;
+        font-size: 16px;
+        &:hover {
+          color: $primary-color !important;
+        }
+      }
+    }
+  }
+}
+.ant-drawer-content {
+  background-color: $screen-color !important;
+  .ant-drawer-body {
+    .ant-anchor {
+      .ant-anchor-ink {
+        display: none;
+      }
+      .navbar__link {
+        display: flex;
+        flex-direction: column;
+        a {
+          color: $black-color;
+          padding: 15px 20px;
+          line-height: 1.4;
+          font-family: $font-SFRMeta !important;
+          font-size: 14px;
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}

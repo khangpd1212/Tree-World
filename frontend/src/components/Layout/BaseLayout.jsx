@@ -1,18 +1,29 @@
-import { Link, Route } from "react-router-dom";
-import { Home, Users } from "../../pages";
-
+import { Layout } from "antd";
+import Backtop from "components/Base/Backtop";
+import BaseFooter from "components/Base/BaseFooter";
+import BaseHeader from "components/Base/BaseHeader";
+import { Route } from "react-router-dom";
+import { Home, Users, Product } from "../../pages";
+import "styles/BaseLayout.scss";
+import { useSelector } from "react-redux";
+const { Content } = Layout;
 export default function BaseLayout() {
-    return <div className="root-base">
-        <div className="head">
-            <h2>HOME</h2>
-            <Link to={'/'}>home</Link>
-            <Link to={'/admin'}>admin</Link>
-            <Link to={'/users'}>login</Link>
-        </div>
-        <Route path="/" component={Home}/>
-        <Route path="/users" component={Users}/>
-        <div className="footer">
-            Footer
-        </div>
+  const layout = useSelector((state) => state.layoutState.layoutStatus);
+  return (
+    <div className="root-base">
+      <Layout>
+        <BaseHeader />
+        <Content>
+          <div className="head">
+            <Route path="/" exact component={Home} />
+            <Route path="/users" exact component={Users} />
+            <Route path="/product" exact component={Product} />
+            {layout ? <div className="head__change"></div> : <></>}
+          </div>
+        </Content>
+        <BaseFooter />
+        <Backtop />
+      </Layout>
     </div>
+  );
 }

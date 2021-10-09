@@ -13,17 +13,9 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  create_date: {
-    type: Date,
-    default: Date.now,
-  },
-  update_date: {
-    type: Date,
-    default: null,
-  },
   isHot: {
-    type: Boolean,
-    default: false,
+    type: Number,
+    default: 0,
   },
   isNew: {
     type: Boolean,
@@ -33,17 +25,25 @@ const ProductSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  view: {
+  star: {
     type: Number,
     default: 0,
+  },
+  inventory: {
+    type: Number,
+    required: true,
   },
   catalog_id: {
     type: String,
     required: true,
   },
   image: {
-    type: String,
-    required: false,
+    type: [String],
+    default: [],
+  },
+  color: {
+    type: [String],
+    default: [],
   },
 });
 

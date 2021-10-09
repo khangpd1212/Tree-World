@@ -9,6 +9,7 @@ export default function Home() {
   dispatch(setLayoutStatus(false));
   return (
     <>
+    {/* Slide */}
       <Row className="slider">
         <Col className="slider-left" xs={24} sm={14}>
           <img src="./images/slider.png" alt="img_slider-left" />
@@ -31,6 +32,8 @@ export default function Home() {
           </button>
         </Col>
       </Row>
+
+      {/* product home */}
       <div className="product-wrapper">
         <Row className="h_product">
           <Col className="h_product-title" xs={24} sm={7}>
@@ -45,29 +48,54 @@ export default function Home() {
             </div>
           </Col>
         </Row>
-        <Row className="h_product-main" justify="space-between">
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
+        <Row className="h_product-main" wrap={false} justify="space-between" gutter={[16, 16]}>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
             <img src="/images/img_product.png" alt="img_product" />
             <div className="h_product-flex_wrap-content">
               <p>lorem ipsum</p>
               <span>$ 25.00</span>
             </div>
           </Col>
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
             <img src="/images/img_product.png" alt="img_product" />
             <div className="h_product-flex_wrap-content">
               <p>lorem ipsum</p>
               <span>$ 25.00</span>
             </div>
           </Col>
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
+              <p>lorem ipsum</p>
+              <span>$ 25.00</span>
+          </Col>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
             <img src="/images/img_product.png" alt="img_product" />
             <div className="h_product-flex_wrap-content">
               <p>lorem ipsum</p>
               <span>$ 25.00</span>
             </div>
           </Col>
-          <Col className="h_product-flex_wrap" xs={24} sm={6}>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
+            <img src="/images/img_product.png" alt="img_product" />
+            <div className="h_product-flex_wrap-content">
+              <p>lorem ipsum</p>
+              <span>$ 25.00</span>
+            </div>
+          </Col>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
+            <img src="/images/img_product.png" alt="img_product" />
+            <div className="h_product-flex_wrap-content">
+              <p>lorem ipsum</p>
+              <span>$ 25.00</span>
+            </div>
+          </Col>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
+            <img src="/images/img_product.png" alt="img_product" />
+            <div className="h_product-flex_wrap-content">
+              <p>lorem ipsum</p>
+              <span>$ 25.00</span>
+            </div>
+          </Col>
+          <Col className="h_product-flex_wrap" xs={16} sm={6}>
             <img src="/images/img_product.png" alt="img_product" />
             <div className="h_product-flex_wrap-content">
               <p>lorem ipsum</p>
@@ -75,7 +103,13 @@ export default function Home() {
             </div>
           </Col>
         </Row>
+        <div className="h_product-button">
+          <button class="btn-home" type="submit">All product &gt;&gt;</button>
+        </div>
       </div>
+
+      {/* detail product hot */}
+      
     </>
   );
 }

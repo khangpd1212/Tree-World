@@ -64,8 +64,11 @@ export default function Home() {
             </div>
           </Col>
           <Col className="h_product-flex_wrap" xs={16} sm={6}>
+            <img src="/images/img_product.png" alt="img_product" />
+            <div className="h_product-flex_wrap-content">
               <p>lorem ipsum</p>
               <span>$ 25.00</span>
+            </div>
           </Col>
           <Col className="h_product-flex_wrap" xs={16} sm={6}>
             <img src="/images/img_product.png" alt="img_product" />

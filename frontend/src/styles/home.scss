@@ -130,6 +130,10 @@
   }
 
   .h_product-main {
+    margin-right: 0 !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
     font-family: $font-SFRMeta;
     background-color: $light--white-color;
     padding: 0px 5vw;

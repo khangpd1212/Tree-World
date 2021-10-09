@@ -1,6 +1,6 @@
 @import "media-queries";
 @import "colors";
-.ant-layout-content {
+.root-base .ant-layout-content {
   background: $screen-color;
   margin-top: 8vw;
   padding-top: 2vw;
@@ -34,6 +34,9 @@
   }
 }
 
-.ant-layout.ant-layout-has-sider {
+.root-base .ant-layout.ant-layout-has-sider {
   flex-direction: column !important;
+  > .ant-layout-content {
+    width: 100%;
+  }
 }

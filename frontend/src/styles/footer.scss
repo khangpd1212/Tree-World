@@ -1,7 +1,7 @@
 @import "media-queries";
 @import "colors";
 @import "fonts";
-.ant-layout-footer {
+.root-base .ant-layout-footer {
   background: $screen-color !important;
   margin-top: 100px;
   padding: 0 5vw !important;

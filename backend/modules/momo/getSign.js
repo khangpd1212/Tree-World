@@ -7,12 +7,13 @@ const getSign = (
     orderInfo
 ) => {
     const partnerCode = "MOMO";
-    const redirectUrl = "https://momo.vn/return";
-    const ipnUrl = "https://callback.url/notify";
+    const redirectUrl = "https://treeword.net/return";
+    const ipnUrl = "https://treeword.net/notify";
     const requestType = "captureWallet";
     const requestId = partnerCode + new Date().getTime();
-    const accessKey = "F8BBA842ECF85"
-    const scretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+    const accessKey = process.env.MOMO_ACCESS_KEY;
+    const scretKey = process.env.MOMO_SCRETKEY;
+    
     if (amount && extraData) {
         const rawSignature =
             "accessKey=" + accessKey
@@ -29,11 +30,12 @@ const getSign = (
         const signature = crypto.createHmac('sha256', scretKey)
             .update(rawSignature)
             .digest('hex');
+            console.log(signature);
 
         return {
             signature,
             partnerCode: partnerCode,
-            accessKey: process.env.MOMO_ACCESS_KEY,
+            accessKey,
             requestId: requestId,
             amount: amount,
             orderId: orderId,

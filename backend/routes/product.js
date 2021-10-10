@@ -8,8 +8,18 @@ router.get("/", async (req, res) => {
     const products = await Product.find();
     if (!products) throw new Error("No items");
     res.status(200).json(products);
-  } catch (e) {
-    res.status(400).json({ message: e.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+// get product by id
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) throw new Error("This product is not found");
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(403).json({ message: error.message });
   }
 });
 
@@ -41,13 +51,27 @@ router.post("/", verify, async (req, res) => {
     try {
       const product = await newProduct.save();
       if (!product) throw new Error("Something were wrong with saving product");
-      res.status(200).json(product);
+      res.status(200).json({ message: "Create successfully", product });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
+  } else {
+    res.status(500).json({ message: "You are not allowed" });
   }
-  elseP;
-  res.status(500).json("You are not allowed");
+});
+
+//delete product
+router.delete("/:id", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      await Product.findByIdAndDelete(req.params.id);
+      res.status(200).json({ message: "The product has beeen deleted" });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.status(403).json({ message: "You are not allowed" });
+  }
 });
 
 module.exports = router;

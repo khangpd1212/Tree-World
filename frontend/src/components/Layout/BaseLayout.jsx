@@ -10,8 +10,8 @@ const { Content } = Layout;
 export default function BaseLayout() {
   const layout = useSelector((state) => state.layoutState.layoutStatus);
   return (
-    <Layout>
-      <div className="root-base">
+    <div className="root-base">
+      <Layout>
         <BaseHeader />
         <Content>
           <div className="head">
@@ -23,7 +23,7 @@ export default function BaseLayout() {
         </Content>
         <BaseFooter />
         <Backtop />
-      </div>
-    </Layout>
+      </Layout>
+    </div>
   );
 }

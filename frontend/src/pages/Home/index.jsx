@@ -7,6 +7,8 @@ import { setLayoutStatus } from "redux/layout";
 import Slider from "react-slick";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+// import ModelViewer from 'react-model-viewer';
+// const modelPath = 'https://sketchfab.com/3d-models/simple-pot-and-plant-d489a069b49c4451a0fa17130fba4c28';
 const { Title, Paragraph } = Typography;
 
 export default function Home() {
@@ -14,38 +16,43 @@ export default function Home() {
   dispatch(setLayoutStatus(false));
 
   var settings = {
-    infinite: false,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+    infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
-    dots: true,
-    appendDots: dots => (
-        <ul style={{ width: '90%' }}> {dots} </ul>
-    ),
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
-          infinite: true,
+          slidesToScroll: 1,
         }
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-          arrows: false
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 2
         }
       },
       {
         breakpoint: 480,
         settings: {
+          pauseOnHover: true,
+          autoplaySpeed: 2000,
           slidesToShow: 1,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          dots: true,
+          appendDots: dots => (
+            <ul style={{ width: '90%' }}>
+              {dots}
+            </ul>
+          ),
         }
       }
     ]
@@ -84,15 +91,15 @@ export default function Home() {
       {/* product home */}
       <div className="product-wrapper">
         <Row className="h_product">
-          <Col className="h_product-title" xs={24} sm={7}>
+          <Col className="h_product-title" xs={24} sm={10} md={8}>
             <h1>Choose your product from our collection</h1>
           </Col>
           <Col className="h_product-header" xs={24} sm={10}>
             <div className="h_product-header_flex">
-              <div>All</div>
-              <div>Somethings</div>
-              <div>Somethings</div>
-              <div>Somethings</div>
+              <div>hot</div>
+              <div>new</div>
+              <div>view</div>
+              <div>favorite</div>
             </div>
           </Col>
         </Row>
@@ -156,7 +163,7 @@ export default function Home() {
           </div>
           <div className="h_product-flex">
             <div className="h_product-flex_hover">
-              <img srcSet="/images/product2.png" alt="img_product" />
+              <img srcSet="/images/product1.png" alt="img_product" />
               <div className="h_product-flex_icon">
                 <a href="#" className="icon-like">
                   <HeartFilled style={icon_like} />
@@ -175,8 +182,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* detail product hot */}
-
+      {/* introduce product */}
+      <Row className="section_hot">
+        <Col className="section_hot__left" md={12}>
+          <div className="section_hot__img">
+          {/* <ModelViewer type="gtlf" src={modelPath} /> */}
+        {/* <model-viewer id="reveal" loading="eager" camera-controls auto-rotate src="https://sketchfab.com/3d-models/simple-pot-and-plant-d489a069b49c4451a0fa17130fba4c28" alt="A 3D model of a shishkebab"></model-viewer> */}
+          </div>
+            <div className="section_hot__top">
+              
+              
+            </div>
+        </Col>
+      </Row>
     </>
   );
 }

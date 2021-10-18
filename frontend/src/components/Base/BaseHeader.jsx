@@ -57,10 +57,11 @@ function BaseHeader() {
           <div className="mobileHidden">
             <Anchor affix={false}>
               <LinkRoute to={"/"}>Home</LinkRoute>
-              <LinkRoute to={"/"}>About Us</LinkRoute>
+              <LinkRoute to={"/"}>About</LinkRoute>
               <LinkRoute to={"/product"}>Product</LinkRoute>
               <LinkRoute to={"/"}>Blog</LinkRoute>
-              <LinkRoute to={"/"}>Contact Us</LinkRoute>
+              <LinkRoute to={"/"}>Contact</LinkRoute>
+              <LinkRoute to={"/cart"}>Cart</LinkRoute>
               <div onClick={showModal}>Login</div>
               <LinkRoute to={"/admin"}>Admin</LinkRoute>
             </Anchor>
@@ -82,6 +83,7 @@ function BaseHeader() {
                   <LinkRoute to={"/product"} onClick={onClose}>Product</LinkRoute>
                   <LinkRoute to={"/"} onClick={onClose}>Blog</LinkRoute>
                   <LinkRoute to={"/"} onClick={onClose}>Contact Us</LinkRoute>
+                  <LinkRoute to={"/cart"} onClick={onClose}>Cart</LinkRoute>
                   <LinkRoute to={"/login"} onClick={onClose}>Login</LinkRoute>
                   <LinkRoute to={"/admin"}>Admin</LinkRoute>
                 </div>

@@ -5,9 +5,9 @@
   .ant-layout-header {
     background: $screen-color;
     height: auto !important;
-    width: 100%;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
+    width: 100%;
 
     @include tablet {
       padding-left: 25px !important;
@@ -21,7 +21,7 @@
     }
     .logo {
       img {
-        width: 100%;
+        width: 217px;
         display: block;
       }
     }
@@ -39,8 +39,9 @@
           color: $black-color;
           padding: 0 20px;
           line-height: 1.4;
-          text-transform: uppercase;
+          text-transform: lowercase;
           font-family: $font-SFRMeta !important;
+          font-weight: 500;
           font-size: 24px;
 
           &:hover {
@@ -64,7 +65,7 @@
           color: $black-color;
           padding: 0 20px;
           line-height: 1.4;
-          text-transform: uppercase;
+          text-transform: lowercase;
           font-family: $font-SFRMeta !important;
           font-size: 24px;
           cursor: pointer;

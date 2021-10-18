@@ -71,15 +71,6 @@
 
 
     .slider-right_title {
-      .title-h1 {
-
-        animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -moz-animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -webkit-animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -o-animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-
-
-      }
 
       margin-left: -28%;
       font-family: $font-SFUToledoMedium;
@@ -87,30 +78,10 @@
       -moz-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
       -webkit-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
       -o-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
-
-      // @keyframes text-clip {
-      //   from {
-      //     clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0%, 100%);
-      //   }
-
-      //   to {
-      //     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      //   }
-      // }
-
+      
       @keyframes outer-title {
         from {
           transform: translateX(20%);
-        }
-
-        to {
-          transform: none;
-        }
-      }
-
-      @keyframes inner-title {
-        from {
-          transform: translateX(-50%);
         }
 
         to {

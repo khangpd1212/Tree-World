@@ -26,13 +26,6 @@ export default function Home() {
     initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        }
-      },
-      {
         breakpoint: 600,
         settings: {
           slidesToShow: 3,
@@ -190,8 +183,7 @@ export default function Home() {
         {/* <model-viewer id="reveal" loading="eager" camera-controls auto-rotate src="https://sketchfab.com/3d-models/simple-pot-and-plant-d489a069b49c4451a0fa17130fba4c28" alt="A 3D model of a shishkebab"></model-viewer> */}
           </div>
             <div className="section_hot__top">
-              
-              
+            
             </div>
         </Col>
       </Row>

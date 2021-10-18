@@ -60,6 +60,30 @@ router.post("/", verify, async (req, res) => {
   }
 });
 
+//UPDATE
+router.put("/:id", verify, async (req, res) => {
+  if (req.user.isAdmin) {
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        {
+          new: true,
+        }
+      );
+      if (!updatedProduct)
+        throw new Error("Something went wrong with updating product");
+      res.status(200).json({ message: "update successfully", updatedProduct });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  } else {
+    res.status(403).json({ message: "You are not allowed" });
+  }
+});
+
 //delete product
 router.delete("/:id", verify, async (req, res) => {
   if (req.user.isAdmin) {

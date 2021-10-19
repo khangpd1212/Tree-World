@@ -3,9 +3,9 @@
 @import "fonts";
 .ant-breadcrumb {
   font-family: $font-SFRMeta;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: $black-color;
-  font-weight: 600;
+  font-weight: 500;
   padding-bottom: 5px !important;
   position: relative;
   &::after {

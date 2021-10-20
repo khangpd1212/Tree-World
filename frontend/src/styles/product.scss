@@ -81,32 +81,32 @@
     &--title {
       width: 230px;
       height: 40px;
-      background: $light-color;
+      background: $light--white-color;
       line-height: 40px;
       text-align: center;
       border: 1px solid $light-gray-color;
       margin-bottom: 10px;
       h3 {
         font-family: $font-SFRMeta;
-        font-size: 20px;
-        text-transform: uppercase;
+        font-size: 22px;
+        text-transform: lowercase;
         font-weight: 400;
       }
     }
     .ant-layout-sider {
       max-width: 230px !important;
       min-width: 230px !important;
-      background: $light-color;
+      background: $light--white-color;
       border: 1px solid $light-gray-color;
       padding: 15px 0;
 
       .side__title {
         font-family: $font-SFRMeta;
-        font-size: 20px;
-        padding-left: 40px;
-        text-transform: uppercase;
+        font-size: 22px;
+        padding-left: 30px;
+        text-transform: lowercase;
         font-weight: 400;
-        color: $black-color;
+        color: $gray-color;
       }
       .ant-radio-group {
         display: flex;
@@ -116,10 +116,11 @@
           .ant-radio-button-wrapper {
             border: none;
             font-size: 20px;
-            padding-left: 40px;
+            padding-left: 30px;
             color: $secondary-color;
-            font-family: $font-SFRMeta;
+            font-family: $font-SFUHelveticaLight;
             text-transform: capitalize;
+            background: $light--white-color;
             &:hover {
               color: $light-color;
               background: $orange-color;
@@ -142,6 +143,200 @@
               &::before {
                 background: $orange-color;
               }
+            }
+          }
+        }
+      }
+      .form__price--range {
+        padding-left: 30px;
+        margin-bottom: 1rem;
+        .ant-input {
+          width: 80px;
+          border-radius: 5px;
+          height: 30px;
+          background: $light-gray-color;
+          color: $dark-color;
+          font-family: $font-SFRMeta;
+          font-size: 14px;
+          text-transform: lowercase;
+          border: none;
+          padding-bottom: 8px;
+          &::placeholder {
+            color: $gray-color !important;
+            opacity: 1;
+          }
+          &:hover {
+            border: none;
+            border-right-width: 0 !important;
+          }
+          &:focus {
+            border: none;
+            outline: none;
+            box-shadow: none;
+          }
+          &[type="number"] {
+            appearance: textfield;
+            &::-webkit-inner-spin-button {
+              appearance: none;
+            }
+            &::-webkit-outer-spin-button {
+              appearance: none;
+            }
+          }
+        }
+        .ant-btn {
+          background: $red-color;
+          width: 80px;
+          height: 30px;
+          margin-top: 10px;
+          border-radius: 5px;
+          border: none;
+          box-shadow: none;
+          color: $light-color;
+          font-family: $font-SFRMeta;
+          text-transform: lowercase;
+          font-size: 18px;
+          line-height: 0;
+          padding-bottom: 8px;
+          &:hover {
+            border: none;
+            background: $dark-color;
+            box-shadow: none;
+            outline: none;
+            border-top-width: 0;
+          }
+        }
+        .price--range__show {
+          margin: 0;
+          margin-top: 10px;
+          margin-left: 15px;
+          color: $gray-color;
+          font-family: $font-SFRMeta;
+          font-size: 14px;
+          text-transform: lowercase;
+          font-size: 16px;
+        }
+      }
+      .side__tags {
+        padding-left: 30px;
+        p {
+          margin: 0;
+          font-family: $font-SFUHelveticaLight;
+          font-size: 18px;
+          color: $secondary-color;
+          padding-right: 20px;
+        }
+      }
+    }
+    &--filter {
+      .ant-radio-group {
+        &-solid {
+          .ant-radio-button-wrapper {
+            font-size: 20px;
+            color: $dark-color;
+            font-family: $font-SFRMeta;
+            text-transform: lowercase;
+            background: $light--white-color;
+            height: 40px;
+            border: 1px solid $light-gray-color;
+            &:hover {
+              color: $light-color;
+              background: $orange-color;
+            }
+            &:first-child {
+              outline: none;
+              border-radius: 0;
+              border-right: 0;
+            }
+            &:last-child {
+              border-radius: 0;
+            }
+            &-checked:not(.ant-radio-button-wrapper-disabled) {
+              background: $orange-color;
+              border-color: $orange-color;
+              border-right-color: $orange-color;
+              &:hover {
+                background: $orange-color;
+                border-color: $orange-color;
+                border-right-color: $orange-color;
+              }
+              &:focus-within {
+                box-shadow: none;
+              }
+            }
+            &:not(:first-child)::before {
+              content: unset;
+            }
+            &-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
+              border-right-color: unset;
+            }
+          }
+        }
+      }
+      .ant-select {
+        font-size: 20px;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+        color: $dark-color;
+        &:hover {
+          .ant-select-arrow {
+            color: $light-color;
+          }
+        }
+        &:not(.ant-select-customize-input) .ant-select-selector {
+          background: $light--white-color;
+          border: 1px solid $light-gray-color;
+          border-radius: 0;
+          &:hover {
+            border-color: $orange-color;
+            color: $light-color;
+            background: $orange-color;
+          }
+          &:focus {
+            border-color: $light-gray-color;
+            box-shadow: none;
+          }
+        }
+        &-single:not(.ant-select-customize-input) .ant-select-selector {
+          height: 40px;
+        }
+        &-arrow {
+          color: $dark-color;
+        }
+        &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+          .ant-select-selector {
+          border-color: $orange-color;
+          background: $orange-color;
+          color: $light-color;
+          box-shadow: none;
+        }
+      }
+      .pagination__btn {
+        display: flex;
+        align-items: center;
+        &--show {
+          font-family: $font-SFUHelveticaLight;
+          font-size: 18px;
+          color: $dark-color;
+          margin-right: 15px;
+        }
+        &--group {
+          .ant-btn {
+            width: 57px;
+            height: 40px;
+            border-radius: 0;
+            background: $light--white-color;
+            color: $dark-color;
+            border: 1px solid $light-gray-color;
+            &[disabled] {
+              color: $light-gray-color;
+              &:hover {
+                background: $light--white-color;
+              }
+            }
+            &:hover {
+              background: $orange-color;
+              color: $light-color;
             }
           }
         }

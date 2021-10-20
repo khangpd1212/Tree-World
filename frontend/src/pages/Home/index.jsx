@@ -1,5 +1,5 @@
 import { Row, Col, Typography } from "antd";
-import { HeartFilled } from '@ant-design/icons';
+import { HeartFilled } from "@ant-design/icons";
 import "styles/home.scss";
 import "styles/button.scss";
 import { useDispatch } from "react-redux";
@@ -30,15 +30,15 @@ export default function Home() {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
-        }
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
@@ -48,20 +48,16 @@ export default function Home() {
           slidesToShow: 1,
           slidesToScroll: 1,
           dots: true,
-          appendDots: dots => (
-            <ul style={{ width: '90%' }}>
-              {dots}
-            </ul>
-          ),
-        }
-      }
-    ]
+          appendDots: (dots) => <ul style={{ width: "90%" }}>{dots}</ul>,
+        },
+      },
+    ],
   };
 
-  var icon_like={
-    fontSize: '2.5vw', 
-    color: '#E44343',
-  }
+  var icon_like = {
+    fontSize: "2.5vw",
+    color: "#E44343",
+  };
   return (
     <>
       {/* Slide */}
@@ -82,7 +78,7 @@ export default function Home() {
               nisi ut aliquip ex ea commodo consequat.
             </Paragraph>
           </div>
-          <button type="submit" class="btn-home">
+          <button type="submit" className="btn-home">
             See more
           </button>
         </Col>
@@ -103,7 +99,7 @@ export default function Home() {
             </div>
           </Col>
         </Row>
-  
+
         <Slider className="h_product-main" {...settings}>
           <div className="h_product-flex">
             <div className="h_product-flex_hover">
@@ -178,7 +174,9 @@ export default function Home() {
         </Slider>
 
         <div className="h_product-button">
-          <button class="btn-home" type="submit">All product &gt;&gt;</button>
+          <button className="btn-home" type="submit">
+            All product &gt;&gt;
+          </button>
         </div>
       </div>
 
@@ -186,13 +184,10 @@ export default function Home() {
       <Row className="section_hot">
         <Col className="section_hot__left" md={12}>
           <div className="section_hot__img">
-          {/* <ModelViewer type="gtlf" src={modelPath} /> */}
-        {/* <model-viewer id="reveal" loading="eager" camera-controls auto-rotate src="https://sketchfab.com/3d-models/simple-pot-and-plant-d489a069b49c4451a0fa17130fba4c28" alt="A 3D model of a shishkebab"></model-viewer> */}
+            {/* <ModelViewer type="gtlf" src={modelPath} /> */}
+            {/* <model-viewer id="reveal" loading="eager" camera-controls auto-rotate src="https://sketchfab.com/3d-models/simple-pot-and-plant-d489a069b49c4451a0fa17130fba4c28" alt="A 3D model of a shishkebab"></model-viewer> */}
           </div>
-            <div className="section_hot__top">
-              
-              
-            </div>
+          <div className="section_hot__top"></div>
         </Col>
       </Row>
     </>

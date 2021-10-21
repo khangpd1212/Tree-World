@@ -21,8 +21,12 @@
     }
     .logo {
       img {
-        width: 217px;
+        width: auto !important;
+        height: auto !important;
         display: block;
+        @include desktop {
+          width: 90% !important;
+        }
       }
     }
     .mobileHidden {
@@ -60,6 +64,10 @@
             padding: 0 10px;
             font-size: 14px;
           }
+          @include tablet1 {
+            padding-right: 0;
+            padding-left: 15px;
+          }
         }
         div {
           color: $black-color;
@@ -84,6 +92,10 @@
           @include tablet {
             padding: 0 10px;
             font-size: 14px;
+          }
+          @include tablet1 {
+            padding-right: 0;
+            padding-left: 15px;
           }
         }
       }

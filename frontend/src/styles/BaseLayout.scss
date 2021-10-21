@@ -1,17 +1,20 @@
 @import "media-queries";
 @import "colors";
+
 .root-base .ant-layout-content {
   background: $screen-color;
-  margin-top: 8vw;
+  margin-top: 5.7vw;
   padding-top: 2vw;
   @include tablet-sm {
     margin-top: 10vw;
     padding-top: 5vw;
   }
+
   @include mobile-plus {
     margin-top: 19vw;
     padding-top: 5vw;
   }
+
   @include mobile {
     margin-top: 20vw;
     padding-top: 5vw;
@@ -21,8 +24,10 @@
 .ant-back-top {
   right: 50px !important;
 }
+
 .head {
   position: relative;
+
   &__change {
     width: 100%;
     background: $screen-color;
@@ -36,7 +41,8 @@
 
 .root-base .ant-layout.ant-layout-has-sider {
   flex-direction: column !important;
-  > .ant-layout-content {
+
+  >.ant-layout-content {
     width: 100%;
   }
 }

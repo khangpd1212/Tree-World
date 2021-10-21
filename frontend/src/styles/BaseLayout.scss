@@ -3,19 +3,29 @@
 
 .root-base .ant-layout-content {
   background: $screen-color;
-  margin-top: 5.7vw;
+  margin-top: 5vw;
   padding-top: 2vw;
+  @include desktop-plus {
+    margin-top: 6vw;
+  }
+  @include desktop {
+    margin-top: 8vw;
+  }
   @include tablet-sm {
     margin-top: 10vw;
     padding-top: 5vw;
   }
 
   @include mobile-plus {
-    margin-top: 19vw;
+    margin-top: 15vw;
     padding-top: 5vw;
   }
 
   @include mobile {
+    margin-top: 18vw;
+    padding-top: 5vw;
+  }
+  @include mobile-sm {
     margin-top: 20vw;
     padding-top: 5vw;
   }
@@ -23,6 +33,17 @@
 
 .ant-back-top {
   right: 50px !important;
+  @include mobile {
+    right: 40px !important;
+    bottom: 40px !important;
+  }
+  div {
+    @include mobile {
+      height: 40px !important;
+      width: 40px !important;
+      line-height: 40px !important;
+    }
+  }
 }
 
 .head {
@@ -42,7 +63,7 @@
 .root-base .ant-layout.ant-layout-has-sider {
   flex-direction: column !important;
 
-  >.ant-layout-content {
+  > .ant-layout-content {
     width: 100%;
   }
 }

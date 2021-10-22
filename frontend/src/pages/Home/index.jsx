@@ -64,12 +64,12 @@ export default function Home() {
             <Title>Make your days feeling goods with beautiful plant</Title>
           </div>
           <div className="slider-right_content">
-            <Paragraph>
+            <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing telit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
-            </Paragraph>
+            </p>
           </div>
           <button type="submit" className="btn-home">
             See more

@@ -1,10 +1,24 @@
 @import "media-queries";
 @import "colors";
 
+body.dark {
+  .root-base .ant-layout-content {
+    background: #121212;
+  }
+
+  .head {
+
+    &__change {
+      background: #121212;
+    }
+  }
+}
+
 .root-base .ant-layout-content {
   background: $screen-color;
   margin-top: 5.7vw;
   padding-top: 2vw;
+
   @include tablet-sm {
     margin-top: 10vw;
     padding-top: 5vw;

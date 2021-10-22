@@ -1,0 +1,61 @@
+   @import "colors";
+
+   .theme-witch-wrapper {
+      display: flex;
+      align-items: center;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+
+      .theme-switch {
+         display: inline-block;
+         height: 34px;
+         position: relative;
+         width: 60px;
+
+         input {
+            display: none;
+         }
+
+         input:checked+.slider {
+            background-color: $forth-color;
+
+            &::before {
+               transform: translateX(26px);
+            }
+         }
+
+         .slider.round {
+            border-radius: 34px;
+         }
+
+         .slider.round:before {
+            border-radius: 50%;
+         }
+
+         .slider {
+            background-color: $light-gray-color;
+            ;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+
+            &::before {
+               background-color: $light-color;
+               bottom: 4px;
+               content: "";
+               height: 26px;
+               left: 4px;
+               position: absolute;
+               transition: .4s;
+               width: 26px;
+            }
+         }
+
+      }
+   }

@@ -5,7 +5,7 @@ import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import { Route } from "react-router-dom";
-import { Home, Users, Product, Cart } from "../../pages";
+import { Home, Users, Product, Cart, Contact } from "../../pages";
 import "styles/BaseLayout.scss";
 
 import '../../styles/handleDarkMode.scss';
@@ -46,6 +46,7 @@ export default function BaseLayout() {
             <Route path="/users" exact component={Users} />
             <Route path="/product" exact component={Product} />
             <Route path="/cart" exact component={Cart} />
+            <Route path="/contact" exact component={Contact} />
             {layout ? <div className="head__change"></div> : <></>}
           </div>
         </Content>

@@ -44,7 +44,7 @@
         }
         strong {
           font-family: $font-SFUMetaBold;
-          text-transform: lowercase;
+          text-transform: uppercase;
           font-weight: 600;
         }
       }
@@ -107,6 +107,10 @@
           padding-left: 5px;
           padding-right: 5px;
         }
+        img {
+          width: auto !important;
+          height: auto !important;
+        }
       }
     }
   }
@@ -117,14 +121,19 @@
       font-family: $font-FuturaSCTOT;
       text-transform: uppercase;
       img {
+        width: auto !important;
+        height: auto !important;
         @include tablet-plus {
-          width: 90%;
+          width: 90% !important;
         }
         @include tablet1 {
-          width: 50%;
+          width: 50% !important;
         }
         @include tablet-sm {
-          width: 60%;
+          width: 60% !important;
+        }
+        @include mobile {
+          width: 80% !important;
         }
       }
       p {
@@ -190,10 +199,14 @@
       @include mobile {
         padding-left: 15px;
         margin-top: 30px;
-        width: 100%;
+        width: 70%;
+      }
+      @include mobile-sm {
+        width: 90%;
       }
       img {
-        width: 30px;
+        width: 30px !important;
+        height: auto !important;
       }
     }
     &--follow.visible {

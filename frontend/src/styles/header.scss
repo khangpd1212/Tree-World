@@ -21,6 +21,10 @@ body.dark {
               color: #509888;
             }
           }
+          @include tablet1 {
+            padding-right: 0;
+            padding-left: 15px;
+          }
         }
       }
 
@@ -34,6 +38,10 @@ body.dark {
 
           &:hover {
             color: $primary-color !important;
+          }
+          @include tablet1 {
+            padding-right: 0;
+            padding-left: 15px;
           }
         }
       }

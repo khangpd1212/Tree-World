@@ -4,7 +4,7 @@ import React from "react";
 const { Sider } = Layout;
 function SideComponent() {
   return (
-    <>
+    <div className="tabletHidden">
       <div className="product__section--title">
         <h3>
           search filter <FilterOutlined />
@@ -41,7 +41,7 @@ function SideComponent() {
           </p>
         </div>
       </Sider>
-    </>
+    </div>
   );
 }
 

@@ -2,15 +2,20 @@ import { Breadcrumb } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import "styles/breadcrumb.scss";
-function BreadCrumb({ page }) {
+function BreadCrumb({ page, item }) {
   return (
     <Breadcrumb>
       <Breadcrumb.Item>
         <Link to={"/"}>Home</Link>
       </Breadcrumb.Item>
       <Breadcrumb.Item>
-        <Link to={"/product"}>{page}</Link>
+        <Link to={`/${page.toLowerCase()}`}>{page}</Link>
       </Breadcrumb.Item>
+      {item && (
+        <Breadcrumb.Item>
+          <Link to={`/${item.toLowerCase()}`}>{item}</Link>
+        </Breadcrumb.Item>
+      )}
     </Breadcrumb>
   );
 }

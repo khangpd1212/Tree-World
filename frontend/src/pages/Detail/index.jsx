@@ -1,4 +1,4 @@
-import { Row, Col, Typography } from "antd";
+import { Row, Col, Typography, Radio } from "antd";
 import { Button, Input, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
@@ -34,16 +34,25 @@ export default function Detail() {
         {/* thon tin san pham */}
         <Col className="infor" xs={24} sm={12}>
           <div className="Category">
+            <div className="hrCategory">
+            </div>
             <p className="succulent">Succulent <br></br> plant</p>
           </div>
           <div className="New_collection">
-            <p className="price">$44,99</p>
+            <div className="newnewCollect">
+              <div className="hrNewCollect">
+              </div>
+            </div>
+            <p className="price">$<span>44.99</span></p>
           </div>
           <div className="color_quantity">
             <div className="color">
-              <div className="green"></div>
-              <div className="quick_heart"></div>
-              <div className="earth_yellow"></div>
+              <p>color</p>
+            <Radio.Group defaultValue="a">
+              <Radio.Button className="color__item green" value="a"></Radio.Button>
+              <Radio.Button className="color__item purple" value="b"></Radio.Button>
+              <Radio.Button className="color__item yellow" value="c"></Radio.Button>
+            </Radio.Group>
             </div>
             <div className="quantity">
               <button>-</button>

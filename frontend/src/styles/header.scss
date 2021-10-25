@@ -7,12 +7,25 @@ body.dark {
     .ant-layout-header {
       background: #141414;
 
+      .logo {
+
+        background: url('../images/logo.png') no-repeat;
+        background-size: contain;
+        width: 100%;
+        height: 56px;
+        margin-left: 20px;
+        img {
+          display: none;
+        }
+      }
+
       &.bg__change {
         background: #141414 !important;
       }
 
       .mobileHidden {
         .ant-anchor {
+
           a,
           div {
             color: #FBFAF8;
@@ -21,6 +34,7 @@ body.dark {
               color: #509888;
             }
           }
+
           @include tablet1 {
             padding-right: 0;
             padding-left: 15px;
@@ -39,6 +53,7 @@ body.dark {
           &:hover {
             color: $primary-color !important;
           }
+
           @include tablet1 {
             padding-right: 0;
             padding-left: 15px;
@@ -105,7 +120,8 @@ body {
             display: none;
           }
 
-          a,div {
+          a,
+          div {
             color: $black-color;
             padding: 0 20px;
             line-height: 1.4;

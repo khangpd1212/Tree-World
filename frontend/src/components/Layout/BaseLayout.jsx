@@ -34,7 +34,7 @@ export default function BaseLayout() {
     <div className="root-base">
       <div className="theme-witch-wrapper">
         <label htmlFor="checkbox" className="theme-switch">
-          <input type="checkbox" id="checkbox" onClick={() => setThemeState(!themeState)}/>
+          <input type="checkbox" id="checkbox" onClick={() => setThemeState(!themeState)} />
           <div className="slider round"></div>
         </label>
       </div>

@@ -1,0 +1,111 @@
+@import "media-queries";
+@import "fonts";
+@import "colors";
+
+.detail {
+  margin: 0 5vw;
+  position: relative;
+  .pro {
+    margin-top: 20vh;
+  }
+  .avtpro img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .image {
+    display: flex;
+    margin-top: 3vh;
+    padding: 0;
+    // text-align: center;
+    justify-content: space-between;
+  }
+  .imageCon {
+    width: 190px;
+    padding: 0;
+    margin: 0;
+  }
+  .imageCon img {
+    //   padding-right: 5vh;
+    width: 100% !important ;
+  }
+  .infor {
+    padding-left: 25px;
+  }
+  .newnewCollect {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .hrCategory {
+    width: 50%;
+    height: 1px;
+    background-color: $dark--hr-color;
+    position: relative;
+    &::before {
+      position: absolute;
+      content: "CATEGORY";
+      right: 0;
+      bottom: 0;
+      transform: translate(120%, 35%);
+      font-size: 18px;
+      color: $light--secondary-color;
+      font-family: $font-SFRMeta;
+      text-transform: lowercase;
+    }
+  }
+  .succulent {
+    font-size: 80px;
+    font-family: $font-SFUToledoMedium;
+    line-height: 75px;
+    color: $fifth-color;
+    margin: 30px 0px 60px 0px;
+  }
+  .hrNewCollect {
+    width: 74.5%;
+    height: 1px;
+    background-color: $dark--hr-color;
+    position: relative;
+    &::before {
+      position: absolute;
+      content: "new collection";
+      left: 0;
+      bottom: 0;
+      transform: translate(-120%, 35%);
+      font-size: 18px;
+      color: $light--secondary-color;
+      font-family: $font-SFRMeta;
+      text-transform: lowercase;
+    }
+  }
+  .price {
+    font-size: 72px;
+    color: $dark-color;
+    font-family: $font-SFRMeta;
+    span {
+      font-family: $font-SFUMetaBold;
+    }
+  }
+  .color_quantity {
+    display: flex;
+    .color {
+      p {
+        font-family: $font-SFRMeta;
+        font-size: 20px;
+        color: $light--secondary-color;
+      }
+      &__item {
+        margin: 0 10px;
+        width: 25px;
+        height: 35px;
+        &.green {
+          background-color: $green-color;
+        }
+        &.purple {
+          background-color: $purple-color;
+        }
+        &.yellow {
+          background-color: $warning-color;
+        }
+      }
+    }
+  }
+}

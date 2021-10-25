@@ -1,10 +1,18 @@
 @import "colors";
 @import "fonts";
-.btn-home{
+
+body.dark {
+    .btn-home {
+        background-color: #259e84;
+    }
+}
+
+.btn-home {
     @media screen and (max-width: 576px) {
         font-size: 0.6rem;
         padding: 1.2vw 2.4vw;
     }
+
     font-size: 1.2vw;
     padding: 0.6vw 1.4vw;
     background-color: $dark-color;
@@ -14,7 +22,8 @@
     text-transform: uppercase !important;
     font-family: $font-SFRMeta;
     transition-duration: .2s;
-    &:hover{
+
+    &:hover {
         background-color: $black-color;
     }
 }

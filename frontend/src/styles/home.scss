@@ -3,21 +3,99 @@
 @import "fonts";
 
 // reset css
-* {
-  a {
-    text-decoration: none;
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+
+input {
+  line-height: normal;
+}
+
+label,
+button {
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// theme dark
+body.dark {
+  .slider {
+    .slider-right {
+      .slider-right_title {
+        h1 {
+          color: #259e84;
+        }
+      }
+
+      .slider-right_content {
+        color: white;
+      }
+    }
   }
 
-  button {
-    cursor: pointer;
-  }
+  // section 2
+  .product-wrapper {
+    color: white;
+    background-color: #131313;
 
-  img {
-    width: 100%;
-    height: 100%;
+    .h_product {
+      .h_product-title {
+        h1 {
+          color: white;
+        
+        }
+      }
+
+      .h_product-header {
+        &_flex {
+
+          div {
+            &::before {
+              background-color: #207d69;
+            }
+
+            &:hover {
+              color: #207d69;
+            }
+          }
+        }
+      }
+    }
+
+    .h_product-main {
+
+      .slick-prev:before,
+      .slick-next:before {
+        color: white;
+      }
+
+      .slick-dots {
+        li button:before {
+          background-color: #207d69;
+        }
+      }
+    }
   }
 }
 
+
+// theme Light
 // section 1
 .slider {
   .slider-left img {
@@ -71,15 +149,6 @@
 
 
     .slider-right_title {
-      .title-h1 {
-
-        animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -moz-animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -webkit-animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -o-animation: text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
-
-
-      }
 
       margin-left: -28%;
       font-family: $font-SFUToledoMedium;
@@ -88,29 +157,9 @@
       -webkit-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
       -o-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
 
-      // @keyframes text-clip {
-      //   from {
-      //     clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0%, 100%);
-      //   }
-
-      //   to {
-      //     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      //   }
-      // }
-
       @keyframes outer-title {
         from {
           transform: translateX(20%);
-        }
-
-        to {
-          transform: none;
-        }
-      }
-
-      @keyframes inner-title {
-        from {
-          transform: translateX(-50%);
         }
 
         to {
@@ -137,6 +186,7 @@
       font-family: $font-SFUHelveticaLight;
       font-size: 1.3vw;
       margin-top: -3vw;
+      color: black;
 
       @media screen and (max-width: 576px) {
         margin-top: 0;
@@ -150,9 +200,11 @@
 // section 2
 .product-wrapper {
   margin-top: 4vw;
+  color: black;
+  background-color: $light--white-color;
+  ;
 
   .h_product {
-    background-color: $light--white-color;
     padding: 40px 5vw;
     align-items: center;
     justify-content: space-between;
@@ -226,7 +278,6 @@
   .h_product-main {
     padding: 0 5vw;
     font-family: $font-SFRMeta;
-    background-color: $light--white-color;
 
     &:hover .slick-arrow {
       opacity: 1;
@@ -376,22 +427,21 @@
       }
     }
   }
-}
 
-.h_product-button {
-  padding: 2rem 5vw;
-  text-align: right;
-  background-color: $light--white-color;
+  .h_product-button {
+    padding: 2rem 5vw;
+    text-align: right;
 
-  @include mobile {
-    text-align: center;
-  }
+    @include mobile {
+      text-align: center;
+    }
 
-  button {
-    font-size: 1vw;
+    button {
+      font-size: 1vw;
 
-    @include tablet-sm {
-      font-size: 0.6rem;
+      @include tablet-sm {
+        font-size: 0.6rem;
+      }
     }
   }
 }

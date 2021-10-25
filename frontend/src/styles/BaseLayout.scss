@@ -1,6 +1,19 @@
 @import "media-queries";
 @import "colors";
 
+body.dark {
+  .root-base .ant-layout-content {
+    background: #121212;
+  }
+
+  .head {
+
+    &__change {
+      background: #121212;
+    }
+  }
+}
+
 .root-base .ant-layout-content {
   background: $screen-color;
   margin-top: 5vw;

@@ -26,13 +26,6 @@ export default function Home() {
     initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
         breakpoint: 600,
         settings: {
           slidesToShow: 3,
@@ -71,12 +64,12 @@ export default function Home() {
             <Title>Make your days feeling goods with beautiful plant</Title>
           </div>
           <div className="slider-right_content">
-            <Paragraph>
+            <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing telit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
-            </Paragraph>
+            </p>
           </div>
           <button type="submit" className="btn-home">
             See more
@@ -187,7 +180,9 @@ export default function Home() {
             {/* <ModelViewer type="gtlf" src={modelPath} /> */}
             {/* <model-viewer id="reveal" loading="eager" camera-controls auto-rotate src="https://sketchfab.com/3d-models/simple-pot-and-plant-d489a069b49c4451a0fa17130fba4c28" alt="A 3D model of a shishkebab"></model-viewer> */}
           </div>
-          <div className="section_hot__top"></div>
+            <div className="section_hot__top">
+            
+            </div>
         </Col>
       </Row>
     </>

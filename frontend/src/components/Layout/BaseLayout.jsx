@@ -3,12 +3,18 @@ import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import { Route } from "react-router-dom";
-import { Home, Users, Product, Cart,Detail, Contact } from "../../pages";
+import { Home, Users, Product, Cart, Detail, Contact } from "../../pages";
 import "styles/BaseLayout.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProducts } from "redux/product";
 const { Content } = Layout;
 export default function BaseLayout() {
+  const dispatch = useDispatch();
   const layout = useSelector((state) => state.layoutState.layoutStatus);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
   return (
     <div className="root-base">
       <Layout>

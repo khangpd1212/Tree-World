@@ -1,8 +1,12 @@
-
-
 export const requests = {
     fetchAllPosts: "posts",
     fetchPost(id){
-        return `post/${id}`
-    }
+        return `posts/${id}`
+    },
+
+    // product
+    fetAllProduct: "product",
+    fetchProduct(id){
+        return `product/${id}`
+    },
 }

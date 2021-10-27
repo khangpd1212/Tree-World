@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://jsonplaceholder.typicode.com/"
+    baseURL: "http://localhost:8800/"
 })
 
 // methods { "get" || "post" .... }
@@ -11,5 +11,4 @@ export const axiosRequest = (methods, requests, data) => {
     }
     return instance[methods](requests).then(({data}) => data)
 }
-
 export default instance

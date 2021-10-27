@@ -9,6 +9,6 @@ export const store = configureStore({
     usersState: userReducer,
     postsState: postReducer,
     layoutState: layoutReducer,
-    productsState: productReducer,
+    productState: productReducer,
   },
 });

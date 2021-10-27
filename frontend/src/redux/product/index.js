@@ -1,36 +1,52 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosRequest } from '../../utils/axios';
-import { requests } from '../../utils/requests';
+import axios from "../../utils/axios";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
+
+const initialState = {
+  productList: [],
+  loading: "idle",
+  error: "",
+};
 
 export const fetchProducts = createAsyncThunk(
-   'products/fetchProducts',
-   async () => {
-      const response = await axiosRequest("get", requests.fetAllProduct)
-      return response;
-   }
-)
+  "GET_ALL_PRODUCTS",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("product/");
+      return await response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+const productSlice = createSlice({
+  name: "product",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.productList = [];
+      state.loading = "loading";
+    });
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.productList = action.payload;
+      state.loading = "loaded";
+    });
+    builder.addCase(fetchProducts.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.loading = "error";
+    });
+  },
+});
+export const selectProducts = createSelector(
+  (state) => ({
+    productList: state.productState.productList,
+    loading: state.productState.loading,
+  }),
+  (state) => state
+);
 
-const productSlice = createSlice ({
-   name: "products",
-   initialState: {
-      entities: [],
-      loading: false,
-      error: "",
-   },
-   extraReducers: {
-      [fetchProducts.pending]: (state) => {
-         state.loading = true;
-      },
-      [fetchProducts.rejected]: (state, action) => {
-         state.loading = false;
-         state.error = action.error;
-      },
-      [fetchProducts.fulfilled]: (state, action) => {
-         state.loading = false;
-         state.entities = action.payload;
-      },
-   }
-})
-
-const {reducer: productReducer} = productSlice;
-export default productReducer;
+export default productSlice.reducer;

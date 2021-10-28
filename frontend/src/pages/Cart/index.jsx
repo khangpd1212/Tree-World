@@ -1,7 +1,6 @@
 import "styles/cart.scss";
 import BreadCrumb from "components/Base/BreadCrumb";
 import { Col, Row } from "antd";
-
 export default function Cart(){
     return(
         <div className="cart">

@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Col, Row } from "antd";
 import Slider from "react-slick";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
-import { HeartFilled } from "@ant-design/icons";
-import { fetchProducts } from 'redux/product';
-import { unwrapResult } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import SliderProductComp from './SliderProductComp';
+import { useSelector } from "react-redux";
+import { selectProducts } from "redux/product";
 
 export default function SliderProduct() {
-   const dispatch = useDispatch();
-
+   const { productList } = useSelector(selectProducts);
+   console.log(productList);
    var settings = {
       autoplay: true,
       autoplaySpeed: 2000,
@@ -43,11 +42,6 @@ export default function SliderProduct() {
       ],
    };
 
-   var icon_like = {
-      fontSize: "2.5vw",
-      color: "#E44343",
-   };
-
    return (
       <div className="product-wrapper">
          <Row className="h_product">
@@ -65,66 +59,16 @@ export default function SliderProduct() {
          </Row>
 
          <Slider className="h_product-main" {...settings}>
-
-            <div className="h_product-flex">
-               <div className="h_product-flex_hover">
-                  <img srcSet="/images/product1.png" alt="img_product" />
-                  <div className="h_product-flex_icon">
-                     <a href="#" className="icon-like">
-                        <HeartFilled style={icon_like} />
-                     </a>
-                  </div>
-               </div>
-               <div className="h_product-flex_content">
-                  <p>jghjg</p>
-                  <span>$ 25.00</span>
-               </div>
-            </div>
-
-            <div className="h_product-flex">
-               <div className="h_product-flex_hover">
-                  <img srcSet="/images/product1.png" alt="img_product" />
-                  <div className="h_product-flex_icon">
-                     <a href="#" className="icon-like">
-                        <HeartFilled style={icon_like} />
-                     </a>
-                  </div>
-               </div>
-               <div className="h_product-flex_content">
-                  <p>jghjg</p>
-                  <span>$ 25.00</span>
-               </div>
-            </div>
-            <div className="h_product-flex">
-               <div className="h_product-flex_hover">
-                  <img srcSet="/images/product1.png" alt="img_product" />
-                  <div className="h_product-flex_icon">
-                     <a href="#" className="icon-like">
-                        <HeartFilled style={icon_like} />
-                     </a>
-                  </div>
-               </div>
-               <div className="h_product-flex_content">
-                  <p>jghjg</p>
-                  <span>$ 25.00</span>
-               </div>
-            </div>
-            <div className="h_product-flex">
-               <div className="h_product-flex_hover">
-                  <img srcSet="/images/product1.png" alt="img_product" />
-                  <div className="h_product-flex_icon">
-                     <a href="#" className="icon-like">
-                        <HeartFilled style={icon_like} />
-                     </a>
-                  </div>
-               </div>
-               <div className="h_product-flex_content">
-                  <p>jghjg</p>
-                  <span>$ 25.00</span>
-               </div>
-            </div>
-
-
+            {productList &&
+               productList.map((product, index) => (
+                  <SliderProductComp
+                     key={index}
+                     src={product.image[0]}
+                     name={product.product_name}
+                     price={product.price}
+                  />
+               ))
+            }
          </Slider>
 
          <div className="h_product-button">

@@ -9,7 +9,7 @@ import { Home, Users, Product, Cart, Detail, Contact } from "../../pages";
 import "styles/BaseLayout.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
-
+import { fetchCatalogs } from "redux/catalog";
 const { Content } = Layout;
 export default function BaseLayout() {
   const dispatch = useDispatch();
@@ -31,14 +31,17 @@ export default function BaseLayout() {
       document.body.classList.remove("dark");
     }
   }, [themeState]);
+
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchCatalogs());
   }, [dispatch]);
+
   return (
     <div className="root-base">
       <div className="theme-witch-wrapper">
         <label htmlFor="checkbox" className="theme-switch">
-          <input type="checkbox" id="checkbox" onClick={() => setThemeState(!themeState)} />
+          <input type="checkbox" id="checkbox" checked={themeState} onClick={() => setThemeState(!themeState)} />
           <div className="slider round"></div>
         </label>
       </div>

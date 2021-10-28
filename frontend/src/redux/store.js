@@ -3,6 +3,7 @@ import userReducer from "./users";
 import postReducer from "./post";
 import layoutReducer from "./layout";
 import productReducer from "./product";
+import catalogReducer from "./catalog";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     postsState: postReducer,
     layoutState: layoutReducer,
     productState: productReducer,
+    catalogState: catalogReducer,
   },
 });

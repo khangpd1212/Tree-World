@@ -72,10 +72,10 @@
             margin-left: -2px;
           }
 
-          .product__total{
-            margin-right: 34px ;
+          .product__total {
+            margin-right: 34px;
           }
-          
+
           .btn-sl {
             background-color: #fcf8f8;
 
@@ -90,10 +90,22 @@
 
             input {
               width: 50px;
-              height: 33.5px;
-              border-radius: none;
+              height: 32.5px;
+              border-radius: unset;
               text-align: center;
               border: 1px solid black;
+              -webkit-border-radius: unset;
+              -moz-border-radius: unset;
+              -ms-border-radius: unset;
+              -o-border-radius: unset;
+
+              &::-webkit-outer-spin-button {
+                display: none;
+              }
+
+              &::-webkit-inner-spin-button{
+                display: none;
+              }
             }
 
             &::after {
@@ -138,7 +150,8 @@
         font-size: 16px;
         text-transform: none;
       }
-      .total--left{
+
+      .total--left {
         line-height: 35px;
       }
 
@@ -150,7 +163,8 @@
           color: $danger-color;
           margin-right: 15px;
         }
-        .total__all{
+
+        .total__all {
           line-height: 35px;
         }
 
@@ -168,8 +182,4 @@
 
     }
   }
-}
-
-.ant-layout-footer {
-  // display: none;
 }

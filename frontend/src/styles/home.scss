@@ -300,7 +300,8 @@ body.dark {
 
     .h_product-flex {
       padding: 0 8px;
-
+      cursor: pointer;
+      
       &_hover {
 
         overflow: hidden;
@@ -310,6 +311,13 @@ body.dark {
         img {
           object-fit: cover;
           display: block;
+          height: 28vw;
+          @include tablet-sm{
+            height: 40vw;
+          }
+          @include mobile{
+            height: 100vw;
+          }
         }
 
         &:hover img {

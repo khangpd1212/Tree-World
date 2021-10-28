@@ -118,7 +118,7 @@ function BaseHeader() {
 
       {/* login */}
       <Modal
-        width={"40vw"}
+        width={"38vw"}
         bodyStyle={{ padding: 0 }}
         closable={false}
         wrapClassName="modal"
@@ -133,10 +133,16 @@ function BaseHeader() {
         </div>
         <h1 className="title-login">Welcome!</h1>
         <form className="content-login">
-          <input type="text" placeholder="Username*" />
-          <input type="password" placeholder="Password*" />
+          <input className="content-login_input" type="text" placeholder="Username*" />
+          <input className="content-login_input" type="password" placeholder="Password*" />
           <div className="wrapper-remember_forgot">
-            <Checkbox>Remember</Checkbox>
+            <div className="wrapper-checkbox">
+              <input type="checkbox" id="login_checkbox" />
+              <label htmlFor="login_checkbox" className="label-checkbox">
+                Remember
+            
+                </label>
+            </div>
             <a href="#" className="login-forget">
               Forget Password?
             </a>

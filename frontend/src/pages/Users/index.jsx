@@ -1,4 +1,4 @@
-export default function users(){
+export default function users() {
     return <>
         Login - Register
     </>

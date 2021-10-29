@@ -1,4 +1,4 @@
-export default function Panel(){
+export default function AdminHome() {
     return <>
         Admin panel
     </>

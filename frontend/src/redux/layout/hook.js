@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 
 export const useLayoutStatus = () => {
-  return useSelector((state) => state.layoutState.layoutStatus);
+    return useSelector((state) => state.layoutState.layoutStatus);
 };

@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import {Col, Row} from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
 import Collections from "components/Product/Collections";
 import Filter from "components/Product/Filter";
@@ -6,9 +6,10 @@ import FormSearch from "components/Product/FormSearch";
 import PaginationComponent from "components/Product/PaginationComponent";
 import ProductList from "components/Product/ProductList";
 import SideComponent from "components/Product/SideComponent";
-import { useDispatch } from "react-redux";
-import { setLayoutStatus } from "redux/layout";
+import {useDispatch} from "react-redux";
+import {setLayoutStatus} from "redux/layout";
 import "styles/product.scss";
+
 export default function Product() {
   const dispatch = useDispatch();
   dispatch(setLayoutStatus(true));

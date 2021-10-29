@@ -2,30 +2,36 @@
   font-family: "SFUMetaCaps";
   src: local("SFUMetaCaps"), url(../fonts/SFUMetaCaps.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUHelveticaLight";
   src: local("SFUHelveticaLight"),
-    url(../fonts/SFUHelveticaLight.TTF) format("opentype");
+  url(../fonts/SFUHelveticaLight.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUToledoBold";
   src: local("SFUToledoBold"),
-    url(../fonts/SFUToledoBold.TTF) format("opentype");
+  url(../fonts/SFUToledoBold.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUToledoMedium";
   src: local("SFUToledoMedium"),
-    url(../fonts/SFUToledoMedium.TTF) format("opentype");
+  url(../fonts/SFUToledoMedium.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUMetaBold";
   src: local("SFUMetaBold"), url(../fonts/SFUMetaBold.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "FuturaSCTOT";
   src: local("FuturaSCTOT"),
-    url(../fonts/Futura-SC-T-OT-Book_19037.ttf) format("opentype");
+  url(../fonts/Futura-SC-T-OT-Book_19037.ttf) format("opentype");
 }
+
 @font-face {
   font-family: "SVNNewton";
   src: local("SVNNewton"), url(../fonts/SVN-Newton.ttf) format("opentype");

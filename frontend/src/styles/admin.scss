@@ -13,13 +13,16 @@
       background-color: $light-color;
       min-width: 300px !important;
       max-width: 300px !important;
-      &-collapsed{
+
+      &-collapsed {
         max-width: 85px !important;
         min-width: 85px !important;
       }
+
       .ant-menu {
         background-color: transparent;
         border: unset;
+
         &-item {
           min-height: 65px;
           line-height: 65px;
@@ -28,12 +31,12 @@
             padding-left: 10px;
           }
 
-          .anticon{
+          .anticon {
             font-size: 1.5rem;
             color: $secondary-color;
           }
 
-          .ant-menu-title-content{
+          .ant-menu-title-content {
             padding-left: 20px;
             font-weight: 700;
             color: $secondary-color;
@@ -41,6 +44,7 @@
           }
         }
       }
+
       .logo-desktop {
         width: 100%;
         padding: 10px;
@@ -56,11 +60,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .trigger {
         margin-left: 24px;
         font-size: 1.5rem;
         color: $primary-color;
       }
+
       .profile {
         padding-right: 20px;
       }

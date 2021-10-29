@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import '../../styles/handleDarkMode.scss';
-import { Layout } from "antd";
+import {Layout} from "antd";
 import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
-import { Route } from "react-router-dom";
-import { Home, Users, Product, Cart,Detail, Contact } from "../../pages";
+import {Route} from "react-router-dom";
+import {Cart, Contact, Detail, Home, Product, Users} from "../../pages";
 import "styles/BaseLayout.scss";
+import {useSelector} from "react-redux";
 
-import '../../styles/handleDarkMode.scss';
-import { useSelector } from "react-redux";
 const { Content } = Layout;
 export default function BaseLayout() {
   const layout = useSelector((state) => state.layoutState.layoutStatus);

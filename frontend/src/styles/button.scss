@@ -2,28 +2,28 @@
 @import "fonts";
 
 body.dark {
-    .btn-home {
-        background-color: #259e84;
-    }
+  .btn-home {
+    background-color: #259e84;
+  }
 }
 
 .btn-home {
-    @media screen and (max-width: 576px) {
-        font-size: 0.6rem;
-        padding: 1.2vw 2.4vw;
-    }
+  @media screen and (max-width: 576px) {
+    font-size: 0.6rem;
+    padding: 1.2vw 2.4vw;
+  }
 
-    font-size: 1.2vw;
-    padding: 0.6vw 1.4vw;
-    background-color: $dark-color;
-    border: 1px solid transparent;
-    color: $light-color !important;
-    cursor: pointer;
-    text-transform: uppercase !important;
-    font-family: $font-SFRMeta;
-    transition-duration: .2s;
+  font-size: 1.2vw;
+  padding: 0.6vw 1.4vw;
+  background-color: $dark-color;
+  border: 1px solid transparent;
+  color: $light-color !important;
+  cursor: pointer;
+  text-transform: uppercase !important;
+  font-family: $font-SFRMeta;
+  transition-duration: .2s;
 
-    &:hover {
-        background-color: $black-color;
-    }
+  &:hover {
+    background-color: $black-color;
+  }
 }

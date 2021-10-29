@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import userReducer from "./users";
-import postReducer from "./post";
 import layoutReducer from "./layout";
+import productsReducer from "./products";
 
 export const store = configureStore({
-  reducer: {
-    usersState: userReducer,
-    postsState: postReducer,
-    layoutState: layoutReducer,
-  },
+    reducer: {
+        usersState: userReducer,
+        products: productsReducer,
+        layoutState: layoutReducer,
+    },
 });

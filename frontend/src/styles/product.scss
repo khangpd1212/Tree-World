@@ -1,9 +1,11 @@
 @import "colors";
 @import "media-queries";
 @import "fonts";
+
 .product {
   margin: 0 5vw;
   position: relative;
+
   &__collections {
     padding-top: 80px;
     @include tablet {
@@ -12,6 +14,7 @@
     @include mobile {
       padding-top: 30px;
     }
+
     &--item {
       cursor: pointer;
       margin: 0 15px;
@@ -26,9 +29,11 @@
       @include mobile {
         margin: 15px 0;
       }
+
       img {
         width: 100%;
       }
+
       &::before {
         position: absolute;
         content: "";
@@ -41,11 +46,13 @@
         transform: translateX(-100%) rotate(45deg);
         transition: all 0.5s ease-in-out;
       }
+
       &:hover::before {
         opacity: 0.2;
         transform: translateX(0);
         transition: all 0.7s ease-in-out;
       }
+
       &::after {
         position: absolute;
         content: "";
@@ -58,17 +65,20 @@
         transform: translateX(100%) rotate(45deg);
         transition: all 0.5s ease-in-out;
       }
+
       &:hover::after {
         opacity: 0.2;
         transform: translateX(0);
         transition: all 0.7s ease-in-out;
       }
     }
+
     &--mobileHidden {
       @include tablet1 {
         display: none;
       }
     }
+
     &--mobileVisible {
       display: none;
       @include tablet1 {
@@ -76,11 +86,13 @@
       }
     }
   }
+
   &__section {
     padding-top: 30px;
     @include tablet-sm {
       padding-top: 15px;
     }
+
     .tabletHidden {
       @include tablet1 {
         display: none;
@@ -101,6 +113,7 @@
       @include tablet-plus {
         width: 100%;
       }
+
       h3 {
         font-family: $font-SFRMeta;
         font-size: 20px;
@@ -112,6 +125,7 @@
         }
       }
     }
+
     .ant-layout-sider {
       max-width: 230px !important;
       min-width: 230px !important;
@@ -142,10 +156,12 @@
           padding-left: 20px;
         }
       }
+
       .ant-radio-group {
         display: flex;
         flex-direction: column;
         margin-bottom: 1rem;
+
         &-solid {
           .ant-radio-button-wrapper {
             border: none;
@@ -162,25 +178,31 @@
               font-size: 16px;
               padding-left: 20px;
             }
+
             &:hover {
               color: $light-color;
               background: $orange-color;
             }
+
             &:first-child {
               border: none;
               border-radius: 0;
             }
+
             &:not(:first-child)::before {
               content: unset;
             }
+
             &-checked:not(.ant-radio-button-wrapper-disabled) {
               background: $orange-color;
               border-color: $orange-color;
               color: $light-color;
               border-radius: 0;
+
               &:focus-within {
                 box-shadow: none;
               }
+
               &::before {
                 background: $orange-color;
               }
@@ -188,12 +210,14 @@
           }
         }
       }
+
       .form__price--range {
         padding-left: 30px;
         margin-bottom: 1rem;
         @include tablet-plus {
           padding-left: 20px;
         }
+
         .ant-input {
           width: 80px;
           border-radius: 5px;
@@ -208,29 +232,36 @@
           @include desktop {
             width: 60px;
           }
+
           &::placeholder {
             color: $gray-color !important;
             opacity: 1;
           }
+
           &:hover {
             border: none;
             border-right-width: 0 !important;
           }
+
           &:focus {
             border: none;
             outline: none;
             box-shadow: none;
           }
+
           &[type="number"] {
             appearance: textfield;
+
             &::-webkit-inner-spin-button {
               appearance: none;
             }
+
             &::-webkit-outer-spin-button {
               appearance: none;
             }
           }
         }
+
         .ant-btn {
           background: $red-color;
           width: 80px;
@@ -251,6 +282,7 @@
             padding-left: 10px;
             padding-right: 10px;
           }
+
           &:hover {
             border: none;
             background: $dark-color;
@@ -259,6 +291,7 @@
             border-top-width: 0;
           }
         }
+
         .price--range__show {
           margin: 0;
           margin-top: 10px;
@@ -275,11 +308,13 @@
           }
         }
       }
+
       .side__tags {
         padding-left: 30px;
         @include tablet-plus {
           padding-left: 20px;
         }
+
         p {
           margin: 0;
           font-family: $font-SFUHelveticaLight;
@@ -295,6 +330,7 @@
         }
       }
     }
+
     &--filter {
       @include desktop-plus {
         margin-left: 15px;
@@ -303,12 +339,14 @@
       @include desktop {
         margin-left: 15px;
       }
+
       .tabletVisible {
         display: none;
         @include tablet1 {
           display: block;
         }
       }
+
       .ant-radio-group {
         &-solid {
           .ant-radio-button-wrapper {
@@ -332,40 +370,49 @@
               height: 20px;
               line-height: 15px;
             }
+
             &:hover {
               color: $light-color;
               background: $orange-color;
             }
+
             &:first-child {
               outline: none;
               border-radius: 0;
               border-right: 0;
             }
+
             &:last-child {
               border-radius: 0;
             }
+
             &-checked:not(.ant-radio-button-wrapper-disabled) {
               background: $orange-color;
               border-color: $orange-color;
               border-right-color: $orange-color;
+
               &:hover {
                 background: $orange-color;
                 border-color: $orange-color;
                 border-right-color: $orange-color;
               }
+
               &:focus-within {
                 box-shadow: none;
               }
             }
+
             &:not(:first-child)::before {
               content: unset;
             }
+
             &-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
               border-right-color: unset;
             }
           }
         }
       }
+
       .ant-select {
         font-size: 20px;
         font-family: $font-SFRMeta;
@@ -380,25 +427,30 @@
         @include tablet-sm {
           font-size: 12px;
         }
+
         &:hover {
           .ant-select-arrow {
             color: $light-color;
           }
         }
+
         &:not(.ant-select-customize-input) .ant-select-selector {
           background: $light--white-color;
           border: 1px solid $light-gray-color;
           border-radius: 0;
+
           &:hover {
             border-color: $orange-color;
             color: $light-color;
             background: $orange-color;
           }
+
           &:focus {
             border-color: $light-gray-color;
             box-shadow: none;
           }
         }
+
         &-single:not(.ant-select-customize-input) .ant-select-selector {
           height: 40px;
           @include tablet1 {
@@ -408,6 +460,7 @@
             height: 20px;
           }
         }
+
         &.ant-select-single .ant-select-selector .ant-select-selection-item {
           @include tablet1 {
             line-height: 25px;
@@ -416,23 +469,27 @@
             line-height: 15px;
           }
         }
+
         &-arrow {
           color: $dark-color;
         }
+
         &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
-          .ant-select-selector {
+        .ant-select-selector {
           border-color: $orange-color;
           background: $orange-color;
           color: $light-color;
           box-shadow: none;
         }
       }
+
       .pagination__btn {
         display: flex;
         align-items: center;
         @include tablet-plus {
           display: none;
         }
+
         &--show {
           font-family: $font-SFUHelveticaLight;
           font-size: 18px;
@@ -442,6 +499,7 @@
             font-size: 16px;
           }
         }
+
         &--group {
           .ant-btn {
             width: 57px;
@@ -450,12 +508,15 @@
             background: $light--white-color;
             color: $dark-color;
             border: 1px solid $light-gray-color;
+
             &[disabled] {
               color: $light-gray-color;
+
               &:hover {
                 background: $light--white-color;
               }
             }
+
             &:hover {
               background: $orange-color;
               color: $light-color;
@@ -468,18 +529,22 @@
     &--list {
       margin-top: 10px;
     }
+
     &--product {
       margin-left: 15px;
       margin-right: 15px;
       overflow: hidden;
       cursor: pointer;
+
       &--img {
         margin-bottom: 5px;
         overflow: hidden;
+
         img {
           transition: all 0.4s;
         }
       }
+
       &:hover {
         .product__section--product {
           &--img {
@@ -488,6 +553,7 @@
               transition: all 0.4s;
             }
           }
+
           &--content {
             h2 {
               color: $primary-color;
@@ -496,12 +562,14 @@
           }
         }
       }
+
       &--content {
         font-family: $font-SFUToledoMedium;
         padding-left: 15px;
         padding-right: 15px;
         text-align: center;
         margin-bottom: 30px;
+
         h2 {
           font-size: 22px;
           color: $gray-color;
@@ -523,6 +591,7 @@
             font-size: 14px;
           }
         }
+
         p {
           margin: 0;
           font-size: 22px;
@@ -545,6 +614,7 @@
         }
       }
     }
+
     &--pagination {
       text-align: center;
       margin-top: 30px;
@@ -559,43 +629,52 @@
       @include tablet1 {
         margin-bottom: 50px;
       }
+
       .ant-pagination {
         &-prev {
           font-family: $font-SFRMeta;
+
           .ant-pagination-item-link {
             background: transparent;
             border: none;
             border-radius: 0;
           }
+
           &:hover {
             .ant-pagination-item-link {
               background: $red-color;
               border: none;
               border-radius: 0;
             }
+
             button {
               color: $light-color;
             }
           }
         }
+
         &-next {
           font-family: $font-SFRMeta;
+
           .ant-pagination-item-link {
             background: transparent;
             border: none;
             border-radius: 0;
           }
+
           &:hover {
             .ant-pagination-item-link {
               background: $red-color;
               border: none;
               border-radius: 0;
             }
+
             button {
               color: $light-color;
             }
           }
         }
+
         &-disabled {
           &:hover {
             .ant-pagination-item-link {
@@ -605,6 +684,7 @@
             }
           }
         }
+
         &-item {
           min-width: 30px;
           height: 30px;
@@ -618,16 +698,20 @@
           @include desktop {
             font-size: 16px;
           }
+
           &-active {
             background: $red-color;
             border-color: $red-color;
+
             a {
               color: $light-color;
             }
           }
+
           &:hover {
             border-color: $red-color;
             background: $red-color;
+
             a {
               color: $light-color;
             }

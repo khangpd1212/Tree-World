@@ -1,18 +1,10 @@
-import { MenuOutlined } from "@ant-design/icons";
-import {
-  Layout,
-  Anchor,
-  Button,
-  Drawer,
-  Row,
-  Col,
-  Modal,
-  Checkbox,
-} from "antd";
-import React, { useEffect, useState } from "react";
-import { Link as LinkRoute } from "react-router-dom";
+import {MenuOutlined} from "@ant-design/icons";
+import {Anchor, Button, Checkbox, Col, Drawer, Layout, Modal, Row,} from "antd";
+import React, {useEffect, useState} from "react";
+import {Link as LinkRoute} from "react-router-dom";
 import "styles/header.scss";
 import "styles/login.scss";
+
 function BaseHeader() {
   const { Header } = Layout;
   const [visible, setVisible] = useState(false);

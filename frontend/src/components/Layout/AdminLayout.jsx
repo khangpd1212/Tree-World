@@ -6,8 +6,7 @@ import SideComponent from "../Admin/SideComponent";
 import {Route} from "react-router-dom";
 import ProductsAdmin from "../../pages/Admin/ProductAdmin";
 import AdminHome from "../../pages/Admin";
-import { useGetProducts } from 'redux/action/useGetDataProduct';
-import { useDataProducts } from 'redux/products/hook';
+import { useGetInitData } from 'redux/action/useGetInitData';
 
 
 const {Content} = Layout;
@@ -15,7 +14,7 @@ const {Content} = Layout;
 export default function AdminLayout() {
     const [isOpen, setIsOpen] = useState(false)
     // fetch init data
-    useGetProducts()
+    useGetInitData()
 
     return <div className="root-admin">
         <Layout>

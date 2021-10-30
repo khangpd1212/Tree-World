@@ -1,10 +1,8 @@
 
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Modal, Rate, Select, Switch, Upload, InputNumber, Image } from 'antd';
+import { Button, Form, Image, Input, InputNumber, Rate, Select, Switch, Upload } from 'antd';
 import React from 'react';
-import { useCallback } from 'react';
-import { useDataInit } from 'redux/products/hook';
-import { request } from 'utils/axios';
+import { useEffect } from 'react';
 const { Option } = Select;
 const formItemLayout = {
     labelCol: {
@@ -24,48 +22,47 @@ const normFile = (e) => {
 
     return e && e.fileList;
 };
-
-export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
-    console.log(selected);
-    const { catalogs } = useDataInit()
-    let catalogSeleted = catalogs && selected && catalogs.find(f => f._id == selected.catalog_id);
-
+export default function FormEdit({ selected, catalogSeleted, catalogs }) {
     const onFinish = (values) => {
-        request.newProducts("token", values)
-            .then(console.log)
+        console.log('Received values of form: ', values);
     };
-
-    const FromEdit = useCallback(() => {
+    return useEffect(() => {
         return <Form
             name="validate_other"
             {...formItemLayout}
             onFinish={onFinish}
             initialValues={{
-                'product_name': selected.product_name,
-                'star': selected.star,
-                'catalog_id': selected.catalog_id,
-                'inventory': selected.inventory ?? 0,
-                'price': selected.price,
-                'isHot': selected.isHot ?? false,
-                'status': selected.status ?? false,
-                'image': selected.image,
-                'description': selected.description,
+                'input-number': 3,
+                'checkbox-group': ['A', 'B'],
+                rate: 3.5,
             }}
         >
             <Form.Item
-                name="product_name"
+                name="price"
                 label="Name"
                 hasFeedback
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input the name product!',
+                    },
+                ]}
             >
-                <Input placeholder={selected.product_name} defaultValue={selected.product_name} value={selected.product_name} />
+                <Input placeholder={selected.product_name} defaultValue={selected.product_name} />
             </Form.Item>
             <Form.Item
                 name="catalog_id"
                 label="Catalog"
                 hasFeedback
                 placeholder="Catalog"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please select Catalog!',
+                    },
+                ]}
             >
-                <Select placeholder={catalogSeleted?.catalog_name} defaultValue={selected.catalog_id}>
+                <Select placeholder={catalogSeleted?.catalog_name}>
                     {
                         catalogs && catalogs.filter(f => f.status).map(cata => <Option value={cata._id}>{cata.catalog_name}</Option>)
                     }
@@ -73,25 +70,25 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
             </Form.Item>
 
             <Form.Item name="inventory" label="Iventory" valuePropName="isHot">
-                <Form.Item name="inventory" noStyle>
-                    <InputNumber min={1} defaultValue={selected.inventory} />
+                <Form.Item name="input-number" noStyle>
+                    <InputNumber min={1} max={10} />
                 </Form.Item>
                 <span className="ant-form-text"> Price</span>
-                <Form.Item name="price" noStyle>
-                    <InputNumber min={1} defaultValue={selected.price} />
+                <Form.Item name="input-number" noStyle>
+                    <InputNumber min={1} max={10} />
                 </Form.Item>
             </Form.Item>
 
             <Form.Item name="isHot" label="isHot" valuePropName="isHot">
-                <Switch defaultChecked={selected.isHot} />
+                <Switch />
             </Form.Item>
 
             <Form.Item name="status" label="Status" valuePropName="status">
-                <Switch defaultChecked={selected.status} />
+                <Switch />
             </Form.Item>
 
             <Form.Item name="star" label="Star">
-                <Rate defaultValue={selected.star} />
+                <Rate />
             </Form.Item>
 
             <Form.Item
@@ -107,8 +104,8 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
             </Form.Item>
 
             <Form.Item label="description">
-                <Form.Item name="description" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                    <Input.TextArea defaultValue={selected.description} />
+                <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+                    <Input.TextArea />
                 </Form.Item>
             </Form.Item>
 
@@ -121,26 +118,7 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 <Button type="primary" htmlType="submit">
                     Submit
                 </Button>
-                <Button onClick={() => setVisible(false)}>
-                    Cancel
-                </Button>
             </Form.Item>
         </Form>
-    }, [selected])
-
-    return <>
-        <Modal
-            title="Edit Products"
-            centered
-            visible={visible}
-            onOk={() => setVisible(false)}
-            onCancel={() => setVisible(false)}
-            footer={false}
-            width="100%"
-            className="edit-product"
-        >
-            <FromEdit />
-        </Modal>
-    </>
-
+    }, [])
 }

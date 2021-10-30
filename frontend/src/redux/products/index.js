@@ -1,7 +1,11 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-    data: []
+    data: [],
+    initData: {
+        products: null,
+        catalogs: null
+    }
 }
 
 const productsSlice = createSlice({
@@ -11,8 +15,12 @@ const productsSlice = createSlice({
         setDataProducts: (state, action)=> {
             state.data = action.payload
         },
+        setInitData: (state, action)=> {
+            state.initData
+             = action.payload
+        },
     }
 })
 
-export const {setDataProducts} = productsSlice.actions;
+export const {setDataProducts, setInitData} = productsSlice.actions;
 export default productsSlice.reducer

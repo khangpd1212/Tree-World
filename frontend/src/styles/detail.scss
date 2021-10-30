@@ -120,8 +120,6 @@
         background-color: black;
       }
     }
-    .hrColor {
-    }
     .quantity {
       margin: auto;
       display: flex;
@@ -243,8 +241,33 @@
     width: 100%;
     margin-left: 40px;
     border: 1px solid $boder-color;
+    // p {
+    //   margin: 10px;
+    // }
   }
-  .comment {
+  .commnet {
+    width: 100%;
+    height: 10px;
     background-color: white;
+    //   margin-top: 3vh;
+    //   .itemComment {
+    //   }
+    // }
+    // .aboveSlide {
+    //   width: 100%;
+    //   height: 3px;
+    //   position: relative;
+    //   margin: 5vh 0;
+    //   background-color: black;
+    //   ::before {
+    //     position: absolute;
+    //     content: "hello";
+    //     left: 0;
+    //     bottom: 0;
+    //     transform: translate(100%, 50%);
+    //     font-size: 18px;
+    //     // color: $light--secondary-color;
+    //     // font-family: $font-SFRMeta;
+    //   }
   }
 }

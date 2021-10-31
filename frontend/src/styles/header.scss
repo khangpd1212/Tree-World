@@ -96,12 +96,44 @@ body.dark {
     .ant-drawer-body {
       .ant-anchor {
         .navbar__link {
-          a {
-            color: #fbfaf8;
-            transition: all 0.4s;
-            &:hover {
-              color: $primary-color;
+          .navbar__menu {
+            a {
+              color: #fbfaf8;
               transition: all 0.4s;
+              &:hover {
+                color: $primary-color;
+                transition: all 0.4s;
+              }
+            }
+          }
+          .dropdown__menu {
+            a {
+              position: absolute;
+              top: 30px;
+              left: 20px;
+              z-index: 2;
+            }
+            .ant-menu {
+              background: transparent !important;
+              &-inline {
+                border-right: 0;
+              }
+              &-light {
+                .ant-menu-submenu-active,
+                .ant-menu-submenu-title {
+                  color: $primary-color;
+                }
+              }
+              &-submenu {
+                > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+                  color: $light-color;
+                }
+              }
+              &-item {
+                .ant-menu-title-content {
+                  color: $light-color;
+                }
+              }
             }
           }
         }
@@ -303,18 +335,56 @@ body {
           display: flex;
           flex-direction: column;
 
-          a {
+          .navbar__menu {
             position: relative;
-            color: $black-color;
             padding: 15px 20px;
-            line-height: 1.4;
-            font-family: $font-SFRMeta !important;
-            font-size: 14px;
-            transition: all 0.4s;
+            a {
+              color: $black-color;
 
-            &:hover {
-              color: $primary-color;
+              line-height: 1.4;
+              font-family: $font-SFRMeta !important;
+              font-size: 14px;
               transition: all 0.4s;
+
+              &:hover {
+                color: $primary-color;
+                transition: all 0.4s;
+              }
+            }
+          }
+          .dropdown__menu {
+            a {
+              position: absolute;
+              top: 30px;
+              left: 20px;
+              z-index: 2;
+            }
+            .ant-menu {
+              background: transparent !important;
+              &-inline {
+                border-right: 0;
+              }
+              &-light {
+                .ant-menu-submenu-active,
+                .ant-menu-submenu-title {
+                  color: $primary-color;
+                }
+              }
+              &-submenu {
+                &:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+                  color: $primary-color;
+                }
+                &-title:focus-visible {
+                  box-shadow: none;
+                }
+              }
+              &-item {
+                &:hover {
+                  .ant-menu-title-content {
+                    color: $primary-color;
+                  }
+                }
+              }
             }
           }
         }

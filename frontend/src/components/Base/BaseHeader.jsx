@@ -11,6 +11,8 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCatalogs } from "redux/catalog";
 import "styles/header.scss";
 import "styles/login.scss";
 function BaseHeader() {
@@ -18,6 +20,7 @@ function BaseHeader() {
   const [visible, setVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [show, handleShow] = useState(false);
+  const { catalogList } = useSelector(selectCatalogs);
   const transitionNavBar = () => {
     if (window.scrollY > 10) {
       handleShow(true);
@@ -65,14 +68,48 @@ function BaseHeader() {
         <Col className="gutter-row" xs={8} sm={17} md={18} xl={18}>
           <div className="mobileHidden">
             <Anchor affix={false}>
-              <LinkRoute to={"/"}>Home</LinkRoute>
-              <LinkRoute to={"/"}>About</LinkRoute>
-              <LinkRoute to={"/product"}>Product</LinkRoute>
-              <LinkRoute to={"/"}>Blog</LinkRoute>
-              <LinkRoute to={"/contact"}>Contact</LinkRoute>
-              <LinkRoute to={"/cart"}>Cart</LinkRoute>
-              <div onClick={showModal}>Login</div>
-              <LinkRoute to={"/admin"}>Admin</LinkRoute>
+              <div>
+                <LinkRoute to={"/"}>Home</LinkRoute>
+              </div>
+              <div>
+                <LinkRoute to={"/"}>About</LinkRoute>
+              </div>
+              <div className="dropdown__menu">
+                <LinkRoute to={"/product"}>Product</LinkRoute>
+                <div
+                  className={
+                    show
+                      ? "dropdown__menu--list bg__change"
+                      : "dropdown__menu--list"
+                  }
+                >
+                  <Row>
+                    {catalogList &&
+                      catalogList.map((item, index) => (
+                        <Col span={12} key={index}>
+                          <li>
+                            <LinkRoute>{item.catalog_name}</LinkRoute>
+                          </li>
+                        </Col>
+                      ))}
+                  </Row>
+                </div>
+              </div>
+              <div>
+                <LinkRoute to={"/"}>Blog</LinkRoute>
+              </div>
+              <div>
+                <LinkRoute to={"/contact"}>Contact</LinkRoute>
+              </div>
+              <div>
+                <LinkRoute to={"/cart"}>Cart</LinkRoute>
+              </div>
+              <div className="div__login" onClick={showModal}>
+                Login
+              </div>
+              <div>
+                <LinkRoute to={"/admin"}>Admin</LinkRoute>
+              </div>
             </Anchor>
           </div>
           <div className="mobileVisible">
@@ -133,15 +170,22 @@ function BaseHeader() {
         </div>
         <h1 className="title-login">Welcome!</h1>
         <form className="content-login">
-          <input className="content-login_input" type="text" placeholder="Username*" />
-          <input className="content-login_input" type="password" placeholder="Password*" />
+          <input
+            className="content-login_input"
+            type="text"
+            placeholder="Username*"
+          />
+          <input
+            className="content-login_input"
+            type="password"
+            placeholder="Password*"
+          />
           <div className="wrapper-remember_forgot">
             <div className="wrapper-checkbox">
               <input type="checkbox" id="login_checkbox" />
               <label htmlFor="login_checkbox" className="label-checkbox">
                 Remember
-            
-                </label>
+              </label>
             </div>
             <a href="#" className="login-forget">
               Forget Password?

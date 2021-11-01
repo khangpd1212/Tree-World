@@ -12,10 +12,10 @@ export default function Home() {
   dispatch(setLayoutStatus(false));
 
   return (
-    <>
+    <div id="Home">
       <Banner/>
       <SliderProduct/>
       <RecommendHome/>
-    </>
+    </div>
   );
 }

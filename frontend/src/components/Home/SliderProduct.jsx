@@ -6,6 +6,7 @@ import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import SliderProductComp from './SliderProductComp';
 import { useSelector } from "react-redux";
 import { selectProducts } from "redux/product";
+import Button from '../../components/utils/Button';
 
 export default function SliderProduct() {
    const { productList } = useSelector(selectProducts);
@@ -43,7 +44,7 @@ export default function SliderProduct() {
    };
 
    return (
-      <div className="product-wrapper">
+      <div className="product-wrapper container_home">
          <Row className="h_product">
             <Col className="h_product-title" xs={24} sm={10} md={8}>
                <h1>Choose your product from our collection</h1>
@@ -69,12 +70,30 @@ export default function SliderProduct() {
                   />
                ))
             }
+            <SliderProductComp
+               src="./images/product1.png"
+               name="dsada"
+               price="$13213"
+            />
+            <SliderProductComp
+               src="./images/product1.png"
+               name="dsada"
+               price="$13213"
+            />
+            <SliderProductComp
+               src="./images/product1.png"
+               name="dsada"
+               price="$13213"
+            />
+            <SliderProductComp
+               src="./images/product1.png"
+               name="dsada"
+               price="$13213"
+            />
          </Slider>
 
          <div className="h_product-button">
-            <button className="btn-home" type="submit">
-               All product &gt;&gt;
-            </button>
+            <Button title="all product >>" />
          </div>
       </div>
    )

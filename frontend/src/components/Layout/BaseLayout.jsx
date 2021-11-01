@@ -10,6 +10,7 @@ import "styles/BaseLayout.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";
+import { fetchUsers } from "redux/user";
 const { Content } = Layout;
 export default function BaseLayout() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ export default function BaseLayout() {
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchCatalogs());
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   return (

@@ -1,17 +1,17 @@
-import React from 'react'
-import { Col, Row, Typography } from "antd";
-const { Title } = Typography;
-
-export default function Banner() {
+import {memo} from 'react'
+import { Col, Row } from "antd";
+import Button from '../../components/utils/Button';
+function Banner() {
+   console.log("dsada");
    return (
       <Row className="slider">
          <Col className="slider-left" xs={24} sm={14}>
             <img srcSet="./images/slider.png" alt="img_slider-left" />
          </Col>
-         <Col className="slider-right" xs={24} sm={10}>
+         <Col className="slider-right container_home" xs={24} sm={10}>
             <img srcSet="./images/slider2.png" alt="img_slider-right" />
             <div className="slider-right_title">
-               <Title>Make your days feeling goods with beautiful plant</Title>
+               <h1>Make your days feeling goods with beautiful plant</h1>
             </div>
             <div className="slider-right_content">
                <p>
@@ -21,10 +21,9 @@ export default function Banner() {
                   nisi ut aliquip ex ea commodo consequat.
                </p>
             </div>
-            <button type="submit" className="btn-home">
-               See more
-            </button>
+            <Button title="see more"/>
          </Col>
       </Row>
    )
 }
+export default memo(Banner);

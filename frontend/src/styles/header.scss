@@ -82,6 +82,7 @@ body.dark {
   }
 }
 
+// theme light
 body {
   .root-base {
     .ant-layout-header {
@@ -129,7 +130,7 @@ body {
             font-family: $font-SFRMeta !important;
             font-weight: 500;
             font-size: 24px;
-
+            cursor: pointer;
             &:hover {
               color: $primary-color;
             }

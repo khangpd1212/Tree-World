@@ -24,6 +24,39 @@ router.get("/:id", async (req, res) => {
    }
 });
 
+// post user
+router.post("/", verify, async (req, res) => {
+   if (req.user.isAdmin) {
+      const {
+         username,
+         addresss,
+         email,
+         password,
+         phone_number,
+         isAdmin
+      } = req.body;
+
+      const newUser = new User({
+         username,
+         addresss,
+         email,
+         password,
+         phone_number,
+         isAdmin
+      });
+
+      try {
+         const user = await newUser.save();
+         if (!user) throw new Error("Something were wrong with saving product");
+         res.status(200).json({ message: "Create successfully", user });
+      } catch (error) {
+         res.status(400).json({ message: error.message });
+      }
+   } else {
+      res.status(500).json({ message: "You are not allowed" });
+   }
+});
+
 //UPDATE
 router.put("/:id", verify, async (req, res) => {
    if (req.user.isAdmin) {

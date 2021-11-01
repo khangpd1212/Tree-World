@@ -19,7 +19,6 @@ function SideComponent() {
         <Radio.Group defaultValue={0} buttonStyle="solid">
           {
             catalogList && catalogList.map((catalog, index) => (
-              console.log(index),
               <Radio.Button
                 value={index} 
                 key={index}>

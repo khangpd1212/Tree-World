@@ -40,22 +40,21 @@ export default function Cart(){
             </div>
             <div className="cart__total">
                 <Row className="cart__total--bottom">
-                    <Col xs={20}>
+                    <Col xs={19}>
                         <div className="total--left">
                             <input type="checkbox" />
                             <span>Select All Products</span>
                         </div>
                             
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={5}>
                         <div className="total--right">
-                            <span className="total__all">Total: <span className="price">$28</span></span>
+                            <span className="total__all">Total: <span className="price">$28.00</span></span>
                             <button className="cart__button">Buy now</button>
                         </div>
                     </Col>
                 </Row>
             </div>
-            
         </div>
     )
 }

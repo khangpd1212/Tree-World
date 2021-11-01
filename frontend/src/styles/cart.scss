@@ -38,6 +38,12 @@
           font-size: 22px;
           color: #696868;
         }
+
+        @include mobile-plus {
+          gap: 15px;
+
+          
+        }
       }
 
       .product__right {
@@ -53,6 +59,23 @@
             color: #bdbebe;
             text-transform: none;
           }
+          @include mobile-plus{
+            h2{
+              display: none;
+            }
+          }
+        }
+
+        .cart__button {
+          margin-bottom: 8px;
+          margin-right: 12px;
+          border: none;
+          font-size: 16px;
+
+          &:hover {
+            color: $red-color;
+          }
+
         }
 
         &--content {
@@ -70,12 +93,20 @@
           .product__color {
             margin-right: 30px;
             margin-left: -2px;
+
+            @include tablet {
+              margin-right: 0;
+            }
           }
 
-          .product__total{
-            margin-right: 34px ;
+          .product__total {
+            margin-right: 34px;
+
+            @include tablet {
+              margin-right: 4px;
+            }
           }
-          
+
           .btn-sl {
             background-color: #fcf8f8;
 
@@ -105,10 +136,17 @@
               border-bottom-right-radius: 4px;
             }
 
-            .cart__button {
-              border-radius: none;
-              margin-left: 30px;
+            @include tablet {
+              margin-bottom: 2vw;
+
+              &::before,
+              &::after {
+                content: unset;
+              }
+
+
             }
+
           }
         }
       }
@@ -138,8 +176,13 @@
         font-size: 16px;
         text-transform: none;
       }
-      .total--left{
+
+      .total--left {
         line-height: 35px;
+
+        @include tablet-plus {
+          line-height: 64px;
+        }
       }
 
       .total--right {
@@ -147,10 +190,11 @@
         justify-content: space-between;
 
         .price {
-          color: $danger-color;
+          color: $red-color;
           margin-right: 15px;
         }
-        .total__all{
+
+        .total__all {
           line-height: 35px;
         }
 
@@ -161,15 +205,21 @@
           text-transform: lowercase;
           font-size: 16px;
           padding-bottom: 30px;
-          border-radius: 1px solid $danger-color !important;
+
+          &:hover {
+            color: #f3f1f1;
+            background-color: $red-color;
+            border: none;
+          }
+
+          @include tablet-plus {
+            width: 70px;
+            height: 60px;
+          }
         }
       }
 
 
     }
   }
-}
-
-.ant-layout-footer {
-  // display: none;
 }

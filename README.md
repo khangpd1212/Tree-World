@@ -1,11 +1,13 @@
-## Đầu tiên add file
-git add .
 ## checkout nhánh
 git checkout (nhánh)
-## pull từ main về nhánh
-git pull origin main
+## xem coi có chuyển nhánh chưa
+git branch
+## add file
+git add .
 ## commit
 git commit -m "ghi cai gi do"
+## pull từ main về nhánh
+git pull origin main
 ## push lên nè
 git push origin (nhánh)
 

@@ -1,7 +1,6 @@
 import "styles/cart.scss";
 import BreadCrumb from "components/Base/BreadCrumb";
 import { Col, Row } from "antd";
-
 export default function Cart(){
     return(
         <div className="cart">
@@ -29,7 +28,7 @@ export default function Cart(){
                                     <p className="product__color">Blue</p>
                                     <p>$28.00</p>
                                     <div className="btn-sl">
-                                        <input type="number" value="1"/>
+                                        <input type="number" defaultValue="1"/>
                                     </div>
                                     <p className="product__total">$28.00</p>
                                     <button className="cart__button">X</button>

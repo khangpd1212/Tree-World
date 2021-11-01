@@ -54,22 +54,57 @@ export default function Detail() {
               <Radio.Button className="color__item yellow" value="c"></Radio.Button>
             </Radio.Group>
             </div>
+
             <div className="quantity">
-              <button>-</button>
-              <button></button>
-              <button>+</button>
-            </div>
-            <div className="footerInfor">
-              <div className="stock">
-                <p>10 in stock</p>
-                <div></div>
-              </div>
-              <div>
-                <button>ADD TO CART</button>
-                <button>BY NOW</button>
-              </div>
+
+              <button className="btn1">-</button>
+              <h3 className="btn2">1</h3>
+              <button className="btn3">+</button>
             </div>
           </div>
+          <div className="stock">
+            <p>10 in stock</p>
+            <p>share now: </p>
+          </div>
+          <div className="footerInfor">
+            <div>
+              <button className="btnCart">ADD TO CART</button>
+              <button className="btnBy">BY NOW</button>
+            </div>
+          </div>
+        </Col>
+        <Col className="textD" sx={24}>
+          <div className="hrtext"></div>
+          <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ullam nesciunt architecto nostrum perspiciatis, voluptatum a delectus officia consectetur hic voluptatibus commodi cum esse et sed explicabo iusto corrupti fugiat odit aut, natus modi cupiditate omnis. Quibusdam commodi, similique corrupti deserunt consectetur totam praesentium! Vero, qui sint, eum quisquam hic quas provident ipsa repudiandae doloremque nam itaque nemo eos fugit dolorum ratione alias quod similique ducimus. Ad sint praesentium voluptates, qui necessitatibus iusto iure at ex provident harum velit animi?
+          </span>
+          <ul>
+            <li>+ Dolor sit amet et dolore magna.</li>
+            <li>+ Consectetur adipiscing elit, sed do eiusmod tempor.</li>
+            <li>+ 1914 translation by H. Rackham.</li>
+          </ul>
+        </Col>
+        <Col className="proCmt" xs={24}>
+          <div className="hrCmt"></div>
+        </Col>
+        <Col className="boxStar" xs={24} sm={15}>
+          <div className='contaistar'>
+            <div className="numberStar"> <p>4.9/5</p></div>
+            <div className="btnStar">
+              <button>ALL</button>
+              <button>5 STAR (750)</button>
+              <button>4 STAR (58)</button>
+              <button>3 STAR (13)</button>
+              <button>2 STAR (5)</button>
+              <button>1 STAR (2)</button>
+              <button>ALL COMMENT (616)</button>
+            </div>
+          </div>
+          <div className="commnet">
+
+          </div>
+        </Col>
+        <Col className="voucher" xs={24} sm={8}>
+          <p>SHOP DISCOUNT</p>
         </Col>
       </Row>
     </div>

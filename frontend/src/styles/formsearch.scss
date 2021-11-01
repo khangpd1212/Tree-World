@@ -23,6 +23,7 @@
         border-color: $dark-color;
         border-width: 2px;
         border-right-width: 1px;
+        background: $light--white-color;
         &:focus {
           outline: none;
           border-right: 0;
@@ -42,6 +43,7 @@
         border-bottom-right-radius: 20px !important;
         border-top-right-radius: 20px !important;
         color: $dark-color !important;
+        background: $light--white-color;
         &:hover {
           color: $primary-color !important;
         }
@@ -72,7 +74,36 @@
       }
     }
     .ant-modal-footer {
-      display: none;
+      display: none !important;
+    }
+  }
+}
+
+body.dark {
+  .head {
+    .form__search {
+      .ant-input-group {
+        .ant-input {
+          border-color: $light-color;
+        }
+
+        .ant-input-search-button {
+          border-color: $light-color;
+        }
+      }
+
+      &--mobileVisible {
+        display: none;
+        @include mobile {
+          display: block;
+        }
+        .ant-btn-primary {
+          color: $light-color !important;
+          &:hover {
+            color: $primary-color !important;
+          }
+        }
+      }
     }
   }
 }

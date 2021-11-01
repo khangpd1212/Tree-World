@@ -1,26 +1,20 @@
 import { MenuOutlined } from "@ant-design/icons";
-import {
-  Layout,
-  Anchor,
-  Button,
-  Drawer,
-  Row,
-  Col,
-} from "antd";
+import LoginDesktop from '../../pages/Login/LoginDesktop';
+import { Layout, Anchor, Button, Drawer, Row, Col, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
-
-import LoginDesktop from '../../pages/Login/LoginDesktop';
-
+import { useSelector } from "react-redux";
+import { selectCatalogs } from "redux/catalog";
 import "styles/header.scss";
 import "styles/login.scss";
 
 function BaseHeader() {
   const { Header } = Layout;
+  const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [show, handleShow] = useState(false);
-  
+  const { catalogList } = useSelector(selectCatalogs);
   const transitionNavBar = () => {
     if (window.scrollY > 10) {
       handleShow(true);
@@ -68,14 +62,50 @@ function BaseHeader() {
         <Col className="gutter-row" xs={8} sm={17} md={18} xl={18}>
           <div className="mobileHidden">
             <Anchor affix={false}>
-              <LinkRoute to={"/"}>Home</LinkRoute>
-              <LinkRoute to={"/"}>About</LinkRoute>
-              <LinkRoute to={"/product"}>Product</LinkRoute>
-              <LinkRoute to={"/"}>Blog</LinkRoute>
-              <LinkRoute to={"/contact"}>Contact</LinkRoute>
-              <LinkRoute to={"/cart"}>Cart</LinkRoute>
-              <div onClick={showModal}>Login</div>
-              <LinkRoute to={"/admin"}>Admin</LinkRoute>
+              <div>
+                <LinkRoute to={"/"}>Home</LinkRoute>
+              </div>
+              <div>
+                <LinkRoute to={"/"}>About</LinkRoute>
+              </div>
+              <div className="dropdown__menu">
+                <LinkRoute to={"/product"}>Product</LinkRoute>
+                <div
+                  className={
+                    show
+                      ? "dropdown__menu--list bg__change"
+                      : "dropdown__menu--list"
+                  }
+                >
+                  <Row>
+                    {catalogList &&
+                      catalogList.map((item, index) => (
+                        <Col span={12} key={index}>
+                          <li>
+                            <LinkRoute to={`/product/${item.catalog_name}`}>
+                              {item.catalog_name}
+                            </LinkRoute>
+                          </li>
+                        </Col>
+                      ))}
+                  </Row>
+                </div>
+              </div>
+              <div>
+                <LinkRoute to={"/"}>Blog</LinkRoute>
+              </div>
+              <div>
+                <LinkRoute to={"/contact"}>Contact</LinkRoute>
+              </div>
+              <div>
+                <LinkRoute to={"/cart"}>Cart</LinkRoute>
+              </div>
+              <div className="div__login" onClick={showModal}>
+                Login
+              </div>
+              <div>
+                <LinkRoute to={"/admin"}>Admin</LinkRoute>
+              </div>
             </Anchor>
           </div>
           <div className="mobileVisible">
@@ -90,28 +120,50 @@ function BaseHeader() {
             >
               <Anchor>
                 <div className="navbar__link">
-                  <LinkRoute to={"/"} onClick={onClose}>
-                    Home
-                  </LinkRoute>
-                  <LinkRoute to={"/"} onClick={onClose}>
-                    About Us
-                  </LinkRoute>
-                  <LinkRoute to={"/product"} onClick={onClose}>
-                    Product
-                  </LinkRoute>
-                  <LinkRoute to={"/"} onClick={onClose}>
-                    Blog
-                  </LinkRoute>
-                  <LinkRoute to={"/contact"} onClick={onClose}>
-                    Contact Us
-                  </LinkRoute>
-                  <LinkRoute to={"/cart"} onClick={onClose}>
-                    Cart
-                  </LinkRoute>
-                  <LinkRoute to={"/login"} onClick={onClose}>
-                    Login
-                  </LinkRoute>
-                  <LinkRoute to={"/admin"}>Admin</LinkRoute>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/"} onClick={onClose}>
+                      Home
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/"} onClick={onClose}>
+                      About Us
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu dropdown__menu">
+                    <LinkRoute to={"/product"} onClick={onClose}>
+                      Product
+                    </LinkRoute>
+                    <Menu mode="inline">
+                      <SubMenu>
+                        <Menu.Item>Cactus</Menu.Item>
+                      </SubMenu>
+                    </Menu>
+                  </div>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/"} onClick={onClose}>
+                      Blog
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/contact"} onClick={onClose}>
+                      Contact Us
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu">
+                    {" "}
+                    <LinkRoute to={"/cart"} onClick={onClose}>
+                      Cart
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/login"} onClick={onClose}>
+                      Login
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/admin"}>Admin</LinkRoute>
+                  </div>
                 </div>
               </Anchor>
             </Drawer>

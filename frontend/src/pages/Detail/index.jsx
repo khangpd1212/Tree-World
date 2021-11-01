@@ -86,6 +86,26 @@ export default function Detail() {
         <Col className="proCmt" xs={24}>
           <div className="hrCmt"></div>
         </Col>
+        <Col className="boxStar" xs={24} sm={15}>
+          <div className='contaistar'>
+            <div className="numberStar"> <p>4.9/5</p></div>
+            <div className="btnStar">
+              <button>ALL</button>
+              <button>5 STAR (750)</button>
+              <button>4 STAR (58)</button>
+              <button>3 STAR (13)</button>
+              <button>2 STAR (5)</button>
+              <button>1 STAR (2)</button>
+              <button>ALL COMMENT (616)</button>
+            </div>
+          </div>
+          <div className="commnet">
+
+          </div>
+        </Col>
+        <Col className="voucher" xs={24} sm={8}>
+          <p>SHOP DISCOUNT</p>
+        </Col>
       </Row>
     </div>
   );

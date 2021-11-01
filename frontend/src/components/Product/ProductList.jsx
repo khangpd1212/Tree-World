@@ -1,9 +1,7 @@
-  import { Row } from "antd";
+import { Row } from "antd";
 import React from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchProducts, selectProducts } from "redux/product";
+import { selectProducts } from "redux/product";
 import ProductComponent from "./ProductComponent";
 
 function ProductList() {

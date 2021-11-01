@@ -35,84 +35,87 @@ img {
 
 // theme dark
 body.dark {
-  .slider {
-    .slider-right {
-      .slider-right_title {
-        h1 {
-          color: #259e84;
+  #Home {
+    .slider {
+      .slider-right {
+        .slider-right_title {
+          h1 {
+            color: #259e84;
+          }
         }
-      }
 
-      .slider-right_content {
-        color: white;
+        .slider-right_content {
+          color: white;
+        }
       }
     }
-  }
 
-  // section 2
-  .product-wrapper {
-    color: white;
-    background-color: #181819;
+    // section 2
+    .product-wrapper {
+      color: white;
+      background-color: #181819;
 
-    .h_product {
-      .h_product-title {
-        h1 {
-          color: white;
+      .h_product {
+        .h_product-title {
+          h1 {
+            color: white;
 
+          }
+        }
+
+        .h_product-header {
+          &_flex {
+
+            div {
+              &::before {
+                background-color: #207d69;
+              }
+
+              &:hover {
+                color: #207d69;
+              }
+            }
+          }
         }
       }
 
-      .h_product-header {
-        &_flex {
+      .h_product-main {
 
-          div {
-            &::before {
-              background-color: #207d69;
-            }
+        .slick-prev:before,
+        .slick-next:before {
+          color: white;
+        }
 
-            &:hover {
-              color: #207d69;
-            }
+        .slick-dots {
+          li button:before {
+            background-color: #207d69;
           }
         }
       }
     }
 
-    .h_product-main {
+    // section 3
+    .section_hot {
+      background-color: #141414;
 
-      .slick-prev:before,
-      .slick-next:before {
+      &__card {
         color: white;
-      }
 
-      .slick-dots {
-        li button:before {
-          background-color: #207d69;
+        .card__flex {
+          background-color: #4fbda8;
         }
-      }
-    }
-  }
 
-  // section 3
-  .section_hot {
-    background-color: #141414;
+        .card__content {
 
-    &__card {
-      color: white;
-
-      .card__flex {
-        background-color: #4fbda8;
-      }
-
-      .card__content {
-
-        &--bar {
-          background-color: #1D483F
+          &--bar {
+            background-color: #1D483F
+          }
         }
       }
     }
   }
 }
+
 
 
 // theme Light
@@ -548,6 +551,7 @@ body.dark {
     .section_hot__desc {
       margin-left: 80px;
       margin-top: 1.4rem;
+
       .desc__title {
         font-size: 60px;
         font-family: $font-SVNNewton;
@@ -559,13 +563,15 @@ body.dark {
         font-size: 24px;
         line-height: 1.2;
         width: 86%;
+
         &--flex {
           display: flex;
           align-items: flex-end;
           gap: 1rem;
           margin-bottom: 1rem;
         }
-        &--btn{
+
+        &--btn {
           margin-top: 2.4rem;
         }
       }

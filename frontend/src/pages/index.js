@@ -6,3 +6,4 @@ export { default as Detail } from "./Detail";
 export { default as LoginMobile } from "./Login/LoginMobile";
 export { default as Cart } from "./Cart";
 export { default as Contact } from "./Contact";
+export { default as Payment } from "./Payment";

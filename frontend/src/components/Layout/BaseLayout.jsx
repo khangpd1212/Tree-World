@@ -5,7 +5,7 @@ import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import { Route } from "react-router-dom";
-import { Home, Users, Product, Cart, Detail, Contact } from "../../pages";
+import { Home, Users, Product, Cart, Detail, Contact, Payment } from "../../pages";
 import "styles/BaseLayout.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
@@ -56,6 +56,7 @@ export default function BaseLayout() {
             <Route path="/product" exact component={Product} />
             <Route path="/detail" exact component={Detail} />
             <Route path="/cart" exact component={Cart} />
+            <Route path="/payment" exact component={Payment} />
             <Route path="/contact" exact component={Contact} />
             {layout ? <div className="head__change"></div> : <></>}
           </div>

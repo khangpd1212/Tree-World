@@ -100,6 +100,9 @@ function BaseHeader() {
               <div>
                 <LinkRoute to={"/cart"}>Cart</LinkRoute>
               </div>
+              <div>
+                <LinkRoute to={"/payment"}>Payment</LinkRoute>
+              </div>
               <div className="div__login" onClick={showModal}>
                 Login
               </div>
@@ -154,6 +157,11 @@ function BaseHeader() {
                     {" "}
                     <LinkRoute to={"/cart"} onClick={onClose}>
                       Cart
+                    </LinkRoute>
+                  </div>
+                  <div className="navbar__menu">
+                    <LinkRoute to={"/payment"} onClick={onClose}>
+                      Payment
                     </LinkRoute>
                   </div>
                   <div className="navbar__menu">

@@ -1,5 +1,4 @@
 import axios from "../../utils/axios";
-import useCallback from 'react';
 import {
   createSlice,
   createAsyncThunk,

@@ -1,5 +1,5 @@
 import { MenuOutlined } from "@ant-design/icons";
-import LoginDesktop from '../../pages/Login/LoginDesktop';
+import LoginDesktop from "../../pages/Login/LoginDesktop";
 import { Layout, Anchor, Button, Drawer, Row, Col, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
@@ -139,7 +139,12 @@ function BaseHeader() {
                     </LinkRoute>
                     <Menu mode="inline">
                       <SubMenu>
-                        <Menu.Item>Cactus</Menu.Item>
+                        {catalogList &&
+                          catalogList.map((item, index) => (
+                            <Menu.Item key={index}>
+                              {item.catalog_name}
+                            </Menu.Item>
+                          ))}
                       </SubMenu>
                     </Menu>
                   </div>
@@ -180,7 +185,7 @@ function BaseHeader() {
       </Row>
 
       {/* login */}
-      <LoginDesktop 
+      <LoginDesktop
         showModal={isModalVisible}
         handleOk={handleOk}
         handleCancel={handleCancel}

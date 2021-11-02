@@ -5,12 +5,12 @@ import Button from '../../components/utils/Button';
 export default function RecommendHome() {
    return (
       <Row className="section_hot container_home" align="middle">
-         <Col md={12}>
-            <Row align="middle" style={{ marginLeft: "50px" }}>
-               <Col className="section_hot__img" md={12}>
+         <Col lg={11} xl={12}>
+            <Row align="middle" className="section_hot__left">
+               <Col className="section_hot__img" xs={16} sm={15} lg={16} xl={12}>
                   <img srcSet="./images/section3.png" alt="img_plots" />
                </Col>
-               <Col className="section_hot__card" md={12}>
+               <Col className="section_hot__card" xs={8} sm={9} lg={8} xl={12}>
                   <div className="card--top card__flex">
                      <div className="card__icon">
                         <InfoCircleFilled style={{ color: "black", background: "white", borderRadius: "100%" }} />
@@ -41,7 +41,7 @@ export default function RecommendHome() {
                </Col>
             </Row>
          </Col>
-         <Col md={12}>
+         <Col lg={13} xl={12}>
             <div className="section_hot__desc">
                <h1 className="desc__title">Lorem ipsum dolor sit amet, consectetur.</h1>
                <div className="desc__content">

@@ -104,13 +104,17 @@ body.dark {
         .card__flex {
           background-color: #4fbda8;
         }
-
         .card__content {
-
           &--bar {
             background-color: #1D483F
           }
         }
+      }
+      .desc__title{
+        color: white;
+      }
+      .desc__content{
+        color: white;
       }
     }
   }
@@ -150,8 +154,8 @@ body.dark {
       flex-wrap: wrap;
       align-content: space-between;
 
-      @media screen and (max-width: 576px) {
-        padding: 5vw 8vw;
+      @include tablet1 {
+        margin: 5vw 0vw;
       }
 
       img {
@@ -171,7 +175,7 @@ body.dark {
           }
         }
 
-        @media screen and (max-width: 576px) {
+        @include tablet1 {
           display: none;
         }
       }
@@ -196,7 +200,7 @@ body.dark {
           }
         }
 
-        @media screen and (max-width: 576px) {
+        @include tablet1 {
           margin-left: 0;
         }
 
@@ -205,8 +209,12 @@ body.dark {
           color: #296a5d;
           line-height: 1.23;
 
-          @media screen and (max-width: 576px) {
-            font-size: 1.6rem;
+          @include tablet1 {
+            font-size: 42px;
+          }
+
+          @include mobile {
+            font-size: 7vw;
           }
         }
       }
@@ -217,10 +225,14 @@ body.dark {
         margin-top: -3vw;
         color: black;
 
-        @media screen and (max-width: 576px) {
+        @include tablet1 {
           margin-top: 0;
           margin-bottom: 1rem;
-          font-size: 0.8rem;
+          font-size: 18px;
+        }
+
+        @include mobile {
+          font-size: 14px;
         }
       }
     }
@@ -284,9 +296,9 @@ body.dark {
             &::before {
               content: "";
               position: absolute;
-              background-color: #296a5d;
+              background-color: $primary-color;
               width: 100%;
-              height: 0.2vw;
+              height: 2px;
               left: 0;
               bottom: 0;
               transform: scale(0, 1);
@@ -342,7 +354,7 @@ body.dark {
             height: 28vw;
 
             @include tablet-sm {
-              height: 40vw;
+              height: 38vw;
             }
 
             @include mobile {
@@ -473,30 +485,45 @@ body.dark {
       @include mobile {
         text-align: center;
       }
-
-      button {
-        font-size: 1vw;
-
-        @include tablet-sm {
-          font-size: 0.6rem;
-        }
-      }
     }
   }
 
   // section 3
   .section_hot {
-    height: 700px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     font-family: $font-SFRMeta;
+
+    @include tablet-plus {
+      display: none;
+    }
+
+    @include tablet-sm {
+      display: block;
+    }
+
+    // section introduce left
 
     &__img {
       z-index: 1;
+      @media screen and (max-width: 376px) {
+        flex: 100%;
+        max-width: 100%;
+      } 
     }
 
     &__card {
       font-size: 20px;
       color: white;
       margin-top: 60px;
+
+      @include desktop {
+        font-size: 18px;
+      }
+
+      @include mobile{
+        font-size: 3.4vw;
+      }
 
       .card__flex {
         padding: 16px 0;
@@ -510,9 +537,36 @@ body.dark {
         width: 380px;
         left: -140px;
 
+        @include desktop {
+          width: 350px;
+          margin-bottom: 40px;
+          padding: 12px 0;
+        }
+
+        @include tablet-sm {
+          width: 340px;
+          margin-bottom: 60px;
+          padding: 16px 0;
+        }
+        @include mobile{
+          width: 275px;
+          padding: 10px 0;
+          margin-bottom: 40px;
+        }
+        @media screen and (max-width: 376px) {
+          display: none;
+        }
+        
         .card__icon {
           margin-right: -20px;
           font-size: 24px;
+
+          @include desktop {
+            font-size: 22px;
+          }
+           @include mobile {
+            font-size: 18px;
+          }
         }
       }
 
@@ -542,27 +596,61 @@ body.dark {
 
     .card--center {
       left: -200px;
+      @include mobile{
+        left: -170px;
+      }
     }
 
     .card--bottom {
       z-index: 2;
     }
 
+    // section introduce right
     .section_hot__desc {
       margin-left: 80px;
       margin-top: 1.4rem;
+
+      @include desktop {
+        margin-left: 110px;
+      }
+
+      @include tablet-sm {
+        margin-left: 0;
+      }
 
       .desc__title {
         font-size: 60px;
         font-family: $font-SVNNewton;
         line-height: 1;
+
+        @include desktop {
+          font-size: 46px;
+        }
+
+        @include tablet-sm {
+          margin-left: 0;
+        }
       }
 
       .desc__content {
         font-family: $font-SFUHelveticaLight;
         font-size: 24px;
         line-height: 1.2;
-        width: 86%;
+
+        @include desktop {
+          font-size: 18px;
+        }
+
+        @include mobile {
+          font-size: 14px;
+        }
+        &--large {
+          width: 86%;
+
+          @include desktop {
+            width: 100%;
+          }
+        }
 
         &--flex {
           display: flex;

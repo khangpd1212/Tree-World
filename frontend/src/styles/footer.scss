@@ -146,7 +146,6 @@ body.dark {
     &--content {
       color: $light-color;
       font-family: $font-SFUHelveticaLight;
-
       @include tablet {
         margin-bottom: 30px;
       }

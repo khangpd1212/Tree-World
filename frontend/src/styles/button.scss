@@ -1,6 +1,6 @@
 @import "colors";
 @import "fonts";
-
+@import "media-queries";
 body.dark {
     .btn-home {
         background-color: #259e84;
@@ -8,18 +8,22 @@ body.dark {
 }
 
 .btn-home {
-    @media screen and (max-width: 576px) {
-        font-size: 0.6rem;
+    @include tablet1 {
+        font-size: 18px;
         padding: 1.2vw 2.4vw;
     }
-
-    font-size: 1.2vw;
-    padding: 0.6vw 1.4vw;
+    @include mobile{
+        font-size: 3.4vw;
+    }
+    font-size: 1.3vw;
+    line-height: 1.4;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+    padding-bottom: 0.4rem;
     background-color: $dark-color;
     border: 1px solid transparent;
     color: $light-color !important;
     cursor: pointer;
-    text-transform: uppercase !important;
     font-family: $font-SFRMeta;
     transition-duration: .2s;
 

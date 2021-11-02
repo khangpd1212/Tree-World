@@ -7,6 +7,7 @@ import { setLayoutStatus } from "redux/layout";
 import Banner from "components/Home/Banner";
 import SliderProduct from "components/Home/SliderProduct";
 import RecommendHome from "components/Home/RecommendHome";
+import BlogHome from "components/Home/BlogHome";
 export default function Home() {
   const dispatch = useDispatch();
   dispatch(setLayoutStatus(false));
@@ -16,6 +17,7 @@ export default function Home() {
       <Banner/>
       <SliderProduct/>
       <RecommendHome/>
+      <BlogHome />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+## cách lấy code
+git clone (tên repository)
 ## checkout nhánh
 git checkout (nhánh)
 ## xem coi có chuyển nhánh chưa

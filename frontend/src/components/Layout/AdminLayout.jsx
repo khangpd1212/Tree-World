@@ -1,9 +1,10 @@
 import { Layout } from 'antd';
 import React, { useState } from "react";
+import { Route } from "react-router-dom";
 import "styles/admin.scss";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
-
+import {ProductAdmin, CategoryAdmin} from "../../pages"
 const { Content } = Layout;
 
 export default function AdminLayout() {
@@ -15,7 +16,9 @@ export default function AdminLayout() {
             <Layout className="site-layout">
                 <HeaderAdmin isOpen={isOpen} setIsOpen={setIsOpen} />
                 <Content>
-                    <h2 className="content-title">Dashboard</h2>
+                    <Route path="/admin/product" exact component={ProductAdmin} />
+                    <Route path="/admin/product/add" exact component={ProductAdmin} />
+                    <Route path="/admin/category" exact component={CategoryAdmin} />
                 </Content>
             </Layout>
         </Layout>

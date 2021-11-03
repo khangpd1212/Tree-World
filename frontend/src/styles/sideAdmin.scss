@@ -1,0 +1,9 @@
+@import "media-queries";
+@import "fonts";
+@import "colors";
+.root-admin .ant-menu-item-selected a {
+  color: $dark-color !important;
+}
+.root-admin .ant-menu-item a:hover {
+  color: $dark-color !important;
+}

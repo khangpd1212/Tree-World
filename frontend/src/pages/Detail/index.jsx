@@ -113,13 +113,14 @@ export default function Detail() {
         <Col className="voucher" xs={24} sm={8}>
           <p>SHOP DISCOUNT</p>
         </Col>
-{/* 
+
 
         <Col className="aboveSlide">
         </Col>
         <Col className="sidelPro">
         </Col>
-      </Row> */}
+
+       </Row>
     </div>
   );
 }

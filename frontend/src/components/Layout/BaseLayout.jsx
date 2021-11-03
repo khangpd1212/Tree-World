@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import "styles/BaseLayout.scss";
 import '../../styles/handleDarkMode.scss';
+import "styles/global.scss";
 import { Layout } from "antd";
 import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import { Route } from "react-router-dom";
 import { Home, Users, Product, Cart, Detail, Contact, Payment, About } from "../../pages";
-import "styles/BaseLayout.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";

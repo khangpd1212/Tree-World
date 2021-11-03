@@ -2,37 +2,6 @@
 @import "colors";
 @import "fonts";
 
-// reset css
-input,
-textarea,
-select,
-button {
-  outline: none;
-}
-
-input {
-  line-height: normal;
-}
-
-label,
-button {
-  cursor: pointer;
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 // theme dark
 body.dark {
   #Home {
@@ -125,10 +94,6 @@ body.dark {
 // theme Light
 // section 1
 #Home {
-  .container_home {
-    padding: 0px 5vw;
-  }
-
   .slider {
     font-family: $font-SFRMeta;
 

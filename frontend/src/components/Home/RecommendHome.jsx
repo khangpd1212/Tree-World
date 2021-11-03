@@ -4,7 +4,7 @@ import { InfoCircleFilled } from '@ant-design/icons';
 import Button from '../../components/utils/Button';
 export default function RecommendHome() {
    return (
-      <Row className="section_hot container_home" align="middle">
+      <Row className="section_hot container" align="middle">
          <Col lg={11} xl={12}>
             <Row align="middle" className="section_hot__left">
                <Col className="section_hot__img" xs={16} sm={15} lg={16} xl={12}>

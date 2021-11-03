@@ -41,8 +41,8 @@ export default function Cart(){
                 <Row className="cart__total--bottom">
                     <Col xs={19}>
                         <div className="total--left">
-                            <input type="checkbox" />
-                            <span>Select All Products</span>
+                            <input type="checkbox" id="checkbox_total" />
+                            <label htmlFor="checkbox_total">Select All Products</label>
                         </div>
                             
                     </Col>

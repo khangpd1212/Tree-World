@@ -44,7 +44,7 @@ export default function SliderProduct() {
    };
 
    return (
-      <div className="product-wrapper container_home">
+      <div className="product-wrapper container">
          <Row className="h_product">
             <Col className="h_product-title" xs={24} sm={10} md={8}>
                <h1>Choose your product from our collection</h1>

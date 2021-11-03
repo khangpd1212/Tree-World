@@ -42,7 +42,7 @@
         @include mobile-plus {
           gap: 15px;
 
-          
+
         }
       }
 
@@ -59,8 +59,9 @@
             color: #bdbebe;
             text-transform: none;
           }
-          @include mobile-plus{
-            h2{
+
+          @include mobile-plus {
+            h2 {
               display: none;
             }
           }
@@ -101,6 +102,7 @@
 
           .product__total {
             margin-right: 34px;
+
             @include tablet {
               margin-right: 4px;
             }
@@ -133,7 +135,7 @@
                 display: none;
               }
 
-              &::-webkit-inner-spin-button{
+              &::-webkit-inner-spin-button {
                 display: none;
               }
             }
@@ -182,7 +184,7 @@
         margin-right: 10px;
       }
 
-      span {
+      label {
         font-family: Helvetica, sans-serif;
         font-size: 16px;
         text-transform: none;

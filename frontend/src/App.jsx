@@ -16,6 +16,11 @@ function App() {
         <Route path="/login" exact component={LoginLayout} />
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />
+        <Route path="/admin/product" exact component={AdminLayout} />
+        <Route path="/admin/product/add" exact component={AdminLayout} />
+        <Route path="/admin/category" exact component={AdminLayout} />
+        <Route path="/admin/order" exact component={AdminLayout} />
+
       </Switch>
     </BrowserRouter>
   );

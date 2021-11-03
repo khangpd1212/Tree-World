@@ -4,7 +4,8 @@ import {
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import React from "react";
-
+import { Link } from 'react-router-dom';
+import "styles/sideAdmin.scss";
 export default function SideComponent({ isOpen }) {
 
     return <Sider
@@ -12,20 +13,22 @@ export default function SideComponent({ isOpen }) {
         collapsible
         collapsed={isOpen}
     >
-        <img src="/logo.png" alt="tree-word-logo" className="logo-desktop" />
         <Menu
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             inlineCollapsed={isOpen}
         >
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-                Option 1
+                <Link to={"/admin/product"}>Product</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
-                Option 2
+            <Link to={"/admin/category"}>Category</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>
-                Option 3
+            <Link to={"/admin/product"}>Product</Link>
+            </Menu.Item>
+            <Menu.Item key="4" icon={<ContainerOutlined />}>
+            <Link to={"/admin/product"}>Product</Link>
             </Menu.Item>
         </Menu>
     </Sider>

@@ -4,8 +4,14 @@ const verify = require("../middlewares/verify");
 // get all products
 //link http://localhost:8800/product/ method get
 router.get("/", async (req, res) => {
+  const catalog = req.query.catalog;
+  let products = [];
   try {
-    const products = await Product.find();
+    if (catalog) {
+      products = await Product.aggregate([{ $match: { catalog_id: catalog } }]);
+    } else {
+      products = await Product.find();
+    }
     if (!products) throw new Error("No items");
     res.status(200).json(products);
   } catch (error) {

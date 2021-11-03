@@ -1,0 +1,73 @@
+@import "fonts";
+@import "media-queries";
+@import "colors";
+#payment {
+   font-family: $font-SFRMeta;
+   .address {
+      margin-top: 20px;
+      background-color: $light-color;
+      &__main {
+         padding: 30px 40px;
+         @include mobile{
+            padding: 30px 20px;
+         }
+         position: relative;
+         &--top {
+            .top__title--text{
+               padding-left: 10px;
+               color: red;
+               font-size: 20px;
+               @include desktop{
+                  font-size: 18px;
+               }
+               @include tablet{
+                  font-size: 16px;
+               } 
+            }
+         }
+         &--bottom{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           
+            .bottom__content{
+               max-width: 60%;
+               font-size: 22px;
+               font-family: $font-SFUHelveticaLight;
+               @include desktop{
+                  font-size: 20px;
+               }
+               @include tablet{
+                  margin-left: 30px;
+                  font-size: 18px;
+               } 
+               @include tablet-sm{
+                  max-width: 78%;
+               }
+               @include mobile-plus{
+                  font-size: 14px;
+               } 
+            }
+            .bottom__button{
+               display: flex;
+               gap: 20px;
+
+               @include tablet{
+                  display: none;
+               }
+            }
+         }
+         .icon-right{
+            display: none;
+
+            @include tablet{
+               display: block !important;
+               position: absolute;
+               top: 50%;
+               transform: translateY(-50%);
+               right: 20px;
+            }
+         }
+      }
+   }
+}

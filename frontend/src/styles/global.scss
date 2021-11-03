@@ -1,0 +1,34 @@
+  .container {
+     padding: 0px 5vw;
+  }
+
+  // reset css
+  input,
+  textarea,
+  select,
+  button {
+     outline: none;
+  }
+
+  input {
+     line-height: normal;
+  }
+
+  label,
+  button {
+     cursor: pointer;
+  }
+
+  li {
+     list-style: none;
+  }
+
+  a {
+     text-decoration: none;
+  }
+
+  img {
+     display: block;
+     width: 100%;
+     height: 100%;
+  }

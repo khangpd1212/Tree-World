@@ -82,7 +82,9 @@ function BaseHeader() {
                       catalogList.map((item, index) => (
                         <Col span={12} key={index}>
                           <li>
-                            <LinkRoute to={`/product/${item.catalog_name}`}>
+                            <LinkRoute
+                              to={`/product/${item.catalog_name}-cat.${item._id}`}
+                            >
                               {item.catalog_name}
                             </LinkRoute>
                           </li>

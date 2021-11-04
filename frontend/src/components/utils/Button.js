@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function BtnOutlineGray(props){
+export function BtnOutlineGray(props) {
    return (
       <button type="submit" className="btn btn-outline outline-gray">
          {props.title}

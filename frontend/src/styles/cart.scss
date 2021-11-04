@@ -2,34 +2,64 @@
 @import "colors";
 @import "fonts";
 
-.cart {
+#cart {
   font-family: $font-SFRMeta;
   padding: 0px 5vw;
   text-transform: lowercase;
 
-  &__product {
+  .cart__product {
     background-color: #f3f1f1;
     border: 1px solid #bab3b3;
     margin-top: 15px;
+    padding: 15px 3vw;
 
-    &--top {
-      padding: 15px 3vw;
-
-      h1 {
-        margin-bottom: 15px;
+    // titl
+    &--title {
+      .title__only {
         color: #696868;
         font-size: 18px;
       }
 
-      .product__left {
+      .title__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h2 {
+          font-size: 16px;
+          font-family: $font-SFUHelveticaLight;
+          color: #bdbebe;
+          text-transform: none;
+          @include tablet-plus{
+            font-size: 14px;
+          }
+        }
+        @include mobile-plus {
+          h2 {
+            display: none;
+          }
+        }
+      }
+    }
+
+    // noi dung san pham
+    &--main {
+      padding: 30px 0;
+      border-bottom: 1px solid gray;
+      &:last-child{
+        border: none;
+      }
+      .main__img {
         gap: 40px;
         display: flex;
         align-items: center;
-
+        @include tablet-plus{
+          gap: 15px;
+        }
         img {
-          width: 80px;
+          width: 100px;
           object-fit: cover;
-          height: 80px;
+          height: 100px;
         }
 
         h2 {
@@ -37,6 +67,9 @@
           text-transform: none;
           font-size: 22px;
           color: #696868;
+          @include tablet-plus{
+            font-size: 18px;
+          }
         }
 
         @include mobile-plus {
@@ -45,164 +78,137 @@
           
         }
       }
+    }
 
-      .product__right {
-        &--title {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-top: 20px;
+    .main__list {
+      color: #696868;
+      font-family: Helvetica, sans-serif;
+      text-transform: none;
+      transition: none;
 
-          h2 {
-            font-size: 16px;
-            font-family: $font-SFUHelveticaLight;
-            color: #bdbebe;
-            text-transform: none;
+      @include tablet-plus{
+        font-size: 13px;
+      }
+      &--price {
+        margin-left: 38px;
+      }
+
+      .btn-sl {
+        background-color: #fcf8f8;
+        display: flex;
+
+        input {
+          width: 50px;
+          border-radius: unset;
+          text-align: center;
+          border: 1px solid black;
+          -webkit-border-radius: unset;
+          -moz-border-radius: unset;
+          -ms-border-radius: unset;
+          -o-border-radius: unset;
+          @include tablet-plus{
+             width: 40px;
           }
-          @include mobile-plus{
-            h2{
-              display: none;
-            }
+          &::-webkit-outer-spin-button {
+            display: none;
+          }
+
+          &::-webkit-inner-spin-button {
+            display: none;
           }
         }
 
-        .cart__button {
-          margin-bottom: 8px;
-          margin-right: 12px;
+        .btn-increment {
+          border-radius: unset;
+          border: 1px solid black;
+          border-left: none;
+          padding: 5px 12px;
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+          -webkit-border-radius: unset;
+          -moz-border-radius: unset;
+          -ms-border-radius: unset;
+          -o-border-radius: unset;
+          @include tablet-plus{
+            padding: 3px 10px;
+          }
+        }
+
+        .btn-decrement {
+          border-radius: unset;
+          padding: 5px 12px;
+          border: 1px solid black;
+          border-right: none;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          -webkit-border-radius: unset;
+          -moz-border-radius: unset;
+          -ms-border-radius: unset;
+          -o-border-radius: unset;
+           @include tablet-plus{
+            padding: 3px 10px;
+          }
+        }
+
+        @include tablet {
+          .btn-decrement,
+          .btn-increment {
+            content: unset;
+          }
+        }
+      }
+
+      &--total {
+        margin-right: 28px;
+      }
+
+      &--delete {
+        margin-right: 10px;
+
+        .btn_remove {
           border: none;
           font-size: 16px;
 
           &:hover {
             color: $red-color;
           }
-
-        }
-
-        &--content {
-          margin-top: 23px;
-          display: flex;
-          color: #696868;
-          font-family: Helvetica, sans-serif;
-          text-transform: none;
-          transition: none;
-          justify-content: space-between;
-          align-items: center;
-          gap: 15px;
-          margin-left: 6px;
-
-          .product__color {
-            margin-right: 30px;
-            margin-left: -2px;
-
-            @include tablet {
-              margin-right: 0;
-            }
-          }
-
-          .product__total {
-            margin-right: 34px;
-            @include tablet {
-              margin-right: 4px;
-            }
-          }
-
-          .btn-sl {
-            background-color: #fcf8f8;
-
-            &::before {
-              content: "-";
-              padding: 8px 12px;
-              border: 1px solid black;
-              border-right: none;
-              border-top-left-radius: 4px;
-              border-bottom-left-radius: 4px;
-            }
-
-            input {
-              width: 50px;
-              height: 32.5px;
-              border-radius: unset;
-              text-align: center;
-              border: 1px solid black;
-              -webkit-border-radius: unset;
-              -moz-border-radius: unset;
-              -ms-border-radius: unset;
-              -o-border-radius: unset;
-
-              &::-webkit-outer-spin-button {
-                display: none;
-              }
-
-              &::-webkit-inner-spin-button{
-                display: none;
-              }
-            }
-
-            &::after {
-              border: 1px solid black;
-              border-left: none;
-              content: "+";
-              padding: 8px 12px;
-              border-top-right-radius: 4px;
-              border-bottom-right-radius: 4px;
-            }
-
-            @include tablet {
-              margin-bottom: 2vw;
-
-              &::before,
-              &::after {
-                content: unset;
-              }
-
-
-            }
-
-          }
         }
       }
     }
-
-    &--bottom {
-      margin-top: 30px;
-    }
   }
 
-  &__total {
+  // section tong tien
+  .cart__total {
     background-color: #f3f1f1;
     border: 1px solid #bab3b3;
     color: #696868;
     margin-top: 5px;
-
     &--bottom {
       padding: 15px 3vw;
-
-
-      input {
-        margin-right: 10px;
-      }
-
-      span {
+      span{
         font-family: Helvetica, sans-serif;
         font-size: 16px;
         text-transform: none;
+        @include tablet-plus{
+          font-size: 15px;
+        }
       }
-
       .total--left {
-        line-height: 35px;
-
-        @include tablet-plus {
-          line-height: 64px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        &__text{
+          padding-bottom: 4px;
         }
       }
 
       .total--right {
         display: flex;
-        justify-content: space-between;
-
+        justify-content: flex-end;
+        gap: 15px;
+        align-items: baseline;
         .price {
           color: $red-color;
-          margin-right: 15px;
         }
 
         .total__all {
@@ -210,27 +216,23 @@
         }
 
         .cart__button {
-          width: 115px;
-          height: 30px;
           font-family: $font-SFRMeta;
           text-transform: lowercase;
           font-size: 16px;
-          padding-bottom: 30px;
-
-          &:hover {
-            color: #f3f1f1;
-            background-color: $red-color;
-            border: none;
+          background-color: $red-color;
+          color: white;
+          border: none;
+          padding: 4px 16px 8px;
+          transition-duration: .2s;
+          @include tablet-plus{
+            font-size: 15px;
           }
-
-          @include tablet-plus {
-            width: 70px;
-            height: 60px;
+          &:hover {
+            color: white;
+            background-color: #a65050;
           }
         }
       }
-
-
     }
   }
 }

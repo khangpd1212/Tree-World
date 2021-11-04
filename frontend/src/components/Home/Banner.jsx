@@ -1,5 +1,6 @@
 import {memo} from 'react'
 import { Col, Row } from "antd";
+import "../../styles/Home/Banner.scss"
 import Button from '../../components/utils/Button';
 function Banner() {
    console.log("dsada");

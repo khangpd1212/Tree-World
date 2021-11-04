@@ -1,12 +1,11 @@
 import React from 'react'
-import { Col, Row } from "antd";
 import Slider from "react-slick";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import SliderProductComp from './SliderProductComp';
 import { useSelector } from "react-redux";
 import { selectProducts } from "redux/product";
-import Button from '../../components/utils/Button';
+import "../../styles/Home/SliderProduct.scss";
 
 export default function SliderProduct() {
    const { productList } = useSelector(selectProducts);
@@ -44,57 +43,37 @@ export default function SliderProduct() {
    };
 
    return (
-      <div className="product-wrapper container_home">
-         <Row className="h_product">
-            <Col className="h_product-title" xs={24} sm={10} md={8}>
-               <h1>Choose your product from our collection</h1>
-            </Col>
-            <Col className="h_product-header" xs={24} sm={10}>
-               <div className="h_product-header_flex">
-                  <div>hot</div>
-                  <div>new</div>
-                  <div>view</div>
-                  <div>favorite</div>
-               </div>
-            </Col>
-         </Row>
-
-         <Slider className="h_product-main" {...settings}>
-            {productList &&
-               productList.map((product, index) => (
-                  <SliderProductComp
-                     key={index}
-                     src={product.image[0]}
-                     name={product.product_name}
-                     price={product.price}
-                  />
-               ))
-            }
-            <SliderProductComp
-               src="./images/product1.png"
-               name="dsada"
-               price="$13213"
-            />
-            <SliderProductComp
-               src="./images/product1.png"
-               name="dsada"
-               price="$13213"
-            />
-            <SliderProductComp
-               src="./images/product1.png"
-               name="dsada"
-               price="$13213"
-            />
-            <SliderProductComp
-               src="./images/product1.png"
-               name="dsada"
-               price="$13213"
-            />
-         </Slider>
-
-         <div className="h_product-button">
-            <Button title="all product >>" />
-         </div>
-      </div>
+      <Slider className="h_product-main" {...settings}>
+         {productList &&
+            productList.map((product, index) => (
+               <SliderProductComp
+                  key={index}
+                  src={product.image[0]}
+                  name={product.product_name}
+                  price={product.price}
+               />
+            ))
+         }
+         <SliderProductComp
+            src="./images/product1.png"
+            name="dsada"
+            price="$13213"
+         />
+         <SliderProductComp
+            src="./images/product1.png"
+            name="dsada"
+            price="$13213"
+         />
+         <SliderProductComp
+            src="./images/product1.png"
+            name="dsada"
+            price="$13213"
+         />
+         <SliderProductComp
+            src="./images/product1.png"
+            name="dsada"
+            price="$13213"
+         />
+      </Slider>
    )
 }

@@ -1,0 +1,165 @@
+@import "../media-queries";
+@import "../colors";
+@import "../fonts";
+  // section 
+    .h_product-main {
+
+      &:hover .slick-arrow {
+        opacity: 1;
+      }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .h_product-flex * {
+        -webkit-transition: all 0.6s ease;
+        transition: all 0.6s ease;
+      }
+
+      .slick-arrow {
+        opacity: 0;
+        top: 40%;
+        transition: .5s ease;
+      }
+
+      .h_product-flex {
+        padding: 0 8px;
+        cursor: pointer;
+
+        &_hover {
+
+          overflow: hidden;
+          position: relative;
+          transition: .5s;
+
+          img {
+            object-fit: cover;
+            display: block;
+            height: 28vw;
+
+            @include tablet-sm {
+              height: 40vw;
+            }
+
+            @include mobile {
+              height: 100vw;
+            }
+          }
+
+          &:hover img {
+            transform: scale(1.1);
+            -webkit-transform: scale(1.1);
+          }
+
+          &:hover .h_product-flex_icon {
+            -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+            opacity: 1;
+          }
+        }
+
+        &_content {
+          margin-top: 0.3rem;
+          font-size: 1.3vw;
+          text-align: center;
+
+          @include tablet-sm {
+            font-size: 2vw
+          }
+
+          @include mobile {
+            font-size: 1.3rem;
+          }
+
+          p {
+            margin-bottom: 0;
+          }
+        }
+
+        &_icon {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+
+          a {
+            position: absolute;
+          }
+
+
+          .icon-like {
+            right: 0;
+            padding: 1vw 1.2vw;
+
+            @include tablet-sm {
+              .anticon-heart {
+                font-size: 3vw !important;
+              }
+            }
+
+            @include mobile {
+              padding: 1rem 1.2rem;
+
+              .anticon-heart {
+                font-size: 12vw !important;
+              }
+            }
+          }
+        }
+      }
+
+      .slick-list {
+        margin: 0 -8px;
+      }
+
+      .slick-next {
+        right: 2.5%;
+
+        @include desktop-plus {
+          right: 2.1%;
+        }
+
+        @include desktop {
+          right: 1.8%;
+        }
+
+        @include tablet-plus {
+          right: 1.4%;
+        }
+      }
+
+      .slick-prev {
+        left: 1%;
+      }
+
+      .slick-prev:before,
+      .slick-next:before {
+        color: black;
+        z-index: 1;
+        font-size: 3vw;
+
+        @include mobile {
+          display: none;
+        }
+      }
+
+      .slick-dots {
+        text-align: left;
+
+        @include mobile {
+          top: -30px;
+          text-align: center;
+        }
+
+        li button:before {
+          content: "";
+          width: 20px;
+          height: 5px;
+          border-radius: 30px;
+          background-color: #4fbda8;
+        }
+      }
+    }
+

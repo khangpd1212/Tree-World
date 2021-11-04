@@ -8,6 +8,7 @@ function App() {
         <Route path="/" exact component={BaseLayout} />
         <Route path="/users" exact component={BaseLayout} />
         <Route path="/product" exact component={BaseLayout} />
+        <Route path="/product/:catalog" exact component={BaseLayout} />
         <Route path="/detail" exact component={BaseLayout} />
         <Route path="/cart" exact component={BaseLayout} />
         <Route path="/about" exact component={BaseLayout} />
@@ -20,7 +21,6 @@ function App() {
         <Route path="/admin/product/add" exact component={AdminLayout} />
         <Route path="/admin/category" exact component={AdminLayout} />
         <Route path="/admin/order" exact component={AdminLayout} />
-
       </Switch>
     </BrowserRouter>
   );

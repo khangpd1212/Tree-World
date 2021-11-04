@@ -1,16 +1,13 @@
 import { Row } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectProducts } from "redux/product";
 import ProductComponent from "./ProductComponent";
 
-function ProductList() {
-  const { productList } = useSelector(selectProducts);
+function ProductList({ products }) {
   return (
     <div className="product__section--list">
       <Row justify="space-between">
-        {productList &&
-          productList.map((product, index) => (
+        {products &&
+          products.map((product, index) => (
             <ProductComponent
               key={index}
               src={product.image[0]}

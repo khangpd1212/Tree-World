@@ -6,12 +6,31 @@ import FormSearch from "components/Product/FormSearch";
 import PaginationComponent from "components/Product/PaginationComponent";
 import ProductList from "components/Product/ProductList";
 import SideComponent from "components/Product/SideComponent";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { setLayoutStatus } from "redux/layout";
+import { fetchProducts, selectProducts } from "redux/product";
 import "styles/product.scss";
 export default function Product() {
   const dispatch = useDispatch();
+  const { catalog } = useParams();
   dispatch(setLayoutStatus(true));
+  const { productList } = useSelector(selectProducts);
+
+  useEffect(() => {
+    if (catalog) {
+      let catalog_id = catalog.substring(
+        catalog.indexOf(".") + 1,
+        catalog.length
+      );
+      dispatch(fetchProducts({ catalog: catalog_id }));
+    } else {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, catalog]);
+  // console.log(catalog);
+
   return (
     <div className="product">
       <BreadCrumb page="Product" />
@@ -24,7 +43,7 @@ export default function Product() {
           </Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             <Filter />
-            <ProductList />
+            <ProductList products={productList} />
             <PaginationComponent />
           </Col>
         </Row>

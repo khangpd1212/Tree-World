@@ -1,12 +1,22 @@
 import { FilterOutlined } from "@ant-design/icons";
 import { Button, Input, Layout, Radio, Row } from "antd";
-import React from "react";
-import { selectCatalogs } from 'redux/catalog';
+import React, { useState, useEffect } from "react";
+import { selectCatalogs } from "redux/catalog";
 import { useSelector } from "react-redux";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 const { Sider } = Layout;
 
 function SideComponent() {
+  const history = useHistory();
+  const params = useParams();
   const { catalogList } = useSelector(selectCatalogs);
+  const { catalog } = params;
+  // let location = useLocation();
+  const [state, setState] = useState(catalog);
+  useEffect(() => {
+    setState(catalog);
+  }, [catalog]);
+  console.log(catalog, state);
   return (
     <div className="tabletHidden">
       <div className="product__section--title">
@@ -16,16 +26,23 @@ function SideComponent() {
       </div>
       <Sider className="site-layout-background">
         <h3 className="side__title">Categories</h3>
-        <Radio.Group defaultValue={0} buttonStyle="solid">
-          {
-            catalogList && catalogList.map((catalog, index) => (
+        <Radio.Group
+          defaultValue={state}
+          buttonStyle="solid"
+          onChange={(e) => {
+            history.push(`/product/${e.target.value}`);
+            // setState({status: true, content: e.target.value})
+          }}
+        >
+          {catalogList &&
+            catalogList.map((catalog, index) => (
               <Radio.Button
-                value={index} 
-                key={index}>
+                value={`${catalog.catalog_name}-cat.${catalog._id}`}
+                key={index}
+              >
                 {catalog.catalog_name}
               </Radio.Button>
-            ))
-          }
+            ))}
         </Radio.Group>
         <h3 className="side__title">Price range</h3>
         <div className="form__price--range">

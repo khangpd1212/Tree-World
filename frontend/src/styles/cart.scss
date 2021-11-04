@@ -7,13 +7,14 @@
   padding: 0px 5vw;
   text-transform: lowercase;
 
+  // section 1
   .cart__product {
     background-color: #f3f1f1;
     border: 1px solid #bab3b3;
     margin-top: 15px;
     padding: 15px 3vw;
 
-    // titl
+    // title
     &--title {
       .title__only {
         color: #696868;
@@ -161,14 +162,6 @@
             padding: 3px 10px;
           }
         }
-
-        @include tablet {
-
-          .btn-decrement,
-          .btn-increment {
-            content: unset;
-          }
-        }
       }
 
       &--total {
@@ -178,73 +171,88 @@
       &--delete {
         margin-right: 10px;
       }
+    }
+  }
 
-      // section tong tien
-      .cart__total {
-        background-color: #f3f1f1;
-        border: 1px solid #bab3b3;
-        color: #696868;
-        margin-top: 5px;
 
-        &--bottom {
-          padding: 15px 3vw;
+  // section tong tien
+  .cart__total {
+    background-color: #f3f1f1;
+    border: 1px solid #bab3b3;
+    color: #696868;
+    margin-top: 5px;
 
-          span {
+    &--bottom {
+      padding: 15px 3vw;
 
-            font-family: Helvetica, sans-serif;
-            font-size: 16px;
-            text-transform: none;
+      span {
+        font-family: Helvetica, sans-serif;
+        font-size: 16px;
+        text-transform: none;
 
-            @include tablet-plus {
-              font-size: 15px;
-            }
+        @include tablet-plus {
+          font-size: 15px;
+        }
+      }
+
+      .total--left {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        &__text {
+          padding-bottom: 4px;
+        }
+      }
+
+      .total--right {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        align-items: baseline;
+
+        .price {
+          color: $red-color;
+        }
+
+        .total__all {
+          line-height: 35px;
+        }
+
+        .cart__button {
+          font-family: $font-SFRMeta;
+          text-transform: lowercase;
+          font-size: 16px;
+          background-color: $red-color;
+          color: white;
+          border: none;
+          padding: 4px 16px 8px;
+          transition-duration: .2s;
+
+          @include tablet-plus {
+            font-size: 15px;
           }
 
-          .total--left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-
-            &__text {
-              padding-bottom: 4px;
-            }
-          }
-
-          .total--right {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            align-items: baseline;
-
-            .price {
-              color: $red-color;
-            }
-
-            .total__all {
-              line-height: 35px;
-            }
-
-            .cart__button {
-              font-family: $font-SFRMeta;
-              text-transform: lowercase;
-              font-size: 16px;
-              background-color: $red-color;
-              color: white;
-              border: none;
-              padding: 4px 16px 8px;
-              transition-duration: .2s;
-
-              @include tablet-plus {
-                font-size: 15px;
-              }
-
-              &:hover {
-                color: white;
-                background-color: #a65050;
-              }
-            }
+          &:hover {
+            color: white;
+            background-color: #a65050;
           }
         }
+      }
+    }
+  }
+
+  // section sản phẩm gợi ý
+  .suggest_product {
+    margin: 40px 0;
+
+    &__heading {  
+      color: #696868;
+      font-family: $font-SVNNewton;
+      font-size: 40px;
+      text-transform: none;
+      @include desktop{
+        font-size: 30px;
       }
     }
   }

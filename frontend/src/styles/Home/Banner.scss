@@ -2,103 +2,111 @@
 @import "../colors";
 @import "../fonts";
 
-  .slider {
-    font-family: $font-SFRMeta;
+.slider {
+  font-family: $font-SFRMeta;
 
-    .slider-left img {
-      animation: slide_left 1s ease-out alternate 1;
-      -moz-animation: slide_left 1s ease-out alternate 1;
-      -webkit-animation: slide_left 1s ease-out alternate 1;
-      -o-animation: slide_left 1s ease-out alternate 1;
+  .slider-left img {
+    animation: slide_left 1s ease-out alternate 1;
+    -moz-animation: slide_left 1s ease-out alternate 1;
+    -webkit-animation: slide_left 1s ease-out alternate 1;
+    -o-animation: slide_left 1s ease-out alternate 1;
+  }
+
+  @keyframes slide_left {
+    from {
+      transform: translateX(-100%);
     }
 
-    @keyframes slide_left {
-      from {
-        transform: translateX(-100%);
+    to {
+      transform: translateX(0%);
+    }
+  }
+
+  .slider-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+
+    @include tablet1 {
+      margin: 5vw 0vw;
+    }
+
+    img {
+      height: 18vw;
+      animation: slide_right 1s ease-out alternate 1;
+      -moz-animation: slide_right 1s ease-out alternate 1;
+      -webkit-animation: slide_right 1s ease-out alternate 1;
+      -o-animation: slide_right 1s ease-out alternate 1;
+
+      @keyframes slide_right {
+        from {
+          transform: translateY(-100%);
+        }
+
+        to {
+          transform: translateY(0%);
+        }
       }
 
-      to {
-        transform: translateX(0%);
+      @include tablet1 {
+        display: none;
       }
     }
 
-    .slider-right {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: space-between;
 
-      @media screen and (max-width: 576px) {
-        padding: 5vw 8vw;
-      }
+    .slider-right_title {
 
-      img {
-        height: 18vw;
-        animation: slide_right 1s ease-out alternate 1;
-        -moz-animation: slide_right 1s ease-out alternate 1;
-        -webkit-animation: slide_right 1s ease-out alternate 1;
-        -o-animation: slide_right 1s ease-out alternate 1;
+      margin-left: -28%;
+      font-family: $font-SFUToledoMedium;
+      animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
+      -moz-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
+      -webkit-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
+      -o-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
 
-        @keyframes slide_right {
-          from {
-            transform: translateY(-100%);
-          }
-
-          to {
-            transform: translateY(0%);
-          }
+      @keyframes outer-title {
+        from {
+          transform: translateX(20%);
         }
 
-        @media screen and (max-width: 576px) {
-          display: none;
+        to {
+          transform: none;
         }
       }
 
-
-      .slider-right_title {
-
-        margin-left: -28%;
-        font-family: $font-SFUToledoMedium;
-        animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -moz-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -webkit-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
-        -o-animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;
-
-        @keyframes outer-title {
-          from {
-            transform: translateX(20%);
-          }
-
-          to {
-            transform: none;
-          }
-        }
-
-        @media screen and (max-width: 576px) {
-          margin-left: 0;
-        }
-
-        h1 {
-          font-size: 3.5vw;
-          color: #296a5d;
-          line-height: 1.23;
-
-          @media screen and (max-width: 576px) {
-            font-size: 1.6rem;
-          }
-        }
+      @include tablet1 {
+        margin-left: 0;
       }
 
-      .slider-right_content {
-        font-family: $font-SFUHelveticaLight;
-        font-size: 1.3vw;
-        margin-top: -3vw;
-        color: black;
+      h1 {
+        font-size: 3.5vw;
+        color: #296a5d;
+        line-height: 1.23;
 
-        @media screen and (max-width: 576px) {
-          margin-top: 0;
-          margin-bottom: 1rem;
-          font-size: 0.8rem;
+        @include tablet1 {
+          font-size: 42px;
         }
+
+        @include mobile {
+          font-size: 7vw;
+        }
+      }
+    }
+
+    .slider-right_content {
+      font-family: $font-SFUHelveticaLight;
+      font-size: 1.3vw;
+      margin-top: -3vw;
+      color: black;
+
+      @include tablet1 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 18px;
+      }
+
+      @include mobile {
+        font-size: 14px;
       }
     }
   }
+}

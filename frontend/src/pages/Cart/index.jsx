@@ -95,7 +95,10 @@ export default function Cart() {
                     </Col>
                 </Row>
             </div>
-            <SliderProduct />
+            <div className="suggest_product">
+                <h1 className="suggest_product__heading">Suggest Product</h1>
+                <SliderProduct />
+            </div>
         </div>
     )
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 
-export function BtnOutlineGray(props){
+export function BtnOutlineGray(props) {
    return (
-      <button type="submit" className="btn-outline btn__payment btn--gray">
+      <button type="submit" className="btn btn-outline outline-gray">
          {props.title}
       </button>
    )
@@ -10,7 +10,7 @@ export function BtnOutlineGray(props){
 
 export function BtnOutlineBlue(props) {
    return (
-      <button type="submit" className="btn-outline btn__payment btn--blue" >
+      <button type="submit" className="btn btn-outline outline-blue">
          {props.title}
       </button>
    )

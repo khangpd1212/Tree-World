@@ -8,11 +8,11 @@
     font-family: $font-SFRMeta;
 
     @include tablet-plus {
-      display: none;
+      display: none !important;
     }
 
     @include tablet-sm {
-      display: block;
+      display: block !important;
     }
 
     // section introduce left

@@ -100,13 +100,27 @@ export default function Detail() {
             </div>
           </div>
           <div className="commnet">
-
+            {/* <div className="itemComment">
+              <div className="avt">
+              </div>
+              <div className="name">
+              </div>
+              <div className="textCommnet">
+              </div>
+            </div> */}
           </div>
         </Col>
         <Col className="voucher" xs={24} sm={8}>
           <p>SHOP DISCOUNT</p>
         </Col>
-      </Row>
+
+
+        <Col className="aboveSlide">
+        </Col>
+        <Col className="sidelPro">
+        </Col>
+
+       </Row>
     </div>
   );
 }

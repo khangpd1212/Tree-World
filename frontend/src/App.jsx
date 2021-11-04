@@ -10,11 +10,17 @@ function App() {
         <Route path="/product" exact component={BaseLayout} />
         <Route path="/detail" exact component={BaseLayout} />
         <Route path="/cart" exact component={BaseLayout} />
+        <Route path="/about" exact component={BaseLayout} />
         <Route path="/payment" exact component={BaseLayout} />
         <Route path="/contact" exact component={BaseLayout} />
         <Route path="/login" exact component={LoginLayout} />
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />
+        <Route path="/admin/product" exact component={AdminLayout} />
+        <Route path="/admin/product/add" exact component={AdminLayout} />
+        <Route path="/admin/category" exact component={AdminLayout} />
+        <Route path="/admin/order" exact component={AdminLayout} />
+
       </Switch>
     </BrowserRouter>
   );

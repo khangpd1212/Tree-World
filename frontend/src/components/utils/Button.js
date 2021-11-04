@@ -17,8 +17,9 @@ export function BtnOutlineBlue(props) {
 }
 
 export default function ButtonHome(props) {
+
    return (
-      <button type="submit" className="btn-home">
+      <button type="submit" className="btn btn-home">
          {props.title}
       </button>
    )

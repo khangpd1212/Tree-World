@@ -30,10 +30,12 @@
           font-family: $font-SFUHelveticaLight;
           color: #bdbebe;
           text-transform: none;
-          @include tablet-plus{
+
+          @include tablet-plus {
             font-size: 14px;
           }
         }
+
         @include mobile-plus {
           h2 {
             display: none;
@@ -46,16 +48,20 @@
     &--main {
       padding: 30px 0;
       border-bottom: 1px solid gray;
-      &:last-child{
+
+      &:last-child {
         border: none;
       }
+
       .main__img {
         gap: 40px;
         display: flex;
         align-items: center;
-        @include tablet-plus{
+
+        @include tablet-plus {
           gap: 15px;
         }
+
         img {
           width: 100px;
           object-fit: cover;
@@ -67,7 +73,8 @@
           text-transform: none;
           font-size: 22px;
           color: #696868;
-          @include tablet-plus{
+
+          @include tablet-plus {
             font-size: 18px;
           }
         }
@@ -75,7 +82,7 @@
         @include mobile-plus {
           gap: 15px;
 
-          
+
         }
       }
     }
@@ -86,9 +93,10 @@
       text-transform: none;
       transition: none;
 
-      @include tablet-plus{
+      @include tablet-plus {
         font-size: 13px;
       }
+
       &--price {
         margin-left: 38px;
       }
@@ -106,9 +114,11 @@
           -moz-border-radius: unset;
           -ms-border-radius: unset;
           -o-border-radius: unset;
-          @include tablet-plus{
-             width: 40px;
+
+          @include tablet-plus {
+            width: 40px;
           }
+
           &::-webkit-outer-spin-button {
             display: none;
           }
@@ -129,7 +139,8 @@
           -moz-border-radius: unset;
           -ms-border-radius: unset;
           -o-border-radius: unset;
-          @include tablet-plus{
+
+          @include tablet-plus {
             padding: 3px 10px;
           }
         }
@@ -145,12 +156,14 @@
           -moz-border-radius: unset;
           -ms-border-radius: unset;
           -o-border-radius: unset;
-           @include tablet-plus{
+
+          @include tablet-plus {
             padding: 3px 10px;
           }
         }
 
         @include tablet {
+
           .btn-decrement,
           .btn-increment {
             content: unset;
@@ -164,72 +177,72 @@
 
       &--delete {
         margin-right: 10px;
+      }
 
-        .btn_remove {
-          border: none;
-          font-size: 16px;
+      // section tong tien
+      .cart__total {
+        background-color: #f3f1f1;
+        border: 1px solid #bab3b3;
+        color: #696868;
+        margin-top: 5px;
 
-          &:hover {
-            color: $red-color;
+        &--bottom {
+          padding: 15px 3vw;
+
+          span {
+
+            font-family: Helvetica, sans-serif;
+            font-size: 16px;
+            text-transform: none;
+
+            @include tablet-plus {
+              font-size: 15px;
+            }
           }
-        }
-      }
-    }
-  }
 
-  // section tong tien
-  .cart__total {
-    background-color: #f3f1f1;
-    border: 1px solid #bab3b3;
-    color: #696868;
-    margin-top: 5px;
-    &--bottom {
-      padding: 15px 3vw;
-      span{
-        font-family: Helvetica, sans-serif;
-        font-size: 16px;
-        text-transform: none;
-        @include tablet-plus{
-          font-size: 15px;
-        }
-      }
-      .total--left {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        &__text{
-          padding-bottom: 4px;
-        }
-      }
+          .total--left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
 
-      .total--right {
-        display: flex;
-        justify-content: flex-end;
-        gap: 15px;
-        align-items: baseline;
-        .price {
-          color: $red-color;
-        }
-
-        .total__all {
-          line-height: 35px;
-        }
-
-        .cart__button {
-          font-family: $font-SFRMeta;
-          text-transform: lowercase;
-          font-size: 16px;
-          background-color: $red-color;
-          color: white;
-          border: none;
-          padding: 4px 16px 8px;
-          transition-duration: .2s;
-          @include tablet-plus{
-            font-size: 15px;
+            &__text {
+              padding-bottom: 4px;
+            }
           }
-          &:hover {
-            color: white;
-            background-color: #a65050;
+
+          .total--right {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            align-items: baseline;
+
+            .price {
+              color: $red-color;
+            }
+
+            .total__all {
+              line-height: 35px;
+            }
+
+            .cart__button {
+              font-family: $font-SFRMeta;
+              text-transform: lowercase;
+              font-size: 16px;
+              background-color: $red-color;
+              color: white;
+              border: none;
+              padding: 4px 16px 8px;
+              transition-duration: .2s;
+
+              @include tablet-plus {
+                font-size: 15px;
+              }
+
+              &:hover {
+                color: white;
+                background-color: #a65050;
+              }
+            }
           }
         }
       }

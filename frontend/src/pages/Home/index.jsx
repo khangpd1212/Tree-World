@@ -9,6 +9,7 @@ import SliderProduct from "components/Home/SliderProduct";
 import RecommendHome from "components/Home/RecommendHome";
 import HeaderProduct from "components/Home/HeaderProduct";
 import Button from '../../components/utils/Button'
+import BlogHome from "components/Home/BlogHome";
 export default function Home() {
    const dispatch = useDispatch();
    dispatch(setLayoutStatus(false));

@@ -6,10 +6,10 @@ function Banner() {
    console.log("dsada");
    return (
       <Row className="slider">
-         <Col className="slider-left" xs={24} sm={14}>
+         <Col className="slider-left" xs={24} md={14}>
             <img srcSet="./images/slider.png" alt="img_slider-left" />
          </Col>
-         <Col className="slider-right container_home" xs={24} sm={10}>
+         <Col className="slider-right container" xs={24} md={10}>
             <img srcSet="./images/slider2.png" alt="img_slider-right" />
             <div className="slider-right_title">
                <h1>Make your days feeling goods with beautiful plant</h1>

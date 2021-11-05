@@ -17,8 +17,9 @@ function Filter() {
             <Radio.Button value="hot">Hot New</Radio.Button>
             <Radio.Button value="best">Best Seller</Radio.Button>
           </Radio.Group>
-          <Select defaultValue="price">
-            <Option value="price">Price</Option>
+          <Select placeholder="PRICE">
+            <Option value="asc">Low to High</Option>
+            <Option value="desc">High to Low</Option>
           </Select>
         </div>
         <div className="pagination__btn">

@@ -23,7 +23,7 @@ export const fetchProducts = createAsyncThunk(
       ) {
         response = await axios.get("product/");
       } else {
-        let text = "?";
+        let text = "filter?";
         for (let i in options) {
           text += `${i}=${options[i]}&`;
         }

@@ -15,7 +15,7 @@ import {
   Detail,
   Contact,
   Payment,
-  About,
+  Blog,
 } from "../../pages";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
@@ -73,7 +73,7 @@ export default function BaseLayout() {
             <Route path="/detail" exact component={Detail} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/payment" exact component={Payment} />
-            <Route path="/about" exact component={About} />
+            <Route path="/blog" exact component={Blog} />
             <Route path="/contact" exact component={Contact} />
             {layout ? <div className="head__change"></div> : <></>}
           </div>

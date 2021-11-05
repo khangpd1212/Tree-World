@@ -18,17 +18,17 @@ export default function SideComponent({ isOpen }) {
             defaultOpenKeys={['sub1']}
             inlineCollapsed={isOpen}
         >
-            <Menu.Item key="1" icon={<PieChartOutlined />}>
+            <Menu.Item key="1" icon={<PieChartOutlined />}> 
                 <Link to={"/admin/product"}>Product</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<DesktopOutlined />}>
+            <Menu.Item key="2" icon={<DesktopOutlined />} >
             <Link to={"/admin/category"}>Category</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>
-            <Link to={"/admin/product"}>Product</Link>
+            <Link to={"/admin/news"}>News</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<ContainerOutlined />}>
-            <Link to={"/admin/product"}>Product</Link>
+            <Link to={"/admin/"}></Link>
             </Menu.Item>
         </Menu>
     </Sider>

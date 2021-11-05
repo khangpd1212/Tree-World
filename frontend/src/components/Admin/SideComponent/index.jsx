@@ -25,10 +25,10 @@ export default function SideComponent({ isOpen }) {
             <Link to={"/admin/category"}>Category</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>
-            <Link to={"/admin/product"}>Order</Link>
+            <Link to={"/admin/news"}>News</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<ContainerOutlined />}>
-            <Link to={"/admin/product"}></Link>
+            <Link to={"/admin/"}></Link>
             </Menu.Item>
         </Menu>
     </Sider>

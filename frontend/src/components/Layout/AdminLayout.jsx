@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import "styles/admin.scss";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
-import {ProductAdmin, CategoryAdmin} from "../../pages"
+import {ProductAdmin, CategoryAdmin, AddProduct} from "../../pages";
 const { Content } = Layout;
 
 export default function AdminLayout() {
@@ -17,7 +17,7 @@ export default function AdminLayout() {
                 <HeaderAdmin isOpen={isOpen} setIsOpen={setIsOpen} />
                 <Content>
                     <Route path="/admin/product" exact component={ProductAdmin} />
-                    <Route path="/admin/product/add" exact component={ProductAdmin} />
+                    <Route path="/admin/product/add" exact component={AddProduct} />
                     <Route path="/admin/category" exact component={CategoryAdmin} />
                 </Content>
             </Layout>

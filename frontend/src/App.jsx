@@ -20,7 +20,6 @@ function App() {
         <Route path="/admin/product/add" exact component={AdminLayout} />
         <Route path="/admin/category" exact component={AdminLayout} />
         <Route path="/admin/order" exact component={AdminLayout} />
-
       </Switch>
     </BrowserRouter>
   );

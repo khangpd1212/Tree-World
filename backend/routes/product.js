@@ -4,18 +4,33 @@ const verify = require("../middlewares/verify");
 // get all products
 //link http://localhost:8800/product/ method get
 router.get("/", async (req, res) => {
-  const catalog = req.query.catalog;
-  let products = [];
   try {
-    if (catalog) {
-      products = await Product.aggregate([{ $match: { catalog_id: catalog } }]);
-    } else {
-      products = await Product.find();
-    }
+    const products = await Product.find();
+
     if (!products) throw new Error("No items");
     res.status(200).json(products);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+// filter product
+router.get("/filter", async (req, res) => {
+  const catalog = req.query.catalog;
+  const isNew = req.query.new;
+  const bestSeller = req.query.sales;
+  let products = [];
+  try {
+    if (catalog) {
+      products = await Product.aggregate([{ $match: { catalog_id: catalog } }]);
+    }
+    if (isNew) {
+      products = await Product.aggregate([
+        { $match: { isNew: isNew.toLowerCase() === "true" } },
+      ]);
+    }
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 });
 // get product by id

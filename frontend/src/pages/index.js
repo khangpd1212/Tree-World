@@ -11,3 +11,4 @@ export { default as About } from "./About";
 export { default as ProductAdmin } from "./Admin/Product";
 export { default as CategoryAdmin } from "./Admin/Category";
 export { default as OrderAdmin } from "./Admin/Order";
+export { default as AddProduct } from "./Admin/Product/AddProduct";

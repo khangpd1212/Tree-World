@@ -11,12 +11,6 @@ export default function AddCategory(){
       console.log('radio checked', e.target.value);
       setValue(e.target.value);
     };
-    // const onFinish = (values) => {
-    // console.log('Success:', values);
-    // }
-    // const onFinishFailed = (errorInfo) => {
-    // console.log('Failed:', errorInfo);
-    // }
     const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
     };

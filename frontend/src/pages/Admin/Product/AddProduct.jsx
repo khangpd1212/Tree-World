@@ -139,8 +139,8 @@ export default function AddProduct() {
 
         {/* image */}
         <Form.Item
-        label="Status"
-        name="status"
+        label="Image"
+        name="image"
         valuePropName="checked"
         wrapperCol={{
         }}

@@ -7,7 +7,7 @@ function Filter() {
     <div className="product__section--filter">
       <Row justify="space-between" align="middle">
         <div className="tabletVisible">
-          <Select defaultValue="search">
+          <Select placeholder="SEARCH FILTER">
             <Option value="search">Search Filter</Option>
           </Select>
         </div>

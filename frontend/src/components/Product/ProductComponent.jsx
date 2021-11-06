@@ -3,7 +3,7 @@ import React from "react";
 
 function ProductComponent(props) {
   return (
-    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+    <Col xs={12} sm={8} md={8} lg={6} xl={6}>
       <div className="product__section--product">
         <div className="product__section--product--img">
           <img src={props.src} alt="Product1" />

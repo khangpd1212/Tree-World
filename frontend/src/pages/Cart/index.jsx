@@ -1,9 +1,13 @@
-import "styles/cart.scss";
-
+import "styles/Cart/Cart.scss";
+import { useSelector } from "react-redux";
+import CartItem from "components/Cart/CartItem";
 import BreadCrumb from "components/Base/BreadCrumb";
 import SliderProduct from "components/Home/SliderProduct";
 import { Col, Row } from "antd";
+import { selectCarts } from "redux/cart";
+
 export default function Cart() {
+    const {cartItems} = useSelector(selectCarts);
     return (
         <div id="cart">
             <BreadCrumb className="breadcrumb" page="Cart" />
@@ -18,66 +22,19 @@ export default function Cart() {
                         <h2>Action</h2>
                     </Col>
                 </Row>
-                <Row className="cart__product--main" align="middle">
-                    <Col span={10} className="main__img">
-                        <input type="checkbox" />
-                        <img src="/images/product1.png" alt="" />
-                        <h2>Product name</h2>
-                    </Col>
-                    <Col span={14}>
-                        <Row className="main__list" justify="space-between" align="middle">
-                            <Col className="main__list--color">
-                                <span>Blue</span>
-                            </Col>
-                            <Col className="main__list--price">
-                                <span>$28.00</span>
-                            </Col>
-                            <Col>
-                                <div className="btn-sl">
-                                    <button className="btn-decrement">-</button>
-                                    <input type="number" defaultValue="1" />
-                                    <button className="btn-increment">+</button>
-                                </div>
-                            </Col>
-                            <Col className="main__list--total">
-                                <span>$28.00</span>
-                            </Col>
-                            <Col className="main__list--delete">
-                                <button className="btn_remove">X</button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-                <Row className="cart__product--main" align="middle">
-                    <Col span={10} className="main__img">
-                        <input type="checkbox" />
-                        <img src="/images/product1.png" alt="" />
-                        <h2>Product name</h2>
-                    </Col>
-                    <Col span={14}>
-                        <Row className="main__list" justify="space-between" align="middle">
-                            <Col className="main__list--color">
-                                <span>Blue</span>
-                            </Col>
-                            <Col className="main__list--price">
-                                <span>$28.00</span>
-                            </Col>
-                            <Col>
-                                <div className="btn-sl">
-                                    <button className="btn-decrement">-</button>
-                                    <input type="number" defaultValue="1" />
-                                    <button className="btn-increment">+</button>
-                                </div>
-                            </Col>
-                            <Col className="main__list--total">
-                                <span>$28.00</span>
-                            </Col>
-                            <Col className="main__list--delete">
-                                <button className="btn_remove">X</button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                {
+                    cartItems.length === 0 ? (
+                        <div className="cart-empty">
+                            <h2>Your cart is currently empty</h2>
+                        </div>
+                    ) : (
+                    cartItems &&
+                    cartItems.map((cartItem, index) => <CartItem
+                        key={index} 
+                        cartItem={cartItem}
+                    />)
+                    )
+                }
             </div>
             <div className="cart__total">
                 <Row className="cart__total--bottom" align="middle">

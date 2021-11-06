@@ -57,6 +57,7 @@ export default function BaseLayout() {
             type="checkbox"
             id="checkbox"
             checked={themeState}
+            onChange={() => themeState}
             onClick={() => setThemeState(!themeState)}
           />
           <div className="slider round"></div>

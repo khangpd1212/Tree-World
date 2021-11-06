@@ -13,16 +13,8 @@ export default function OrderAdmin(){
     return(
             <Table dataSource={data}>
                     <Column title="Name" dataIndex="name" key="name" />
-                    <Column title="Name" dataIndex="name" key="name" />
-
-                    <Column 
-                    title="Status"
-                    key="status"
-                    render={(text, record)=>(
-                        <Switch defaultChecked onChange={onChange} />
-                    )}
-                    />
-
+                    <Column title="Address" dataIndex="address" key="address" />
+                    <Column title="" dataIndex="description" key="description" />
                 </Table>
     )
 }

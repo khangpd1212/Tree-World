@@ -20,7 +20,10 @@ function App() {
         <Route path="/admin/product" exact component={AdminLayout} />
         <Route path="/admin/product/add" exact component={AdminLayout} />
         <Route path="/admin/category" exact component={AdminLayout} />
+        <Route path="/admin/category/add" exact component={AdminLayout} />
         <Route path="/admin/order" exact component={AdminLayout} />
+        <Route path="/admin/new" exact component={AdminLayout} />
+        <Route path="/admin/new/add" exact component={AdminLayout} />
       </Switch>
     </BrowserRouter>
   );

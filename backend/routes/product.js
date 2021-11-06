@@ -4,18 +4,70 @@ const verify = require("../middlewares/verify");
 // get all products
 //link http://localhost:8800/product/ method get
 router.get("/", async (req, res) => {
-  const catalog = req.query.catalog;
-  let products = [];
   try {
-    if (catalog) {
-      products = await Product.aggregate([{ $match: { catalog_id: catalog } }]);
-    } else {
-      products = await Product.find();
-    }
+    const products = await Product.find();
+
     if (!products) throw new Error("No items");
     res.status(200).json(products);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+// filter product
+router.get("/filter", async (req, res) => {
+  const catalog = req.query.catalog;
+  const isNew = req.query.new;
+  const bestSeller = req.query.sales;
+  const isHot = req.query.hot;
+  const match = {};
+  //sort
+  let sort = { _id: 1 };
+  //filter by price
+  const price = req.query.price;
+  const priceMin = req.query.priceMin;
+  const priceMax = req.query.priceMax;
+  const order = req.query.order;
+  //pagination
+  let page = 0;
+  let products = [];
+  if (catalog) {
+    match.catalog_id = catalog;
+  }
+  if (isNew) {
+    match.isNew = isNew.toLowerCase() === "true";
+  }
+  if (priceMin && priceMax && parseFloat(priceMin) <= parseFloat(priceMax)) {
+    match.price = {
+      ...match.price,
+      $lte: parseInt(priceMax),
+      $gte: parseInt(priceMin),
+    };
+  }
+  if (bestSeller) {
+    sort = { sold: bestSeller.toLowerCase() === "true" ? -1 : 1 };
+  }
+  if (isHot) {
+    sort = { isHot: isHot.toLowerCase() === "true" ? -1 : 1 };
+  }
+  if (order && price.toLowerCase() === "true") {
+    sort = { price: order.toLowerCase() === "asc" ? 1 : -1 };
+  }
+  if (req.query.page) {
+    page = req.query.page;
+  }
+
+  try {
+    products = await Product.aggregate([
+      {
+        $match: match,
+      },
+      { $sort: sort },
+      { $skip: 5 * parseInt(page) },
+      { $limit: 5 },
+    ]);
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 });
 // get product by id

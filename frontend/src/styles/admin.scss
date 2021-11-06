@@ -85,3 +85,11 @@
     }
   }
 }
+.modal-login{
+  .ant-modal-content{
+    background: transparent;
+  }
+  .ant-modal-close-x{
+    display: none;
+  }
+}

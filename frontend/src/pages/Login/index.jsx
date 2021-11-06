@@ -4,7 +4,7 @@ import {CloseOutlined} from '@ant-design/icons';
 import "styles/login.scss";
 import {Link} from 'react-router-dom';
 
-export default function Login() {
+export default function Login({toggle}) {
     return (
         <div className="login_mobile">
             <Link to="/" className="login_mobile-icon">

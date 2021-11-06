@@ -1,15 +1,28 @@
 import { Layout } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Route } from "react-router-dom";
+import { fetchCatalogs } from "redux/catalog";
+import { fetchProducts } from "redux/product";
 import "styles/admin.scss";
+import { AddCategory, AddNew, AddProduct, CategoryAdmin, New, OrderAdmin, ProductAdmin } from "../../pages";
+import LoginDesktop from "../../pages/Login/LoginDesktop";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
-import { ProductAdmin, CategoryAdmin, AddProduct,AddCategory,New,AddNew,OrderAdmin } from "../../pages";
+
 const { Content } = Layout;
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(true);
 
+  const dispatch = useDispatch()
+
+  useEffect(()=> {
+    dispatch(fetchProducts())
+    dispatch(fetchCatalogs())
+  }, [dispatch])
+  
   return (
     <div className="root-admin">
       <Layout>
@@ -25,6 +38,11 @@ export default function AdminLayout() {
             <Route path="/admin/new/add" exact component={AddNew} />
             <Route path="/admin/order" exact component={OrderAdmin} />
           </Content>
+          <LoginDesktop
+            showModal={isOpenLogin}
+            handleOk={()=> setIsOpenLogin(!isOpenLogin)}
+            handleCancel={()=> setIsOpenLogin(!isOpenLogin)}
+          />
         </Layout>
       </Layout>
     </div>

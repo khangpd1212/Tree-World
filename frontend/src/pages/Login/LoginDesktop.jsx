@@ -18,8 +18,8 @@ function LoginDesktop(props) {
       onCancel={props.handleCancel}
     >
       <div className="img-login">
-        <img src="/logo.png" alt="tree-world-logo" className="logo-login" />
-        <img src="images/bg_login.png" alt="bg-login" className="bg-login" />
+        <img src="../..//logo.png" alt="tree-world-logo" className="logo-login" />
+        <img src="../../images/bg_login.png" alt="bg-login" className="bg-login" />
       </div>
       <h1 className="title-login">Welcome!</h1>
       <form className="content-login">
@@ -51,13 +51,13 @@ function LoginDesktop(props) {
       <div className="footer-login">
         <div className="icon-login">
           <a href="#">
-            <img src="images/icon-fb_login.png" alt="icon-fb_login" />
+            <img src="../../images/icon-fb_login.png" alt="icon-fb_login" />
           </a>
           <a href="#">
-            <img src="images/icon-twitter_login.png" alt="icon-twitter_login" />
+            <img src="../../images/icon-twitter_login.png" alt="icon-twitter_login" />
           </a>
           <a href="#">
-            <img src="images/icon-gg_login.png" alt="icon-gg_login" />
+            <img src="../../images/icon-gg_login.png" alt="icon-gg_login" />
           </a>
         </div>
         <div className="add-account">

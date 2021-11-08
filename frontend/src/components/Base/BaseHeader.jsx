@@ -6,7 +6,6 @@ import { Link as LinkRoute } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
 import "styles/header.scss";
-import "styles/login.scss";
 
 function BaseHeader() {
   const { Header } = Layout;

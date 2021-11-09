@@ -21,6 +21,11 @@ function BaseHeader() {
       handleShow(false);
     }
   };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  }
+
   const showDrawer = () => {
     setVisible(true);
   };
@@ -29,16 +34,6 @@ function BaseHeader() {
   };
 
   // modal login
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
   useEffect(() => {
     window.addEventListener("scroll", transitionNavBar);
@@ -104,7 +99,8 @@ function BaseHeader() {
               <div>
                 <LinkRoute to={"/payment"}>Payment</LinkRoute>
               </div>
-              <div className="div__login" onClick={showModal}>
+              <div className="div__login" 
+                onClick={showModal}>
                 Login
               </div>
               <div>
@@ -186,11 +182,12 @@ function BaseHeader() {
       </Row>
 
       {/* login */}
-      <LoginDesktop
-        showModal={isModalVisible}
-        handleOk={handleOk}
-        handleCancel={handleCancel}
-      />
+      {
+        isModalVisible ? 
+        <LoginDesktop
+          isModalVisible = {isModalVisible}
+        /> : null
+      }
     </Header>
   );
 }

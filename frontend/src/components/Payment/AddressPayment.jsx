@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Row } from "antd";
 import { EnvironmentFilled, RightOutlined } from '@ant-design/icons';
 import { BtnOutlineGray, BtnOutlineBlue } from '../utils/Button'
+import VoucherPayment from './VoucherPayment';
 
 export default function AddressPayment() {
    return (
@@ -10,7 +11,7 @@ export default function AddressPayment() {
          <div className="address__main">
             <div className="address__main--top">
                <p className="top__title">
-                  <EnvironmentFilled style={{color: "red", fontSize: "20px"}}/>
+                  <EnvironmentFilled style={{ color: "#d64848", fontSize: "20px"}}/>
                   <span className="top__title--text">your address</span>
                </p>
             </div>

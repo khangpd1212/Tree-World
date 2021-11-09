@@ -1,22 +1,38 @@
 import { FilterOutlined } from "@ant-design/icons";
 import { Button, Input, Layout, Radio, Row } from "antd";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { selectCatalogs } from "redux/catalog";
 import { useSelector } from "react-redux";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 const { Sider } = Layout;
 
 function SideComponent() {
   const history = useHistory();
-  const params = useParams();
   const { catalogList } = useSelector(selectCatalogs);
-  const { catalog } = params;
-  // let location = useLocation();
-  const [state, setState] = useState(catalog);
-  useEffect(() => {
-    setState(catalog);
-  }, [catalog]);
-  console.log(catalog, state);
+  const { urlStatus } = useSelector((state) => state.layoutState);
+
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+  const [err, setErr] = useState(false);
+  const handleSubmit = () => {
+    console.log(priceMin, priceMax);
+    if (Number(priceMin) > Number(priceMax)) {
+      setErr(true);
+    } else {
+      setErr(false);
+      if (urlStatus.search.indexOf("priceMin")) {
+        console.log(urlStatus.search.search("priceMin"));
+      }
+      history.push({
+        pathname: urlStatus.pathname,
+        search:
+          urlStatus.search === ""
+            ? `?priceMin=${priceMin}&priceMax=${priceMax}&page=0`
+            : `${urlStatus.search}&priceMin=${priceMin}&priceMax=${priceMax}&page=0`,
+      });
+    }
+  };
   return (
     <div className="tabletHidden">
       <div className="product__section--title">
@@ -27,7 +43,15 @@ function SideComponent() {
       <Sider className="site-layout-background">
         <h3 className="side__title">Categories</h3>
         <Radio.Group
-          defaultValue={state}
+          defaultValue=""
+          value={
+            urlStatus.pathname
+              ? urlStatus.pathname.substring(
+                  "/product/".length,
+                  urlStatus.pathname.length
+                )
+              : ""
+          }
           buttonStyle="solid"
           onChange={(e) => {
             history.push(`/product/${e.target.value}`);
@@ -47,13 +71,38 @@ function SideComponent() {
         <h3 className="side__title">Price range</h3>
         <div className="form__price--range">
           <Row>
-            <Input type="number" placeholder="From" />{" "}
+            <Input
+              type="number"
+              placeholder="From"
+              value={priceMin}
+              onChange={(e) => setPriceMin(e.target.value)}
+            />{" "}
             <span style={{ padding: "0 5px" }}>-</span>
-            <Input type="number" placeholder="To" />
+            <Input
+              type="number"
+              placeholder="To"
+              value={priceMax}
+              onChange={(e) => setPriceMax(e.target.value)}
+            />
           </Row>
+          {err ? (
+            <p
+              style={{ fontStyle: "italic", color: "red", paddingTop: "10px" }}
+            >
+              Please fill in the appropriate price
+            </p>
+          ) : (
+            <></>
+          )}
           <Row align="middle">
-            <Button>Apply</Button>
-            <p className="price--range__show">$50 - $300</p>
+            <Button onClick={handleSubmit}>Apply</Button>
+            {err ? (
+              <></>
+            ) : (
+              <p className="price--range__show">
+                ${priceMin} - ${priceMax}
+              </p>
+            )}
           </Row>
         </div>
         <h3 className="side__title">tags</h3>

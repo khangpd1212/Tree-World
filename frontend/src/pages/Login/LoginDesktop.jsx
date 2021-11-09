@@ -1,11 +1,19 @@
 import React, { memo } from "react";
 import { Modal } from "antd";
+import { useDispatch } from "react-redux";
+import { login, selectUsers } from "redux/user";
 import { useSelector } from "react-redux";
-import { selectUsers } from "../../redux/user";
 
 function LoginDesktop(props) {
-  const { userList } = useSelector(selectUsers);
-  // console.log(userList);
+  const dispatch = useDispatch()
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const [{value: email}, {value: password}] = event.target;
+    await dispatch(login({email, password})).then(console.log)
+    props.handleCancel()
+  }
+
   return (
     <Modal
       width={"38vw"}
@@ -22,20 +30,22 @@ function LoginDesktop(props) {
         <img src="../../images/bg_login.png" alt="bg-login" className="bg-login" />
       </div>
       <h1 className="title-login">Welcome!</h1>
-      <form className="content-login">
+      <form className="content-login"  onSubmit={e => handleLogin(e)}>
         <input
           className="content-login_input"
-          type="text"
-          placeholder="Username*"
+          type="email"
+          placeholder="Email*"
+          name="email"
         />
         <input
           className="content-login_input"
           type="password"
+          name="password"
           placeholder="Password*"
         />
         <div className="wrapper-remember_forgot">
           <div className="wrapper-checkbox">
-            <input type="checkbox" id="login_checkbox" />
+            <input type="checkbox" id="login_checkbox" name="remember" />
             <label htmlFor="login_checkbox" className="label-checkbox">
               Remember
             </label>
@@ -44,7 +54,10 @@ function LoginDesktop(props) {
             Forget Password?
           </a>
         </div>
-        <button type="submit" className="login-btn_submit">
+        <button
+          type="submit"
+          className="login-btn_submit"
+        >
           login
         </button>
       </form>

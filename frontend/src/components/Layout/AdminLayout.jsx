@@ -14,15 +14,22 @@ const { Content } = Layout;
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenLogin, setIsOpenLogin] = useState(true);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
 
   const dispatch = useDispatch()
+  const token = localStorage.getItem("token")
 
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(fetchProducts())
     dispatch(fetchCatalogs())
   }, [dispatch])
-  
+
+  useEffect(() => {
+    if (!token) {
+      setIsOpenLogin(true)
+    }
+  }, [token])
+
   return (
     <div className="root-admin">
       <Layout>
@@ -40,8 +47,8 @@ export default function AdminLayout() {
           </Content>
           <LoginDesktop
             showModal={isOpenLogin}
-            handleOk={()=> setIsOpenLogin(!isOpenLogin)}
-            handleCancel={()=> setIsOpenLogin(!isOpenLogin)}
+            handleOk={() => setIsOpenLogin(!isOpenLogin)}
+            handleCancel={() => setIsOpenLogin(!isOpenLogin)}
           />
         </Layout>
       </Layout>

@@ -1,10 +1,12 @@
 
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Rate, Select, Switch, Upload, InputNumber, Image } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCatalogs } from 'redux/catalog';
+import { requests } from 'utils/axios';
+
 const { Option } = Select;
 const formItemLayout = {
     labelCol: {
@@ -16,8 +18,6 @@ const formItemLayout = {
 };
 
 const normFile = (e) => {
-    console.log('Upload event:', e);
-
     if (Array.isArray(e)) {
         return e;
     }
@@ -25,13 +25,26 @@ const normFile = (e) => {
     return e && e.fileList;
 };
 
-export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
-    const {catalogList} = useSelector(selectCatalogs);
-    let catalogSeleted = catalogList && selected && catalogList.find(f => f._id == selected.catalog_id);
 
-    const onFinish = (values) => {
-      
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
+    const { catalogList } = useSelector(selectCatalogs);
+    const [imgBase64, setImgBase64] = useState("")
+    let catalogSeleted = catalogList && selected && catalogList.find(f => f._id == selected.catalog_id);
+    const token = localStorage.getItem("token");
+    const onFinish = async (values) => {
+        const res = await requests.editProduct(token, values, selected._id)
+        console.log(res)
     };
+
 
     const FromEdit = useCallback(() => {
         return <Form
@@ -46,7 +59,7 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 'price': selected.price,
                 'isHot': selected.isHot ?? false,
                 'status': selected.status ?? false,
-                'image': selected.image,
+                'image': "img",
                 'description': selected.description,
             }}
         >
@@ -99,7 +112,14 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 getValueFromEvent={normFile}
             >
                 <Image src={selected.image} width="120px" /> <br />
-                <Upload name="logo" action="/upload.do" listType="picture">
+                <Upload
+                    name="logo"
+                    onPreview={({ file }) => {
+                        getBase64(file)
+                            .then(console.log)
+                            .catch(console.log)
+                    }}
+                    listType="picture">
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
                 </Upload>
             </Form.Item>

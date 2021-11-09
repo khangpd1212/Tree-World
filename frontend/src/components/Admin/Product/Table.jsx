@@ -1,17 +1,26 @@
 import { Button, Image, message, Popconfirm, Space, Table } from 'antd';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { selectProducts } from 'redux/product';
+import { fetchProducts, selectProducts } from 'redux/product';
+import { requests } from 'utils/axios';
+import ModalAddProduct from './ModalAddProduct';
 import ModalEdit from './ModalEdit';
 
 
 
 export default function TableProducts() {
-    const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState({})
-
-    function confirm() {
-        message.success('delete success');
+    const token = localStorage.getItem("token")
+    const dispatch = useDispatch()
+    function confirm(id) {
+        requests.deleteProduct(token, id)
+            .then(res=> {
+                console.log(res);
+                dispatch(fetchProducts())
+                message.success('delete success')
+            })
     }
 
     const onEdit = (data) => {
@@ -57,7 +66,7 @@ export default function TableProducts() {
                     <Popconfirm
                         placement="rightTop"
                         title={"Do you want delete this ?"}
-                        onConfirm={confirm}
+                        onConfirm={() => confirm(record._id)}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -69,7 +78,7 @@ export default function TableProducts() {
     ];
 
     const {productList} = useSelector(selectProducts)
-    console.log(productList);
+    
     return <>
         <Table columns={columns} dataSource={productList} />
         <ModalEdit

@@ -1,13 +1,11 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, Rate, Select, Switch, Upload, InputNumber, Image } from 'antd';
-import React, { useState } from 'react';
-import { useCallback } from 'react';
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
+import { Button, Form, Input, InputNumber, Modal, Rate, Select, Switch, Upload } from 'antd';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { selectCatalogs } from 'redux/catalog';
 import { fetchProducts } from "redux/product";
-import { requests } from 'utils/axios';
+import { requests } from "utils/axios";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -28,23 +26,21 @@ const normFile = (e) => {
     return e && e.fileList;
 };
 
-export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
+export default function ModalAddProduct({ visible, setVisible }) {
     const { catalogList } = useSelector(selectCatalogs);
     const [imgBase64, setImgBase64] = useState("")
     const [fileList, setFileList] = useState([]);
-    let catalogSeleted = catalogList && selected && catalogList.find(f => f._id == selected.catalog_id);
     const dispatch = useDispatch()
     const token = localStorage.getItem("token");
 
     const onFinish = (values) => {
-        requests.editProduct(
-            token, values, selected._id,imgBase64
-        ).then(res=> {
-            dispatch(fetchProducts())
-            setVisible(false)
-            toast.success("Update product success")
-        }).catch(err=> toast.warning(err))
-
+        requests.addProduct(token, values, imgBase64)
+            .then(res => {
+                console.log(res);
+                dispatch(fetchProducts())
+                setVisible(false)
+                toast.success("Add new product succesfully!")
+            })
     };
 
     function getBase64(file) {
@@ -67,23 +63,23 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
             name="validate_other"
             {...formItemLayout}
             onFinish={onFinish}
-            initialValues={{
-                'product_name': selected.product_name,
-                'star': selected.star,
-                'catalog_id': selected.catalog_id,
-                'inventory': selected.inventory ?? 0,
-                'price': selected.price,
-                'isHot': selected.isHot ?? false,
-                'status': selected.status ?? false,
-                'description': selected.description
-            }}
+        // initialValues={{
+        //     'product_name': selected.product_name,
+        //     'star': selected.star,
+        //     'catalog_id': selected.catalog_id,
+        //     'inventory': selected.inventory ?? 0,
+        //     'price': selected.price,
+        //     'isHot': selected.isHot ?? false,
+        //     'status': selected.status ?? false,
+        //     'description': selected.description
+        // }}
         >
             <Form.Item
                 name="product_name"
                 label="Name"
                 hasFeedback
             >
-                <Input placeholder={selected.product_name} defaultValue={selected.product_name} value={selected.product_name} />
+                <Input placeholder="Name product" />
             </Form.Item>
             <Form.Item
                 name="catalog_id"
@@ -91,33 +87,35 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 hasFeedback
                 placeholder="Catalog"
             >
-                <Select placeholder={catalogSeleted?.catalog_name} defaultValue={selected.catalog_id}>
+                <Select placeholder="Catalog">
                     {
-                        catalogList && catalogList.filter(f => f.status).map(cata => <Option value={cata._id}>{cata.catalog_name}</Option>)
+                        catalogList &&
+                        catalogList.filter(f => f.status)
+                            .map(cata => <Option value={cata._id}>{cata.catalog_name}</Option>)
                     }
                 </Select>
             </Form.Item>
 
             <Form.Item name="inventory" label="Iventory" valuePropName="isHot">
                 <Form.Item name="inventory" noStyle>
-                    <InputNumber min={1} defaultValue={selected.inventory} />
+                    <InputNumber min={1} defaultValue={0} />
                 </Form.Item>
                 <span className="ant-form-text"> Price</span>
                 <Form.Item name="price" noStyle>
-                    <InputNumber min={1} defaultValue={selected.price} />
+                    <InputNumber min={1} defaultValue={0} />
                 </Form.Item>
             </Form.Item>
 
             <Form.Item name="isHot" label="isHot" valuePropName="isHot">
-                <Switch defaultChecked={selected.isHot} />
+                <Switch defaultChecked={true} />
             </Form.Item>
 
             <Form.Item name="status" label="Status" valuePropName="status">
-                <Switch defaultChecked={selected.status} />
+                <Switch defaultChecked={true} />
             </Form.Item>
 
             <Form.Item name="star" label="Star">
-                <Rate defaultValue={selected.star} />
+                <Rate defaultValue={1} />
             </Form.Item>
 
             <Form.Item
@@ -125,7 +123,6 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
             >
-                <Image src={selected.image} width="120px" /> <br />
                 <Upload
                     listType="picture-card"
                     fileList={fileList}
@@ -141,7 +138,7 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
 
             <Form.Item label="description">
                 <Form.Item name="description" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                    <Input.TextArea defaultValue={selected.description} />
+                    <Input.TextArea defaultValue="description" />
                 </Form.Item>
             </Form.Item>
 
@@ -159,11 +156,11 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 </Button>
             </Form.Item>
         </Form>
-    }, [selected, imgBase64])
+    }, [catalogList, imgBase64])
 
     return <>
         <Modal
-            title="Edit Products"
+            title="Add Products"
             centered
             visible={visible}
             onOk={() => setVisible(false)}

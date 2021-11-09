@@ -93,6 +93,9 @@ router.post("/", verify, async (req, res) => {
       image,
       inventory,
       color,
+      isHot,
+      status,
+      star,
     } = req.body;
 
     const newProduct = new Product({

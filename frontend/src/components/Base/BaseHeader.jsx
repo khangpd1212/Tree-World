@@ -1,19 +1,23 @@
 import { MenuOutlined } from "@ant-design/icons";
-import LoginDesktop from "../../pages/Login/LoginDesktop";
-import { Layout, Anchor, Button, Drawer, Row, Col, Menu } from "antd";
+import { Layout, Anchor, Button, Drawer, Row, Col, Menu} from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
+import { ShowModalLogin } from "redux/login";
 import "styles/header.scss";
+import LoginDesktop from 'pages/Login/LoginDesktop';
+import SignUpDesktop from 'pages/SignUp/SignUpDesktop';
 
 function BaseHeader() {
   const { Header } = Layout;
   const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [show, handleShow] = useState(false);
+
+  const dispath = useDispatch();
   const { catalogList } = useSelector(selectCatalogs);
+
   const transitionNavBar = () => {
     if (window.scrollY > 10) {
       handleShow(true);
@@ -22,17 +26,12 @@ function BaseHeader() {
     }
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  }
-
   const showDrawer = () => {
     setVisible(true);
   };
   const onClose = () => {
     setVisible(false);
   };
-
   // modal login
 
   useEffect(() => {
@@ -100,7 +99,7 @@ function BaseHeader() {
                 <LinkRoute to={"/payment"}>Payment</LinkRoute>
               </div>
               <div className="div__login" 
-                onClick={showModal}>
+                onClick={() => dispath(ShowModalLogin(true))}>
                 Login
               </div>
               <div>
@@ -180,14 +179,8 @@ function BaseHeader() {
           </div>
         </Col>
       </Row>
-
-      {/* login */}
-      {
-        isModalVisible ? 
-        <LoginDesktop
-          isModalVisible = {isModalVisible}
-        /> : null
-      }
+      <LoginDesktop/>
+      <SignUpDesktop/>
     </Header>
   );
 }

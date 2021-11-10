@@ -1,6 +1,5 @@
 import {
    createSlice,
-   createAsyncThunk,
    createSelector,
 } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";

@@ -6,6 +6,8 @@ import productReducer from "./product";
 import catalogReducer from "./catalog";
 import cartReducer from "./cart";
 import paymentReducer from "./payment";
+import loginReducer from "./login";
+import SignUpReducer from "./SignUp";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +17,8 @@ export const store = configureStore({
     productState: productReducer,
     catalogState: catalogReducer,
     cartState: cartReducer,
+    loginState: loginReducer,
+    SignUpState: SignUpReducer,
     // paymentState: paymentReducer,
   },
 });

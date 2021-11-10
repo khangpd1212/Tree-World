@@ -13,27 +13,31 @@
       background-color: $light-color;
       min-width: 300px !important;
       max-width: 300px !important;
-      &-collapsed{
+
+      &-collapsed {
         max-width: 85px !important;
         min-width: 85px !important;
       }
+
       .ant-menu {
         background-color: transparent;
         border: unset;
+
         &-item {
           min-height: 65px;
           line-height: 65px;
           padding-left: 40px;
+
           @media (max-width: 600px) {
             padding-left: 10px;
           }
 
-          .anticon{
+          .anticon {
             font-size: 1.5rem;
             color: $secondary-color;
           }
 
-          .ant-menu-title-content{
+          .ant-menu-title-content {
             padding-left: 20px;
             font-weight: 700;
             color: $secondary-color;
@@ -41,34 +45,55 @@
           }
         }
       }
-      .logo-desktop {
-        width: 100%;
-        padding: 10px;
-        cursor: pointer;
-      }
     }
 
     &-header {
       background-color: $light-color;
-      box-shadow: 0 0 3px black;
-      min-height: 94px;
-      line-height: 94px;
+      height: 70px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      .ant-input-search{
+        .ant-input{
+          height: 36px;
+        }
+        .ant-input-search-button{
+          height: 36px;
+        }
+      }
       .trigger {
         margin-left: 24px;
         font-size: 1.5rem;
         color: $primary-color;
       }
+
       .profile {
+        cursor: pointer;
         padding-right: 20px;
+
+        .avatar-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          &__text {
+            line-height: 1;
+
+            p {
+              font-weight: 600;
+              font-size: 16px;
+              margin-bottom: 6px;
+            }
+          }
+        }
       }
     }
 
     &-content {
       background-color: $light-color;
-      padding: 8px 21px;
+      margin: 25px 20px;
+      padding: 30px 35px;
     }
 
     main {

@@ -1,5 +1,5 @@
 import {
-    ContainerOutlined, DesktopOutlined, PieChartOutlined
+    ContainerOutlined, DesktopOutlined, PieChartOutlined, DashboardOutlined
 } from '@ant-design/icons';
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
@@ -8,28 +8,42 @@ import { Link } from 'react-router-dom';
 import "styles/sideAdmin.scss";
 export default function SideComponent({ isOpen }) {
 
-    return <Sider
-        trigger={null}
-        collapsible
-        collapsed={isOpen}
-    >
-        <Menu
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            inlineCollapsed={isOpen}
+    return (
+        <Sider
+            trigger={null}
+            collapsible
+            collapsed={isOpen}
         >
-            <Menu.Item key="1" icon={<PieChartOutlined />}> 
-                <Link to={"/admin/product"}>Product</Link>
-            </Menu.Item>
-            <Menu.Item key="2" icon={<DesktopOutlined />} >
-            <Link to={"/admin/category"}>Category</Link>
-            </Menu.Item>
-            <Menu.Item key="3" icon={<ContainerOutlined />}>
-            <Link to={"/admin/new"}>New</Link>
-            </Menu.Item>
-            <Menu.Item key="4" icon={<ContainerOutlined />}>
-            <Link to={"/admin/order"}>Order</Link>
-            </Menu.Item>
-        </Menu>
-    </Sider>
+            {
+                isOpen ?
+                    <Link to="/admin" className="icon-admin">
+                        <img srcSet="../../icon.png" alt="icon-logo" />
+                    </Link> :
+                    <Link to="/admin" className="logo-admin">
+                        <img srcSet="../../logo.png" alt="logo" />
+                    </Link>
+            }
+            <Menu
+                defaultSelectedKeys={['1']}
+                defaultOpenKeys={['sub1']}
+                inlineCollapsed={isOpen}
+            >
+                <Menu.Item key="1" icon={<DashboardOutlined />}>
+                    <Link to={"/admin"}>Dashboard</Link>
+                </Menu.Item>
+                <Menu.Item key="2" icon={<PieChartOutlined />}>
+                    <Link to={"/admin/product"}>Product</Link>
+                </Menu.Item>
+                <Menu.Item key="3" icon={<DesktopOutlined />} >
+                    <Link to={"/admin/category"}>Category</Link>
+                </Menu.Item>
+                <Menu.Item key="4" icon={<ContainerOutlined />}>
+                    <Link to={"/admin/new"}>New</Link>
+                </Menu.Item>
+                <Menu.Item key="5" icon={<ContainerOutlined />}>
+                    <Link to={"/admin/order"}>Order</Link>
+                </Menu.Item>
+            </Menu>
+        </Sider>
+    )
 }

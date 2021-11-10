@@ -1,9 +1,25 @@
 @import "media-queries";
 @import "fonts";
 @import "colors";
+
 .root-admin .ant-menu-item-selected a {
   color: $dark-color !important;
 }
+
 .root-admin .ant-menu-item a:hover {
   color: $dark-color !important;
+}
+
+.logo-admin {
+  width: 250px;
+  height: 66px;
+  margin: 0 auto;
+  display: block;
+}
+
+.icon-admin {
+  width: 45px;
+  height: 50px;
+  margin: 8px auto;
+  display: block;
 }

@@ -134,8 +134,9 @@
         border-top: 1px solid;
         border-bottom: 1px solid;
         height: 30px;
-        width: 70px;
+        width: 55px;
         text-align: center;
+        border-radius: 0;
       }
       .btn3 {
         height: 30px;
@@ -174,6 +175,7 @@
       background-color: $dark--hr-color;
       position: relative;
       margin: 35px 0px 15px 0px;
+      font-family: $font-SFUHelveticaLight;
       &::before {
         position: absolute;
         content: "product description";
@@ -214,6 +216,7 @@
     margin-right: 5vh;
     background-color: white;
     border: 1px solid $boder-color;
+    font-family: $font-SFRMeta;
     display: flex;
   }
   .numberStar {
@@ -223,6 +226,8 @@
     text-align: center;
     align-items: center;
     font-size: 41px;
+    font-family: $font-SFUMetaBold;
+    color: $light--red-color;
   }
   .btnStar {
     button {

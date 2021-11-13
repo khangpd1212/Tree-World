@@ -32,7 +32,7 @@ export default function BaseLayout() {
     if (getTheme === "dark") {
       setThemeState(true);
     }
-  }, []);
+  }, [themeState]);
   useEffect(() => {
     if (themeState) {
       localStorage.setItem("Theme", "dark");

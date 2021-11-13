@@ -1,32 +1,47 @@
+import { Radio, Space } from 'antd';
+import { useState } from "react";
 export default function PaymentMethod() {
+    const [radio, setRadio] = useState(1)
+
+    const onChangeRadio = (e) => {
+        setRadio(e.target.value);
+    }   
     return (
         <div className="method">
             <div className="method__top">
                 <span className="method__top--title">
                     Payment method
                 </span>
-                <button className="method__top--creadit">Creadit/Debit cart</button>
-                <button className="method__top--wallet">Electronic Wallet</button>
-                <button className="method__top--cod">Cod</button>
+                <div className="method__top--wrapper">
+                    <button className="method__top--btn">Creadit/Debit cart</button>
+                    <button className="method__top--btn">Electronic Wallet</button>
+                    <button className="method__top--btn">Cod</button>
+                </div>
             </div>
-            <hr/>
+            <hr />
             <div className="method__container">
-                <div className="momo">
-                    <input className="momo__checkbox" type="radio"/>
-                    <img src="https://play-lh.googleusercontent.com/dQbjuW6Jrwzavx7UCwvGzA_sleZe3-Km1KISpMLGVf1Be5N6hN6-tdKxE5RDQvOiGRg" alt=""/>
-                    <div className="momo__title">
-                        <span className="momo__title--1">MOMO Wallet</span>
-                        <span>account balance: $289.054</span>
-                    </div>
-                </div>
-                <div className="bank">
-                    <input type="radio" className="bank" />
-                    <img src="https://appoda.com/wp-content/uploads/2015/10/340x340bb-80.png" alt=""/>
-                    <div className="bank__title">
-                        <span className="bank__title--1">Agribank</span>
-                        <span>*6877</span>
-                    </div>
-                </div>
+                <Radio.Group onChange={onChangeRadio} value={radio}>
+                    <Space direction="vertical">
+                        <Radio value={1} className="method__wrapper" id="momo">
+                            <label className="radio_flex" for="momo">
+                                <img src="https://play-lh.googleusercontent.com/dQbjuW6Jrwzavx7UCwvGzA_sleZe3-Km1KISpMLGVf1Be5N6hN6-tdKxE5RDQvOiGRg" alt="" />
+                                <div className="method__wrapper--title">
+                                    <span className="method__wrapper--title_1">MOMO Wallet</span>
+                                    <span>account balance: $289.054</span>
+                                </div>
+                            </label>
+                        </Radio>
+                        <Radio value={2} className="method__wrapper" id="bank">
+                            <label className="radio_flex" for="bank">
+                                <img src="https://appoda.com/wp-content/uploads/2015/10/340x340bb-80.png" alt="" />
+                                <div className="method__wrapper--title">
+                                    <span className="method__wrapper--title_1">Agribank</span>
+                                    <span>*6877</span>
+                                </div>
+                            </label>
+                        </Radio>
+                    </Space>
+                </Radio.Group>
             </div>
             <hr />
             <div className="method__bottom">
@@ -49,14 +64,13 @@ export default function PaymentMethod() {
                     </div>
                 </div>
             </div>
-            <hr/>
+            <hr />
             <div className="order__now">
                 <div className="back__button">
-                    {/* <LeftOutlined /> */}
                     <span>back</span>
                 </div>
                 <button className="order__button">Order now</button>
-                
+
             </div>
         </div>
     )

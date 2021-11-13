@@ -1,0 +1,64 @@
+@import "../media-queries";
+@import "../colors";
+@import "../fonts";
+
+.blog {
+   background-color: $light--white-color;
+   padding-top: 30px;
+   padding-bottom: 100px;
+
+   .font-title {
+      font-family: $font-SVNNewton;
+      font-size: 48px;
+      line-height: 1;
+      color: #6B5F5F;
+   }
+
+   .font-content {
+      line-height: 30px;
+      font-size: 24px;
+      font-family: $font-SFUHelveticaLight;
+   }
+
+   .btn-read_more {
+      text-transform: lowercase;
+      font-size: 24px;
+      font-family: $font-SFRMeta;
+      background-color: transparent;
+      border: none;
+   }
+
+   .content__date {
+      color: #889C6D;
+   }
+
+   &__title {
+      font-family: $font-SVNNewton;
+      font-size: 54px;
+      margin-bottom: 20px;
+   }
+
+   .bg-item_blog {
+      background-color: $screen-color;
+   }
+   .blog__wrapper--content {
+      padding: 50px 30px;
+   }
+   .blog__flex{
+      display: flex;
+      align-items: center;
+
+      &--content{
+         padding: 0px 35px;
+      }
+      &--heading{
+         margin-bottom: 0.4rem;
+      }
+      .blog__img{
+         width: 250px;
+         height: 240px;
+         overflow: hidden;
+         object-fit: cover;
+      }
+   }
+}

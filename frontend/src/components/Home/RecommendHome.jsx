@@ -1,8 +1,8 @@
 import React from 'react'
 import { Col, Row } from "antd";
 import { InfoCircleFilled } from '@ant-design/icons';
-import Button from '../../components/utils/Button';
-import "../../styles/Home/Recommend.scss"
+import Button from 'components/utils/Button';
+import "styles/Home/Recommend.scss"
 export default function RecommendHome() {
    return (
       <Row className="section_hot container_home" align="middle">

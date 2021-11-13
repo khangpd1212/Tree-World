@@ -1,5 +1,5 @@
 import "styles/button.scss";
-import "styles/Home/Home.scss";
+import "styles/Home/index.scss";
 import { useDispatch } from "react-redux";
 import { setLayoutStatus } from "redux/layout";
 
@@ -7,7 +7,7 @@ import Banner from "components/Home/Banner";
 import SliderProduct from "components/Home/SliderProduct";
 import RecommendHome from "components/Home/RecommendHome";
 import HeaderProduct from "components/Home/HeaderProduct";
-import Button from '../../components/utils/Button'
+import Button from 'components/utils/Button'
 import BlogHome from "components/Home/BlogHome";
 
 export default function Home() {
@@ -24,6 +24,7 @@ export default function Home() {
             </div>
          </div>
          <RecommendHome />
+         <BlogHome/>
       </div>
    );
 

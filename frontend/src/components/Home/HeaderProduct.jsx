@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Row } from "antd";
-import "../../styles/Home/HeaderProduct.scss"
+import "styles/Home/HeaderProduct.scss"
 
 export default function HeaderProduct() {
    return (

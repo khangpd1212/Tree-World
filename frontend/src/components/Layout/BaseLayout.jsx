@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "styles/BaseLayout.scss";
-import "../../styles/handleDarkMode.scss";
+import "styles/handleDarkMode.scss";
 import "styles/global.scss";
 import { Layout } from "antd";
 import Backtop from "components/Base/Backtop";

@@ -4,7 +4,7 @@
 
 body.dark {
   .h_product-flex_content {
-    color: white;
+    color: $light--white-color;
   }
 }
 
@@ -181,9 +181,11 @@ body.dark {
     color: black;
     z-index: 1;
     font-size: 3vw;
-    @include tablet-plus{
+
+    @include tablet-plus {
       font-size: 22px;
     }
+
     @include mobile {
       display: none;
     }

@@ -1,6 +1,6 @@
 import { Row, Col, Typography, Radio } from "antd";
 import { Button, Input, Modal } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { CheckCircleFilled, SearchOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { setLayoutStatus } from "redux/layout";
 import FormSearch from "components/Product/FormSearch";
@@ -54,7 +54,7 @@ export default function Detail() {
               <Radio.Button className="color__item yellow" value="c"></Radio.Button>
             </Radio.Group>
             </div>
-
+            <span className="textQuantyti">quantity</span>
             <div className="quantity">
 
               <button className="btn1">-</button>
@@ -63,7 +63,7 @@ export default function Detail() {
             </div>
           </div>
           <div className="stock">
-            <p>10 in stock</p>
+            <p icon={<CheckCircleFilled />}>10 in stock</p>
             <p>share now: </p>
           </div>
           <div className="footerInfor">
@@ -100,14 +100,24 @@ export default function Detail() {
             </div>
           </div>
           <div className="commnet">
-            {/* <div className="itemComment">
-              <div className="avt">
+            <div className="itemComment">
+              <div className="avt_name">
+                <div className="avt">
+                  avt
+                </div>
+                <div className="name">
+                  name
+                  <div className="star">
+                    star
+                  </div>
+                </div>
               </div>
-              <div className="name">
-              </div>
+
               <div className="textCommnet">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id accusantium, labore nam obcaecati asperiores nihil officiis earum voluptate maiores sed?
               </div>
-            </div> */}
+              <div className="hritemComment">hi</div>
+            </div>
           </div>
         </Col>
         <Col className="voucher" xs={24} sm={8}>
@@ -116,6 +126,9 @@ export default function Detail() {
 
 
         <Col className="aboveSlide">
+          <div className="aboveSlide_Right"></div>
+          <div className="aboveSlide_Mid">You Might Also Like</div>
+          <div className="aboveSlide_Left"></div>
         </Col>
         <Col className="sidelPro">
         </Col>

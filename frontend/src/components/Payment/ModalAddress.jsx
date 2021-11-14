@@ -10,14 +10,7 @@ export default function ModalAddress({ visible, onCreate, onCancel }) {
 
    const [district, setDistrict] = useState([]);
    const [ward, setWard] = useState([]);
-   const [address, setAddress] = useState({
-      province: '',
-      district: '',
-      ward: '',
-      street: '',
-      name: '',
-      phone: ''
-   })
+   const [address, setAddress] = useState([])
 
    const dispatch = useDispatch();
    useEffect(() => {
@@ -60,7 +53,7 @@ export default function ModalAddress({ visible, onCreate, onCancel }) {
                .validateFields()
                .then(() => {
                   form.resetFields();
-                  onCreate(address);
+                  onCreate([address]);
                })
                .catch((info) => {
                   console.log('Validate Failed:', info);

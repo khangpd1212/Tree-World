@@ -1,13 +1,15 @@
-import React from 'react'
 import { EnvironmentFilled, RightOutlined } from '@ant-design/icons';
 import { BtnOutlineGray, BtnOutlineBlue } from '../utils/Button'
 import ModalAddress from "./ModalAddress";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { showTextAddress, selectAddress } from "redux/address";
 
 export default function AddressPayment() {
    const [visible, setVisible] = useState(false);
    const [addressLocal, setAddressLocal] = useState([]);
    const [addressText, setAddressText] = useState([]);
+   const dispatch = useDispatch();
 
    useEffect(() => {
       let addressGetLocal = JSON.parse(localStorage.getItem("address"));
@@ -27,8 +29,10 @@ export default function AddressPayment() {
       setAddressLocal(JSON.parse(addressStorage));
    }
    const onCreate = (values) => {
-      sessionStorage.setItem("address" , JSON.stringify([values]));
+      console.log(values)
+      sessionStorage.setItem("address" , JSON.stringify(values));
       setAddressText(JSON.parse(sessionStorage.getItem("address")));
+      dispatch(showTextAddress(values))
       setVisible(false);
    };
 
@@ -61,7 +65,6 @@ export default function AddressPayment() {
                      <span className="bottom__content" key={index}>
                         {text.name} - {text.phone} <br />
                         {text.street}, {text.ward}, {text.district}, {text.province}
-
                      </span>
                   )))
                }

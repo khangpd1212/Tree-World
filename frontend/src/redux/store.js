@@ -6,6 +6,7 @@ import productReducer from "./product";
 import catalogReducer from "./catalog";
 import cartReducer from "./cart";
 import addressReducer from "./address";
+import feeReducer from "./fee";
 export const store = configureStore({
   reducer: {
     userState: userReducer,
@@ -14,6 +15,7 @@ export const store = configureStore({
     productState: productReducer,
     catalogState: catalogReducer,
     cartState: cartReducer,
-    addressState: addressReducer
+    addressState: addressReducer,
+    feeState: feeReducer,
   },
 });

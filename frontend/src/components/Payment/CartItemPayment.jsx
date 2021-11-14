@@ -1,16 +1,23 @@
 import { Col, Row, Input} from "antd";
 import CartItem from "components/Cart/CartItem";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchFee, selectFee } from "redux/fee";
 import { selectCarts, getTotals } from 'redux/cart';
+import { selectAddress } from "redux/address";
 import { useEffect } from "react";
 
 export default function CartItemPayment() {
     const { TextArea } = Input;
+    const { textAddress } = useSelector(selectAddress);
     const { cartTotalAmount, cartItems } = useSelector(selectCarts);
-    const dispath = useDispatch();
+    const { feeItems } = useSelector(selectFee);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispath(getTotals());
+        dispatch(fetchFee(textAddress))
+    }, [textAddress])
+    useEffect(() => {
+        dispatch(getTotals());
     }, [cartItems]);
 
     return (
@@ -40,7 +47,7 @@ export default function CartItemPayment() {
                                 <span>International express shipping</span>
                                 <span>Standard Express</span>
                                 <span>Receive goods on Oct 17 - Dec 11</span>
-                                <span>$5.00</span>
+                                <span>${feeItems.fee}</span>
                             </div>
 
                         </div>
@@ -49,7 +56,7 @@ export default function CartItemPayment() {
             </div>
             <div className="product__items--bottom">
                 <span className="total">
-                    total: ${cartTotalAmount.total}
+                    total: ${cartTotalAmount.total + feeItems.fee}
                 </span>
             </div>
         </div>

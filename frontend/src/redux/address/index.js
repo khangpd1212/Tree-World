@@ -1,4 +1,6 @@
-import { axiosRequest} from "../../utils/axios";
+import axios from "utils/axios";
+
+
 import {
    createSlice,
    createAsyncThunk,
@@ -6,7 +8,9 @@ import {
 } from "@reduxjs/toolkit";
 
 const initialState = {
-   textAddress: "",
+   textAddress: sessionStorage.getItem("address")
+      ? JSON.parse(sessionStorage.getItem("address"))
+      : JSON.parse(localStorage.getItem("address")),
    itemsAddress: [],
    loading: "idle",
    error: "",
@@ -16,8 +20,8 @@ export const fetchAddress = createAsyncThunk(
    "GET_ALL_ADDRESS",
    async (_, thunkAPI) => {
       try {
-         const response = await axiosRequest("get", "address/")
-         return await response;
+         const response = await axios.get("address")         
+         return await response.data;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
@@ -25,7 +29,7 @@ export const fetchAddress = createAsyncThunk(
 )
 
 export const addressSlice = createSlice({
-   name: "address/",
+   name: "address",
    initialState,
    reducers: {
       showTextAddress: (state, action) => {

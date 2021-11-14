@@ -3,15 +3,14 @@ import { Button, Input, Layout, Radio, Row } from "antd";
 import React from "react";
 import { selectCatalogs } from "redux/catalog";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useState } from "react";
 const { Sider } = Layout;
 
 function SideComponent() {
   const history = useHistory();
   const { catalogList } = useSelector(selectCatalogs);
-  const { urlStatus } = useSelector((state) => state.layoutState);
-
+  const { catalog } = useParams();
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [err, setErr] = useState(false);
@@ -21,18 +20,9 @@ function SideComponent() {
       setErr(true);
     } else {
       setErr(false);
-      if (urlStatus.search.indexOf("priceMin")) {
-        console.log(urlStatus.search.search("priceMin"));
-      }
-      history.push({
-        pathname: urlStatus.pathname,
-        search:
-          urlStatus.search === ""
-            ? `?priceMin=${priceMin}&priceMax=${priceMax}&page=0`
-            : `${urlStatus.search}&priceMin=${priceMin}&priceMax=${priceMax}&page=0`,
-      });
     }
   };
+  console.log(catalog.substring(catalog.indexOf(".") + 1, catalog.length));
   return (
     <div className="tabletHidden">
       <div className="product__section--title">
@@ -44,18 +34,10 @@ function SideComponent() {
         <h3 className="side__title">Categories</h3>
         <Radio.Group
           defaultValue=""
-          value={
-            urlStatus.pathname
-              ? urlStatus.pathname.substring(
-                  "/product/".length,
-                  urlStatus.pathname.length
-                )
-              : ""
-          }
+          value={catalog ? catalog : ""}
           buttonStyle="solid"
           onChange={(e) => {
             history.push(`/product/${e.target.value}`);
-            // setState({status: true, content: e.target.value})
           }}
         >
           {catalogList &&
@@ -97,6 +79,8 @@ function SideComponent() {
           <Row align="middle">
             <Button onClick={handleSubmit}>Apply</Button>
             {err ? (
+              <></>
+            ) : priceMin === "" || priceMax === "" ? (
               <></>
             ) : (
               <p className="price--range__show">

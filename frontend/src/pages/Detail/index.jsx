@@ -1,6 +1,5 @@
-import { Row, Col, Typography, Radio } from "antd";
-import { Button, Input, Modal } from "antd";
-import { CheckCircleFilled, SearchOutlined } from "@ant-design/icons";
+import { Row, Col, Radio } from "antd";
+import { CheckCircleFilled,MessageFilled,ShoppingCartOutlined,StarFilled,SmileFilled,FacebookFilled,InstagramFilled,SkypeFilled,TwitterCircleFilled } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { setLayoutStatus } from "redux/layout";
 import FormSearch from "components/Product/FormSearch";
@@ -63,13 +62,13 @@ export default function Detail() {
             </div>
           </div>
           <div className="stock">
-            <p icon={<CheckCircleFilled />}>10 in stock</p>
-            <p>share now: </p>
+            <p> {<CheckCircleFilled className="iconV" />}10 in stock</p>
+            <p>SHARE NOW: <MessageFilled className="icon" /> <FacebookFilled className="icon" /> <InstagramFilled className="icon" /> <SkypeFilled className="icon" /> <TwitterCircleFilled className="icon" /> </p>
           </div>
           <div className="footerInfor">
             <div>
-              <button className="btnCart">ADD TO CART</button>
-              <button className="btnBy">BY NOW</button>
+              <button className="btn"> <ShoppingCartOutlined className="Cart" />ADD TO CART</button>
+              <button className="btn">BY NOW</button>
             </div>
           </div>
         </Col>
@@ -102,26 +101,87 @@ export default function Detail() {
           <div className="commnet">
             <div className="itemComment">
               <div className="avt_name">
-                <div className="avt">
-                  avt
+                <div >
+                <SmileFilled className="avt" />
                 </div>
                 <div className="name">
-                  name
+                  <h3>tnu_yeulinhnhieu</h3>
                   <div className="star">
-                    star
+                  <StarFilled /><StarFilled /><StarFilled /><StarFilled />
                   </div>
                 </div>
               </div>
-
               <div className="textCommnet">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id accusantium, labore nam obcaecati asperiores nihil officiis earum voluptate maiores sed?
+                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id accusantium, labore nam obcaecati asperiores nihil officiis earum voluptate maiores sed?</h4>
               </div>
-              <div className="hritemComment">hi</div>
+              <div className="hritemComment"></div>
+            </div>
+            <div className="itemComment">
+              <div className="avt_name">
+                <div >
+                <SmileFilled className="avt" />
+                </div>
+                <div className="name">
+                  <h3>tnu_yeulinhnhieu</h3>
+                  <div className="star">
+                  <StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                  </div>
+                </div>
+              </div>
+              <div className="textCommnet">
+                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id accusantium, labore nam obcaecati asperiores nihil officiis earum voluptate maiores sed?</h4>
+              </div>
+              <div className="hritemComment"></div>
+            </div>
+            <div className="itemComment">
+              <div className="avt_name">
+                <div >
+                <SmileFilled className="avt" />
+                </div>
+                <div className="name">
+                  <h3>tnu_yeulinhnhieu</h3>
+                  <div className="star">
+                  <StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                  </div>
+                </div>
+              </div>
+              <div className="textCommnet">
+                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id accusantium, labore nam obcaecati asperiores nihil officiis earum voluptate maiores sed?</h4>
+              </div>
+              <div className="hritemComment"></div>
+            </div>
+            <div className="itemComment">
+              <div className="avt_name">
+                <div >
+                <SmileFilled className="avt" />
+                </div>
+                <div className="name">
+                  <h3>tnu_yeulinhnhieu</h3>
+                  <div className="star">
+                  <StarFilled /><StarFilled /><StarFilled /><StarFilled />
+                  </div>
+                </div>
+              </div>
+              <div className="textCommnet">
+                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id accusantium, labore nam obcaecati asperiores nihil officiis earum voluptate maiores sed?</h4>
+              </div>
+              <div className="hritemComment"></div>
             </div>
           </div>
+          
         </Col>
         <Col className="voucher" xs={24} sm={8}>
           <p>SHOP DISCOUNT</p>
+          <div className="voucherItem">
+            <div className="voucherMain">
+              <h4>15% off</h4>
+              <p>maximum $5.00</p>
+              <h5>20/09/2021-15/10/2021</h5>
+            </div>
+            <div className="voucherAdd">
+              <button>SAVE</button>
+            </div>
+          </div>
         </Col>
 
 

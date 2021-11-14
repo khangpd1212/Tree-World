@@ -44,7 +44,7 @@ export default function BaseLayout() {
   }, [themeState]);
 
   useEffect(() => {
-    // dispatch(fetchProducts());
+    dispatch(fetchProducts());
     dispatch(fetchCatalogs());
     dispatch(fetchUsers());
   }, [dispatch]);

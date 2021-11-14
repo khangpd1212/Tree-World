@@ -13,25 +13,10 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk(
   "GET_ALL_PRODUCTS",
-  async (options = {}, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      let response;
-      if (
-        options &&
-        Object.keys(options).length === 0 &&
-        Object.getPrototypeOf(options) === Object.prototype
-      ) {
-        response = await axios.get("product/");
-      } else {
-        let text = "filter?";
-        for (let i in options) {
-          text += `${i}=${options[i]}&`;
-        }
-        let query = text.substring(0, text.length - 1);
-        response = await axios.get(`product/${query}`);
-      }
-
-      return await response.data;
+      const response = await axios.get("product/");
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }

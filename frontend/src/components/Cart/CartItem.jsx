@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCarts, addItemToCart, btnDecrement, removeCart } from 'redux/cart';
-import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import "../../styles/Cart/CartItem.scss";
 
@@ -9,23 +9,29 @@ export default function CartItem() {
 
    const { cartItems } = useSelector(selectCarts);
    const dispath = useDispatch();
-   const history = useHistory()
+   const [state, setstate] = useState(cartItems)
 
    const handleDecrement = (cartItems) => {
       dispath(btnDecrement(cartItems))
-      history.push("/cart")
    }
    const handleIncrement = (cartItems) => {
       dispath(addItemToCart(cartItems));
-      history.push("/cart")
    }
    const handleRemoveCart = (cartItems) => {
       dispath(removeCart(cartItems));
-      history.push("/cart")
    }
    const handleChange = (e) => {
       e.target.value = cartItems.quantity;
    }
+   
+   // re-render
+   useEffect(() => {
+      setstate(cartItems);
+      return () => {
+         setstate([]);
+      }
+   }, [cartItems])
+
 
    return (
       <div className="cart__product">
@@ -73,8 +79,8 @@ export default function CartItem() {
                                  </button>
 
                                  <input type="number" 
-                                 onChange={handleChange} 
-                                 value={cartItem.quantity} 
+                                    onChange={handleChange} 
+                                    value={cartItem.quantity}
                                  />
 
                                  <button className="btn-increment" 

@@ -6,6 +6,9 @@ import { Link as LinkRoute } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
 import "styles/header.scss";
+import { useDispatch } from "react-redux";
+import { setCatalog, setDefault } from "redux/filter";
+import { setDefaultStatus, setFilterStatus } from "redux/layout";
 
 function BaseHeader() {
   const { Header } = Layout;
@@ -46,6 +49,7 @@ function BaseHeader() {
       window.removeEventListener("scroll", transitionNavBar);
     };
   });
+  const dispatch = useDispatch();
 
   return (
     <Header
@@ -68,7 +72,15 @@ function BaseHeader() {
                 <LinkRoute to={"/about"}>About</LinkRoute>
               </div>
               <div className="dropdown__menu">
-                <LinkRoute to={"/product"}>Product</LinkRoute>
+                <LinkRoute
+                  to={"/product"}
+                  onClick={() => {
+                    dispatch(setDefault());
+                    dispatch(setDefaultStatus());
+                  }}
+                >
+                  Product
+                </LinkRoute>
                 <div
                   className={
                     show
@@ -83,6 +95,10 @@ function BaseHeader() {
                           <li>
                             <LinkRoute
                               to={`/product/${item.catalog_name}-cat.${item._id}`}
+                              onClick={() => {
+                                dispatch(setCatalog(item._id));
+                                dispatch(setFilterStatus());
+                              }}
                             >
                               {item.catalog_name}
                             </LinkRoute>
@@ -135,14 +151,28 @@ function BaseHeader() {
                     </LinkRoute>
                   </div>
                   <div className="navbar__menu dropdown__menu">
-                    <LinkRoute to={"/product"} onClick={onClose}>
+                    <LinkRoute
+                      to={"/product"}
+                      onClick={() => {
+                        dispatch(setDefault());
+                        dispatch(setDefaultStatus());
+                        onClose();
+                      }}
+                    >
                       Product
                     </LinkRoute>
                     <Menu mode="inline">
                       <SubMenu>
                         {catalogList &&
                           catalogList.map((item, index) => (
-                            <Menu.Item key={index}>
+                            <Menu.Item
+                              key={index}
+                              onClick={() => {
+                                dispatch(setCatalog(item._id));
+                                dispatch(setFilterStatus());
+                                onClose();
+                              }}
+                            >
                               {item.catalog_name}
                             </Menu.Item>
                           ))}

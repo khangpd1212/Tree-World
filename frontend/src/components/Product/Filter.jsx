@@ -1,29 +1,52 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Radio, Row, Select } from "antd";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import { setUrlStatus } from "redux/layout";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setBestSeller,
+  setHot,
+  setPage,
+  sortDefault,
+  sortPrice,
+} from "redux/filter";
+import { setFilterStatus } from "redux/layout";
+
 const { Option } = Select;
 function Filter() {
-  const history = useHistory();
-  const location = useLocation();
   const dispatch = useDispatch();
+  const [sort, setSort] = useState("default");
+  const [qty, setQty] = useState(1);
+  const { page } = useSelector((state) => state.filterState);
+
   const changePrice = (value) => {
-    console.log(location);
-    // dispatch(
-    //   setUrlStatus({
-    //     pathname: `${location.pathname}?order=${value}&price=true`,
-    //     search: `?order=${value}&price=true`,
-    //   })
-    // );
-    history.push({
-      pathname: location.pathname,
-      search: `?order=${value}&price=true`,
-    });
-  };
-  const changeSort = (value) => {
     console.log(value);
+    setSort(value);
+    dispatch(setFilterStatus());
+    dispatch(sortPrice(value));
+  };
+  const changeSort = (e) => {
+    console.log(e.target.value);
+    setSort(e.target.value);
+    dispatch(setFilterStatus());
+
+    if (e.target.value === "hot") {
+      dispatch(setHot());
+    } else if (e.target.value === "sales") {
+      dispatch(setBestSeller());
+    } else {
+      dispatch(sortDefault());
+    }
+  };
+  const increaseQty = () => {
+    setQty(qty + 1);
+    dispatch(setPage(qty));
+    dispatch(setFilterStatus());
+  };
+  const descreaseQty = () => {
+    setQty(qty - 1);
+    dispatch(setPage(qty - 2));
+    dispatch(setFilterStatus());
   };
   return (
     <div className="product__section--filter">
@@ -37,11 +60,12 @@ function Filter() {
           <Radio.Group
             defaultValue="default"
             buttonStyle="solid"
+            value={sort}
             onChange={changeSort}
           >
             <Radio.Button value="default">Default Sorting</Radio.Button>
-            <Radio.Button value="hot">Hot New</Radio.Button>
-            <Radio.Button value="best">Best Seller</Radio.Button>
+            <Radio.Button value="hot">Hot</Radio.Button>
+            <Radio.Button value="sales">Best Seller</Radio.Button>
 
             <Select placeholder="PRICE" onChange={changePrice}>
               <Option value="asc">Low to High</Option>
@@ -50,12 +74,19 @@ function Filter() {
           </Radio.Group>
         </div>
         <div className="pagination__btn">
-          <span className="pagination__btn--show">1/100</span>
+          <span className="pagination__btn--show">{page + 1}/100</span>
           <div className="pagination__btn--group">
-            <Button disabled>
-              <LeftOutlined />
-            </Button>
-            <Button>
+            {page + 1 === 1 ? (
+              <Button disabled>
+                <LeftOutlined />
+              </Button>
+            ) : (
+              <Button onClick={descreaseQty}>
+                <LeftOutlined />
+              </Button>
+            )}
+
+            <Button onClick={increaseQty}>
               <RightOutlined />
             </Button>
           </div>

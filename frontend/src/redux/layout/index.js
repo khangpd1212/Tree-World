@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   layoutStatus: false,
+  filterStatus: false,
 };
 
 const layoutSlice = createSlice({
@@ -11,8 +12,15 @@ const layoutSlice = createSlice({
     setLayoutStatus: (state, action) => {
       state.layoutStatus = action.payload;
     },
+    setFilterStatus: (state) => {
+      return { ...state, filterStatus: true };
+    },
+    setDefaultStatus: (state) => {
+      return { ...state, filterStatus: false };
+    },
   },
 });
 
-export const { setLayoutStatus } = layoutSlice.actions;
+export const { setLayoutStatus, setFilterStatus, setDefaultStatus } =
+  layoutSlice.actions;
 export default layoutSlice.reducer;

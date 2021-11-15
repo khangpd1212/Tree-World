@@ -171,17 +171,35 @@ export default function Detail() {
           
         </Col>
         <Col className="voucher" xs={24} sm={8}>
-          <p>SHOP DISCOUNT</p>
-          <div className="voucherItem">
-            <div className="voucherMain">
-              <h4>15% off</h4>
-              <p>maximum $5.00</p>
-              <h5>20/09/2021-15/10/2021</h5>
+            <div>
+              <p>SHOP DISCOUNT</p>
+              <div className="voucherItem">
+                <div className="voucherMain">
+                  <h4>15% off</h4>
+                  <p>maximum $5.00</p>
+                  <h5>20/09/2021-15/10/2021</h5>
+                </div>
+                <div className="voucherAdd">
+                  <button>SAVE</button>
+                </div>
+              </div>
+              <div className="voucherItem">
+                <div className="voucherMain">
+                  <h4>15% off</h4>
+                  <p>maximum $5.00</p>
+                  <h5>20/09/2021-15/10/2021</h5>
+                </div>
+                <div className="voucherAdd">
+                  <button>SAVE</button>
+                </div>
+              </div>
             </div>
-            <div className="voucherAdd">
-              <button>SAVE</button>
+            <div className="hotSelling">
+              <p>HOT SELLING</p>
+              <div className="img">
+                <img src="./image/product3.pbg" alt="" />
+              </div>
             </div>
-          </div>
         </Col>
 
 

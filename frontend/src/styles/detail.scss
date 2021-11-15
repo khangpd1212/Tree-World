@@ -320,24 +320,90 @@
       }
     }
   }
-  .voucherItem {
-    display: flex;
-    margin: auto;
-    background-color: $pink-color;
-    width: 350px;
-    .voucherMain {
-      border-right: 1px dashed $bode--voucher-color;
-      padding: 10px;
-      width: 65%;
-      h4 {
-        padding: 0;
-        margin: 0;
-        font-size: 24px;
-        font-family: $font-SVNNewton;
-        color: $red-color;
+  .voucher {
+    height: 350px;
+    .voucherItem {
+      display: flex;
+      margin: auto auto 20px;
+      background-color: $pink-color;
+      width: 350px;
+      position: relative;
+      &::after {
+        position: absolute;
+        content: "";
+        display: block;
+        height: 10px;
+        bottom: -10px;
+        /* -height */
+        left: 0;
+        right: 0;
+        /* TODO Add browser prefixes */
+        background: linear-gradient(
+            45deg,
+            transparent 33.333%,
+            $pink-color 33.333%,
+            $pink-color 66.667%,
+            transparent 66.667%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 33.333%,
+            $pink-color 33.333%,
+            $pink-color 66.667%,
+            transparent 66.667%
+          );
+        background-size: 8px 20px;
+        /* toothSize doubleHeight */
+        background-position: 0 -10px;
+      }
+      .voucherMain {
+        border-right: 1px dashed $bode--voucher-color;
+        padding: 10px 10px 10px 20px;
+        width: 65%;
+        h4 {
+          padding: 0;
+          margin-left: 10px;
+          font-size: 24px;
+          font-family: $font-SVNSwahington;
+          color: $red-color;
+        }
+        p {
+          font-size: 14px;
+          color: $red-color;
+          font-family: $font-SFUToledoMedium;
+        }
+        h5 {
+          font-size: 11px;
+          font-family: $font-SFUToledoMedium;
+          margin-left: 10px;
+        }
+      }
+      .voucherAdd {
+        margin: auto;
+        button {
+          background-color: $red-color;
+          border: none;
+          border-radius: 3px;
+          font-size: 18px;
+          color: $light-color;
+          padding: 9px 13px;
+        }
+        button:hover {
+          background-color: $forth-color;
+          transition-duration: 1s, 1s, 1s, 1s, 1s, 1s;
+        }
       }
     }
-    .voucherAdd {
+    .hotSelling {
+      margin-top: 60px;
+      background: $light-color;
+      .img {
+        width: 300px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
     }
   }
 

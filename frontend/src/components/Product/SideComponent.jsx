@@ -5,14 +5,19 @@ import { selectCatalogs } from "redux/catalog";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCatalog, setPrice } from "redux/filter";
+import { setFilterStatus } from "redux/layout";
 const { Sider } = Layout;
 
 function SideComponent() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { catalogList } = useSelector(selectCatalogs);
   const { catalog } = useParams();
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
+
   const [err, setErr] = useState(false);
   const handleSubmit = () => {
     console.log(priceMin, priceMax);
@@ -20,9 +25,11 @@ function SideComponent() {
       setErr(true);
     } else {
       setErr(false);
+      dispatch(setFilterStatus());
+      dispatch(setPrice({ priceMin, priceMax }));
     }
   };
-  console.log(catalog.substring(catalog.indexOf(".") + 1, catalog.length));
+  // console.log(catalog.substring(catalog.indexOf(".") + 1, catalog.length));
   return (
     <div className="tabletHidden">
       <div className="product__section--title">
@@ -37,6 +44,16 @@ function SideComponent() {
           value={catalog ? catalog : ""}
           buttonStyle="solid"
           onChange={(e) => {
+            dispatch(
+              setCatalog(
+                e.target.value.substring(
+                  e.target.value.indexOf(".") + 1,
+                  e.target.value.length
+                )
+              )
+            );
+            dispatch(setFilterStatus());
+
             history.push(`/product/${e.target.value}`);
           }}
         >

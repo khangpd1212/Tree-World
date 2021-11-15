@@ -4,7 +4,8 @@ import postReducer from "./post";
 import layoutReducer from "./layout";
 import productReducer from "./product";
 import catalogReducer from "./catalog";
-
+import cartReducer from "./cart";
+import addressReducer from "./address";
 export const store = configureStore({
   reducer: {
     userState: userReducer,
@@ -12,5 +13,7 @@ export const store = configureStore({
     layoutState: layoutReducer,
     productState: productReducer,
     catalogState: catalogReducer,
+    cartState: cartReducer,
+    addressState: addressReducer
   },
 });

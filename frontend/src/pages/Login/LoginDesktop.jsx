@@ -1,8 +1,8 @@
-import React, { memo } from "react";
 import { Modal } from "antd";
+import React, { memo } from "react";
 import { useDispatch } from "react-redux";
-import { login, selectUsers } from "redux/user";
-import { useSelector } from "react-redux";
+import { login } from "redux/user";
+import "styles/Login/LoginDesktop.scss";
 
 function LoginDesktop(props) {
   const dispatch = useDispatch()

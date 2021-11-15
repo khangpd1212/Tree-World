@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from "antd";
 import { CloseOutlined } from '@ant-design/icons';
-import "styles/login.scss";
+import "styles/Login/LoginMobile.scss";
 import { Link } from 'react-router-dom';
 export default function Login() {
     return (

@@ -32,7 +32,7 @@ export default function BaseLayout() {
     if (getTheme === "dark") {
       setThemeState(true);
     }
-  }, []);
+  }, [themeState]);
   useEffect(() => {
     if (themeState) {
       localStorage.setItem("Theme", "dark");
@@ -44,7 +44,7 @@ export default function BaseLayout() {
   }, [themeState]);
 
   useEffect(() => {
-    // dispatch(fetchProducts());
+    dispatch(fetchProducts());
     dispatch(fetchCatalogs());
     dispatch(fetchUsers());
   }, [dispatch]);
@@ -57,6 +57,7 @@ export default function BaseLayout() {
             type="checkbox"
             id="checkbox"
             checked={themeState}
+            onChange={() => themeState}
             onClick={() => setThemeState(!themeState)}
           />
           <div className="slider round"></div>

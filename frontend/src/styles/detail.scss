@@ -5,6 +5,8 @@
 .detail {
   margin: 0 5vw;
   position: relative;
+  @include mobile {
+  }
   .pro {
     margin-top: 20vh;
   }
@@ -54,6 +56,7 @@
   }
   .succulent {
     font-size: 80px;
+    margin-top: 50px;
     font-family: $font-SFUToledoMedium;
     line-height: 75px;
     color: $fifth-color;
@@ -61,6 +64,7 @@
   }
   .hrNewCollect {
     width: 74.5%;
+    margin-top: 50px;
     height: 1px;
     background-color: $dark--hr-color;
     position: relative;
@@ -78,6 +82,7 @@
   }
   .price {
     font-size: 72px;
+    margin-top: 30px;
     color: $dark-color;
     font-family: $font-SFRMeta;
     span {
@@ -120,8 +125,15 @@
         background-color: black;
       }
     }
+    .textQuantyti {
+      font-family: $font-SFRMeta;
+      font-size: 20px;
+      color: $light--secondary-color;
+      margin-left: 100px;
+      height: 10px;
+    }
     .quantity {
-      margin: auto;
+      margin: 50px auto auto -75px;
       display: flex;
       .btn1 {
         width: 23px;
@@ -134,8 +146,9 @@
         border-top: 1px solid;
         border-bottom: 1px solid;
         height: 30px;
-        width: 70px;
+        width: 55px;
         text-align: center;
+        border-radius: 0;
       }
       .btn3 {
         height: 30px;
@@ -147,23 +160,37 @@
     }
   }
   .stock {
-    margin-top: 5vh;
+    margin-top: 60px;
+    .iconV {
+      font-size: 26px;
+      padding: 10px;
+      margin: auto;
+    }
+    .icon {
+      font-size: 26px;
+      padding: 10px;
+      margin: auto;
+    }
+    .icon:hover {
+      color: $forth-color;
+    }
   }
   .footerInfor {
-    .btnCart {
+    .btn {
+      font-size: 26px;
       background-color: $dark-color;
       color: white;
       border: none;
-      width: 25%;
-      height: 32px;
-    }
-    .btnBy {
-      background-color: $dark-color;
-      color: white;
-      border: none;
-      width: 15%;
-      height: 32px;
+      padding: 7px;
       margin-left: 30px;
+      margin-top: 30px;
+    }
+    .btn:hover {
+      background-color: $forth-color;
+      font-family: 600;
+    }
+    .Cart {
+      margin-right: 10px;
     }
   }
   .textD {
@@ -174,6 +201,7 @@
       background-color: $dark--hr-color;
       position: relative;
       margin: 35px 0px 15px 0px;
+      font-family: $font-SFUHelveticaLight;
       &::before {
         position: absolute;
         content: "product description";
@@ -214,6 +242,7 @@
     margin-right: 5vh;
     background-color: white;
     border: 1px solid $boder-color;
+    font-family: $font-SFRMeta;
     display: flex;
   }
   .numberStar {
@@ -223,16 +252,18 @@
     text-align: center;
     align-items: center;
     font-size: 41px;
+    font-family: $font-SFUMetaBold;
+    color: $light--red-color;
   }
   .btnStar {
     button {
       padding: 0 10px;
       margin: 10px 20px;
+      border: 1px solid black;
     }
     button:hover {
       border: 1px solid $bode--hover-color;
       color: $bode--hover-color;
-      font-size: 14.5px;
     }
   }
   .voucher {
@@ -241,33 +272,121 @@
     width: 100%;
     margin-left: 40px;
     border: 1px solid $boder-color;
-    // p {
-    //   margin: 10px;
-    // }
+    p {
+      margin: 10px;
+    }
   }
   .commnet {
     width: 100%;
-    height: 10px;
+    padding: 30px;
     background-color: white;
     margin-top: 3vh;
     .itemComment {
+      .avt_name {
+        display: flex;
+        margin-top: 10px;
+        .avt {
+          font-size: 48px;
+          color: $forth-color;
+          margin: 10px 10px 0 10px;
+        }
+        .name {
+          .star {
+            color: yellow;
+            margin: 0 4px;
+          }
+        }
+      }
+      .textCommnet {
+        margin-left: 40px;
+        h4 {
+          padding: 10px;
+        }
+      }
+      .hritemComment {
+        position: relative;
+        margin: auto;
+        width: 95%;
+        height: 1px;
+        opacity: 0.5;
+        background-color: $secondary-color;
+        &::before {
+          position: absolute;
+          content: "";
+          left: 0;
+          bottom: 0;
+          transform: translate(50%, 0%);
+        }
+      }
     }
   }
+  .voucherItem {
+    display: flex;
+    margin: auto;
+    background-color: $pink-color;
+    width: 350px;
+    .voucherMain {
+      border-right: 1px dashed $bode--voucher-color;
+      padding: 10px;
+      width: 65%;
+      h4 {
+        padding: 0;
+        margin: 0;
+        font-size: 24px;
+        font-family: $font-SVNNewton;
+        color: $red-color;
+      }
+    }
+    .voucherAdd {
+    }
+  }
+
   .aboveSlide {
+    display: flex;
     width: 100%;
-    height: 3px;
-    position: relative;
-    margin: 5vh 0;
-    background-color: black;
-    ::before {
-      position: absolute;
-      content: "hello";
-      left: 0;
-      bottom: 0;
-      transform: translate(100%, 50%);
-      font-size: 18px;
-      // color: $light--secondary-color;
-      // font-family: $font-SFRMeta;
+    margin: 30px;
+    .aboveSlide_Right {
+      width: 28%;
+      height: 2.5px;
+      margin: 5vh;
+      background-color: $dark--hr-color;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        right: 0;
+        bottom: 0;
+        transform: translate(-800%, 35%);
+        font-size: 18px;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+      }
+    }
+    .aboveSlide_Mid {
+      margin: -10px auto;
+      padding-left: 10px;
+      width: 40%;
+      font-weight: 500;
+      font-size: 54px;
+      color: $secondary-color;
+      font-family: $font-SVNNewton;
+    }
+    .aboveSlide_Left {
+      width: 28%;
+      height: 2.5px;
+      margin: 5vh;
+      background-color: $dark--hr-color;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0;
+        transform: translate(-800%, 35%);
+        font-size: 18px;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+      }
     }
   }
 }

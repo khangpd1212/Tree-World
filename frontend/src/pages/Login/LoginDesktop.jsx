@@ -35,7 +35,7 @@ function LoginDesktop() {
         <img src="/logo.png" alt="tree-world-logo" className="logo-login" />
         <img src="images/bg_login.png" alt="bg-login" className="bg-login" />
       </div>
-      <h1 className="title-login">Sign In</h1>
+      <h1 className="title-login">Welcome!</h1>
       <form className="content-login">
         <input
           className="content-login_input"
@@ -59,7 +59,7 @@ function LoginDesktop() {
           </a>
         </div>
         <button type="submit" className="login-btn_submit">
-          login
+          sign in
         </button>
       </form>
       <div className="footer-login">

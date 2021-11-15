@@ -1,3 +1,4 @@
+import { LeftOutlined } from '@ant-design/icons';
 export default function PaymentMethod() {
     return (
         <div className="method">
@@ -9,7 +10,6 @@ export default function PaymentMethod() {
                 <button className="method__top--wallet">Electronic Wallet</button>
                 <button className="method__top--cod">Cod</button>
             </div>
-            <hr/>
             <div className="method__container">
                 <div className="momo">
                     <input className="momo__checkbox" type="radio"/>
@@ -28,7 +28,6 @@ export default function PaymentMethod() {
                     </div>
                 </div>
             </div>
-            <hr />
             <div className="method__bottom">
                 <div className="method__bottom--content">
                     <div className="product__total title-submenu">
@@ -49,10 +48,9 @@ export default function PaymentMethod() {
                     </div>
                 </div>
             </div>
-            <hr/>
             <div className="order__now">
                 <div className="back__button">
-                    {/* <LeftOutlined /> */}
+                    <LeftOutlined className="back__icon" />
                     <span>back</span>
                 </div>
                 <button className="order__button">Order now</button>

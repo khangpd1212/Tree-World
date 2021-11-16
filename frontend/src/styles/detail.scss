@@ -455,4 +455,27 @@
       }
     }
   }
+  .slidePro {
+    margin: 50px 0 200px;
+    .itemPro {
+      width: 80% !important;
+      background-color: $boder-color;
+      margin: 50px;
+      .itemImg {
+        width: 80%;
+        margin: auto;
+      }
+      .info {
+        display: flex;
+        padding: 10px;
+        h4 {
+          width: 60%;
+        }
+        p {
+          width: 30%;
+          text-align: right;
+        }
+      }
+    }
+  }
 }

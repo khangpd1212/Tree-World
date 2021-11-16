@@ -118,6 +118,18 @@ router.post("/", verify, async (req, res) => {
   }
 });
 
+//search
+router.post("/search", async (req, res) => {
+  const { keyword } = req.body;
+  try {
+    await Product.search(keyword, function (err, data) {
+      res.status(200).json(data);
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
 //UPDATE
 router.put("/:id", verify, async (req, res) => {
   if (req.user.isAdmin) {

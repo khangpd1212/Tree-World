@@ -5,10 +5,12 @@ import layoutReducer from "./layout";
 import productReducer from "./product";
 import catalogReducer from "./catalog";
 import cartReducer from "./cart";
-import paymentReducer from "./payment";
+// import paymentReducer from "./payment";
 import addressReducer from "./address";
 import loginReducer from "./login";
 import SignUpReducer from "./SignUp";
+import serviceReducer from "./service";
+import filterReducer from "./filter";
 
 export const store = configureStore({
   reducer: {
@@ -20,7 +22,9 @@ export const store = configureStore({
     cartState: cartReducer,
     loginState: loginReducer,
     SignUpState: SignUpReducer,
-    addressState: addressReducer,
     // paymentState: paymentReducer,
+    addressState: addressReducer,
+    serviceState: serviceReducer,
+    filterState: filterReducer,
   },
 });

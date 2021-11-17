@@ -99,42 +99,6 @@
       border: 1px solid #bab3b3;
       margin-top: 5px;
 
-
-
-      .product__items--top {
-         padding: 10px 40px;
-      }
-
-      .cart__product {
-         border: none;
-
-         &--title {
-            .title__only {
-               text-transform: lowercase;
-               font-size: 18px;
-               color: #696868;
-            }
-
-            .title__content {
-               display: flex;
-               align-items: center;
-               justify-content: space-between;
-
-               h2 {
-                  font-size: 16px;
-                  color: #bdbebe;
-                  font-family: $font-SFUHelveticaLight;
-               }
-
-               &--main {
-                  span {
-                     align-items: center;
-                  }
-               }
-            }
-         }
-      }
-
       .product__items--container {
          border-top: 1px dashed #ded9d9;
          border-bottom: 1px dashed #ded9d9;
@@ -148,6 +112,7 @@
          .right__items {
             font-size: 16px;
             display: flex;
+            gap: 15px;
             text-transform: lowercase;
 
             .shipping__title {
@@ -162,7 +127,7 @@
             .shipping__inf {
                text-transform: none;
                font-family: $font-SFUHelveticaLight;
-               padding: 0 15px;
+               justify-content: space-between;
                display: flex;
                flex-direction: column;
 
@@ -252,9 +217,10 @@
          border-bottom: 1px dashed #ded9d9;
          font-family: $font-SFUHelveticaLight;
 
-         .momo{
+         .momo {
             margin-bottom: 15px;
          }
+
          .method__wrapper {
             align-items: center;
             gap: 10px;
@@ -320,6 +286,7 @@
          .back__button {
             color: #817d7d;
             cursor: pointer;
+
             .back__icon {
                width: 20px;
                font-size: 12px;

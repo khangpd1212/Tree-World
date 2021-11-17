@@ -7,17 +7,24 @@ import PaginationComponent from "components/Product/PaginationComponent";
 import ProductList from "components/Product/ProductList";
 import SideComponent from "components/Product/SideComponent";
 import React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLayoutStatus } from "redux/layout";
-import { selectProducts } from "redux/product";
+import { filterProducts, selectProducts } from "redux/product";
 import "styles/product.scss";
 
 export default function Product() {
   const dispatch = useDispatch();
   dispatch(setLayoutStatus(true));
-
   const { productList } = useSelector(selectProducts);
-
+  const { filterProduct } = useSelector(selectProducts);
+  const { filterStatus } = useSelector((state) => state.layoutState);
+  const filterOptions = useSelector((state) => state.filterState);
+  const { searchStatus } = useSelector((state) => state.layoutState);
+  const { searchProduct } = useSelector(selectProducts);
+  useEffect(() => {
+    dispatch(filterProducts(filterOptions));
+  }, [dispatch, filterOptions]);
   return (
     <div className="product">
       <BreadCrumb page="Product" />
@@ -30,8 +37,18 @@ export default function Product() {
           </Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             <Filter />
-            <ProductList products={productList} />
-            <PaginationComponent />
+            <ProductList
+              products={searchStatus ? searchProduct : filterProduct}
+            />
+            <PaginationComponent
+              products={
+                filterStatus
+                  ? filterProduct
+                  : searchStatus
+                  ? searchProduct
+                  : productList
+              }
+            />
           </Col>
         </Row>
       </div>

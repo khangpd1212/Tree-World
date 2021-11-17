@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { setPage } from "redux/filter";
 import { selectProducts } from "redux/product";
 
-function PaginationComponent() {
+function PaginationComponent({ products }) {
   const dispatch = useDispatch();
   const { page } = useSelector((state) => state.filterState);
-  const { filterProduct } = useSelector(selectProducts);
+  // const { filterProduct } = useSelector(selectProducts);
   return (
     <div className="product__section--pagination">
       <Pagination

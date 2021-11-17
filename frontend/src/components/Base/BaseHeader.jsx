@@ -54,7 +54,11 @@ function BaseHeader() {
   return (
     <Header
       className={show ? "bg__change" : ""}
-      style={{ position: "fixed", zIndex: 999, width: "100%" }}
+      style={
+        show
+          ? { position: "fixed", zIndex: 999, width: "100%" }
+          : { width: "100%" }
+      }
     >
       <Row justify="space-between" align="middle">
         <Col className="gutter-row" xs={16} sm={7} md={6} xl={6}>

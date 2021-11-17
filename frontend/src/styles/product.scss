@@ -529,6 +529,13 @@
       &--img {
         margin-bottom: 5px;
         overflow: hidden;
+        height: 25vw;
+        @include tablet1 {
+          height: 35vw;
+        }
+        @include mobile1 {
+          height: 50vw;
+        }
         img {
           transition: all 0.4s;
         }

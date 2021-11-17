@@ -8,9 +8,9 @@ import {
 } from "@reduxjs/toolkit";
 
 const initialState = {
-   textAddress: localStorage.getItem("address")
-               ? JSON.parse(localStorage.getItem("address"))
-               : [],
+   textAddress: localStorage.getItem("address") 
+   ? JSON.parse(localStorage.getItem("address")) 
+   : [],
    itemsProvince: [],
    loading: "idle",
    error: "",

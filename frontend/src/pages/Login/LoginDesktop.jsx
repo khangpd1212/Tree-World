@@ -53,7 +53,7 @@ function LoginDesktop() {
         <img src="../../images/bg_login.png" alt="bg-login" className="bg-login" />
       </div>
       <h1 className="title-login">Welcome!</h1>
-      <form className="content-login"  onSubmit={e => handleLogin(e)}>
+      <form className="content-login">
         <input
           className="content-login_input"
           type="text"

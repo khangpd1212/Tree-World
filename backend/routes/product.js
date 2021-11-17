@@ -62,8 +62,8 @@ router.get("/filter", async (req, res) => {
         $match: match,
       },
       { $sort: sort },
-      { $skip: 5 * parseInt(page) },
-      { $limit: 5 },
+      { $skip: 2 * parseInt(page) },
+      { $limit: 2 },
     ]);
     res.status(200).json(products);
   } catch (error) {
@@ -115,6 +115,18 @@ router.post("/", verify, async (req, res) => {
     }
   } else {
     res.status(500).json({ message: "You are not allowed" });
+  }
+});
+
+//search
+router.post("/search", async (req, res) => {
+  const { keyword } = req.body;
+  try {
+    await Product.search(keyword, function (err, data) {
+      res.status(200).json(data);
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
 });
 

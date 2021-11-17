@@ -30,6 +30,11 @@
   font-family: "SVNNewton";
   src: local("SVNNewton"), url(../fonts/SVN-Newton.ttf) format("opentype");
 }
+@font-face {
+  font-family: "SVNSwashington";
+  src: local("SVNSwashington"),
+    url(../fonts/SVN-Swashington.otf) format("opentype");
+}
 
 $font-SFRMeta: "SFUMetaCaps";
 $font-SFUHelveticaLight: "SFUHelveticaLight";
@@ -38,3 +43,4 @@ $font-SFUToledoMedium: "SFUToledoMedium";
 $font-SFUMetaBold: "SFUMetaBold";
 $font-FuturaSCTOT: "FuturaSCTOT";
 $font-SVNNewton: "SVNNewton";
+$font-SVNSwahington: "SVNSwashington";

@@ -15,7 +15,7 @@ function ProductList({ products }) {
               price={product.price}
             />
           ))}
-        <ProductComponent
+        {/* <ProductComponent
           src="/images/product1.png"
           name="Hatiora Gaertneri"
           price="20.00"
@@ -64,7 +64,7 @@ function ProductList({ products }) {
           src="/images/product1.png"
           name="Hatiora Gaertneri"
           price="20.00"
-        />
+        /> */}
       </Row>
     </div>
   );

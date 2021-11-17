@@ -1,6 +1,7 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const initialState = {
+   loginState: [],
    isShowLogin: false,
 };
 
@@ -16,6 +17,10 @@ const loginSlice = createSlice({
       },
       onOkLogin: (state, action) => {
          state.isShowLogin = action.payload;
+      },
+      onLogin: (state, action) => {
+         state.loginState = action.payload;
+
       }
    },
 });
@@ -27,5 +32,5 @@ export const selectLogins = createSelector(
    (state) => state
 );
 
-export const { ShowModalLogin, onCancelLogin, onOkLogin } = loginSlice.actions;
+export const { ShowModalLogin, onCancelLogin, onOkLogin, onLogin } = loginSlice.actions;
 export default loginSlice.reducer;

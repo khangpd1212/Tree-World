@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCarts, addItemToCart, btnDecrement, removeCart } from 'redux/cart';
 import { useState, useEffect } from "react";
 
-import "../../styles/Cart/CartItem.scss";
+import "styles/Cart/CartItem.scss";
 
 export default function CartItem() {
 
    const { cartItems } = useSelector(selectCarts);
    const dispath = useDispatch();
-   const [state, setstate] = useState(cartItems)
+   const [, setstate] = useState(cartItems)
 
    const handleDecrement = (cartItems) => {
       dispath(btnDecrement(cartItems))

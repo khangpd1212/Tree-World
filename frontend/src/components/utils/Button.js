@@ -2,7 +2,12 @@ import React from 'react'
 
 export function BtnOutlineGray(props) {
    return (
-      <button type="submit" className="btn btn-outline outline-gray">
+      <button 
+      type="submit" 
+      className="btn btn-outline outline-gray" 
+      onClick={
+         () => props.handleOnClick(props)
+      }>
          {props.title}
       </button>
    )
@@ -10,7 +15,12 @@ export function BtnOutlineGray(props) {
 
 export function BtnOutlineBlue(props) {
    return (
-      <button type="submit" className="btn btn-outline outline-blue">
+      <button 
+      type="submit" 
+      className="btn btn-outline outline-blue" 
+      onClick={
+         () => props.handleOnClick(props)
+      }>
          {props.title}
       </button>
    )
@@ -19,7 +29,12 @@ export function BtnOutlineBlue(props) {
 export default function ButtonHome(props) {
 
    return (
-      <button type="submit" className="btn btn-home">
+      <button 
+      type="submit" 
+      className="btn btn-home"
+      onClick={
+         () => props.handleOnClick(props)
+      }>
          {props.title}
       </button>
    )

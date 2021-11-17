@@ -1,10 +1,10 @@
-
 import { Col, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCarts, getTotals } from 'redux/cart';
 import { useEffect } from "react";
 
 import "../../styles/Cart/CartTotal.scss";
+import { Link } from "react-router-dom";
 
 export default function CartTotal() {
    const { cartTotalAmount, cartItems } = useSelector(selectCarts);
@@ -26,7 +26,9 @@ export default function CartTotal() {
             <Col md={8}>
                <div className="total--right">
                   <span className="total__all">Total: <span className="price">${cartTotalAmount.total}</span></span>
-                  <button className="cart__button">Buy now</button>
+                  <Link to="/payment">
+                     <button className="cart__button">Buy now</button>
+                  </Link>
                </div>
             </Col>
          </Row>

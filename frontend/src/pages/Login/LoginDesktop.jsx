@@ -1,22 +1,52 @@
-import React, { memo } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "antd";
-import { useSelector } from "react-redux";
-import { selectUsers } from "../../redux/user";
+import { useSelector, useDispatch } from "react-redux";
+import { selectLogins, ShowModalLogin, onCancelLogin, onOkLogin, onLogin } from "redux/login";
+import { fetchUsers, selectUsers } from "redux/user";
+import { ShowModalSignUp } from "redux/SignUp"
 import "styles/Login/LoginDesktop.scss";
 
-function LoginDesktop(props) {
+
+function LoginDesktop() {
+  const [text, setText] = useState({
+    name: '',
+    pass: ''
+  })
   const { userList } = useSelector(selectUsers);
-  // console.log(userList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const { isShowLogin } = useSelector(selectLogins);
+  const handleShowSignUp = () => {
+    dispatch(ShowModalSignUp(true));
+    dispatch(ShowModalLogin(false))
+  }
+  const handleOk = (e) => {
+    // const a = userList.find(x.)
+    dispatch(onLogin(text))
+    // dispatch(onOkLogin(false));
+  }
+  const handleCancel = () => {
+    dispatch(onCancelLogin(false));
+  }
+  const handleChangeName = (e) => {
+    setText({...text, name: e.target.value});
+  }
+  const handleChangePassword = (e) => {
+    setText({...text, pass: e.target.value});
+  }
   return (
     <Modal
       width={"38vw"}
-      bodyStyle={{ padding: 0 }}
+      bodyStyle={{ padding: 0, position: "relative" }}
       closable={false}
       wrapClassName="modal"
       footer={null}
-      visible={props.showModal}
-      onOk={props.handleOk}
-      onCancel={props.handleCancel}
+      visible={isShowLogin}
+      // onOk={handleOk}
+      onCancel={handleCancel}
     >
       <div className="img-login">
         <img src="/logo.png" alt="tree-world-logo" className="logo-login" />
@@ -28,11 +58,13 @@ function LoginDesktop(props) {
           className="content-login_input"
           type="text"
           placeholder="Username*"
+          onChange={handleChangeName}
         />
         <input
           className="content-login_input"
           type="password"
           placeholder="Password*"
+          onChange={handleChangePassword}
         />
         <div className="wrapper-remember_forgot">
           <div className="wrapper-checkbox">
@@ -45,8 +77,8 @@ function LoginDesktop(props) {
             Forget Password?
           </a>
         </div>
-        <button type="submit" className="login-btn_submit">
-          login
+        <button onClick={handleOk} className="login-btn_submit">
+          sign in
         </button>
       </form>
       <div className="footer-login">
@@ -62,10 +94,10 @@ function LoginDesktop(props) {
           </a>
         </div>
         <div className="add-account">
-          <a href="#">Create account</a>
+          <div onClick={handleShowSignUp}>Create account</div>
         </div>
       </div>
     </Modal>
   );
 }
-export default memo(LoginDesktop);
+export default LoginDesktop;

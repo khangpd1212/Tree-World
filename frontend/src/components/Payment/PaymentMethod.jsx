@@ -1,7 +1,15 @@
 import { Radio, Space } from 'antd';
 import { useState } from "react";
+import { selectCarts } from 'redux/cart';
+import { selectFee } from "redux/service/fee";
+import { useSelector } from "react-redux";
+import {Link} from "react-router-dom";
+
 export default function PaymentMethod() {
+    const { feeItems } = useSelector(selectFee);
+    const { cartTotalAmount } = useSelector(selectCarts);
     const [radio, setRadio] = useState(1)
+    const feeItem = feeItems ? feeItems.service_fee : 0
 
     const onChangeRadio = (e) => {
         setRadio(e.target.value);
@@ -23,7 +31,7 @@ export default function PaymentMethod() {
                 <Radio.Group onChange={onChangeRadio} value={radio}>
                     <Space direction="vertical">
                         <Radio value={1} className="method__wrapper" id="momo">
-                            <label className="radio_flex" for="momo">
+                            <label className="radio_flex" htmlFor="momo">
                                 <img src="https://play-lh.googleusercontent.com/dQbjuW6Jrwzavx7UCwvGzA_sleZe3-Km1KISpMLGVf1Be5N6hN6-tdKxE5RDQvOiGRg" alt="" />
                                 <div className="method__wrapper--title">
                                     <span className="method__wrapper--title_1">MOMO Wallet</span>
@@ -32,7 +40,7 @@ export default function PaymentMethod() {
                             </label>
                         </Radio>
                         <Radio value={2} className="method__wrapper" id="bank">
-                            <label className="radio_flex" for="bank">
+                            <label className="radio_flex" htmlFor="bank">
                                 <img src="https://appoda.com/wp-content/uploads/2015/10/340x340bb-80.png" alt="" />
                                 <div className="method__wrapper--title">
                                     <span className="method__wrapper--title_1">Agribank</span>
@@ -43,16 +51,15 @@ export default function PaymentMethod() {
                     </Space>
                 </Radio.Group>
             </div>
-            <hr />
             <div className="method__bottom">
                 <div className="method__bottom--content">
                     <div className="product__total title-submenu">
                         <span>Product total:</span>
-                        <span>$28.00</span>
+                        <span>${cartTotalAmount.total}</span>
                     </div>
                     <div className="shipping__fee title-submenu">
                         <span>Shipping fee:</span>
-                        <span>$5.00</span>
+                        <span>${feeItem}</span>
                     </div>
                     <div className="shop__voucher title-submenu">
                         <span>Shop Voucher:</span>
@@ -67,7 +74,7 @@ export default function PaymentMethod() {
             <hr />
             <div className="order__now">
                 <div className="back__button">
-                    <span>back</span>
+                    <Link to="/cart"><span>back</span></Link>
                 </div>
                 <button className="order__button">Order now</button>
 

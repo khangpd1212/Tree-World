@@ -4,6 +4,7 @@ export { default as Users } from "./Users";
 export { default as Product } from "./Product";
 export { default as Detail } from "./Detail";
 export { default as LoginMobile } from "./Login/LoginMobile";
+export { default as SignUpDesktop } from "./SignUp/SignUpDesktop";
 export { default as Cart } from "./Cart";
 export { default as Contact } from "./Contact";
 export { default as Payment } from "./Payment";

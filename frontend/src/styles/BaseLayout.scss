@@ -7,7 +7,6 @@ body.dark {
   }
 
   .head {
-
     &__change {
       background: #121212;
     }
@@ -16,32 +15,6 @@ body.dark {
 
 .root-base .ant-layout-content {
   background: $screen-color;
-  margin-top: 5vw;
-  padding-top: 2vw;
-  @include desktop-plus {
-    margin-top: 6vw;
-  }
-  @include desktop {
-    margin-top: 8vw;
-  }
-  @include tablet-sm {
-    margin-top: 10vw;
-    padding-top: 5vw;
-  }
-
-  @include mobile-plus {
-    margin-top: 15vw;
-    padding-top: 5vw;
-  }
-
-  @include mobile {
-    margin-top: 18vw;
-    padding-top: 5vw;
-  }
-  @include mobile-sm {
-    margin-top: 20vw;
-    padding-top: 5vw;
-  }
 }
 
 .ant-back-top {
@@ -83,4 +56,11 @@ body.dark {
   > .ant-layout-content {
     width: 100%;
   }
+}
+.spinner--loading {
+  margin: 200px 0;
+  margin-bottom: 200px;
+  padding: 30px 50px;
+  text-align: center;
+  border-radius: 4px;
 }

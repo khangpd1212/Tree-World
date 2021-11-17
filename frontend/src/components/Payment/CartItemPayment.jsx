@@ -9,7 +9,6 @@ import { useEffect } from "react";
 export default function CartItemPayment() {
     const { Option } = Select;
     const { TextArea } = Input;
-
     const { textAddress } = useSelector(selectProvince);
     const { cartTotalAmount, cartItems } = useSelector(selectCarts);
     const { feeItems } = useSelector(selectFee);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLogins, ShowModalLogin, onCancelLogin, onOkLogin, onLogin } from "redux/login";
-import { fetchUsers, selectUsers } from "redux/user";
+// import { fetchUsers, selectUsers } from "redux/user";
 import { ShowModalSignUp } from "redux/SignUp"
 import "styles/Login/LoginDesktop.scss";
 
@@ -12,11 +12,7 @@ function LoginDesktop() {
     name: '',
     pass: ''
   })
-  const { userList } = useSelector(selectUsers);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   const { isShowLogin } = useSelector(selectLogins);
   const handleShowSignUp = () => {
@@ -25,7 +21,7 @@ function LoginDesktop() {
   }
   const handleOk = (e) => {
     // const a = userList.find(x.)
-    dispatch(onLogin(text))
+    // dispatch(onLogin(text))
     // dispatch(onOkLogin(false));
   }
   const handleCancel = () => {

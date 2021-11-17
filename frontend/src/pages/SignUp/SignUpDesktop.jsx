@@ -2,6 +2,8 @@ import { Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSignUp, ShowModalSignUp, onCancelSignUp, onOkSignUp } from "redux/SignUp";
 import { ShowModalLogin } from "redux/login";
+import { useEffect} from "react"
+import { signupUser, loginUser } from "redux/user";
 import "styles/Login/SignUpDesktop.scss";
 
 export default function SignUpDesktop() {
@@ -19,10 +21,39 @@ export default function SignUpDesktop() {
       dispatch(onCancelSignUp(false));
    }
 
-   const  contact = () => {
-      console.log("false")
+   const onSubmit = (data) => {
+      dispatch(signupUser(data));
    }
 
+   const data = {
+      a: 1,
+      b: 2,
+      c: 3
+   }
+   useEffect(() => {
+      // dispatch(signupUser(data));
+      // dispatch(loginUser());
+   
+   }, [])
+   
+   // useEffect(() => {
+   //    effect
+   //    return () => {
+   //       dispatch(clearState());
+   //    }
+   // }, []);
+
+   // useEffect(() => {
+   //   if (isSucess) {
+   //     dispatch(clearState());
+   //     history.push("/");
+   //   }
+
+   //   if (isError) {
+   //     toast.error(errorMessage);
+   //     dispatch(clearState());
+   //   }
+   // }, [isSuccess, isError]);
    return (
       <Modal
          width={"38vw"}

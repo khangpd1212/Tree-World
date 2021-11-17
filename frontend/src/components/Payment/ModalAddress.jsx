@@ -11,7 +11,6 @@ export default function ModalAddress({ visible, onCreate, onCancel }) {
    const { itemsProvince } = useSelector(selectProvince);
    const { itemsDistrict } = useSelector(selectDistrict);
    const { itemsWard } = useSelector(selectWard);
-
    const [address, setAddress] = useState([])
    const dispatch = useDispatch();
    useEffect(() => {

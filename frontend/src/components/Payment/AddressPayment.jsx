@@ -12,19 +12,19 @@ export default function AddressPayment() {
 
    useEffect(() => {
       sessionStorage.setItem("address", JSON.stringify(textAddress));
-   }, [])
+   }, [textAddress])
 
    useEffect(() => {
       let addressGetLocal = JSON.parse(localStorage.getItem("address"));
       let itemAddressLocal = addressGetLocal ? addressGetLocal : [];
       dispatch(showTextAddress(itemAddressLocal))
-   }, [])
+   }, [dispatch])
 
    useEffect(() => {
       let addressGetSession = JSON.parse(sessionStorage.getItem("address"));
       let itemAddressSession = addressGetSession ? addressGetSession : [];
       dispatch(showTextAddress(itemAddressSession))
-   }, [])
+   }, [dispatch])
 
    const handleDefaultAddress = () => {
       localStorage.setItem("address", JSON.stringify(textAddress));

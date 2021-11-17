@@ -89,6 +89,7 @@
       }
    }
 
+
    .product__items--top::after {
       border: 1px dashed #454242;
    }
@@ -211,7 +212,9 @@
       }
 
       &__container {
-         padding: 10px 40px;
+         padding: 20px 40px;
+         border-top: 1px dashed #ded9d9;
+         border-bottom: 1px dashed #ded9d9;
          font-family: $font-SFUHelveticaLight;
 
          .momo {
@@ -247,8 +250,9 @@
 
       &__bottom {
          text-transform: none;
+         border-bottom: 1px dashed #ded9d9;
          font-family: $font-SFUHelveticaLight;
-         padding: 10px 40px;
+         padding: 20px 40px;
          display: flex;
          justify-content: flex-end;
 
@@ -276,7 +280,7 @@
       .order__now {
          display: flex;
          justify-content: space-between;
-         padding: 10px 40px;
+         padding: 20px 40px;
          font-size: 16px;
 
          .back__button {
@@ -284,7 +288,8 @@
             cursor: pointer;
 
             .back__icon {
-               margin-top: 5px;
+               width: 20px;
+               font-size: 12px;
             }
          }
 
@@ -300,7 +305,6 @@
             padding-bottom: 5px;
             width: 100px;
             height: 36px;
-            margin-bottom: 8px;
          }
 
          .order__button:hover {

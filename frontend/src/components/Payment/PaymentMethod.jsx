@@ -51,7 +51,6 @@ export default function PaymentMethod() {
                     </Space>
                 </Radio.Group>
             </div>
-            <hr />
             <div className="method__bottom">
                 <div className="method__bottom--content">
                     <div className="product__total title-submenu">

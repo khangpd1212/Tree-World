@@ -3,6 +3,9 @@
 @import "../fonts";
 
 .img-login {
+
+   
+
    .logo-login {
       padding: 4px;
       width: 36%;
@@ -12,7 +15,9 @@
 .title-login {
    position: absolute;
    top: 12%;
-   left: 30%;
+   left: 0;
+   right: 0;
+   text-align: center;
    color: #246356;
    font-size: 3.5vw;
    font-family: $font-SFUToledoMedium;
@@ -22,7 +27,9 @@
    width: 60%;
    font-family: $font-SFUHelveticaLight;
    position: absolute;
-   left: 20%;
+   left: 0;
+   right: 0;
+   margin: 0 auto;
    top: 36%;
    font-size: 18px;
 
@@ -96,9 +103,9 @@
    }
 
    .login-btn_submit {
-      margin-left: 26%;
+      margin: 0 auto;
       margin-top: 12%;
-      padding: 0.4vw 2.8vw !important;
+      padding: 0.2vw 2.8vw 0.4vw 2.8vw !important;
       display: block;
       border-radius: 30px;
       background-color: transparent;
@@ -107,13 +114,10 @@
       font-family: "SFUMetaCaps";
       cursor: pointer;
       box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
-      outline: 1px solid;
-      outline-color: rgba(255, 255, 255, 0);
-      outline-offset: 0px;
+      outline: 1px solid rgba(255, 255, 255, 0.5);
       text-shadow: none;
       -webkit-transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
       transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-      outline-color: rgba(255, 255, 255, 0.5);
       outline-offset: 0px;
 
       &:hover {
@@ -152,26 +156,25 @@
    }
 
    .add-account {
-      a {
-         color: #7CACC2;
-         font-size: 18px;
+      color: #7CACC2;
+      font-size: 18px;
+      cursor: pointer;
 
-         @include desktop-plus {
-            font-size: 16px;
-         }
-
-         @include desktop {
-            font-size: 14px;
-         }
-
-         @include tablet-plus {
-            font-size: 12px;
-         }
-
-         @include tablet {
-            font-size: 10px;
-         }
-
+      @include desktop-plus {
+         font-size: 16px;
       }
+
+      @include desktop {
+         font-size: 14px;
+      }
+
+      @include tablet-plus {
+         font-size: 12px;
+      }
+
+      @include tablet {
+         font-size: 10px;
+      }
+
    }
 }

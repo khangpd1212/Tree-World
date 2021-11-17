@@ -1,22 +1,35 @@
-import React, { memo } from "react";
+import { useState } from "react";
 import { Modal } from "antd";
-import { useSelector } from "react-redux";
-import { selectUsers } from "../../redux/user";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUsers } from "redux/user";
+import { selectLogins, ShowModalLogin, onCancelLogin, onOkLogin } from "redux/login";
+import { ShowModalSignUp } from "redux/SignUp"
 import "styles/Login/LoginDesktop.scss";
 
-function LoginDesktop(props) {
-  const { userList } = useSelector(selectUsers);
-  // console.log(userList);
+
+function LoginDesktop() {
+  const dispatch = useDispatch()
+  const { isShowLogin } = useSelector(selectLogins);
+  const handleShowSignUp = () => {
+    dispatch(ShowModalSignUp(true));
+    dispatch(ShowModalLogin(false))
+  }
+  const handleOk = () => {
+    dispatch(onOkLogin(false));
+  }
+  const handleCancel = () => {
+    dispatch(onCancelLogin(false));
+  }
   return (
     <Modal
       width={"38vw"}
-      bodyStyle={{ padding: 0 }}
+      bodyStyle={{ padding: 0, position: "relative" }}
       closable={false}
       wrapClassName="modal"
       footer={null}
-      visible={props.showModal}
-      onOk={props.handleOk}
-      onCancel={props.handleCancel}
+      visible={isShowLogin}
+      onOk={handleOk}
+      onCancel={handleCancel}
     >
       <div className="img-login">
         <img src="/logo.png" alt="tree-world-logo" className="logo-login" />
@@ -46,7 +59,7 @@ function LoginDesktop(props) {
           </a>
         </div>
         <button type="submit" className="login-btn_submit">
-          login
+          sign in
         </button>
       </form>
       <div className="footer-login">
@@ -62,10 +75,10 @@ function LoginDesktop(props) {
           </a>
         </div>
         <div className="add-account">
-          <a href="#">Create account</a>
+          <div onClick={handleShowSignUp}>Create account</div>
         </div>
       </div>
     </Modal>
   );
 }
-export default memo(LoginDesktop);
+export default LoginDesktop;

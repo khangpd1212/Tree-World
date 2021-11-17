@@ -19,11 +19,11 @@ export default function CartItemPayment() {
     useEffect(() => {
         dispatch(fetchService(textAddress))
         dispatch(fetchFee(textAddress))
-    }, [])
+    }, [dispatch, textAddress])
 
     useEffect(() => {
         dispatch(getTotals());
-    }, [cartItems]);
+    }, [cartItems, dispatch]);
 
     const handleServiceChange = (key) => {
         const objectNew = Object.assign({}, textAddress[0], { service_id: key })

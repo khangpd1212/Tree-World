@@ -10,6 +10,7 @@ const initialState = {
   loading: "idle",
   error: "",
   filterProduct: [],
+  searchProduct: [],
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -43,11 +44,24 @@ export const filterProducts = createAsyncThunk(
     }
   }
 );
+export const searchProducts = createAsyncThunk(
+  "SEARCH_PRODUCT",
+  async (keyword, thunkAPI) => {
+    try {
+      const response = await axios.post(`product/search`, keyword);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    //FETCH
     builder.addCase(fetchProducts.pending, (state) => {
       state.productList = [];
       state.loading = "loading";
@@ -60,6 +74,7 @@ const productSlice = createSlice({
       state.error = action.error.message;
       state.loading = "error";
     });
+    //FILTER
     builder.addCase(filterProducts.pending, (state) => {
       return { ...state, loading: "loading" };
     });
@@ -69,6 +84,17 @@ const productSlice = createSlice({
     builder.addCase(filterProducts.rejected, (state, action) => {
       return { ...state, loading: "error", error: action.error.message };
     });
+
+    //SEARCH
+    builder.addCase(searchProducts.pending, (state) => {
+      return { ...state, loading: "loading" };
+    });
+    builder.addCase(searchProducts.fulfilled, (state, action) => {
+      return { ...state, loading: "loaded", searchProduct: action.payload };
+    });
+    builder.addCase(searchProducts.rejected, (state, action) => {
+      return { ...state, loading: "error", error: action.error.message };
+    });
   },
 });
 export const selectProducts = createSelector(
@@ -76,6 +102,7 @@ export const selectProducts = createSelector(
     productList: state.productState.productList,
     loading: state.productState.loading,
     filterProduct: state.productState.filterProduct,
+    searchProduct: state.productState.searchProduct,
   }),
   (state) => state
 );

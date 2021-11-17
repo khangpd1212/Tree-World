@@ -62,8 +62,8 @@ router.get("/filter", async (req, res) => {
         $match: match,
       },
       { $sort: sort },
-      { $skip: 2 * parseInt(page) },
-      { $limit: 2 },
+      { $skip: 5 * parseInt(page) },
+      { $limit: 5 },
     ]);
     res.status(200).json(products);
   } catch (error) {

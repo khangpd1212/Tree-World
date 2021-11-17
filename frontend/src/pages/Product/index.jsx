@@ -9,8 +9,6 @@ import SideComponent from "components/Product/SideComponent";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { setCatalog } from "redux/filter";
 import { setLayoutStatus } from "redux/layout";
 import { filterProducts, selectProducts } from "redux/product";
 import "styles/product.scss";
@@ -22,7 +20,8 @@ export default function Product() {
   const { filterProduct } = useSelector(selectProducts);
   const { filterStatus } = useSelector((state) => state.layoutState);
   const filterOptions = useSelector((state) => state.filterState);
-
+  const { searchStatus } = useSelector((state) => state.layoutState);
+  const { searchProduct } = useSelector(selectProducts);
   useEffect(() => {
     dispatch(filterProducts(filterOptions));
   }, [dispatch, filterOptions]);
@@ -38,8 +37,18 @@ export default function Product() {
           </Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             <Filter />
-            <ProductList products={filterProduct} />
-            <PaginationComponent />
+            <ProductList
+              products={searchStatus ? searchProduct : filterProduct}
+            />
+            <PaginationComponent
+              products={
+                filterStatus
+                  ? filterProduct
+                  : searchStatus
+                  ? searchProduct
+                  : productList
+              }
+            />
           </Col>
         </Row>
       </div>

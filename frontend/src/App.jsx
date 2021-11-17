@@ -17,6 +17,7 @@ function App() {
         <Route path="/login" exact component={LoginLayout} />
         {/* <Route path="/sign-up" exact component={LoginLayout} /> */}
         <Route path="/admin" exact component={AdminLayout} />
+        <Route path="/admin/dashboard" component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />
         <Route path="/admin/product" exact component={AdminLayout} />
         <Route path="/admin/product/add" exact component={AdminLayout} />

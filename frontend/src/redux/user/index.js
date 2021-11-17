@@ -10,6 +10,7 @@ const initialState = {
     loading: "idle",
     error: "",
 }
+
 export const fetchUsers = createAsyncThunk(
     "GET_ALL_USERS",
     async (_, thunkAPI) => {
@@ -21,6 +22,20 @@ export const fetchUsers = createAsyncThunk(
         }
     }
 );
+
+export const login = createAsyncThunk(
+    "LOGIN",
+    async (body, thunkAPI) => {
+        try {
+            const {data} = await axios.post("auth/login/", body);
+            localStorage.setItem("token", data.accessToken)
+            return data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -35,6 +50,17 @@ const userSlice = createSlice({
             state.loading = "loaded";
         });
         builder.addCase(fetchUsers.rejected, (state, action) => {
+            state.error = action.error.message;
+            state.loading = "error";
+        });
+        builder.addCase(login.pending, (state) => {
+            state.loading = "loading";
+        });
+        builder.addCase(login.fulfilled, (state, action) => {
+            state.token = action.payload;
+            state.loading = "loaded";
+        });
+        builder.addCase(login.rejected, (state, action) => {
             state.error = action.error.message;
             state.loading = "error";
         });

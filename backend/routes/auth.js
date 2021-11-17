@@ -27,12 +27,12 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(401).json("Email is not found");
+    !user && res.status(403).json("Email is not found");
 
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
     originalPassword !== req.body.password &&
-      res.status(401).json("Password is wrong");
+      res.status(403).json("Password is wrong");
 
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
@@ -46,4 +46,25 @@ router.post("/login", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+//CHECK TOKEN
+router.post("/token", async (req, res) => {
+  try {
+    const authHeader = req.body.token;
+    if (authHeader) {
+      const token = authHeader.split(" ")[1];
+      jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+        if (err) res.status(403).json("Token is invalid.");
+        req.user = user;
+        res.status(200).json("token is working")
+      });
+    } else {
+      return res.status(401).json("You are not authenticated");
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;
+

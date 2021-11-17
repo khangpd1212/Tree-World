@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Col, Row, Spin } from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
 import Collections from "components/Product/Collections";
 import Filter from "components/Product/Filter";
@@ -22,6 +23,8 @@ export default function Product() {
   const filterOptions = useSelector((state) => state.filterState);
   const { searchStatus } = useSelector((state) => state.layoutState);
   const { searchProduct } = useSelector(selectProducts);
+  const { loading } = useSelector(selectProducts);
+  const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
   useEffect(() => {
     dispatch(filterProducts(filterOptions));
   }, [dispatch, filterOptions]);
@@ -37,18 +40,26 @@ export default function Product() {
           </Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             <Filter />
-            <ProductList
-              products={searchStatus ? searchProduct : filterProduct}
-            />
-            <PaginationComponent
-              products={
-                filterStatus
-                  ? filterProduct
-                  : searchStatus
-                  ? searchProduct
-                  : productList
-              }
-            />
+            {loading === "loaded" ? (
+              <>
+                <ProductList
+                  products={searchStatus ? searchProduct : filterProduct}
+                />
+                <PaginationComponent
+                  products={
+                    filterStatus
+                      ? filterProduct
+                      : searchStatus
+                      ? searchProduct
+                      : productList
+                  }
+                />
+              </>
+            ) : (
+              <div className="spinner--loading">
+                <Spin indicator={antIcon} />
+              </div>
+            )}
           </Col>
         </Row>
       </div>

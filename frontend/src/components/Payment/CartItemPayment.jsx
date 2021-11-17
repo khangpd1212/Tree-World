@@ -11,7 +11,7 @@ export default function CartItemPayment() {
 
     useEffect(() => {
         dispath(getTotals());
-    }, [cartItems]);
+    }, [cartItems, dispath]);
 
     return (
         <div className="cartItemPayment">

@@ -6,7 +6,7 @@ import productReducer from "./product";
 import catalogReducer from "./catalog";
 import cartReducer from "./cart";
 import paymentReducer from "./payment";
-import addressReducer from "/address";
+import addressReducer from "./address";
 import loginReducer from "./login";
 import SignUpReducer from "./SignUp";
 

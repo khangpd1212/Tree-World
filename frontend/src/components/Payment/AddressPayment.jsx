@@ -3,35 +3,34 @@ import { BtnOutlineGray, BtnOutlineBlue } from '../utils/Button'
 import ModalAddress from "./ModalAddress";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showTextAddress, selectAddress } from "redux/address";
+import { showTextAddress, selectProvince } from "redux/address/province";
 
 export default function AddressPayment() {
    const [visible, setVisible] = useState(false);
-   const [addressLocal, setAddressLocal] = useState([]);
-   const [addressText, setAddressText] = useState([]);
    const dispatch = useDispatch();
+   const { textAddress } = useSelector(selectProvince)
+
+   useEffect(() => {
+      sessionStorage.setItem("address", JSON.stringify(textAddress));
+   }, [])
 
    useEffect(() => {
       let addressGetLocal = JSON.parse(localStorage.getItem("address"));
       let itemAddressLocal = addressGetLocal ? addressGetLocal : [];
-      setAddressLocal(itemAddressLocal)
+      dispatch(showTextAddress(itemAddressLocal))
    }, [])
 
    useEffect(() => {
       let addressGetSession = JSON.parse(sessionStorage.getItem("address"));
       let itemAddressSession = addressGetSession ? addressGetSession : [];
-      setAddressText(itemAddressSession)
+      dispatch(showTextAddress(itemAddressSession))
    }, [])
 
    const handleDefaultAddress = () => {
-      localStorage.setItem("address", JSON.stringify(addressText));
-      let addressStorage = localStorage.getItem("address");
-      setAddressLocal(JSON.parse(addressStorage));
+      localStorage.setItem("address", JSON.stringify(textAddress));
    }
    const onCreate = (values) => {
-      console.log(values)
-      sessionStorage.setItem("address" , JSON.stringify(values));
-      setAddressText(JSON.parse(sessionStorage.getItem("address")));
+      sessionStorage.setItem("address", JSON.stringify(values));
       dispatch(showTextAddress(values))
       setVisible(false);
    };
@@ -52,21 +51,12 @@ export default function AddressPayment() {
             </div>
             <div className="address__main--bottom">
                {
-                  addressLocal.length === 0 && addressText.length === 0
-                  ? null :
-                  addressLocal.length === 0 || addressText.length > 0 
-                  ? (addressText.map((text, index) => (
+                  textAddress && textAddress.map((text, index) => (
                      <span className="bottom__content" key={index}>
                         {text.name} - {text.phone} <br />
                         {text.street}, {text.ward}, {text.district}, {text.province}
                      </span>
-                     ))
-                  ) : (addressLocal.map((text, index) => (
-                     <span className="bottom__content" key={index}>
-                        {text.name} - {text.phone} <br />
-                        {text.street}, {text.ward}, {text.district}, {text.province}
-                     </span>
-                  )))
+                  ))
                }
 
                <div className="bottom__button">

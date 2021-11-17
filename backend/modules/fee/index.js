@@ -1,23 +1,22 @@
-const https = require("https");
 const axios = require("axios");
 
-exports.getFee = async (province, district, address, ward, weight, transport) => {
+exports.getFee = async (service_id, to_district_id, to_ward_code) => {
    var config = {
       method: "GET",
-      url: "https://services.giaohangtietkiem.vn/services/shipment/fee",
+      // url: "https://services.giaohangtietkiem.vn/services/shipment/fee",
+      url: `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=${service_id}&to_district_id=${to_district_id}&to_ward_code=${to_ward_code}`,
       headers: {
          "Content-Type": "application/json",
-         Token: process.env.FEE_TOKEN,
+         Token: process.env.ADDRESS_TOKEN,
       },
       data: {
-         pick_address_id: 14930287,
-         province: province,
-         district: district,
-         address: address,
-         ward: ward,
-         weight: 1000,
-         transport: "fly",
-         deliver_option: "xteam",
+         "from_district_id": 1447,
+         "height": 50,
+         "length": 20,
+         "weight": 200,
+         "width": 20,
+         "insurance_value": 10000,
+         "coupon": null
       },
    };
    const result = await axios(config)

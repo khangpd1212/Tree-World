@@ -1,12 +1,15 @@
 import { Radio, Space } from 'antd';
 import { useState } from "react";
 import { selectCarts } from 'redux/cart';
-import { selectFee } from "redux/fee";
+import { selectFee } from "redux/service/fee";
 import { useSelector } from "react-redux";
+import {Link} from "react-router-dom";
+
 export default function PaymentMethod() {
     const { feeItems } = useSelector(selectFee);
     const { cartTotalAmount } = useSelector(selectCarts);
     const [radio, setRadio] = useState(1)
+    const feeItem = feeItems ? feeItems.service_fee : 0
 
     const onChangeRadio = (e) => {
         setRadio(e.target.value);
@@ -57,7 +60,7 @@ export default function PaymentMethod() {
                     </div>
                     <div className="shipping__fee title-submenu">
                         <span>Shipping fee:</span>
-                        <span>${feeItems.fee}</span>
+                        <span>${feeItem}</span>
                     </div>
                     <div className="shop__voucher title-submenu">
                         <span>Shop Voucher:</span>
@@ -72,7 +75,7 @@ export default function PaymentMethod() {
             <hr />
             <div className="order__now">
                 <div className="back__button">
-                    <span>back</span>
+                    <Link to="/cart"><span>back</span></Link>
                 </div>
                 <button className="order__button">Order now</button>
 

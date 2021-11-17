@@ -18,16 +18,16 @@ export const fetchFee = createAsyncThunk(
    
    async(address, thunkAPI) => {
       try {
-         const response = await axios.get("fee",
+         console.log(address)
+         const response = await axios.get("payment/fee",
            {
               params: {
-                 province: address[0].province,
-                 district: address[0].district,
-                 address: address[0].street,
-                 ward: address[0].ward,
+                 to_district_id: address[0].district_id,
+                 service_id: address[0].service_id,
+                 to_ward_code: address[0].ward_code,
               }
          })
-         return await response.data.fee;
+         return await response.data.data;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
@@ -57,13 +57,10 @@ export const feeSlice = createSlice({
 
 export const selectFee = createSelector(
    (state) => ({
-      // textfee: state.feeState.textfee,
-      feeItems: state.feeState.feeItems,
-      loading: state.feeState.loading,
+      feeItems: state.serviceState.feeReducer.feeItems,
+      loading: state.serviceState.feeReducer.loading,
    }),
    (state) => state
 );
-
-// export const { showTextfee } = feeSlice.actions;
 
 export default feeSlice.reducer

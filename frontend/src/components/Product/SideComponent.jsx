@@ -22,7 +22,7 @@ function SideComponent() {
       setErr(false);
     }
   };
-  console.log(catalog.substring(catalog.indexOf(".") + 1, catalog.length));
+  // console.log(catalog.substring(catalog.indexOf(".") + 1, catalog.length));
   return (
     <div className="tabletHidden">
       <div className="product__section--title">

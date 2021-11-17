@@ -1,46 +1,48 @@
 import { Modal, Form, Input, Row, Col, Select } from 'antd';
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAddress, selectAddress } from "redux/address";
+import { fetchProvince, selectProvince } from "redux/address/province";
+import { fetchDistrict, selectDistrict } from "redux/address/district";
+import { fetchWard, selectWard } from "redux/address/ward";
 
 export default function ModalAddress({ visible, onCreate, onCancel }) {
    const { Option } = Select;
 
-   const { itemsAddress } = useSelector(selectAddress);
+   const { itemsProvince } = useSelector(selectProvince);
+   const { itemsDistrict } = useSelector(selectDistrict);
+   const { itemsWard } = useSelector(selectWard);
 
-   const [district, setDistrict] = useState([]);
-   const [ward, setWard] = useState([]);
    const [address, setAddress] = useState([])
-
    const dispatch = useDispatch();
    useEffect(() => {
-      dispatch(fetchAddress());
+      dispatch(fetchProvince());
    }, [dispatch])
 
-   const handleProvinceChange = (value) => {
-      setAddress({ ...address, province: value })
-      setDistrict(itemsAddress.find(x => x.name === value).districts);
-   }
-
-   const handleDistrictChange = (value) => {
-      setAddress({ ...address, district: value })
-      setWard(district.find(x => x.name === value).wards);
+   const handleProvinceChange =(key, value) => {
+      dispatch(fetchDistrict(key));
+      setAddress({ ...address, province: value.children})
    };
-   const handleWardChange = (value) => {
-      setAddress({ ...address, ward: value })
+
+   const handleDistrictChange = (key, value) => {
+      dispatch(fetchWard(key));
+      setAddress({ ...address, district_id: key,district: value.children})
+   };
+   const handleWardChange = (key, value) => {
+      setAddress({ ...address, ward_code: key, ward: value.children})
    }
-   const handleStreetChange = event => {
-      setAddress({ ...address, street: event.target.value })
+   const handleStreetChange = e => {
+      setAddress({ ...address, street: e.target.value })
    }
-   const handleNameChange = event => {
-      setAddress({ ...address, name: event.target.value })
+   const handleNameChange = e => {
+      setAddress({ ...address, name: e.target.value })
    }
-   const handlePhoneChange = event => {
-      setAddress({ ...address, phone: event.target.value })
+   const handlePhoneChange = e => {
+      setAddress({ ...address, phone: e.target.value })
    }
    const [form] = Form.useForm();
 
    return (
+  
       <Modal
          visible={visible}
          title="Choose address"
@@ -122,8 +124,8 @@ export default function ModalAddress({ visible, onCreate, onCancel }) {
                         onChange={handleProvinceChange}
                         showSearch
                      >
-                        {itemsAddress.map((province) => (
-                           <Option key={province.name}>{province.name}</Option>
+                        {itemsProvince && itemsProvince.map((province) => (
+                           <Option key={province.ProvinceID}>{province.ProvinceName}</Option>
                         ))}
                      </Select>
                   </Form.Item>
@@ -145,8 +147,8 @@ export default function ModalAddress({ visible, onCreate, onCancel }) {
                         onChange={handleDistrictChange}
                         showSearch
                      >
-                        {district.map((district) => (
-                           <Option key={district.name}>{district.name}</Option>
+                        {itemsDistrict && itemsDistrict.map((district) => (
+                           <Option key={district.DistrictID}>{district.DistrictName}</Option>
                         ))}
                      </Select>
                   </Form.Item>
@@ -167,8 +169,8 @@ export default function ModalAddress({ visible, onCreate, onCancel }) {
                         showSearch
                         onChange={handleWardChange}
                      >
-                        {ward.map((ward) => (
-                           <Option key={ward.name}>{ward.name}</Option>
+                        {itemsWard && itemsWard.map((ward) => (
+                           <Option key={ward.WardCode}>{ward.WardName}</Option>
                         ))}
                      </Select>
                   </Form.Item>

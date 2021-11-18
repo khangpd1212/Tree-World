@@ -1,42 +1,33 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { selectLogins, ShowModalLogin, onCancelLogin, onOkLogin, onLogin } from "redux/login";
-import { fetchUsers, selectUsers } from "redux/user";
-import { ShowModalSignUp } from "redux/SignUp"
+import { fetchLogin } from "redux/user";
+import {
+  selectModals,
+  ShowModalLogin,
+  onCancelLogin,
+  ShowModalSignUp,
+} from "redux/modal";
 import "styles/Login/LoginDesktop.scss";
 
 
 function LoginDesktop() {
-  const [text, setText] = useState({
-    name: '',
-    pass: ''
-  })
-  const { userList } = useSelector(selectUsers);
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+  const { isShowLogin } = useSelector(selectModals);
 
-  const { isShowLogin } = useSelector(selectLogins);
   const handleShowSignUp = () => {
     dispatch(ShowModalSignUp(true));
     dispatch(ShowModalLogin(false))
   }
-  const handleOk = (e) => {
-    // const a = userList.find(x.)
-    dispatch(onLogin(text))
-    // dispatch(onOkLogin(false));
+  const onSubmit = (data) => {
+    dispatch(fetchLogin(data));
   }
   const handleCancel = () => {
     dispatch(onCancelLogin(false));
   }
-  const handleChangeName = (e) => {
-    setText({...text, name: e.target.value});
-  }
-  const handleChangePassword = (e) => {
-    setText({...text, pass: e.target.value});
-  }
+
   return (
     <Modal
       width={"38vw"}
@@ -45,27 +36,37 @@ function LoginDesktop() {
       wrapClassName="modal"
       footer={null}
       visible={isShowLogin}
-      // onOk={handleOk}
       onCancel={handleCancel}
     >
       <div className="img-login">
-        <img src="../..//logo.png" alt="tree-world-logo" className="logo-login" />
-        <img src="../../images/bg_login.png" alt="bg-login" className="bg-login" />
+        <img
+          src="../..//logo.png"
+          alt="tree-world-logo"
+          className="logo-login"
+        />
+        <img
+          src="../../images/bg_login.png"
+          alt="bg-login"
+          className="bg-login"
+        />
       </div>
       <h1 className="title-login">Welcome!</h1>
-      <form className="content-login">
+      <form 
+        onSubmit={handleSubmit(onSubmit)}
+        method="POST" 
+        className="content-login">
         <input
+          {...register("username")}
           className="content-login_input"
           type="text"
           placeholder="Username*"
-          onChange={handleChangeName}
         />
         <input
+          {...register("password")}
           className="content-login_input"
           type="password"
           name="password"
           placeholder="Password*"
-          onChange={handleChangePassword}
         />
         <div className="wrapper-remember_forgot">
           <div className="wrapper-checkbox">
@@ -78,7 +79,7 @@ function LoginDesktop() {
             Forget Password?
           </a>
         </div>
-        <button onClick={handleOk} className="login-btn_submit">
+        <button type="submit" className="login-btn_submit">
           sign in
         </button>
       </form>
@@ -88,7 +89,10 @@ function LoginDesktop() {
             <img src="../../images/icon-fb_login.png" alt="icon-fb_login" />
           </a>
           <a href="#">
-            <img src="../../images/icon-twitter_login.png" alt="icon-twitter_login" />
+            <img
+              src="../../images/icon-twitter_login.png"
+              alt="icon-twitter_login"
+            />
           </a>
           <a href="#">
             <img src="../../images/icon-gg_login.png" alt="icon-gg_login" />

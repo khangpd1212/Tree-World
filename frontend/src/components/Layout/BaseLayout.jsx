@@ -72,6 +72,7 @@ export default function BaseLayout() {
             <Route path="/product" exact component={Product} />
             <Route path="/product/:catalog" exact component={Product} />
             <Route path="/detail" exact component={Detail} />
+            <Route path="/detail/:id" exact component={Detail} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/payment" exact component={Payment} />
             <Route path="/about" exact component={About} />

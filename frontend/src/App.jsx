@@ -10,6 +10,7 @@ function App() {
         <Route path="/product" exact component={BaseLayout} />
         <Route path="/product/:catalog" exact component={BaseLayout} />
         <Route path="/detail" exact component={BaseLayout} />
+        <Route path="/detail/:id" exact component={BaseLayout} />
         <Route path="/cart" exact component={BaseLayout} />
         <Route path="/about" exact component={BaseLayout} />
         <Route path="/payment" exact component={BaseLayout} />

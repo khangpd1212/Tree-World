@@ -5,13 +5,16 @@ import "styles/formsearch.scss";
 import { useDispatch } from "react-redux";
 import { setSearchStatus } from "redux/layout";
 import { searchProducts } from "redux/product";
+import { useHistory } from "react-router";
 const { Search } = Input;
 function FormSearch() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const onSearch = (value) => {
     console.log(value);
     dispatch(setSearchStatus(value));
     dispatch(searchProducts({ keyword: value }));
+    history.push(`/product/?keyword=${value}`);
   };
   const [isModalVisible, setIsModalVisible] = useState(false);
 

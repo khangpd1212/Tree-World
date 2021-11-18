@@ -25,6 +25,7 @@ function ProductList({ products }) {
               src={product.image[0]}
               name={product.product_name}
               price={product.price}
+              id={product._id}
             />
           ))}
       </Row>

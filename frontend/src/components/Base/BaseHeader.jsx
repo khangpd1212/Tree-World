@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
-import { ShowModalLogin } from "redux/login";
+import { ShowModalLogin } from "redux/modal";
 import "styles/header.scss";
 import LoginDesktop from 'pages/Login/LoginDesktop';
 import SignUpDesktop from 'pages/SignUp/SignUpDesktop';

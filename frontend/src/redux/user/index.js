@@ -4,18 +4,19 @@ import {
     createAsyncThunk,
     createSelector,
 } from "@reduxjs/toolkit";
+import { useHistory } from "react-router";
 
 const initialState = {
-    userList: [],
+    signIn: {},
     loading: "idle",
     error: "",
 }
 
-export const fetchUsers = createAsyncThunk(
-    "GET_ALL_USERS",
-    async (_, thunkAPI) => {
+export const fetchRegister = createAsyncThunk(
+    "REGISTER",
+    async (data, thunkAPI) => {
         try {
-            const response = await axios.get("user/");
+            const response = await axios.post("auth/register", data);
             return await response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.message });
@@ -23,11 +24,11 @@ export const fetchUsers = createAsyncThunk(
     }
 );
 
-export const login = createAsyncThunk(
+export const fetchLogin = createAsyncThunk(
     "LOGIN",
     async (body, thunkAPI) => {
         try {
-            const {data} = await axios.post("auth/login/", body);
+            const { data } = await axios.post("auth/login/", body);
             localStorage.setItem("token", data.accessToken)
             return data;
         } catch (error) {
@@ -35,42 +36,30 @@ export const login = createAsyncThunk(
         }
     }
 );
-
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchUsers.pending, (state) => {
-            state.userList = [];
+        builder.addCase(fetchLogin.pending, (state) => {
             state.loading = "loading";
         });
-        builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            state.userList = action.payload;
+        builder.addCase(fetchLogin.fulfilled, (state, action) => {
+            state.signIn = action.payload;
             state.loading = "loaded";
         });
-        builder.addCase(fetchUsers.rejected, (state, action) => {
-            state.error = action.error.message;
-            state.loading = "error";
-        });
-        builder.addCase(login.pending, (state) => {
-            state.loading = "loading";
-        });
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.token = action.payload;
-            state.loading = "loaded";
-        });
-        builder.addCase(login.rejected, (state, action) => {
+        builder.addCase(fetchLogin.rejected, (state, action) => {
             state.error = action.error.message;
             state.loading = "error";
         });
     },
 });
-export const selectUsers = createSelector(
-    (state) => ({
-        userList: state.userState.userList,
-        loading: state.userState.loading,
-    }),
-    (state) => state
-);
+export const selectUsers = (state) => state.userState;
+// export const selectUsers = createSelector(
+//     (state) => ({
+//         userList: state.userState.userList,
+//         loading: state.userState.loading,
+//     }),
+//     (state) => state
+// );
 export default userSlice.reducer;

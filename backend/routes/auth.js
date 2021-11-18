@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 router.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
-    address: req.body.address,
     email: req.body.email,
     phone_number: req.body.phone_number,
     password: CryptoJS.AES.encrypt(
@@ -26,8 +25,8 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
-    !user && res.status(403).json("Email is not found");
+    const user = await User.findOne({ username: req.body.username });
+    !user && res.status(403).json("Username is not found");
 
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);

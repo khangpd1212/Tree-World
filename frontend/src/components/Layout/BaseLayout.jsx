@@ -20,13 +20,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";
-import { fetchUsers } from "redux/user";
 const { Content } = Layout;
 export default function BaseLayout() {
   const dispatch = useDispatch();
   const layout = useSelector((state) => state.layoutState.layoutStatus);
-
   const [themeState, setThemeState] = useState(false);
+
   useEffect(() => {
     const getTheme = localStorage.getItem("Theme");
     if (getTheme === "dark") {
@@ -46,7 +45,6 @@ export default function BaseLayout() {
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchCatalogs());
-    dispatch(fetchUsers());
   }, [dispatch]);
 
   return (

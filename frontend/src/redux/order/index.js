@@ -17,12 +17,14 @@ export const fetchOrders = createAsyncThunk(
             }
          );
          toast.success(`You success order`, {
-            position: "top-right",
+            position: "bottom-left",
+            autoClose: 2000,
          });
          return await response.data;
       } catch (error) {
          toast.error(`Error order`, {
-            position: "top-right",
+            position: "bottom-left",
+            autoClose: 2000,
          });
          return thunkAPI.rejectWithValue({ error: error.message });
       }

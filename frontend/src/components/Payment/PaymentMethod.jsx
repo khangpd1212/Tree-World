@@ -7,6 +7,7 @@ import { selectProvince } from "redux/address/province";
 import { fetchOrders } from "redux/order";
 import { selectUsers } from "redux/user";
 import { Link } from "react-router-dom";
+import { ShowModalLogin } from "redux/modal";
 import { toast } from "react-toastify";
 
 export default function PaymentMethod() {
@@ -14,7 +15,9 @@ export default function PaymentMethod() {
   const { feeItems } = useSelector(selectFee);
   const { cartTotalAmount } = useSelector(selectCarts);
   const { userItems } = useSelector(selectUsers);
+
   const [radio, setRadio] = useState(1);
+
   const dispatch = useDispatch();
   const feeItem = feeItems ? feeItems.service_fee : 0;
 
@@ -35,7 +38,16 @@ export default function PaymentMethod() {
       idUser: userItems._id,
       idVoucher: 1,
     };
+    if (Object.values(userItems).length === 0) {
+      dispatch(ShowModalLogin(true));
+      toast.error(`You need to login`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+    } else {
+      dispatch(ShowModalLogin(false));
       dispatch(fetchOrders(data));
+    }
   };
   return (
     <div className="method">

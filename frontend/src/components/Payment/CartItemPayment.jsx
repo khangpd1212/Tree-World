@@ -29,7 +29,7 @@ export default function CartItemPayment() {
         const objectNew = Object.assign({}, textAddress[0], { service_id: key })
         dispatch(showTextAddress([objectNew]))
         dispatch(fetchFee([objectNew]))
-        localStorage.setItem("address", JSON.stringify([objectNew]))
+        sessionStorage.setItem("address", JSON.stringify([objectNew]));
     }
     return (
         <div className="cartItemPayment">

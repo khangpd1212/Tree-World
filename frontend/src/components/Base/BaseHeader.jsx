@@ -1,13 +1,25 @@
-import { MenuOutlined } from "@ant-design/icons";
-import { Layout, Anchor, Button, Drawer, Row, Col, Menu} from "antd";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  Layout,
+  Anchor,
+  Button,
+  Drawer,
+  Row,
+  Col,
+  Menu,
+  Avatar,
+  Dropdown,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
 import { ShowModalLogin } from "redux/modal";
 import "styles/header.scss";
+import MenuOverlay from "components/utils/MenuOverlay";
 import LoginDesktop from 'pages/Login/LoginDesktop';
 import SignUpDesktop from 'pages/SignUp/SignUpDesktop';
+import { selectUsers } from "redux/user";
 import { setCatalog, setDefault } from "redux/filter";
 import { setDefaultStatus, setFilterStatus } from "redux/layout";
 
@@ -16,8 +28,9 @@ function BaseHeader() {
   const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
   const [show, handleShow] = useState(false);
-
+  
   const dispath = useDispatch();
+  const { userItems } = useSelector(selectUsers);
   const { catalogList } = useSelector(selectCatalogs);
 
   const transitionNavBar = () => {
@@ -117,13 +130,34 @@ function BaseHeader() {
               <div>
                 <LinkRoute to={"/payment"}>Payment</LinkRoute>
               </div>
-              <div className="div__login" 
-                onClick={() => dispath(ShowModalLogin(true))}>
-                Login
-              </div>
               <div>
                 <LinkRoute to={"/admin"}>Admin</LinkRoute>
               </div>
+              {
+                Object.values(userItems).length === 0 ? (
+                  <div
+                    className="div__login"
+                    onClick={() => dispath(ShowModalLogin(true))}
+                  >
+                    Login
+                  </div>
+                ) : (
+                  <Dropdown overlay={<MenuOverlay />} placement="bottomLeft">
+                    <Avatar
+                      style={{
+                        backgroundColor: "#87d068",
+                        width: "40px",
+                        height: "40px",
+                        lineHeight: "40px",
+                        fontSize: "20px",
+                        margin: "0 18px",
+                        cursor: "pointer",
+                      }}
+                      icon={<UserOutlined />}
+                    ></Avatar>
+                  </Dropdown>
+                )
+              }
             </Anchor>
           </div>
           <div className="mobileVisible">
@@ -212,8 +246,8 @@ function BaseHeader() {
           </div>
         </Col>
       </Row>
-      <LoginDesktop/>
-      <SignUpDesktop/>
+      <LoginDesktop />
+      <SignUpDesktop />
     </Header>
   );
 }

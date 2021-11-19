@@ -11,10 +11,10 @@ export default function AddressPayment() {
    const { textAddress } = useSelector(selectProvince)
 
    const handleDefaultAddress = () => {
-      localStorage.setItem("address", JSON.stringify(textAddress));
+      sessionStorage.setItem("address", JSON.stringify(textAddress));
    }
    const onCreate = (values) => {
-      localStorage.setItem("address", JSON.stringify(values));
+      sessionStorage.setItem("address", JSON.stringify(values));
       dispatch(showTextAddress(values))
       setVisible(false);
    };

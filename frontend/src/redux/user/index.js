@@ -1,4 +1,5 @@
 import axios from "../../utils/axios";
+import { toast } from "react-toastify";
 import {
     createSlice,
     createAsyncThunk,
@@ -30,8 +31,16 @@ export const fetchLogin = createAsyncThunk(
         try {
             const { data } = await axios.post("auth/login/", body);
             sessionStorage.setItem("userItem", JSON.stringify(data))
-            return data;
+            toast.success(`Account is success`, {
+                position: "bottom-left",
+                autoClose: 2000,
+            });
+            return await data;
         } catch (error) {
+            toast.error(`Account is error`, {
+                position: "bottom-left",
+                autoClose: 2000,
+            });
             return thunkAPI.rejectWithValue({ error: error.message });
         }
     }
@@ -39,9 +48,15 @@ export const fetchLogin = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        onRemoveUser: (state,action) => {
+            sessionStorage.removeItem('userItem');
+            state.userItems = {}
+        } 
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchLogin.pending, (state) => {
+            state.userItems = {}
             state.loading = "loading";
         });
         builder.addCase(fetchLogin.fulfilled, (state, action) => {
@@ -55,4 +70,5 @@ const userSlice = createSlice({
     },
 });
 export const selectUsers = (state) => state.userState;
+export const { onRemoveUser } = userSlice.actions
 export default userSlice.reducer;

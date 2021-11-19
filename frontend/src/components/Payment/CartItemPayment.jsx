@@ -53,7 +53,6 @@ export default function CartItemPayment() {
                         cartItems.map((cartItem, index) => (
                             <Row key={index} className="cart__product--main" align="middle" >
                                 <Col span={10} className="main__img">
-                                    <input type="checkbox" />
                                     <img src={cartItem.image[0]} alt="" />
                                     <h2>{cartItem.product_name}</h2>
                                 </Col>
@@ -66,7 +65,9 @@ export default function CartItemPayment() {
                                                 backgroundColor: cartItem.color[0]
                                             }}>
                                         </Col>
-                                        <Col className="main__list--price">
+                                        <Col className="main__list--price"
+                                        style={{margin: 0}}
+                                        >
                                             <span>${cartItem.price}</span>
                                         </Col>
                                         <Col>

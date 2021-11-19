@@ -2,12 +2,12 @@ import axios from "../../utils/axios";
 import {
     createSlice,
     createAsyncThunk,
-    createSelector,
 } from "@reduxjs/toolkit";
-import { useHistory } from "react-router";
 
 const initialState = {
-    signIn: {},
+    userItems: sessionStorage.getItem("userItem") 
+    ? JSON.parse(sessionStorage.getItem("userItem"))
+    : {},
     loading: "idle",
     error: "",
 }
@@ -29,7 +29,7 @@ export const fetchLogin = createAsyncThunk(
     async (body, thunkAPI) => {
         try {
             const { data } = await axios.post("auth/login/", body);
-            localStorage.setItem("token", data.accessToken)
+            sessionStorage.setItem("userItem", JSON.stringify(data))
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue({ error: error.message });
@@ -45,7 +45,7 @@ const userSlice = createSlice({
             state.loading = "loading";
         });
         builder.addCase(fetchLogin.fulfilled, (state, action) => {
-            state.signIn = action.payload;
+            state.userItems = action.payload;
             state.loading = "loaded";
         });
         builder.addCase(fetchLogin.rejected, (state, action) => {
@@ -55,11 +55,4 @@ const userSlice = createSlice({
     },
 });
 export const selectUsers = (state) => state.userState;
-// export const selectUsers = createSelector(
-//     (state) => ({
-//         userList: state.userState.userList,
-//         loading: state.userState.loading,
-//     }),
-//     (state) => state
-// );
 export default userSlice.reducer;

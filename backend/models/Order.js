@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-   name: {
+   username: {
       type: String,
       required: true,
    },
@@ -22,8 +22,8 @@ const OrderSchema = new mongoose.Schema({
       required: true,
    },
    orderDate: {
-      type: Date,
-      required: true,
+      type: Date, 
+      default: Date.now,
    },
    activatedVoucher: {
       type: Boolean,

@@ -18,7 +18,6 @@ export const fetchFee = createAsyncThunk(
    
    async(address, thunkAPI) => {
       try {
-         console.log(address)
          const response = await axios.get("payment/fee",
            {
               params: {

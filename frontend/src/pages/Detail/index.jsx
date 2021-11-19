@@ -29,7 +29,6 @@ export default function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const { product } = useSelector(selectProducts);
-  console.log(id);
   useEffect(() => {
     if (id) {
       dispatch(detailProduct(id));
@@ -37,7 +36,6 @@ export default function Detail() {
       history.push("/");
     }
   }, [dispatch, id, history]);
-  console.log(product);
   var settings = {
     dots: true,
     infinite: false,
@@ -79,7 +77,7 @@ export default function Detail() {
       <Row className="pro">
         {/* hinh anh san pham */}
         <Col className="avtpro" xs={24} sm={12}>
-          <img src={product.image[0]} alt="" />
+          <img src={product.image} alt="" />
           {/* hinh lien quan */}
           <Col className="image">
             <div className="imageCon">

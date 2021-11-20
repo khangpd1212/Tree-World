@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 
 const initialState = {
+    userList: [],
     userItems: sessionStorage.getItem("userItem") 
     ? JSON.parse(sessionStorage.getItem("userItem"))
     : {},
@@ -24,7 +25,17 @@ export const fetchRegister = createAsyncThunk(
         }
     }
 );
-
+export const fetchGetUser = createAsyncThunk(
+    "USER",
+    async (_, thunkAPI) => {
+        try {
+            const response = await axios.get("user/");
+            return await response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
+    }
+);
 export const fetchLogin = createAsyncThunk(
     "LOGIN",
     async (body, thunkAPI) => {
@@ -64,6 +75,17 @@ const userSlice = createSlice({
             state.loading = "loaded";
         });
         builder.addCase(fetchLogin.rejected, (state, action) => {
+            state.error = action.error.message;
+            state.loading = "error";
+        });
+        builder.addCase(fetchGetUser.pending, (state) => {
+            state.loading = "loading";
+        });
+        builder.addCase(fetchGetUser.fulfilled, (state, action) => {
+            state.userList = action.payload;
+            state.loading = "loaded";
+        });
+        builder.addCase(fetchGetUser.rejected, (state, action) => {
             state.error = action.error.message;
             state.loading = "error";
         });

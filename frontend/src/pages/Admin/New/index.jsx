@@ -1,14 +1,14 @@
-import {  Space, Table, Switch, } from "antd";
+import {  Space, Table, Switch } from "antd";
 import BtnAdd from "components/BtnAdd";
 export default function News(){
     const { Column,  } = Table;
     const data = [
         {
-          key: "1",
-          name: "John",
-          Price: 32,
-          address: "New York No. 1 Lake Park",
-          tags: ["nice", "developer"],
+            key: "1",
+            name: "John",
+            date: 21-7-2021,
+            content: "New York No. 1 Lake Park",
+            tags: ["nice", "developer"],
         },
       ];
     return(
@@ -17,7 +17,7 @@ export default function News(){
             <Table dataSource={data}>
                 <Column title="Name" dataIndex="name" key="name" />
                 <Column title="Date" dataIndex="date" key="date" />
-                <Column title="Conten" dataIndex="Conten" key="Conten" />
+                <Column title="Content" dataIndex="content" key="content" />
                 <Column 
                 title="Status"
                 key="status"

@@ -10,9 +10,12 @@ import addressReducer from "./address";
 import modalReducer from "./modal";
 import serviceReducer from "./service";
 import filterReducer from "./filter";
+import voucherReducer  from "./voucher";
+import commentReducer from "./comment"
 
 export const store = configureStore({
   reducer: {
+    commentState: commentReducer,
     userState: userReducer,
     postsState: postReducer,
     layoutState: layoutReducer,
@@ -20,6 +23,8 @@ export const store = configureStore({
     catalogState: catalogReducer,
     cartState: cartReducer,
     modalState: modalReducer,
+    voucherState: voucherReducer,
+    // paymentState: paymentReducer,
     orderState: orderReducer,
     addressState: addressReducer,
     serviceState: serviceReducer,

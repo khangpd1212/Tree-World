@@ -62,7 +62,13 @@ export const requests = {
       .then(({ data }) => data)
       .catch(err => err)
   },
+  //catalog
+    async fetchAllCatalog() {
+    const { data } = await instance.get('/catalog')
+    return data
+  },
 }
+
 
 export const imgbbClient = axios.create({
   baseURL: "https://api.imgbb.com/1/upload?key=403852fdf7303df5e119b675b814876f"

@@ -15,8 +15,8 @@ function App() {
         <Route path="/about" exact component={BaseLayout} />
         <Route path="/payment" exact component={BaseLayout} />
         <Route path="/contact" exact component={BaseLayout} />
+        <Route path="/order" exact component={BaseLayout} />
         <Route path="/login" exact component={LoginLayout} />
-        {/* <Route path="/sign-up" exact component={LoginLayout} /> */}
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/dashboard" component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />

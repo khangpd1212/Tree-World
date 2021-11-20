@@ -4,7 +4,7 @@ import { selectCarts } from "redux/cart";
 import { selectFee } from "redux/service/fee";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProvince } from "redux/address/province";
-import { fetchOrders } from "redux/order";
+import { fetchOrders, getOrders } from "redux/order";
 import { selectUsers } from "redux/user";
 import { Link } from "react-router-dom";
 import { ShowModalLogin } from "redux/modal";
@@ -29,7 +29,7 @@ export default function PaymentMethod() {
       (item) =>
         `${item.street}, ${item.ward}, ${item.district}, ${item.province}`
     );
-    let data = {
+    let dataOrder = {
       username: textAddress[0].name,
       address: textChild.toString(),
       phoneNumber: textAddress[0].phone,
@@ -38,6 +38,9 @@ export default function PaymentMethod() {
       idUser: userItems._id,
       idVoucher: 1,
     };
+    // let dataOrderDetail = {
+    //   id_order: 
+    // }
     if (Object.values(userItems).length === 0) {
       dispatch(ShowModalLogin(true));
       toast.error(`You need to login`, {
@@ -46,7 +49,7 @@ export default function PaymentMethod() {
       });
     } else {
       dispatch(ShowModalLogin(false));
-      dispatch(fetchOrders(data));
+      dispatch(fetchOrders(dataOrder));
     }
   };
   return (

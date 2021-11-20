@@ -4,6 +4,7 @@ const authRoute = require("./auth");
 const paymentRoute = require("./payment");
 const userRoute = require("./user");
 const orderRoute = require("./order");
+const orderDetailRoute = require("./order_detail");
 const useRouter = (app) => {
     app
         .use("/auth", authRoute)
@@ -12,6 +13,7 @@ const useRouter = (app) => {
         .use("/payment", paymentRoute)
         .use("/user", userRoute)
         .use("/order", orderRoute)
+        .use("./order_detail", orderDetailRoute)
 }
 
 

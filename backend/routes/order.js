@@ -21,6 +21,7 @@ router.get("/:id", async (req, res) => {
         res.status(403).json({ message: error.message });
     }
 });
+
 //user is not allowed create, update or delete
 //CREATE
 router.post("/", verify, async (req, res) => {
@@ -28,7 +29,6 @@ router.post("/", verify, async (req, res) => {
         username,
         address,
         status,
-        // orderDate,
         phoneNumber,
         toTal,
         idUser,
@@ -39,7 +39,6 @@ router.post("/", verify, async (req, res) => {
         username,
         address,
         status,
-        // orderDate,
         phoneNumber,
         toTal,
         idUser,

@@ -10,6 +10,7 @@ import addressReducer from "./address";
 import modalReducer from "./modal";
 import serviceReducer from "./service";
 import filterReducer from "./filter";
+import voucherReducer  from "./voucher";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     catalogState: catalogReducer,
     cartState: cartReducer,
     modalState: modalReducer,
+    voucherState: voucherReducer,
     // paymentState: paymentReducer,
     addressState: addressReducer,
     serviceState: serviceReducer,

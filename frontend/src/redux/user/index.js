@@ -4,10 +4,10 @@ import {
     createAsyncThunk,
     createSelector,
 } from "@reduxjs/toolkit";
-import { useHistory } from "react-router";
 
 const initialState = {
     signIn: {},
+    userList: [],
     loading: "idle",
     error: "",
 }
@@ -23,7 +23,17 @@ export const fetchRegister = createAsyncThunk(
         }
     }
 );
-
+export const fetchGetUser = createAsyncThunk(
+    "USER",
+    async (_, thunkAPI) => {
+        try {
+            const response = await axios.get("user/");
+            return await response.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({ error: error.message });
+        }
+    }
+);
 export const fetchLogin = createAsyncThunk(
     "LOGIN",
     async (body, thunkAPI) => {
@@ -52,14 +62,18 @@ const userSlice = createSlice({
             state.error = action.error.message;
             state.loading = "error";
         });
+        builder.addCase(fetchGetUser.pending, (state) => {
+            state.loading = "loading";
+        });
+        builder.addCase(fetchGetUser.fulfilled, (state, action) => {
+            state.userList = action.payload;
+            state.loading = "loaded";
+        });
+        builder.addCase(fetchGetUser.rejected, (state, action) => {
+            state.error = action.error.message;
+            state.loading = "error";
+        });
     },
 });
 export const selectUsers = (state) => state.userState;
-// export const selectUsers = createSelector(
-//     (state) => ({
-//         userList: state.userState.userList,
-//         loading: state.userState.loading,
-//     }),
-//     (state) => state
-// );
 export default userSlice.reducer;

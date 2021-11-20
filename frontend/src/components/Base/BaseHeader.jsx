@@ -1,4 +1,4 @@
-import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import {
   Layout,
   Anchor,
@@ -7,8 +7,6 @@ import {
   Row,
   Col,
   Menu,
-  Avatar,
-  Dropdown,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
@@ -16,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
 import { ShowModalLogin } from "redux/modal";
 import "styles/header.scss";
-import MenuOverlay from "components/utils/MenuOverlay";
+import DropdownOverlay from "components/utils/Dropdown";
 import LoginDesktop from 'pages/Login/LoginDesktop';
 import SignUpDesktop from 'pages/SignUp/SignUpDesktop';
 import { selectUsers } from "redux/user";
@@ -133,31 +131,16 @@ function BaseHeader() {
               <div>
                 <LinkRoute to={"/admin"}>Admin</LinkRoute>
               </div>
-              {
-                Object.values(userItems).length === 0 ? (
-                  <div
-                    className="div__login"
-                    onClick={() => dispath(ShowModalLogin(true))}
-                  >
-                    Login
-                  </div>
-                ) : (
-                  <Dropdown overlay={<MenuOverlay />} placement="bottomLeft">
-                    <Avatar
-                      style={{
-                        backgroundColor: "#87d068",
-                        width: "40px",
-                        height: "40px",
-                        lineHeight: "40px",
-                        fontSize: "20px",
-                        margin: "0 18px",
-                        cursor: "pointer",
-                      }}
-                      icon={<UserOutlined />}
-                    ></Avatar>
-                  </Dropdown>
-                )
-              }
+              {Object.values(userItems).length === 0 ? (
+                <div
+                  className="div__login"
+                  onClick={() => dispath(ShowModalLogin(true))}
+                >
+                  Login
+                </div>
+              ) : (
+                <DropdownOverlay />
+              )}
             </Anchor>
           </div>
           <div className="mobileVisible">

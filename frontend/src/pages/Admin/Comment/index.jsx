@@ -1,21 +1,15 @@
 
 import TableComment from "components/Admin/Comment/Table";
-import ModalAddProduct from "components/Admin/Product/ModalAddProduct";
-import TableVoucher from "components/Admin/Voucher/Table";
-import BtnAdd from "components/BtnAdd";
-import { useState } from "react";
 
-export default function User() {
-    const [openAddProduct, setOpenAddProduct] = useState(false)
+
+export default function CommentAdmin() {
+    
 
     return (
         <>
-            <BtnAdd page='product' setOpen={setOpenAddProduct} />
+           
             <TableComment />
-            <ModalAddProduct
-                visible={openAddProduct}
-                setVisible={setOpenAddProduct}
-            />
+            
         </>
     )
 }

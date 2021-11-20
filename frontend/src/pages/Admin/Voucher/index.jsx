@@ -1,19 +1,19 @@
 
-import ModalAddProduct from "components/Admin/Product/ModalAddProduct";
+import ModalAddVoucher from "components/Admin/Voucher/ModalAddVoucher";
 import TableVoucher from "components/Admin/Voucher/Table";
 import BtnAdd from "components/BtnAdd";
 import { useState } from "react";
 
-export default function User() {
-    const [openAddProduct, setOpenAddProduct] = useState(false)
+export default function VoucherAdmin() {
+    const [openAddVoucher, setOpenAddVoucher] = useState(false)
 
     return (
         <>
-            <BtnAdd page='product' setOpen={setOpenAddProduct} />
+            <BtnAdd page='voucher' setOpen={setOpenAddVoucher} />
             <TableVoucher />
-            <ModalAddProduct
-                visible={openAddProduct}
-                setVisible={setOpenAddProduct}
+            <ModalAddVoucher
+                visible={openAddVoucher}
+                setVisible={setOpenAddVoucher}
             />
         </>
     )

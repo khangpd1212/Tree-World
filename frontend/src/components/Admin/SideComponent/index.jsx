@@ -1,5 +1,5 @@
 import {
-    ContainerOutlined, UserOutlined, DashboardOutlined, InboxOutlined, ReadOutlined, TagsOutlined, PrinterOutlined
+    ContainerOutlined, UserOutlined, DashboardOutlined, InboxOutlined, ReadOutlined, TagsOutlined, PrinterOutlined, CommentOutlined
 } from '@ant-design/icons';
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
@@ -48,6 +48,9 @@ export default function SideComponent({ isOpen }) {
                 </Menu.Item>
                 <Menu.Item key="7" icon={<UserOutlined />}>
                     <Link to={"/admin/users"}>User</Link>
+                </Menu.Item>
+                <Menu.Item key="8" icon={<CommentOutlined />}>
+                    <Link to={"/admin/comment"}>Comment</Link>
                 </Menu.Item>
             </Menu>
         </Sider>

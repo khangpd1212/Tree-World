@@ -1,25 +1,25 @@
-import { Button, message, Popconfirm, Space, Table } from 'antd';
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { getOrders, selectOrders } from 'redux/order';
+import { Button, message, Popconfirm, Space, Table,Image, Switch } from 'antd';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGetComment, selectComment } from 'redux/comment';
 import { requests } from 'utils/axios';
 // import ModalEdit from './ModalEdit';
 
 
 
-export default function TableOrder() {
+export default function TableComment() {
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getOrders())
+        dispatch(fetchGetComment())
     }, [dispatch])
     function confirm(id) {
         requests.deleteProduct(token, id)
             .then(res => {
-                dispatch(getOrders())
+                dispatch(fetchGetComment())
                 message.success('delete success')
             })
     }
@@ -30,34 +30,46 @@ export default function TableOrder() {
     }
     const columns = [
         {
+            title: 'Image URL',
+            dataIndex: 'imageProduct',
+            key: 'imageProduct',
+            render: (value, record) => (
+                <Space size="middle">
+                    <Image
+                        width={100}
+                        src={value}
+                    />
+                </Space>
+            ),
+        },
+        {
             title: 'Name',
-            dataIndex: 'username',
-            key: 'username',
+            dataIndex: 'nameUser',
+            key: 'nameUser',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: 'Star',
+            dataIndex: 'star',
+            key: 'star',
+        },
+        {
+            title: 'Content',
+            dataIndex: 'content',
+            key: 'content',
         },
         {
             title: 'Date',
-            dataIndex: 'orderDate',
-            key: 'orderDate',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: 'Phone_Number',
-            dataIndex: 'phoneNumber',
-            key: 'phoneNumber',
-        },
-        {
-            title: 'Total',
-            dataIndex: 'toTal',
-            key: 'toTal',
+            dataIndex: 'date',
+            key: 'date',
         },
         {
             title: 'Status',
-            dataIndex: 'status',
             key: 'status',
+            render: (text, record) => (
+                <Switch defaultChecked={true} />
+            )
+
         },
 
         {
@@ -85,10 +97,10 @@ export default function TableOrder() {
         },
     ];
 
-    const { orderList } = useSelector(selectOrders)
-    console.log(orderList)
+    const { commentList } = useSelector(selectComment)
+    console.log(commentList);
     return <>
-        <Table columns={columns} dataSource={orderList} />
+        <Table columns={columns} dataSource={commentList} />
         {/* <ModalEdit
             visible={visible}
             setVisible={setVisible}

@@ -1,25 +1,25 @@
-import { Button, message, Popconfirm, Space, Table } from 'antd';
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { getOrders, selectOrders } from 'redux/order';
+import { Button, message, Popconfirm, Space, Table, Switch } from 'antd';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGetVoucher, selectVouchers } from 'redux/voucher';
 import { requests } from 'utils/axios';
 // import ModalEdit from './ModalEdit';
 
 
 
-export default function TableOrder() {
+export default function TableVoucher() {
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getOrders())
+        dispatch(fetchGetVoucher())
     }, [dispatch])
     function confirm(id) {
         requests.deleteProduct(token, id)
             .then(res => {
-                dispatch(getOrders())
+                dispatch(fetchGetVoucher())
                 message.success('delete success')
             })
     }
@@ -30,36 +30,34 @@ export default function TableOrder() {
     }
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'username',
-            key: 'username',
+            title: 'Percent',
+            dataIndex: 'percent',
+            key: 'percent',
+            render: text => <a>{text}</a>,
         },
         {
-            title: 'Date',
-            dataIndex: 'orderDate',
-            key: 'orderDate',
+            title: 'Created_Date',
+            dataIndex: 'createDate',
+            key: 'createDate',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Expiry_Date',
+            dataIndex: 'expiryDate',
+            key: 'expiryDate',
         },
         {
-            title: 'Phone_Number',
-            dataIndex: 'phoneNumber',
-            key: 'phoneNumber',
-        },
-        {
-            title: 'Total',
-            dataIndex: 'toTal',
-            key: 'toTal',
+            title: 'Maximum',
+            dataIndex: 'maximum',
+            key: 'maximum',
         },
         {
             title: 'Status',
-            dataIndex: 'status',
             key: 'status',
-        },
+            render: (text, record) => (
+                <Switch defaultChecked={true} />
+            )
 
+        },
         {
             title: 'Action',
             key: 'action',
@@ -85,10 +83,10 @@ export default function TableOrder() {
         },
     ];
 
-    const { orderList } = useSelector(selectOrders)
-    console.log(orderList)
+    const { voucherList } = useSelector(selectVouchers)
+    console.log(voucherList);
     return <>
-        <Table columns={columns} dataSource={orderList} />
+        <Table columns={columns} dataSource={voucherList} />
         {/* <ModalEdit
             visible={visible}
             setVisible={setVisible}

@@ -1,5 +1,5 @@
 
-import TableCategory from "components/Admin/Category/Table";
+import TableOrder from "components/Admin/Order/Table";
 import ModalAddProduct from "components/Admin/Product/ModalAddProduct";
 import BtnAdd from "components/BtnAdd";
 import { useState } from "react";
@@ -10,7 +10,7 @@ export default function ProductAdmin() {
   return (
     <>
       <BtnAdd page='product' setOpen={setOpenAddProduct} />
-      <TableCategory />
+      <TableOrder />
       <ModalAddProduct
         visible={openAddProduct}
         setVisible={setOpenAddProduct}

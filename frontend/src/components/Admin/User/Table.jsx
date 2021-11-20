@@ -1,4 +1,5 @@
 import { Button, message, Popconfirm, Space, Table } from 'antd';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetUser, selectUsers } from 'redux/user';
@@ -12,7 +13,9 @@ export default function TableUser() {
     const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
-    dispatch(fetchGetUser)
+    useEffect( () => {
+        dispatch(fetchGetUser())
+    },[dispatch])
     function confirm(id) {
         requests.deleteProduct(token, id)
             .then(res => {

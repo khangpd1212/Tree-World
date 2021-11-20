@@ -11,9 +11,11 @@ import modalReducer from "./modal";
 import serviceReducer from "./service";
 import filterReducer from "./filter";
 import voucherReducer  from "./voucher";
+import commentReducer from "./comment"
 
 export const store = configureStore({
   reducer: {
+    commentState: commentReducer,
     userState: userReducer,
     postsState: postReducer,
     layoutState: layoutReducer,

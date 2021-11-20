@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Modal } from "antd";
+import { Modal, Tag } from "antd";
+import IconPassword from "components/utils/IconPassword";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchLogin } from "redux/user";
 import {
@@ -11,22 +12,30 @@ import {
 } from "redux/modal";
 import "styles/Login/LoginDesktop.scss";
 
-
 function LoginDesktop() {
-  const { register, handleSubmit } = useForm();
+  const [passwordShown, setPasswordShown] = useState(false);
+  const { register, handleSubmit, formState, resetField } = useForm();
+  const { isDirty, isValid, errors } = formState;
   const dispatch = useDispatch();
   const { isShowLogin } = useSelector(selectModals);
 
+  const handleShowPass = () => {
+    setPasswordShown(!passwordShown);
+  };
+
   const handleShowSignUp = () => {
     dispatch(ShowModalSignUp(true));
-    dispatch(ShowModalLogin(false))
-  }
+    dispatch(ShowModalLogin(false));
+  };
   const onSubmit = (data) => {
     dispatch(fetchLogin(data));
-  }
+    dispatch(ShowModalLogin(false));
+    resetField("username");
+    resetField("password");
+  };
   const handleCancel = () => {
     dispatch(onCancelLogin(false));
-  }
+  };
 
   return (
     <Modal
@@ -51,23 +60,48 @@ function LoginDesktop() {
         />
       </div>
       <h1 className="title-login">Welcome!</h1>
-      <form 
+      <form
         onSubmit={handleSubmit(onSubmit)}
-        method="POST" 
-        className="content-login">
-        <input
-          {...register("username")}
-          className="content-login_input"
-          type="text"
-          placeholder="Username*"
-        />
-        <input
-          {...register("password")}
-          className="content-login_input"
-          type="password"
-          name="password"
-          placeholder="Password*"
-        />
+        method="POST"
+        className="content-login"
+      >
+        <div className="wrapper_input">
+          <input
+            {...register("username", { required: true })}
+            className="content-login_input"
+            type="text"
+            placeholder="Username*"
+          />
+          {errors.username && (
+            <Tag
+              color="error"
+              style={{ paddingBottom: "2px", fontSize: "14px" }}
+            >
+              Please input username
+            </Tag>
+          )}
+        </div>
+        <div className="wrapper_password wrapper_input">
+          <input
+            {...register("password", { required: true })}
+            className="content-login_input"
+            type={passwordShown ? "text" : "password"}
+            name="password"
+            placeholder="Password*"
+          />
+          <IconPassword
+            iconRender={passwordShown}
+            handleOnClick={handleShowPass}
+          />
+          {errors.password && (
+            <Tag
+              color="error"
+              style={{ paddingBottom: "2px", fontSize: "14px" }}
+            >
+              Please input password
+            </Tag>
+          )}
+        </div>
         <div className="wrapper-remember_forgot">
           <div className="wrapper-checkbox">
             <input type="checkbox" id="login_checkbox" name="remember" />

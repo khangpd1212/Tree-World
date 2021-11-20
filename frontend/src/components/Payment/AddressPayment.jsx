@@ -10,17 +10,11 @@ export default function AddressPayment() {
    const dispatch = useDispatch();
    const { textAddress } = useSelector(selectProvince)
 
-   // useEffect(() => {
-   //    let addressGetLocal = localStorage.getItem("address"));
-   //    let itemAddressLocal = addressGetLocal ? addressGetLocal : [];
-   //    dispatch(showTextAddress(itemAddressLocal))
-   // }, [dispatch])
-
    const handleDefaultAddress = () => {
-      localStorage.setItem("address", JSON.stringify(textAddress));
+      sessionStorage.setItem("address", JSON.stringify(textAddress));
    }
    const onCreate = (values) => {
-      localStorage.setItem("address", JSON.stringify(values));
+      sessionStorage.setItem("address", JSON.stringify(values));
       dispatch(showTextAddress(values))
       setVisible(false);
    };

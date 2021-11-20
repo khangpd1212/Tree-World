@@ -11,6 +11,7 @@ const initialState = {
   error: "",
   filterProduct: [],
   searchProduct: [],
+  product: {},
 };
 
 export const fetchProducts = createAsyncThunk(
@@ -56,6 +57,17 @@ export const searchProducts = createAsyncThunk(
     }
   }
 );
+export const detailProduct = createAsyncThunk(
+  "DETAIL_PRODUCT",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`product/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 const productSlice = createSlice({
   name: "product",
   initialState,
@@ -95,6 +107,16 @@ const productSlice = createSlice({
     builder.addCase(searchProducts.rejected, (state, action) => {
       return { ...state, loading: "error", error: action.error.message };
     });
+    //DETAIL
+    builder.addCase(detailProduct.pending, (state) => {
+      return { ...state, loading: "loading" };
+    });
+    builder.addCase(detailProduct.fulfilled, (state, action) => {
+      return { ...state, product: action.payload, loading: "loaded" };
+    });
+    builder.addCase(detailProduct.rejected, (state, action) => {
+      return { ...state, loading: "error", error: action.error.message };
+    });
   },
 });
 export const selectProducts = createSelector(
@@ -103,6 +125,7 @@ export const selectProducts = createSelector(
     loading: state.productState.loading,
     filterProduct: state.productState.filterProduct,
     searchProduct: state.productState.searchProduct,
+    product: state.productState.product,
   }),
   (state) => state
 );

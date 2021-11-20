@@ -25,7 +25,8 @@ export const cartSlice = createSlice({
             const tempProduct = {...action.payload, quantity: 1};
             state.cartItems.push(tempProduct);
             toast.success(`${action.payload.product_name} added to cart`, {
-               position: "top-right",
+               position: "bottom-left",
+               autoClose: 2000,
             });
          }
 
@@ -52,14 +53,16 @@ export const cartSlice = createSlice({
          );
          state.cartItems = nextCartItems;
          toast.error(`${action.payload.product_name} removed from cart`, {
-            position: "top-right",
+            position: "bottom-left",
+            autoClose: 2000,
          });
          localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
       },
       clearCart: (state, action) => {
          state.cartItems = [];
          toast.error(`Cart cleared`, {
-            position: "top-right",
+            position: "bottom-left",
+            autoClose: 2000,
          });
          localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
       },

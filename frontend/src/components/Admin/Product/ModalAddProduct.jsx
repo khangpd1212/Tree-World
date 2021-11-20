@@ -76,18 +76,17 @@ export default function ModalAddProduct({ visible, setVisible }) {
         >
             <Form.Item
                 name="product_name"
-                label="Name"
+                label="Product Name"
                 hasFeedback
             >
-                <Input placeholder="Name product" />
+                <Input />
             </Form.Item>
             <Form.Item
                 name="catalog_id"
-                label="Catalog"
+                label="Catalog Name"
                 hasFeedback
-                placeholder="Catalog"
             >
-                <Select placeholder="Catalog">
+                <Select >
                     {
                         catalogList &&
                         catalogList.filter(f => f.status)
@@ -100,7 +99,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
                 <Form.Item name="inventory" noStyle>
                     <InputNumber min={1} defaultValue={0} />
                 </Form.Item>
-                <span className="ant-form-text"> Price</span>
+                <span className="ant-form-text"> Price:</span>
                 <Form.Item name="price" noStyle>
                     <InputNumber min={1} defaultValue={0} />
                 </Form.Item>
@@ -136,9 +135,9 @@ export default function ModalAddProduct({ visible, setVisible }) {
                 </Upload>
             </Form.Item>
 
-            <Form.Item label="description">
+            <Form.Item label="Description">
                 <Form.Item name="description" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                    <Input.TextArea defaultValue="description" />
+                    <Input.TextArea />
                 </Form.Item>
             </Form.Item>
 
@@ -166,7 +165,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
             onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             footer={false}
-            width="100%"
+            width="50%"
             className="edit-product"
         >
             <FromEdit />

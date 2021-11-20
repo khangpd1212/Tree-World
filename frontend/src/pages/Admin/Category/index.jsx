@@ -1,19 +1,19 @@
 
 import TableCategory from "components/Admin/Category/Table";
-import ModalAddProduct from "components/Admin/Product/ModalAddProduct";
+import ModalAddCategory from "components/Admin/Category/ModalAddCategory";
 import BtnAdd from "components/BtnAdd";
 import { useState } from "react";
 
 export default function CategoryAdmin() {
-  const [openAddProduct, setOpenAddProduct] = useState(false)
+  const [openAddCategory, setOpenAddCategory] = useState(false)
 
   return (
     <>
-      <BtnAdd page='product' setOpen={setOpenAddProduct} />
+      <BtnAdd page='product' setOpen={setOpenAddCategory} />
       <TableCategory />
-      <ModalAddProduct
-        visible={openAddProduct}
-        setVisible={setOpenAddProduct}
+      <ModalAddCategory
+        visible={openAddCategory}
+        setVisible={setOpenAddCategory}
       />
     </>
   )

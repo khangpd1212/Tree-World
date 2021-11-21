@@ -1,19 +1,20 @@
 import { Radio, Space } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { selectCarts } from "redux/cart";
 import { selectFee } from "redux/service/fee";
-import { useSelector, useDispatch } from "react-redux";
 import { selectProvince } from "redux/address/province";
 import { fetchOrders, getOrders } from "redux/order";
+import { getOrderDetail } from "redux/order_detail";
 import { selectUsers } from "redux/user";
-import { Link } from "react-router-dom";
 import { ShowModalLogin } from "redux/modal";
-import { toast } from "react-toastify";
 
 export default function PaymentMethod() {
   const { textAddress } = useSelector(selectProvince);
   const { feeItems } = useSelector(selectFee);
-  const { cartTotalAmount } = useSelector(selectCarts);
+  const { cartTotalAmount, cartItems } = useSelector(selectCarts);
   const { userItems } = useSelector(selectUsers);
 
   const [radio, setRadio] = useState(1);
@@ -25,22 +26,30 @@ export default function PaymentMethod() {
     setRadio(e.target.value);
   };
   const handleOrder = () => {
-    const textChild = textAddress.map(
+    const textAddressChild = textAddress.map(
       (item) =>
         `${item.street}, ${item.ward}, ${item.district}, ${item.province}`
     );
-    let dataOrder = {
-      username: textAddress[0].name,
-      address: textChild.toString(),
-      phoneNumber: textAddress[0].phone,
-      toTal: cartTotalAmount.total + feeItem,
-      status: "Mới tạo",
-      idUser: userItems._id,
-      idVoucher: 1,
-    };
-    // let dataOrderDetail = {
-    //   id_order: 
-    // }
+    const order_detail = cartItems.map((item) => (
+        {
+          id_product: item._id,
+          quantity: item.quantity
+        }
+    ))
+    let dataOrder = [
+        {
+        username: textAddress[0].name,
+        address: textAddressChild.toString(),
+        phoneNumber: textAddress[0].phone,
+        toTal: cartTotalAmount.total + feeItem,
+        status: "Mới tạo",
+        idUser: userItems._id,
+        idVoucher: 1,
+      },
+      {
+        order_detail,
+      },
+    ];
     if (Object.values(userItems).length === 0) {
       dispatch(ShowModalLogin(true));
       toast.error(`You need to login`, {
@@ -50,6 +59,8 @@ export default function PaymentMethod() {
     } else {
       dispatch(ShowModalLogin(false));
       dispatch(fetchOrders(dataOrder));
+      dispatch(getOrders());
+      dispatch(getOrderDetail());
     }
   };
   return (

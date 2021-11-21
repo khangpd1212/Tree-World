@@ -20,6 +20,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";
+import { fetchGetUser } from "redux/user";
+import { getOrders } from "redux/order";
+import { getOrderDetail } from "redux/order_detail";
 const { Content } = Layout;
 export default function BaseLayout() {
   const dispatch = useDispatch();
@@ -43,8 +46,11 @@ export default function BaseLayout() {
   }, [themeState]);
 
   useEffect(() => {
+    dispatch(fetchGetUser());
     dispatch(fetchProducts());
     dispatch(fetchCatalogs());
+    dispatch(getOrders());
+    dispatch(getOrderDetail());
   }, [dispatch]);
 
   return (

@@ -17,7 +17,7 @@ const useRouter = (app) => {
         .use("/user", userRoute)
         .use("/comment", commentRoute)
         .use("/order", orderRoute)
-        .use("./order_detail", orderDetailRoute)
+        .use("/order_detail", orderDetailRoute)
 }
 
 

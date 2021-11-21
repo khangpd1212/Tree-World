@@ -1,5 +1,5 @@
 import {
-    ContainerOutlined, DesktopOutlined, PieChartOutlined, DashboardOutlined
+    ContainerOutlined, UserOutlined, DashboardOutlined, InboxOutlined, ReadOutlined, TagsOutlined, PrinterOutlined, CommentOutlined
 } from '@ant-design/icons';
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
@@ -31,17 +31,26 @@ export default function SideComponent({ isOpen }) {
                 <Menu.Item key="1" icon={<DashboardOutlined />}>
                     <Link to={"/admin"}>Dashboard</Link>
                 </Menu.Item>
-                <Menu.Item key="2" icon={<PieChartOutlined />}>
+                <Menu.Item key="2" icon={<InboxOutlined />}>
                     <Link to={"/admin/product"}>Product</Link>
                 </Menu.Item>
-                <Menu.Item key="3" icon={<DesktopOutlined />} >
+                <Menu.Item key="3" icon={<ReadOutlined />} >
                     <Link to={"/admin/category"}>Category</Link>
                 </Menu.Item>
-                <Menu.Item key="4" icon={<ContainerOutlined />}>
-                    <Link to={"/admin/new"}>New</Link>
+                <Menu.Item key="4" icon={<TagsOutlined />} >
+                    <Link to={"/admin/voucher"}>Voucher</Link>
                 </Menu.Item>
                 <Menu.Item key="5" icon={<ContainerOutlined />}>
+                    <Link to={"/admin/new"}>News</Link>
+                </Menu.Item>
+                <Menu.Item key="6" icon={<PrinterOutlined />}>
                     <Link to={"/admin/order"}>Order</Link>
+                </Menu.Item>
+                <Menu.Item key="7" icon={<UserOutlined />}>
+                    <Link to={"/admin/users"}>User</Link>
+                </Menu.Item>
+                <Menu.Item key="8" icon={<CommentOutlined />}>
+                    <Link to={"/admin/comment"}>Comment</Link>
                 </Menu.Item>
             </Menu>
         </Sider>

@@ -1,33 +1,23 @@
-import {  Space, Table, Switch, } from "antd";
-import BtnAdd from "components/BtnAdd";
-export default function CategoryAdmin(){
-    const { Column,  } = Table;
-    const data = [
-        {
-          key: "1",
-          name: "John",
-          Price: 32,
-          address: "New York No. 1 Lake Park",
-          tags: ["nice", "developer"],
-        },
-      ];
-    return(
-          <>
-            <BtnAdd page='category' />
-            <Table dataSource={data}>
-                    <Column title="Name" dataIndex="name" key="name" />
-                    <Column 
-                    title="Status"
-                    key="status"
-                    render={(text, record)=>(
-                        <Switch defaultChecked onChange={onChange} />
-                    )}
-                    />
 
-            </Table>
-            </>
-    )
+import TableCategory from "components/Admin/Category/Table";
+import ModalAddCategory from "components/Admin/Category/ModalAddCategory";
+import BtnAdd from "components/BtnAdd";
+import { useState } from "react";
+
+export default function CategoryAdmin() {
+  const [openAddCategory, setOpenAddCategory] = useState(false)
+
+  return (
+    <>
+      <BtnAdd page='product' setOpen={setOpenAddCategory} />
+      <TableCategory />
+      <ModalAddCategory
+        visible={openAddCategory}
+        setVisible={setOpenAddCategory}
+      />
+    </>
+  )
 }
 function onChange(checked) {
-    console.log(`switch to ${checked}`);
+  console.log(`switch to ${checked}`);
 }

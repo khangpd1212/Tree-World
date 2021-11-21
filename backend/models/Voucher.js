@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const VoucherSchema = new mongoose.Schema({
    percent: {
-      type: String,
+      type: Number,
       required: true,
    },
    createDate: {

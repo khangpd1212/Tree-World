@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import { fetchCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
 import "styles/admin.scss";
-import { AddCategory, AddNew, AddProduct, CategoryAdmin, New, OrderAdmin, ProductAdmin, Dashboard } from "../../pages";
+import { CategoryAdmin, News, OrderAdmin, ProductAdmin, Dashboard, UserAdmin, VoucherAdmin, CommentAdmin } from "../../pages";
 import LoginDesktop from "../../pages/Login/LoginDesktop";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
@@ -39,11 +39,11 @@ export default function AdminLayout() {
           <Content>
             <Route path="/admin" exact component={Dashboard} />
             <Route path="/admin/product" exact component={ProductAdmin} />
-            <Route path="/admin/product/add" exact component={AddProduct} />
             <Route path="/admin/category" exact component={CategoryAdmin} />
-            <Route path="/admin/category/add" exact component={AddCategory} />
-            <Route path="/admin/new" exact component={New} />
-            <Route path="/admin/new/add" exact component={AddNew} />
+            <Route path="/admin/new" exact component={News} />
+            <Route path="/admin/voucher" exact component={VoucherAdmin} />
+            <Route path="/admin/users" exact component={UserAdmin} />
+            <Route path="/admin/comment" exact component={CommentAdmin} />
             <Route path="/admin/order" exact component={OrderAdmin} />
           </Content>
         </Layout>

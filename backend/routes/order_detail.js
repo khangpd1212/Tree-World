@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
       res.status(400).json({ message: error.message });
    }
 });
-// get order_detail
+
 router.post("/", async (req, res) => {
    const {id_order, id_product, quantity} = req.body;
    const newOrderDetail = new Order_detail({

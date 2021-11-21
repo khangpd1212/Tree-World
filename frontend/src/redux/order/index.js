@@ -9,25 +9,28 @@ export const fetchOrders = createAsyncThunk(
    async (data, thunkAPI) => {
       try {
          let token = localStorage.getItem("token");
-         const response = await axios.post("order", data,
+         await axios.post("order", data[0],
             {
                headers: {
                   'Authorization': 'Bearer ' + token
                }
             }).then(res => {
-               console.log(res.data)
-               axios.post("order_detail", res.data, {
-                  headers: {
-                     'Authorization': 'Bearer ' + token
-                  }
-               })
+               const id_order = res.data.order._id
+               data[1].order_detail.map((item) => (
+                  axios.post("order_detail", {
+                     ...item,
+                     id_order,
+                  }, {
+                     headers: {
+                        'Authorization': 'Bearer ' + token
+                     }
+                  })
+               ))
             })
-         // toast.success(`You success order`, {
-         //    position: "bottom-left",
-         //    autoClose: 2000,
-         // };
-         console.log(response)
-         return await response.data;
+         toast.success(`You success order`, {
+            position: "bottom-left",
+            autoClose: 2000,
+         })
       } catch (error) {
          toast.error(`Error order`, {
             position: "bottom-left",

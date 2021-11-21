@@ -11,15 +11,10 @@ import SliderProductComp from "./SliderProductComp";
 
 export default function SliderProduct() {
    const { productList } = useSelector(selectProducts);
-   const dispatch = useDispatch();
-   useEffect(() => {
-      dispatch(fetchProducts());
-   }, [dispatch]);
 
    var settings = {
       // autoplay: true,
       autoplaySpeed: 3000,
-      // cssEase: "linear",
       infinite: true,
       speed: 500,
       slidesToShow: 4,

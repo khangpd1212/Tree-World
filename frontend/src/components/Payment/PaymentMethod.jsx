@@ -37,9 +37,9 @@ export default function PaymentMethod() {
         }
     ))
     let dataOrder = [
-        {
+      {
         username: textAddress[0].name,
-        address: textAddressChild.toString(),
+        address: textAddress[0].address ? textAddress[0].address : textAddressChild.toString(),
         phoneNumber: textAddress[0].phone,
         toTal: cartTotalAmount.total + feeItem,
         status: "Mới tạo",

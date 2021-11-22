@@ -7,6 +7,7 @@ const voucherRoute = require("./voucher");
 const commentRoute = require("./comment");
 const orderRoute = require("./order");
 const orderDetailRoute = require("./order_detail");
+const addressRoute = require("./address");
 const useRouter = (app) => {
     app
         .use("/voucher", voucherRoute)
@@ -18,6 +19,7 @@ const useRouter = (app) => {
         .use("/comment", commentRoute)
         .use("/order", orderRoute)
         .use("/order_detail", orderDetailRoute)
+        .use("/address", addressRoute)
 }
 
 

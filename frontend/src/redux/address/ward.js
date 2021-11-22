@@ -1,6 +1,4 @@
 import axios from "utils/axios";
-
-
 import {
    createSlice,
    createAsyncThunk,

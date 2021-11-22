@@ -8,7 +8,7 @@ export const fetchOrders = createAsyncThunk(
    "POST_ORDER",
    async (data, thunkAPI) => {
       try {
-         let token = localStorage.getItem("token");
+         let token = sessionStorage.getItem("token");
          await axios.post("order", data[0],
             {
                headers: {

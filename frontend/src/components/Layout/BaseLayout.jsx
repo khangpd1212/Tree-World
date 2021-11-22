@@ -23,6 +23,7 @@ import { fetchCatalogs } from "redux/catalog";
 import { fetchGetUser } from "redux/user";
 import { getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
+import { getAddress } from "redux/address";
 const { Content } = Layout;
 export default function BaseLayout() {
   const dispatch = useDispatch();
@@ -34,7 +35,8 @@ export default function BaseLayout() {
     if (getTheme === "dark") {
       setThemeState(true);
     }
-  }, [themeState]);
+  }, []);
+  console.log(themeState);
   useEffect(() => {
     if (themeState) {
       localStorage.setItem("Theme", "dark");
@@ -51,6 +53,7 @@ export default function BaseLayout() {
     dispatch(fetchCatalogs());
     dispatch(getOrders());
     dispatch(getOrderDetail());
+    dispatch(getAddress());
   }, [dispatch]);
 
   return (

@@ -56,7 +56,7 @@ export default function AddressPayment() {
     }
   }, [textAddress, addressList, userItems]);
 
-  console.log(addressItems);
+
   const handleDefaultAddress = () => {
     let dataAddress = {};
     const compareAddress = addressList.find(

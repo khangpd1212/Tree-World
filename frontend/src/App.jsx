@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { AdminLayout, BaseLayout, LoginLayout } from "./components/Layout";
+import { AdminLayout, BaseLayout, LoginLayout } from "components/Layout";
 
 function App() {
   return (

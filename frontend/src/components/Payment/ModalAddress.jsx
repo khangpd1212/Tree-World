@@ -123,7 +123,7 @@ export default function ModalAddress({ handleCreate }) {
         <Row gutter={10}>
           <Col md={8}>
             <Form.Item
-            name="province"
+              name="province"
               label="Province"
               rules={[
                 {
@@ -139,7 +139,10 @@ export default function ModalAddress({ handleCreate }) {
               >
                 {itemsProvince &&
                   itemsProvince.map((province) => (
-                    <Option value={province.ProvinceID}>
+                    <Option
+                      value={province.ProvinceID}
+                      key={province.ProvinceID}
+                    >
                       {province.ProvinceName}
                     </Option>
                   ))}
@@ -164,7 +167,10 @@ export default function ModalAddress({ handleCreate }) {
               >
                 {itemsDistrict &&
                   itemsDistrict.map((district) => (
-                    <Option value={district.DistrictID}>
+                    <Option
+                      value={district.DistrictID}
+                      key={district.DistrictID}
+                    >
                       {district.DistrictName}
                     </Option>
                   ))}
@@ -173,7 +179,7 @@ export default function ModalAddress({ handleCreate }) {
           </Col>
           <Col md={8}>
             <Form.Item
-            name="ward"
+              name="ward"
               label="Ward"
               rules={[
                 {
@@ -185,7 +191,9 @@ export default function ModalAddress({ handleCreate }) {
               <Select placeholder="Ward" showSearch onChange={handleWardChange}>
                 {itemsWard &&
                   itemsWard.map((ward) => (
-                    <Option value={ward.WardCode}>{ward.WardName}</Option>
+                    <Option value={ward.WardCode} key={ward.WardCode}>
+                      {ward.WardName}
+                    </Option>
                   ))}
               </Select>
             </Form.Item>

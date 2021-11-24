@@ -7,8 +7,8 @@ import {
 
 const initialState = {
     userList: [],
-    userItems: sessionStorage.getItem("userItem") 
-    ? JSON.parse(sessionStorage.getItem("userItem"))
+    userItems: localStorage.getItem("userItems") 
+    ? JSON.parse(localStorage.getItem("userItems")) 
     : {},
     loading: "idle",
     error: "",
@@ -41,7 +41,7 @@ export const fetchLogin = createAsyncThunk(
     async (body, thunkAPI) => {
         try {
             const { data } = await axios.post("auth/login/", body);
-            sessionStorage.setItem("userItem", JSON.stringify(data))
+            localStorage.setItem("userItems", JSON.stringify(data))
             toast.success(`Account is success`, {
                 position: "bottom-left",
                 autoClose: 2000,
@@ -60,10 +60,10 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        onRemoveUser: (state,action) => {
-            sessionStorage.removeItem('userItem');
+        onRemoveUser: (state, action) => {
+            localStorage.removeItem('userItem');
             state.userItems = {}
-        } 
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchLogin.pending, (state) => {

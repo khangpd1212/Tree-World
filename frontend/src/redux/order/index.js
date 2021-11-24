@@ -8,21 +8,21 @@ export const fetchOrders = createAsyncThunk(
    "POST_ORDER",
    async (data, thunkAPI) => {
       try {
-         let token = sessionStorage.getItem("token");
+         let userItem = JSON.parse(localStorage.getItem("userItems"));
          await axios.post("order", data[0],
             {
                headers: {
-                  'Authorization': 'Bearer ' + token
+                  'Authorization': 'Bearer ' + userItem.accessToken
                }
             }).then(res => {
                const id_order = res.data.order._id
-               data[1].order_detail.map((item) => (
+               data[1].map((item) => (
                   axios.post("order_detail", {
                      ...item,
                      id_order,
                   }, {
                      headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + userItem.accessToken
                      }
                   })
                ))
@@ -45,6 +45,23 @@ export const getOrders = createAsyncThunk(
    async (_, thunkAPI) => {
       try {
          const response = await axios.get("order");
+         return await response.data;
+      } catch (error) {
+         return thunkAPI.rejectWithValue({ error: error.message });
+      }
+   }
+);
+// Xóa order
+export const deleteOrders = createAsyncThunk(
+   "DELETE_ORDER",
+   async (id, thunkAPI) => {
+      try {
+         let userItem = JSON.parse(localStorage.getItem("userItems"));
+         const response = await axios.delete("order/" + id, {
+            headers: {
+               'Authorization': 'Bearer ' + userItem.accessToken
+            }
+         });
          return await response.data;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });

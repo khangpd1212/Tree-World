@@ -3,14 +3,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   orderDetailList: [],
 };
-export const getOrderDetail = createAsyncThunk("GET_ORDER_DETAIL", async (_, thunkAPI) => {
-  try {
-    const response = await axios.get("order_detail");
-    return await response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ error: error.message });
-  }
-});
+export const getOrderDetail = createAsyncThunk(
+  "GET_ORDER_DETAIL",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("order_detail");
+      return await response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  });
 export const orderDetailSlice = createSlice({
   name: "order_detail",
   initialState,

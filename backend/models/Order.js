@@ -22,8 +22,8 @@ const OrderSchema = new mongoose.Schema({
       required: true,
    },
    orderDate: {
-      type: Date, 
-      default: Date.now,
+      type: String,
+      required: true,
    },
    activatedVoucher: {
       type: Boolean,

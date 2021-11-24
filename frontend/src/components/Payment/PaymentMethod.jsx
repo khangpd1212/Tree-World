@@ -25,31 +25,53 @@ export default function PaymentMethod() {
   const onChangeRadio = (e) => {
     setRadio(e.target.value);
   };
+
   const handleOrder = () => {
+    var today = new Date();
+    var date =
+      today.getDate() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getFullYear();
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var orderDate = date + " " + time;
+
+    // nối chuỗi address
     const textAddressChild = textAddress.map(
       (item) =>
         `${item.street}, ${item.ward}, ${item.district}, ${item.province}`
     );
-    const order_detail = cartItems.map((item) => (
-        {
-          id_product: item._id,
-          quantity: item.quantity
-        }
-    ))
+
+    // lấy data order detail
+    const order_detail = cartItems.map((item) => ({
+      id_product: item._id,
+      quantity: item.quantity,
+    }));
+
+    // data để order lên db
     let dataOrder = [
       {
-        username: textAddress[0].name,
-        address: textAddress[0].address ? textAddress[0].address : textAddressChild.toString(),
-        phoneNumber: textAddress[0].phone,
+        username: textAddress[0].name
+          ? textAddress[0].name
+          : userItems.username,
+        address: textAddress[0].address
+          ? textAddress[0].address
+          : textAddressChild.toString(),
+        phoneNumber: textAddress[0].phone
+          ? textAddress[0].phone
+          : userItems.phone_number,
         toTal: cartTotalAmount.total + feeItem,
         status: "Mới tạo",
         idUser: userItems._id,
         idVoucher: 1,
+        orderDate: orderDate,
       },
-      {
-        order_detail,
-      },
+      order_detail,
     ];
+
+    // nếu không đăng nhập thì báo cần đăng nhập
     if (Object.values(userItems).length === 0) {
       dispatch(ShowModalLogin(true));
       toast.error(`You need to login`, {

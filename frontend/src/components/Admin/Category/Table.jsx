@@ -6,8 +6,6 @@ import { fetchCatalogs, selectCatalogs } from 'redux/catalog';
 import { requests } from 'utils/axios';
 import ModalEdit from './ModalEditCategory';
 
-
-
 export default function TableCategory() {
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState({})

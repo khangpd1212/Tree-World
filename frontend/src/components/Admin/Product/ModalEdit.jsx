@@ -34,9 +34,10 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
     const [fileList, setFileList] = useState([]);
     let catalogSeleted = catalogList && selected && catalogList.find(f => f._id == selected.catalog_id);
     const dispatch = useDispatch()
-    const token = localStorage.getItem("token");
-
+    const userItem = JSON.parse(localStorage.getItem("userItems"));
+    const token = userItem ? userItem.accessToken : null;
     const onFinish = (values) => {
+         console.log(values)
         requests.editProduct(
             token, values, selected._id,imgBase64
         ).then(res=> {

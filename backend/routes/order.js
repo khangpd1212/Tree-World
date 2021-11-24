@@ -30,6 +30,7 @@ router.post("/", verify, async (req, res) => {
         address,
         status,
         phoneNumber,
+        orderDate,
         toTal,
         idUser,
         idVoucher
@@ -40,6 +41,7 @@ router.post("/", verify, async (req, res) => {
         address,
         status,
         phoneNumber,
+        orderDate,
         toTal,
         idUser,
         idVoucher

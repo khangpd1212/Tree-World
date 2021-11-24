@@ -5,30 +5,29 @@ import { Route } from "react-router-dom";
 import { fetchCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
 import "styles/admin.scss";
-import { CategoryAdmin, News, OrderAdmin, ProductAdmin, Dashboard, UserAdmin, VoucherAdmin, CommentAdmin } from "../../pages";
-import LoginDesktop from "../../pages/Login/LoginDesktop";
+import {
+  CategoryAdmin,
+  News,
+  OrderAdmin,
+  ProductAdmin,
+  Dashboard,
+  UserAdmin,
+  VoucherAdmin,
+  CommentAdmin,
+} from "pages";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
-
 const { Content } = Layout;
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-
-  const dispatch = useDispatch()
-  const token = localStorage.getItem("token")
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts())
-    dispatch(fetchCatalogs())
-  }, [dispatch])
+    dispatch(fetchProducts());
+    dispatch(fetchCatalogs());
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (!token) {
-      setIsOpenLogin(true)
-    }
-  }, [token])
 
   return (
     <div className="root-admin">

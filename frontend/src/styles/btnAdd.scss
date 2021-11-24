@@ -1,0 +1,10 @@
+@import "colors";
+@import "fonts";
+@import "media-queries";
+
+.btn__add {
+  .ant-btn {
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+}

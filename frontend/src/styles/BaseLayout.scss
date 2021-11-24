@@ -1,0 +1,66 @@
+@import "media-queries";
+@import "colors";
+
+body.dark {
+  .root-base .ant-layout-content {
+    background: #121212;
+  }
+
+  .head {
+    &__change {
+      background: #121212;
+    }
+  }
+}
+
+.root-base .ant-layout-content {
+  background: $screen-color;
+}
+
+.ant-back-top {
+  right: 50px !important;
+  @include mobile {
+    right: 40px !important;
+    bottom: 40px !important;
+  }
+  @include mobile-sm {
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+  div {
+    @include mobile {
+      height: 40px !important;
+      width: 40px !important;
+      line-height: 40px !important;
+    }
+  }
+}
+
+.head {
+  position: relative;
+
+  &__change {
+    width: 100%;
+    background: $screen-color;
+    height: 100px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translate(0, 100%);
+  }
+}
+
+.root-base .ant-layout.ant-layout-has-sider {
+  flex-direction: column !important;
+
+  > .ant-layout-content {
+    width: 100%;
+  }
+}
+.spinner--loading {
+  margin: 200px 0;
+  margin-bottom: 200px;
+  padding: 30px 50px;
+  text-align: center;
+  border-radius: 4px;
+}

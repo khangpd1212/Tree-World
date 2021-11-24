@@ -2,30 +2,52 @@
   font-family: "SFUMetaCaps";
   src: local("SFUMetaCaps"), url(../fonts/SFUMetaCaps.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUHelveticaLight";
   src: local("SFUHelveticaLight"),
     url(../fonts/SFUHelveticaLight.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUToledoBold";
   src: local("SFUToledoBold"),
     url(../fonts/SFUToledoBold.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUToledoMedium";
   src: local("SFUToledoMedium"),
     url(../fonts/SFUToledoMedium.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "SFUMetaBold";
   src: local("SFUMetaBold"), url(../fonts/SFUMetaBold.TTF) format("opentype");
 }
+
 @font-face {
   font-family: "FuturaSCTOT";
   src: local("FuturaSCTOT"),
     url(../fonts/Futura-SC-T-OT-Book_19037.ttf) format("opentype");
 }
+
+@font-face {
+  font-family: "SVNNewton";
+  src: local("SVNNewton"), url(../fonts/SVN-Newton.ttf) format("opentype");
+}
+@font-face {
+  font-family: "SVNSwashington";
+  src: local("SVNSwashington"),
+    url(../fonts/SVN-Swashington.otf) format("opentype");
+}
+
+@font-face {
+  font-family: "SVNSwashington";
+  src: local("SVNSwashington"), url(../fonts/SVN-Swashington.otf) format("opentype");
+}
+
+$font-SVNSwahington: "SVNSwashington";
 
 $font-SFRMeta: "SFUMetaCaps";
 $font-SFUHelveticaLight: "SFUHelveticaLight";
@@ -33,3 +55,5 @@ $font-SFUToledoBold: "SFUToledoBold";
 $font-SFUToledoMedium: "SFUToledoMedium";
 $font-SFUMetaBold: "SFUMetaBold";
 $font-FuturaSCTOT: "FuturaSCTOT";
+$font-SVNNewton: "SVNNewton";
+$font-SVNSwahington: "SVNSwashington";

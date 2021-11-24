@@ -1,0 +1,481 @@
+@import "media-queries";
+@import "fonts";
+@import "colors";
+
+.detail {
+  margin: 0 5vw;
+  position: relative;
+  @include mobile {
+  }
+  .pro {
+    margin-top: 20vh;
+  }
+  .avtpro img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .image {
+    display: flex;
+    margin-top: 3vh;
+    padding: 0;
+    // text-align: center;
+    justify-content: space-between;
+  }
+  .imageCon {
+    width: 190px;
+    padding: 0;
+    margin: 0;
+  }
+  .imageCon img {
+    //   padding-right: 5vh;
+    width: 100% !important ;
+  }
+  .infor {
+    padding-left: 40px;
+  }
+  .newnewCollect {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .hrCategory {
+    width: 50%;
+    height: 1px;
+    background-color: $dark--hr-color;
+    position: relative;
+    &::before {
+      position: absolute;
+      content: "CATEGORY";
+      right: 0;
+      bottom: 0;
+      transform: translate(120%, 35%);
+      font-size: 18px;
+      color: $light--secondary-color;
+      font-family: $font-SFRMeta;
+      text-transform: lowercase;
+    }
+  }
+  .succulent {
+    font-size: 80px;
+    margin-top: 50px;
+    font-family: $font-SFUToledoMedium;
+    line-height: 75px;
+    color: $fifth-color;
+    margin: 30px 0px 60px 0px;
+  }
+  .hrNewCollect {
+    width: 74.5%;
+    margin-top: 50px;
+    height: 1px;
+    background-color: $dark--hr-color;
+    position: relative;
+    &::before {
+      position: absolute;
+      content: "new collection";
+      left: 0;
+      bottom: 0;
+      transform: translate(-120%, 35%);
+      font-size: 18px;
+      color: $light--secondary-color;
+      font-family: $font-SFRMeta;
+      text-transform: lowercase;
+    }
+  }
+  .price {
+    font-size: 72px;
+    margin-top: 30px;
+    color: $dark-color;
+    font-family: $font-SFRMeta;
+    span {
+      font-family: $font-SFUMetaBold;
+    }
+  }
+  .color_quantity {
+    display: flex;
+    .color {
+      width: 40%;
+      position: relative;
+      padding-right: 30px;
+      p {
+        font-family: $font-SFRMeta;
+        font-size: 20px;
+        color: $light--secondary-color;
+      }
+      &__item {
+        margin: 0 10px;
+        width: 25px;
+        height: 35px;
+        &.green {
+          background-color: $green-color;
+        }
+        &.purple {
+          background-color: $purple-color;
+        }
+        &.yellow {
+          background-color: $warning-color;
+        }
+      }
+      &::before {
+        position: absolute;
+        content: "";
+        width: 1px;
+        height: 100%;
+        right: 0;
+        bottom: 0;
+        transform: rotate(25deg);
+        background-color: black;
+      }
+    }
+    .textQuantyti {
+      font-family: $font-SFRMeta;
+      font-size: 20px;
+      color: $light--secondary-color;
+      margin-left: 100px;
+      height: 10px;
+    }
+    .quantity {
+      margin: 50px auto auto -75px;
+      display: flex;
+      .btn1 {
+        width: 23px;
+        height: 30px;
+        border: 0.01px solid;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      .btn2 {
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        height: 30px;
+        width: 55px;
+        text-align: center;
+        border-radius: 0;
+      }
+      .btn3 {
+        height: 30px;
+        width: 23px;
+        border: 0.01px solid;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+  }
+  .stock {
+    margin-top: 60px;
+    .iconV {
+      font-size: 26px;
+      padding: 10px;
+      margin: auto;
+    }
+    .icon {
+      font-size: 26px;
+      padding: 10px;
+      margin: auto;
+    }
+    .icon:hover {
+      color: $forth-color;
+    }
+  }
+  .footerInfor {
+    .btn {
+      font-size: 26px;
+      background-color: $dark-color;
+      color: white;
+      border: none;
+      padding: 7px;
+      margin-left: 30px;
+      margin-top: 30px;
+    }
+    .btn:hover {
+      background-color: $forth-color;
+      font-family: 600;
+    }
+    .Cart {
+      margin-right: 10px;
+    }
+  }
+  .textD {
+    margin-top: 3vh;
+    .hrtext {
+      width: 100%;
+      height: 1px;
+      background-color: $dark--hr-color;
+      position: relative;
+      margin: 35px 0px 15px 0px;
+      font-family: $font-SFUHelveticaLight;
+      &::before {
+        position: absolute;
+        content: "product description";
+        left: 0;
+        bottom: 0;
+        transform: translate(0%, 0%);
+        font-size: 18px;
+        color: $light--secondary-color;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+      }
+    }
+  }
+
+  .proCmt {
+    .hrCmt {
+      width: 100%;
+      height: 1px;
+      background-color: $dark--hr-color;
+      position: relative;
+      margin: 35px 0px 15px 0px;
+      &::before {
+        position: absolute;
+        content: "product comments";
+        left: 0;
+        bottom: 0;
+        transform: translate(0%, 0%);
+        font-size: 18px;
+        color: $light--secondary-color;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+      }
+    }
+  }
+  .contaistar {
+    width: 100%;
+    height: auto;
+    margin-right: 5vh;
+    background-color: white;
+    border: 1px solid $boder-color;
+    font-family: $font-SFRMeta;
+    display: flex;
+  }
+  .numberStar {
+    width: 30%;
+    height: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 41px;
+    font-family: $font-SFUMetaBold;
+    color: $light--red-color;
+  }
+  .btnStar {
+    button {
+      padding: 0 10px;
+      margin: 10px 20px;
+      border: 1px solid black;
+    }
+    button:hover {
+      border: 1px solid $bode--hover-color;
+      color: $bode--hover-color;
+    }
+  }
+  .voucher {
+    background-color: white;
+    height: 250px;
+    width: 100%;
+    margin-left: 40px;
+    border: 1px solid $boder-color;
+    p {
+      margin: 10px;
+    }
+  }
+  .commnet {
+    width: 100%;
+    padding: 30px;
+    background-color: white;
+    margin-top: 3vh;
+    .itemComment {
+      .avt_name {
+        display: flex;
+        margin-top: 10px;
+        .avt {
+          font-size: 48px;
+          color: $forth-color;
+          margin: 10px 10px 0 10px;
+        }
+        .name {
+          .star {
+            color: yellow;
+            margin: 0 4px;
+          }
+        }
+      }
+      .textCommnet {
+        margin-left: 40px;
+        h4 {
+          padding: 10px;
+        }
+      }
+      .hritemComment {
+        position: relative;
+        margin: auto;
+        width: 95%;
+        height: 1px;
+        opacity: 0.5;
+        background-color: $secondary-color;
+        &::before {
+          position: absolute;
+          content: "";
+          left: 0;
+          bottom: 0;
+          transform: translate(50%, 0%);
+        }
+      }
+    }
+  }
+  .voucher {
+    height: 350px;
+    .voucherItem {
+      display: flex;
+      margin: auto auto 20px;
+      background-color: $pink-color;
+      width: 350px;
+      position: relative;
+      &::after {
+        position: absolute;
+        content: "";
+        display: block;
+        height: 10px;
+        bottom: -10px;
+        /* -height */
+        left: 0;
+        right: 0;
+        /* TODO Add browser prefixes */
+        background: linear-gradient(
+            45deg,
+            transparent 33.333%,
+            $pink-color 33.333%,
+            $pink-color 66.667%,
+            transparent 66.667%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 33.333%,
+            $pink-color 33.333%,
+            $pink-color 66.667%,
+            transparent 66.667%
+          );
+        background-size: 8px 20px;
+        /* toothSize doubleHeight */
+        background-position: 0 -10px;
+      }
+      .voucherMain {
+        border-right: 1px dashed $bode--voucher-color;
+        padding: 10px 10px 10px 20px;
+        width: 65%;
+        h4 {
+          padding: 0;
+          margin-left: 10px;
+          font-size: 24px;
+          font-family: $font-SVNSwahington;
+          color: $red-color;
+        }
+        p {
+          font-size: 14px;
+          color: $red-color;
+          font-family: $font-SFUToledoMedium;
+        }
+        h5 {
+          font-size: 11px;
+          font-family: $font-SFUToledoMedium;
+          margin-left: 10px;
+        }
+      }
+      .voucherAdd {
+        margin: auto;
+        button {
+          background-color: $red-color;
+          border: none;
+          border-radius: 3px;
+          font-size: 18px;
+          color: $light-color;
+          padding: 9px 13px;
+        }
+        button:hover {
+          background-color: $forth-color;
+          transition-duration: 1s, 1s, 1s, 1s, 1s, 1s;
+        }
+      }
+    }
+    .hotSelling {
+      margin-top: 60px;
+      background: $light-color;
+      .img {
+        width: 300px;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .aboveSlide {
+    display: flex;
+    width: 100%;
+    margin: 30px;
+    .aboveSlide_Right {
+      width: 28%;
+      height: 2.5px;
+      margin: 5vh;
+      background-color: $dark--hr-color;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        right: 0;
+        bottom: 0;
+        transform: translate(-800%, 35%);
+        font-size: 18px;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+      }
+    }
+    .aboveSlide_Mid {
+      margin: -10px auto;
+      padding-left: 10px;
+      width: 40%;
+      font-weight: 500;
+      font-size: 54px;
+      color: $secondary-color;
+      font-family: $font-SVNNewton;
+    }
+    .aboveSlide_Left {
+      width: 28%;
+      height: 2.5px;
+      margin: 5vh;
+      background-color: $dark--hr-color;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0;
+        transform: translate(-800%, 35%);
+        font-size: 18px;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+      }
+    }
+  }
+  .slidePro {
+    margin: 50px 0 200px;
+    .itemPro {
+      width: 80% !important;
+      background-color: $boder-color;
+      margin: 50px;
+      .itemImg {
+        width: 80%;
+        margin: auto;
+      }
+      .info {
+        display: flex;
+        padding: 10px;
+        h4 {
+          width: 60%;
+        }
+        p {
+          width: 30%;
+          text-align: right;
+        }
+      }
+    }
+  }
+}

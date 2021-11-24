@@ -1,0 +1,180 @@
+@import "../media-queries";
+@import "../colors";
+@import "../fonts";
+  // section 3
+  .section_hot {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-family: $font-SFRMeta;
+
+    @include tablet-plus {
+      display: none !important;
+    }
+
+    @include tablet-sm {
+      display: block !important;
+    }
+
+    // section introduce left
+
+    &__img {
+      z-index: 1;
+      @media screen and (max-width: 376px) {
+        flex: 100%;
+        max-width: 100%;
+      } 
+    }
+
+    &__card {
+      font-size: 20px;
+      color: white;
+      margin-top: 60px;
+
+      @include desktop {
+        font-size: 18px;
+      }
+
+      @include mobile{
+        font-size: 3.4vw;
+      }
+
+      .card__flex {
+        padding: 16px 0;
+        margin-bottom: 60px;
+        background-color: #4fbda8;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        z-index: 0;
+        position: relative;
+        width: 380px;
+        left: -140px;
+
+        @include desktop {
+          width: 350px;
+          margin-bottom: 40px;
+          padding: 12px 0;
+        }
+
+        @include tablet-sm {
+          width: 340px;
+          margin-bottom: 60px;
+          padding: 16px 0;
+        }
+        @include mobile{
+          width: 275px;
+          padding: 10px 0;
+          margin-bottom: 40px;
+        }
+        @media screen and (max-width: 376px) {
+          display: none;
+        }
+        
+        .card__icon {
+          margin-right: -20px;
+          font-size: 24px;
+
+          @include desktop {
+            font-size: 22px;
+          }
+           @include mobile {
+            font-size: 18px;
+          }
+        }
+      }
+
+      .card__content {
+        flex-basis: 76%;
+        margin-right: -26px;
+
+        &--title {
+          margin-bottom: 0.3rem;
+        }
+
+        &--bar {
+          width: 80%;
+          position: relative;
+          height: 1.1rem;
+          background-color: #1D483F;
+
+          &::after {
+            content: "sit";
+            position: absolute;
+            right: -2rem;
+            bottom: -3px;
+          }
+        }
+      }
+    }
+
+    .card--center {
+      left: -200px;
+      @include mobile{
+        left: -170px;
+      }
+    }
+
+    .card--bottom {
+      z-index: 2;
+    }
+
+    // section introduce right
+    .section_hot__desc {
+      margin-left: 80px;
+      margin-top: 1.4rem;
+
+      @include desktop {
+        margin-left: 110px;
+      }
+
+      @include tablet-sm {
+        margin-left: 0;
+      }
+
+      .desc__title {
+        font-size: 60px;
+        font-family: $font-SVNNewton;
+        line-height: 1;
+
+        @include desktop {
+          font-size: 46px;
+        }
+
+        @include tablet-sm {
+          margin-left: 0;
+        }
+      }
+
+      .desc__content {
+        font-family: $font-SFUHelveticaLight;
+        font-size: 24px;
+        line-height: 1.2;
+
+        @include desktop {
+          font-size: 18px;
+        }
+
+        @include mobile {
+          font-size: 14px;
+        }
+        &--large {
+          width: 86%;
+
+          @include desktop {
+            width: 100%;
+          }
+        }
+
+        &--flex {
+          display: flex;
+          align-items: flex-end;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        &--btn {
+          margin-top: 2.4rem;
+        }
+      }
+    }
+  }

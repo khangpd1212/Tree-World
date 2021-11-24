@@ -1,27 +1,30 @@
-import { Row, Col,Space, Typography } from "antd";
-import "styles/home.scss";
 import "styles/button.scss";
-const { Title,Paragraph } = Typography;
-export default function Home(){
-    return (
-    <>
-        <Row className="slider">
-            <Col className="slider-left" xs={24} lg={14}>
-                <img src="./images/slider.png" alt="img_slider-left"/>
-            </Col>
-            <Col className="slider-right" lg={10}>
-                <img src="./images/slider2.png" alt="img_slider-right"/>
-                <div className="slider-right_title">
-                    <Title>Make your days feeling goods with beautiful plant</Title>
-                </div>
-                <div className="slider-right_content">
-                    <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing telit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Paragraph>
-                    <button type="submit">
-                        See more
-                    </button>
-                </div>
-            </Col>
-        </Row>
-    </>
-    );
+import "styles/Home/Home.scss";
+import { useDispatch } from "react-redux";
+import { setLayoutStatus } from "redux/layout";
+
+import Banner from "components/Home/Banner";
+import SliderProduct from "components/Home/SliderProduct";
+import RecommendHome from "components/Home/RecommendHome";
+import HeaderProduct from "components/Home/HeaderProduct";
+import Button from '../../components/utils/Button'
+import BlogHome from "components/Home/BlogHome";
+
+export default function Home() {
+   const dispatch = useDispatch();
+   dispatch(setLayoutStatus(false));
+   return (
+      <div id="Home">
+         <Banner />
+         <div className="product-wrapper container_home">
+            <HeaderProduct/>
+            <SliderProduct/>
+            <div className="h_product-button">
+               <Button title="all product >>" />
+            </div>
+         </div>
+         <RecommendHome />
+      </div>
+   );
+
 }

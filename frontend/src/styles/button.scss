@@ -1,16 +1,81 @@
 @import "colors";
 @import "fonts";
-button{
-    padding: 8px 20px;
-    background-color: transparent;
-    border: 1px solid $primary-color;
-    color: $primary-color !important;
+@import "media-queries";
+
+body.dark {
+    .btn-home {
+        background-color: #259e84;
+    }
+}
+
+.btn {
+    @include tablet-plus {
+        padding: 0 1rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.3rem;
+    }
+
+    @include tablet1 {
+        font-size: 16px;
+        padding-top: 0.5rem;
+        padding-bottom: 0.8rem;
+    }
+
+    @include mobile {
+        font-size: 12px;
+        padding-top: 0.4rem;
+        padding-bottom: 0.6rem;
+    }
+
+    border-radius: unset;
+    -webkit-border-radius: unset;
+    -moz-border-radius: unset;
+    -ms-border-radius: unset;
+    -o-border-radius: unset;
+    font-size: 1.3vw;
+    line-height: 1;
+    padding: 0 1.2rem;
+    padding-bottom: 0.8rem;
+    padding-top: 0.4rem;
     cursor: pointer;
-    text-transform: uppercase !important;
     font-family: $font-SFRMeta;
-    &:hover{
-        transition: 0.4s ease;
-        background-color: $primary-color;
-        color: $light-color !important;
+    transition-duration: .2s;
+}
+
+.btn-home {
+    background-color: $dark-color;
+    border: 1px solid transparent;
+    color: $light-color !important;
+
+    &:hover {
+        background-color: $black-color;
+    }
+}
+
+.btn-outline {
+    background-color: transparent;
+}
+
+.outline-gray {
+    font-size: 16px;
+    border: none;
+    color: #918888;
+    outline: 3px solid #CEC8C8;
+
+    &:hover {
+        color: white;
+        background-color: #CEC8C8;
+    }
+}
+
+.outline-blue {
+    font-size: 16px;
+    border: none;
+    color: #647D8C;
+    outline: 3px solid #94A8B4;
+
+    &:hover {
+        color: white;
+        background-color: #94A8B4;
     }
 }

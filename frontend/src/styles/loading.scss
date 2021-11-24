@@ -1,0 +1,12 @@
+.spin__loading {
+  position: relative;
+  .ant-spin {
+    position: fixed;
+    margin-left: 50%;
+    margin-top: 50vh;
+    z-index: 999;
+    .anticon-spin {
+      animation: loadingCircle 2s linear infinite;
+    }
+  }
+}

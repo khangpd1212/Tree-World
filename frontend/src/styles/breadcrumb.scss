@@ -3,9 +3,9 @@
 @import "fonts";
 .ant-breadcrumb {
   font-family: $font-SFRMeta;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: $black-color;
-  font-weight: 600;
+  font-weight: 500;
   padding-bottom: 5px !important;
   position: relative;
   &::after {
@@ -28,6 +28,30 @@
     }
     @include tablet-sm {
       font-size: 14px !important;
+    }
+  }
+}
+body.dark {
+  .ant-breadcrumb {
+    color: $light-color;
+    &-separator {
+      color: $light-color;
+    }
+    &::after {
+      background: $light-gray-color;
+    }
+    a {
+      color: $light-color !important;
+      font-size: 18px !important;
+      &:hover {
+        color: $primary-color !important;
+      }
+      @include tablet-plus {
+        font-size: 16px !important;
+      }
+      @include tablet-sm {
+        font-size: 14px !important;
+      }
     }
   }
 }

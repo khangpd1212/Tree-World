@@ -1,0 +1,158 @@
+@import "../media-queries";
+@import "../colors";
+@import "../fonts";
+
+// reset css
+input,
+textarea,
+select,
+button {
+  outline: none;
+}
+
+input {
+  line-height: normal;
+}
+
+label,
+button {
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// theme dark
+body.dark {
+  #Home {
+    .slider {
+      .slider-right {
+        .slider-right_title {
+          h1 {
+            color: #259e84;
+          }
+        }
+
+        .slider-right_content {
+          color: white;
+        }
+      }
+    }
+
+    // section 2
+    .product-wrapper {
+      color: white;
+      background-color: #181819;
+
+      .h_product {
+        .h_product-title {
+          h1 {
+            color: white;
+
+          }
+        }
+
+        &-header {
+          color: white;
+          &_flex {
+            div {
+              &::before {
+                background-color: #207d69;
+              }
+
+              &:hover {
+                color: #207d69;
+              }
+            }
+          }
+        }
+
+      }
+
+      .h_product-main {
+
+        .slick-prev:before,
+        .slick-next:before {
+          color: white;
+        }
+
+        .slick-dots {
+          li button:before {
+            background-color: #207d69;
+          }
+        }
+      }
+    }
+
+    // section 3
+    .section_hot {
+      background-color: #141414;
+
+      &__card {
+        color: white;
+
+        .card__flex {
+          background-color: #4fbda8;
+        }
+
+        .card__content {
+          &--bar {
+            background-color: #1D483F
+          }
+        }
+      }
+
+      .desc__title {
+        color: white;
+      }
+
+      .desc__content {
+        color: white;
+      }
+    }
+  }
+}
+
+
+
+// theme Light
+// section 1
+
+.container_home {
+  padding: 0px 5vw;
+}
+
+.product-wrapper {
+
+  margin-top: 4vw;
+  background-color: $light--white-color;
+  ;
+}
+
+.h_product-button {
+  padding: 2rem 0;
+  text-align: right;
+
+  @include mobile {
+    text-align: center;
+  }
+
+  button {
+    font-size: 1vw;
+
+    @include tablet-sm {
+      font-size: 0.6rem;
+    }
+  }
+}

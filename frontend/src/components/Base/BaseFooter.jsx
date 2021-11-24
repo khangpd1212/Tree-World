@@ -33,6 +33,7 @@ function BaseFooter() {
             <Row>
               <Col xs={24} sm={24} md={7} lg={7} xl={7}>
                 <div className="footer__section--logo">
+                  <div className="images_logo-dark"></div>
                   <img src="/logo.png" alt="logo" />
                   <p>
                     © 2021 <br /> privacy policy
@@ -51,13 +52,18 @@ function BaseFooter() {
                   </p>
                 </div>
                 <div className="footer__section--follow visible">
-                  <img src="/images/facebook-icon.png" alt="facebook" />
-
-                  <img src="/images/twitter-icon.png" alt="twitter" />
-
-                  <img src="/images/shopee-icon.png" alt="shopee" />
-
-                  <img src="/images/lazada-icon.png" alt="lazada" />
+                  <div className="footer__section--icon_fb">
+                    <img src="/images/facebook-icon.png" alt="facebook" />
+                  </div>
+                  <div className="footer__section--icon_twitter">
+                    <img src="/images/twitter-icon.png" alt="twitter" />
+                  </div>
+                  <div className="footer__section--icon_shoppe">
+                    <img src="/images/shopee-icon.png" alt="shopee" />
+                  </div>
+                  <div className="footer__section--icon_lazada">
+                    <img src="/images/lazada-icon.png" alt="lazada" />
+                  </div>
                 </div>
               </Col>
               <Col xs={24} sm={24} md={7} lg={7} xl={7}>
@@ -75,13 +81,18 @@ function BaseFooter() {
                   <p>closed monday</p>
                 </div>
                 <div className="footer__section--follow hidden">
-                  <img src="/images/facebook-icon.png" alt="facebook" />
-
-                  <img src="/images/twitter-icon.png" alt="twitter" />
-
-                  <img src="/images/shopee-icon.png" alt="shopee" />
-
-                  <img src="/images/lazada-icon.png" alt="lazada" />
+                  <div className="footer__section--icon_fb">
+                    <img src="/images/facebook-icon.png" alt="facebook" />
+                  </div>
+                  <div className="footer__section--icon_twiter">
+                    <img src="/images/twitter-icon.png" alt="twitter" />
+                  </div>
+                  <div className="footer__section--icon_shoppe">
+                    <img src="/images/shopee-icon.png" alt="shopee" />
+                  </div>
+                  <div className="footer__section--icon_lazada">
+                    <img src="/images/lazada-icon.png" alt="lazada" />
+                  </div>
                 </div>
               </Col>
             </Row>

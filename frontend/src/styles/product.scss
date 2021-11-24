@@ -1,3 +1,717 @@
+@import "colors";
+@import "media-queries";
+@import "fonts";
 .product {
-  margin: 0 50px;
+  margin: 0 5vw;
+  position: relative;
+  &__collections {
+    padding-top: 80px;
+    @include tablet {
+      padding-top: 50px;
+    }
+    @include mobile {
+      padding-top: 30px;
+    }
+
+    &--item {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      @include tablet1 {
+        margin: 15px 0 0;
+      }
+      @include tablet-sm {
+        margin: 10px 0 0;
+      }
+      @include mobile {
+        margin: 15px 0;
+      }
+      img {
+        width: 100%;
+      }
+      &::before {
+        position: absolute;
+        content: "";
+        background: $black-color;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateX(-100%) rotate(45deg);
+        transition: all 0.5s ease-in-out;
+      }
+      &:hover::before {
+        opacity: 0.2;
+        transform: translateX(0);
+        transition: all 0.7s ease-in-out;
+      }
+      &::after {
+        position: absolute;
+        content: "";
+        background: $light-color;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateX(100%) rotate(45deg);
+        transition: all 0.5s ease-in-out;
+      }
+      &:hover::after {
+        opacity: 0.2;
+        transform: translateX(0);
+        transition: all 0.7s ease-in-out;
+      }
+    }
+    &--mobileHidden {
+      @include tablet1 {
+        display: none;
+      }
+    }
+    &--mobileVisible {
+      display: none;
+      @include tablet1 {
+        display: block;
+      }
+      &--sm {
+        display: none;
+        @include mobile1 {
+          display: block;
+        }
+      }
+      &--plus {
+        @include mobile1 {
+          display: none;
+        }
+      }
+    }
+  }
+  &__section {
+    padding-top: 30px;
+    @include tablet-sm {
+      padding-top: 15px;
+    }
+    .tabletHidden {
+      @include tablet1 {
+        display: none;
+      }
+    }
+
+    &--title {
+      width: 230px;
+      height: 40px;
+      background: $light--white-color;
+      line-height: 40px;
+      text-align: center;
+      border: 1px solid $light-gray-color;
+      margin-bottom: 10px;
+      @include desktop {
+        width: 100%;
+      }
+      @include tablet-plus {
+        width: 100%;
+      }
+      h3 {
+        font-family: $font-SFRMeta;
+        font-size: 20px;
+        color: $dark-color;
+        text-transform: lowercase;
+        font-weight: 400;
+        @include desktop {
+          font-size: 18px;
+        }
+      }
+    }
+    .ant-layout-sider {
+      max-width: 230px !important;
+      min-width: 230px !important;
+      background: $light--white-color;
+      border: 1px solid $light-gray-color;
+      padding: 15px 0;
+      @include desktop {
+        max-width: 100% !important;
+        min-width: 100% !important;
+      }
+      @include tablet-plus {
+        max-width: 100% !important;
+        min-width: 100% !important;
+      }
+
+      .side__title {
+        font-family: $font-SFRMeta;
+        font-size: 22px;
+        padding-left: 30px;
+        text-transform: lowercase;
+        font-weight: 500;
+        color: $gray-color;
+        @include desktop {
+          font-size: 20px;
+          padding-left: 3vw;
+        }
+        @include tablet-plus {
+          font-size: 18px;
+          padding-left: 20px;
+        }
+      }
+      .ant-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+        &-solid {
+          .ant-radio-button-wrapper {
+            border: none;
+            font-size: 20px;
+            padding-left: 30px;
+            color: $secondary-color;
+            font-family: $font-SFUHelveticaLight;
+            text-transform: capitalize;
+            background: $light--white-color;
+            @include desktop {
+              font-size: 18px;
+              padding-left: 3vw;
+            }
+            @include tablet-plus {
+              font-size: 16px;
+              padding-left: 20px;
+            }
+            &:hover {
+              color: $light-color;
+              background: $orange-color;
+            }
+            &:first-child {
+              border: none;
+              border-radius: 0;
+            }
+            &:not(:first-child)::before {
+              content: unset;
+            }
+            &-checked:not(.ant-radio-button-wrapper-disabled) {
+              background: $orange-color;
+              border-color: $orange-color;
+              color: $light-color;
+              border-radius: 0;
+              &:focus-within {
+                box-shadow: none;
+              }
+              &::before {
+                background: $orange-color;
+              }
+            }
+          }
+        }
+      }
+      .form__price--range {
+        padding-left: 30px;
+        margin-bottom: 1rem;
+        @include desktop {
+          padding-left: 3vw;
+        }
+        @include tablet-plus {
+          padding-left: 20px;
+        }
+        .ant-input {
+          width: 80px;
+          border-radius: 5px;
+          height: 30px;
+          background: $light-gray-color;
+          color: $dark-color;
+          font-family: $font-SFRMeta;
+          font-size: 14px;
+          text-transform: lowercase;
+          border: none;
+          padding-bottom: 8px;
+          @include desktop {
+            width: 60px;
+          }
+          &::placeholder {
+            color: $gray-color !important;
+            opacity: 1;
+          }
+          &:hover {
+            border: none;
+            border-right-width: 0 !important;
+          }
+          &:focus {
+            border: none;
+            outline: none;
+            box-shadow: none;
+          }
+          &[type="number"] {
+            appearance: textfield;
+            &::-webkit-inner-spin-button {
+              appearance: none;
+            }
+            &::-webkit-outer-spin-button {
+              appearance: none;
+            }
+          }
+        }
+        .ant-btn {
+          background: $red-color;
+          width: 80px;
+          height: 30px;
+          margin-top: 10px;
+          border-radius: 5px;
+          border: none;
+          box-shadow: none;
+          color: $light-color;
+          font-family: $font-SFRMeta;
+          text-transform: lowercase;
+          font-size: 18px;
+          line-height: 0;
+          padding-bottom: 8px;
+          @include desktop {
+            width: 60px;
+            font-size: 14px;
+            padding-left: 10px;
+            padding-right: 10px;
+          }
+          &:hover {
+            border: none;
+            background: $dark-color;
+            box-shadow: none;
+            outline: none;
+            border-top-width: 0;
+          }
+        }
+        .price--range__show {
+          margin: 0;
+          margin-top: 10px;
+          margin-left: 15px;
+          color: $gray-color;
+          font-family: $font-SFRMeta;
+          text-transform: lowercase;
+          font-size: 16px;
+          @include desktop {
+            font-size: 14px;
+          }
+          @include tablet-plus {
+            font-size: 13px;
+          }
+        }
+      }
+      .side__tags {
+        padding-left: 30px;
+        @include desktop {
+          padding-left: 3vw;
+        }
+        @include tablet-plus {
+          padding-left: 20px;
+        }
+        p {
+          margin: 0;
+          font-family: $font-SFUHelveticaLight;
+          font-size: 18px;
+          color: $secondary-color;
+          padding-right: 20px;
+          @include desktop {
+            font-size: 16px;
+          }
+          @include tablet-plus {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    &--filter {
+      @include desktop-plus {
+        margin-left: 15px;
+      }
+      @include desktop {
+        margin-left: 15px;
+      }
+      @include tablet1 {
+        margin-left: 0;
+      }
+      .tabletVisible {
+        display: none;
+        @include tablet1 {
+          display: block;
+        }
+      }
+      .ant-radio-group {
+        &-solid {
+          .ant-radio-button-wrapper {
+            font-size: 20px;
+            color: $dark-color;
+            font-family: $font-SFRMeta;
+            text-transform: lowercase;
+            background: $light--white-color;
+            height: 40px;
+            border: 1px solid $light-gray-color;
+            @include desktop {
+              font-size: 18px;
+            }
+            @include tablet1 {
+              font-size: 14px;
+              height: 30px;
+              line-height: 25px;
+            }
+            @include tablet-sm {
+              font-size: 12px;
+              height: 30px;
+              line-height: 2;
+            }
+            &:hover {
+              color: $light-color;
+              background: $orange-color;
+            }
+            &:first-child {
+              outline: none;
+              border-radius: 0;
+              border-right: 0;
+            }
+            &:last-child {
+              border-radius: 0;
+            }
+            &-checked:not(.ant-radio-button-wrapper-disabled) {
+              background: $orange-color;
+              border-color: $orange-color;
+              border-right-color: $orange-color;
+              &:hover {
+                background: $orange-color;
+                border-color: $orange-color;
+                border-right-color: $orange-color;
+              }
+              &:focus-within {
+                box-shadow: none;
+              }
+            }
+            &:not(:first-child)::before {
+              content: unset;
+            }
+            &-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
+              border-right-color: unset;
+            }
+          }
+        }
+      }
+      .ant-select {
+        font-size: 20px;
+        font-family: $font-SFRMeta;
+        text-transform: lowercase;
+        color: $dark-color;
+        @include desktop {
+          font-size: 18px;
+        }
+        @include tablet1 {
+          font-size: 14px;
+        }
+        @include tablet-sm {
+          font-size: 12px;
+        }
+        &:hover {
+          .ant-select-arrow,
+          .ant-select-selection-placeholder {
+            color: $light-color;
+          }
+        }
+        &:not(.ant-select-customize-input) .ant-select-selector {
+          background: $light--white-color;
+          border: 1px solid $light-gray-color;
+          border-radius: 0;
+          &:hover {
+            border-color: $orange-color;
+            color: $light-color;
+            background: $orange-color;
+          }
+          &:focus {
+            border-color: $light-gray-color;
+            box-shadow: none;
+          }
+        }
+        &-single {
+          &.ant-select-open .ant-select-selection-item {
+            color: $light-color;
+          }
+          &:not(.ant-select-customize-input) .ant-select-selector {
+            width: 10vw;
+            height: 40px;
+            @include tablet-plus {
+              width: 13vw;
+            }
+            @include tablet1 {
+              width: auto;
+              height: 30px;
+            }
+            @include tablet-sm {
+              height: 30px;
+            }
+          }
+        }
+        &.ant-select-single .ant-select-selector .ant-select-selection-item {
+          @include tablet1 {
+            line-height: 25px;
+          }
+          @include tablet-sm {
+            line-height: 2;
+          }
+        }
+        &-arrow {
+          color: $dark-color;
+        }
+        &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+          .ant-select-selector {
+          border-color: $orange-color;
+          background: $orange-color;
+          color: $light-color;
+          box-shadow: none;
+        }
+        &-selection-placeholder {
+          color: $dark-color;
+          &:hover {
+            color: $light-color;
+          }
+        }
+        &-single .ant-select-selector .ant-select-selection-placeholder {
+          @include tablet1 {
+            line-height: 25px;
+          }
+          @include tablet-sm {
+            line-height: 2;
+          }
+        }
+      }
+      .pagination__btn {
+        display: flex;
+        align-items: center;
+        @include tablet-plus {
+          display: none;
+        }
+        &--show {
+          font-family: $font-SFUHelveticaLight;
+          font-size: 18px;
+          color: $dark-color;
+          margin-right: 15px;
+          @include desktop-plus {
+            font-size: 16px;
+          }
+        }
+        &--group {
+          .ant-btn {
+            width: 57px;
+            height: 40px;
+            border-radius: 0;
+            background: $light--white-color;
+            color: $dark-color;
+            border: 1px solid $light-gray-color;
+            &[disabled] {
+              color: $light-gray-color;
+              &:hover {
+                background: $light--white-color;
+              }
+            }
+            &:hover {
+              background: $orange-color;
+              color: $light-color;
+            }
+            @include desktop-plus {
+              width: 47px;
+            }
+          }
+        }
+      }
+    }
+
+    &--list {
+      margin-top: 10px;
+      @include desktop-plus {
+        margin-left: 15px;
+      }
+      @include tablet1 {
+        margin-left: 0;
+      }
+    }
+    &--product {
+      overflow: hidden;
+      cursor: pointer;
+      &--img {
+        margin-bottom: 5px;
+        overflow: hidden;
+        height: 25vw;
+        @include tablet1 {
+          height: 35vw;
+        }
+        @include mobile1 {
+          height: 50vw;
+        }
+        img {
+          transition: all 0.4s;
+        }
+      }
+      &:hover {
+        .product__section--product {
+          &--img {
+            img {
+              transform: scale(1.1);
+              transition: all 0.4s;
+            }
+          }
+          &--content {
+            h2 {
+              color: $primary-color;
+              transition: all 0.4s;
+            }
+          }
+        }
+      }
+      &--content {
+        font-family: $font-SFUToledoMedium;
+        padding-left: 15px;
+        padding-right: 15px;
+        text-align: center;
+        margin-bottom: 30px;
+        h2 {
+          font-size: 20px;
+          color: $gray-color;
+          margin-bottom: 0;
+          transition: all 0.4s;
+          @include desktop {
+            font-size: 20px;
+          }
+          @include tablet-plus {
+            font-size: 16px;
+          }
+          @include tablet {
+            font-size: 14px;
+          }
+          @include mobile-plus {
+            font-size: 18px;
+          }
+          @include mobile {
+            font-size: 4vw;
+          }
+          // @include mobile-sm {
+          //   font-size: 14px;
+          // }
+        }
+        p {
+          margin: 0;
+          font-size: 20px;
+          color: $gray-color;
+          @include desktop {
+            font-size: 20px;
+          }
+          @include tablet-plus {
+            font-size: 16px;
+          }
+          @include tablet {
+            font-size: 14px;
+          }
+          @include mobile-plus {
+            font-size: 18px;
+          }
+          @include mobile {
+            font-size: 4vw;
+          }
+          // @include mobile-sm {
+          //   font-size: 14px;
+          // }
+        }
+      }
+    }
+    &--pagination {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 60px;
+      @include tablet-plus {
+        margin-top: 20px;
+        margin-bottom: 30px;
+      }
+      @include tablet {
+        margin-top: 10px;
+      }
+      @include tablet1 {
+        margin-bottom: 50px;
+      }
+      .ant-pagination {
+        &-prev {
+          font-family: $font-SFRMeta;
+          .ant-pagination-item-link {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+          }
+          &:hover {
+            .ant-pagination-item-link {
+              background: $red-color;
+              border: none;
+              border-radius: 0;
+            }
+            button {
+              color: $light-color;
+            }
+          }
+        }
+        &-next {
+          font-family: $font-SFRMeta;
+          .ant-pagination-item-link {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+          }
+          &:hover {
+            .ant-pagination-item-link {
+              background: $red-color;
+              border: none;
+              border-radius: 0;
+            }
+            button {
+              color: $light-color;
+            }
+          }
+        }
+        &-disabled {
+          &:hover {
+            .ant-pagination-item-link {
+              background: transparent;
+              border: none;
+              border-radius: 0;
+            }
+          }
+        }
+        &-item {
+          min-width: 30px;
+          height: 30px;
+          border-radius: 0;
+          background: transparent;
+          border: 1px solid $gray-color;
+          font-family: $font-SFRMeta;
+          font-size: 18px;
+          color: $gray-color;
+          line-height: 25px;
+          @include desktop {
+            font-size: 16px;
+          }
+          &-active {
+            background: $red-color;
+            border-color: $red-color;
+            a {
+              color: $light-color;
+            }
+          }
+          &:hover {
+            border-color: $red-color;
+            background: $red-color;
+            a {
+              color: $light-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 576px) {
+  .product__collections .ant-col-sm-15 {
+    display: block;
+    flex: 0 0 64%;
+    max-width: 64%;
+  }
+  .product__collections .ant-col-sm-9 {
+    display: block;
+    flex: 0 0 36%;
+    max-width: 36%;
+  }
 }

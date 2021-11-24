@@ -8,6 +8,7 @@ import PaginationComponent from "components/Product/PaginationComponent";
 import ProductList from "components/Product/ProductList";
 import SideComponent from "components/Product/SideComponent";
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLayoutStatus } from "redux/layout";
@@ -25,6 +26,20 @@ export default function Product() {
   const { searchProduct } = useSelector(selectProducts);
   const { loading } = useSelector(selectProducts);
   const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(3);
+
+  //pagination
+  const indexOfLast = currentPage * pageSize;
+  const indexOfFirst = indexOfLast - pageSize;
+  const currentFilterProduct = filterProduct.slice(indexOfFirst, indexOfLast);
+  const currentProduct = productList.slice(indexOfFirst, indexOfLast);
+  const currentSearchProduct = searchProduct.slice(indexOfFirst, indexOfLast);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   useEffect(() => {
     dispatch(filterProducts(filterOptions));
   }, [dispatch, filterOptions]);
@@ -39,20 +54,36 @@ export default function Product() {
             <SideComponent />
           </Col>
           <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-            <Filter />
+            <Filter
+              total={
+                filterStatus
+                  ? filterProduct.length
+                  : searchStatus.length
+                  ? searchProduct.length
+                  : productList.length
+              }
+              currentPage={currentPage}
+              pageSize={pageSize}
+              paginate={paginate}
+            />
             {loading === "loaded" ? (
               <>
                 <ProductList
-                  products={searchStatus ? searchProduct : filterProduct}
+                  products={
+                    searchStatus ? currentSearchProduct : currentFilterProduct
+                  }
                 />
                 <PaginationComponent
-                  products={
+                  total={
                     filterStatus
-                      ? filterProduct
-                      : searchStatus
-                      ? searchProduct
-                      : productList
+                      ? filterProduct.length
+                      : searchStatus.length
+                      ? searchProduct.length
+                      : productList.length
                   }
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  paginate={paginate}
                 />
               </>
             ) : (

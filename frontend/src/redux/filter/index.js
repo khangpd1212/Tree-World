@@ -9,7 +9,6 @@ const initialState = {
   priceMin: null,
   priceMax: null,
   order: null,
-  page: null,
 };
 const filterSlice = createSlice({
   name: "filter",
@@ -46,9 +45,6 @@ const filterSlice = createSlice({
         priceMax: action.payload.priceMax,
       };
     },
-    setPage: (state, action) => {
-      return { ...state, page: action.payload };
-    },
     setDefault: (state) => {
       return {
         ...state,
@@ -60,7 +56,6 @@ const filterSlice = createSlice({
         priceMin: null,
         priceMax: null,
         order: null,
-        page: null,
       };
     },
   },
@@ -71,7 +66,6 @@ export const {
   setBestSeller,
   setHot,
   setNew,
-  setPage,
   sortPrice,
   setPrice,
   setDefault,

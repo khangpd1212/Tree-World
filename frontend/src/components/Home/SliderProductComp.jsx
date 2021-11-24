@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "redux/cart";
 import { selectUsers } from "redux/user";
 import { ShowModalLogin } from "redux/modal";
+import { Link } from "react-router-dom";
 
 export default function SliderProductComp(props) {
   const { userItems } = useSelector(selectUsers);
@@ -24,13 +25,15 @@ export default function SliderProductComp(props) {
       });
     } else {
       dispatch(ShowModalLogin(false));
-      dispatch(addItemToCart(prod));
+      dispatch(addItemToCart({ product: prod, qty: 1, color: prod.color[0] }));
     }
   };
   return (
     <div className="h_product-flex">
       <div className="h_product-flex_hover">
-        <img srcSet={prod.image[0]} alt="img_product" />
+        <Link to={`detail/${prod._id}`}>
+          <img srcSet={prod.image[0]} alt="img_product" />
+        </Link>
         <div className="h_product-flex_icon">
           <div className="icon-like">
             <HeartFilled className="icon-card" />

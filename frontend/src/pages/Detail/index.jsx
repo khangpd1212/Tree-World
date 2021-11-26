@@ -1,4 +1,4 @@
-import { Row, Col, Radio } from "antd";
+import { Row, Col, Radio, Button, Input } from "antd";
 import {
   CheckCircleFilled,
   MessageFilled,
@@ -22,6 +22,11 @@ import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { detailProduct, selectProducts } from "redux/product";
+import { useState } from "react";
+import { selectUsers } from "redux/user";
+import { ShowModalLogin } from "redux/modal";
+import { toast } from "react-toastify";
+import { addItemToCart } from "redux/cart";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -29,15 +34,22 @@ export default function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const { product } = useSelector(selectProducts);
+
   console.log(id);
+  const [qty, setQty] = useState(1);
+  const [color, setColor] = useState(null);
+  const { userItems } = useSelector(selectUsers);
+  const { productList } = useSelector(selectProducts);
   useEffect(() => {
     if (id) {
       dispatch(detailProduct(id));
     } else {
       history.push("/");
     }
+    product.color && setColor(product.color[0]);
   }, [dispatch, id, history]);
   console.log(product);
+  console.log(color);
   var settings = {
     dots: true,
     infinite: false,
@@ -72,9 +84,27 @@ export default function Detail() {
       },
     ],
   };
+  const increaseQty = () => {
+    setQty(qty + 1);
+  };
+  const decreaseQty = () => {
+    setQty(qty - 1);
+  };
+  const handleAddToCart = () => {
+    if (Object.values(userItems).length === 0) {
+      dispatch(ShowModalLogin(true));
+      toast.error(`You need to login`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+    } else {
+      dispatch(ShowModalLogin(false));
+      dispatch(addItemToCart({ product: product, qty: qty, color: color }));
+    }
+  };
   return (
     <div className="detail">
-      <BreadCrumb page="product" item="detail product" />
+      <BreadCrumb page="product" item={product} />
       <FormSearch />
       <Row className="pro">
         {/* hinh anh san pham */}
@@ -111,26 +141,44 @@ export default function Detail() {
           <div className="color_quantity">
             <div className="color">
               <p>color</p>
-              <Radio.Group defaultValue="a">
-                <Radio.Button
-                  className="color__item green"
-                  value="a"
-                ></Radio.Button>
-                <Radio.Button
-                  className="color__item purple"
-                  value="b"
-                ></Radio.Button>
-                <Radio.Button
-                  className="color__item yellow"
-                  value="c"
-                ></Radio.Button>
+              <Radio.Group
+                defaultValue={product.color && product.color[0]}
+                onChange={(e) => {
+                  setColor(e.target.value);
+                }}
+              >
+                {product.color &&
+                  product.color.map((item, index) => (
+                    <Radio.Button
+                      key={index}
+                      className="color__item"
+                      style={{ backgroundColor: item }}
+                      value={item}
+                    ></Radio.Button>
+                  ))}
               </Radio.Group>
             </div>
             <span className="textQuantyti">quantity</span>
             <div className="quantity">
-              <button className="btn1">-</button>
-              <h3 className="btn2">1</h3>
-              <button className="btn3">+</button>
+              {qty > 1 ? (
+                <button onClick={decreaseQty} className="btn1">
+                  -
+                </button>
+              ) : (
+                <button disabled className="btn1">
+                  -
+                </button>
+              )}
+              <h3 className="btn2">{qty}</h3>
+              {qty < product.inventory ? (
+                <button onClick={increaseQty} className="btn3">
+                  +
+                </button>
+              ) : (
+                <button disabled className="btn3">
+                  +
+                </button>
+              )}
             </div>
           </div>
           {/* chia sẻ  */}
@@ -150,12 +198,12 @@ export default function Detail() {
           </div>
           <div className="footerInfor">
             <div>
-              <button className="btn">
+              <button className="btn" onClick={handleAddToCart}>
                 {" "}
                 <ShoppingCartOutlined className="Cart" />
                 ADD TO CART
               </button>
-              <button className="btn">BY NOW</button>
+              <button className="btn">BUY NOW</button>
             </div>
           </div>
         </Col>
@@ -188,6 +236,10 @@ export default function Detail() {
               <button>ALL COMMENT (616)</button>
             </div>
           </div>
+          {/* <div className="input__comment">
+            <Input.TextArea rows={5} placeholder="Writting your comment..." />
+            <Button>Comment</Button>
+          </div> */}
           <div className="commnet">
             <div className="itemComment">
               <div className="avt_name">
@@ -314,7 +366,7 @@ export default function Detail() {
           <div className="hotSelling">
             <p>HOT SELLING</p>
             <div className="img">
-              <img src="./image/product3.pbg" alt="" />
+              <img src="./images/product3.png" alt="" />
             </div>
           </div>
         </Col>
@@ -327,55 +379,16 @@ export default function Detail() {
         <Col className="slidePro">
           <div>
             <Slider {...settings}>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
-              <div className="itemPro">
-                <img className="itemImg" src="../images/section3.png" alt="" />
-                <div className="info">
-                  <h4>name</h4>
-                  <p>pice</p>
-                </div>
-              </div>
+              {productList &&
+                productList.map((item, index) => (
+                  <div className="itemPro" key={index}>
+                    <img className="itemImg" src={item.image[0]} alt="" />
+                    <div className="info">
+                      <h4>{item.product_name}</h4>
+                      <p>{item.price}</p>
+                    </div>
+                  </div>
+                ))}
             </Slider>
           </div>
         </Col>
@@ -383,6 +396,8 @@ export default function Detail() {
     </div>
   );
 }
+
 function onChange(a, b, c) {
   console.log(a, b, c);
 }
+

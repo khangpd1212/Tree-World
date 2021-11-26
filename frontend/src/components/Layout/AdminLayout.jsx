@@ -17,6 +17,7 @@ import {
 } from "pages";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
+import { fetchBlogs } from "redux/blog";
 const { Content } = Layout;
 
 export default function AdminLayout() {
@@ -26,8 +27,8 @@ export default function AdminLayout() {
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchCatalogs());
+    dispatch(fetchBlogs());
   }, [dispatch]);
-
 
   return (
     <div className="root-admin">

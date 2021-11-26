@@ -46,7 +46,7 @@ export default function Detail() {
     }
     product.color && setColor(product.color[0]);
   }, [dispatch, id, history]);
-  console.log(color);
+  console.log(product);
   var settings = {
     dots: true,
     infinite: false,
@@ -106,7 +106,7 @@ export default function Detail() {
       <Row className="pro">
         {/* hinh anh san pham */}
         <Col className="avtpro" xs={24} sm={12}>
-          <img src={product.image} alt="" />
+          <img src={product.image && product.image[0]} alt="" />
           {/* hinh lien quan */}
           <Col className="image">
             <div className="imageCon">

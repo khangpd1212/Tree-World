@@ -3,21 +3,15 @@ import { Button, Radio, Row, Select } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setBestSeller,
-  setHot,
-  setPage,
-  sortDefault,
-  sortPrice,
-} from "redux/filter";
+import { setBestSeller, setHot, sortDefault, sortPrice } from "redux/filter";
 import { setFilterStatus } from "redux/layout";
 
 const { Option } = Select;
-function Filter() {
+function Filter({ currentPage, total, pageSize, paginate }) {
   const dispatch = useDispatch();
   const [sort, setSort] = useState("default");
   const [qty, setQty] = useState(1);
-  const { page } = useSelector((state) => state.filterState);
+  // const { page } = useSelector((state) => state.filterState);
 
   const changePrice = (value) => {
     console.log(value);
@@ -38,16 +32,7 @@ function Filter() {
       dispatch(sortDefault());
     }
   };
-  const increaseQty = () => {
-    setQty(qty + 1);
-    dispatch(setPage(qty));
-    dispatch(setFilterStatus());
-  };
-  const descreaseQty = () => {
-    setQty(qty - 1);
-    dispatch(setPage(qty - 2));
-    dispatch(setFilterStatus());
-  };
+
   return (
     <div className="product__section--filter">
       <Row justify="space-between" align="middle">
@@ -74,21 +59,29 @@ function Filter() {
           </Radio.Group>
         </div>
         <div className="pagination__btn">
-          <span className="pagination__btn--show">{page + 1}/100</span>
+          <span className="pagination__btn--show">
+            {currentPage}/{Math.ceil(total / pageSize)}
+          </span>
           <div className="pagination__btn--group">
-            {page + 1 === 1 ? (
-              <Button disabled>
+            {currentPage > 1 ? (
+              <Button onClick={() => paginate(currentPage - 1)}>
                 <LeftOutlined />
               </Button>
             ) : (
-              <Button onClick={descreaseQty}>
+              <Button disabled>
                 <LeftOutlined />
               </Button>
             )}
 
-            <Button onClick={increaseQty}>
-              <RightOutlined />
-            </Button>
+            {currentPage < Math.ceil(total / pageSize) ? (
+              <Button onClick={() => paginate(currentPage + 1)}>
+                <RightOutlined />
+              </Button>
+            ) : (
+              <Button disabled>
+                <RightOutlined />
+              </Button>
+            )}
           </div>
         </div>
       </Row>

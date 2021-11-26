@@ -21,7 +21,11 @@ function SideComponent() {
   const [err, setErr] = useState(false);
   const handleSubmit = () => {
     console.log(priceMin, priceMax);
-    if (Number(priceMin) > Number(priceMax)) {
+    if (
+      Number(priceMin) > Number(priceMax) ||
+      Number(priceMin) < 0 ||
+      Number(priceMax) < 0
+    ) {
       setErr(true);
     } else {
       setErr(false);
@@ -95,7 +99,7 @@ function SideComponent() {
           )}
           <Row align="middle">
             <Button onClick={handleSubmit}>Apply</Button>
-            {err ? (
+            {/* {err ? (
               <></>
             ) : priceMin === "" || priceMax === "" ? (
               <></>
@@ -103,7 +107,7 @@ function SideComponent() {
               <p className="price--range__show">
                 ${priceMin} - ${priceMax}
               </p>
-            )}
+            )} */}
           </Row>
         </div>
         <h3 className="side__title">tags</h3>

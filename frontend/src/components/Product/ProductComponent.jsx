@@ -8,7 +8,7 @@ function ProductComponent(props) {
       <div className="product__section--product">
         <div className="product__section--product--img">
           <Link to={`detail/${props.id}`}>
-            <img src={props.src} alt="Product1" />
+            <img src={props.src} alt={props.name} />
           </Link>
         </div>
         <div className="product__section--product--content">

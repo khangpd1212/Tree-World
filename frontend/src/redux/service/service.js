@@ -14,11 +14,9 @@ const initialState = {
 
 export const fetchService = createAsyncThunk(
    "GET_ALL_SERVICE",
-
    async (district_id, thunkAPI) => {
       try {
-         let to_district = district_id[0].district_id;
-         const response = await axios.get(`payment/service/${to_district}`,)
+         const response = await axios.get(`payment/service/${district_id}`,)
          return await response.data.data;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
@@ -36,7 +34,7 @@ export const serviceSlice = createSlice({
          state.loading = "loading";
       });
       builder.addCase(fetchService.fulfilled, (state, action) => {
-         const payload = action.payload.filter((service) => {
+         const payload = action.payload && action.payload.filter((service) => {
             return service ? service.short_name !== "" : []
         })
          state.serviceItems = payload;

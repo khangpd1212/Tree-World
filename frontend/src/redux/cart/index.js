@@ -15,16 +15,14 @@ export const cartSlice = createSlice({
     addItemToCart: (state, action) => {
       const itemIndex = state.cartItems.findIndex(
         (item) =>
-          item._id === action.payload.product._id &&
-          item.pickColor === action.payload.color
+          item.product._id === action.payload.product._id &&
+          item.pickColor === action.payload.pickColor
       );
       if (itemIndex >= 0) {
-        state.cartItems[itemIndex].quantity += action.payload.qty;
+        state.cartItems[itemIndex].quantity += action.payload.quantity;
       } else {
         const tempProduct = {
-          ...action.payload.product,
-          quantity: action.payload.qty,
-          pickColor: action.payload.color,
+          ...action.payload,
         };
         state.cartItems.push(tempProduct);
         toast.success(`${action.payload.product.product_name} added to cart`, {
@@ -35,27 +33,40 @@ export const cartSlice = createSlice({
 
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
+    btnIncrement: (state, action) => {
+      const itemIndex = state.cartItems.findIndex(
+        (item) => item.product._id === action.payload.product._id &&
+          item.pickColor === action.payload.pickColor
+      );
+      console.log(itemIndex)
+      if (itemIndex >= 0){
+        state.cartItems[itemIndex].quantity += 1;
+      }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    },
     btnDecrement: (state, action) => {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item.product._id === action.payload.product._id &&
+          item.pickColor === action.payload.pickColor
       );
       if (state.cartItems[itemIndex].quantity > 1) {
         state.cartItems[itemIndex].quantity -= 1;
       } else if (state.cartItems[itemIndex].quantity === 1) {
-        const nextCartItems = state.cartItems.filter(
-          (cartItem) => cartItem._id !== action.payload._id
+        const itemIndex = state.cartItems.findIndex(
+          (item) => item.product._id === action.payload.product._id &&
+            item.pickColor === action.payload.pickColor
         );
-
-        state.cartItems = nextCartItems;
+        state.cartItems.splice(itemIndex, 1);
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeCart: (state, action) => {
-      const nextCartItems = state.cartItems.filter(
-        (cartItem) => cartItem._id !== action.payload._id
+      const itemIndex = state.cartItems.findIndex(
+        (item) => item.product._id === action.payload.product._id &&
+          item.pickColor === action.payload.pickColor
       );
-      state.cartItems = nextCartItems;
-      toast.error(`${action.payload.product_name} removed from cart`, {
+      state.cartItems.splice(itemIndex, 1);
+      toast.error(`${action.payload.product.product_name} removed from cart`, {
         position: "bottom-left",
         autoClose: 2000,
       });
@@ -72,7 +83,8 @@ export const cartSlice = createSlice({
     getTotals: (state, action) => {
       let total = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          const { price, quantity } = cartItem;
+          const { price } = cartItem.product;
+          const { quantity } = cartItem;
           const itemTotal = price * quantity;
           cartTotal.total += itemTotal;
           return cartTotal;
@@ -93,7 +105,7 @@ export const selectCarts = createSelector(
   (state) => state
 );
 
-export const { addItemToCart, btnDecrement, removeCart, clearCart, getTotals } =
+export const { addItemToCart, btnIncrement, btnDecrement, removeCart, clearCart, getTotals } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

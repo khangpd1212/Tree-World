@@ -56,7 +56,7 @@ export default function CartItemPayment() {
           cartItems.map((cartItem, index) => (
             <Row key={index} className="cart__product--main" align="middle">
               <Col span={10} className="main__img">
-                <img src={cartItem.image[0]} alt="" />
+                <img src={cartItem.product.image[0]} alt="" />
                 <h2>{cartItem.product_name}</h2>
               </Col>
               <Col span={14}>
@@ -66,23 +66,26 @@ export default function CartItemPayment() {
                   align="middle"
                 >
                   <Col className="main__list--color">
-                    {cartItem.color[0] === "#ffff" ||
-                    cartItem.color[0] === "white" ? (
-                      <Tag style={{ color: "black" }} color={cartItem.color[0]}>
-                        {cartItem.color[0]}
+                    {cartItem.pickColor === "#ffff" ||
+                    cartItem.pickColor === "white" ? (
+                      <Tag
+                        style={{ color: "black" }}
+                        color={cartItem.pickColor}
+                      >
+                        {cartItem.pickColor}
                       </Tag>
                     ) : (
-                      <Tag color={cartItem.color[0]}>{cartItem.color[0]}</Tag>
+                      <Tag color={cartItem.pickColor}>{cartItem.pickColor}</Tag>
                     )}
                   </Col>
                   <Col className="main__list--price" style={{ margin: 0 }}>
-                    <span>${cartItem.price}</span>
+                    <span>${cartItem.product.price}</span>
                   </Col>
                   <Col>
                     <div>{cartItem.quantity}</div>
                   </Col>
                   <Col>
-                    <span>${cartItem.price * cartItem.quantity}</span>
+                    <span>${cartItem.product.price * cartItem.quantity}</span>
                   </Col>
                 </Row>
               </Col>

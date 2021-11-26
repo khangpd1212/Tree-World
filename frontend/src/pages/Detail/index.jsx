@@ -1,32 +1,24 @@
-import { Row, Col, Radio, Button, Input } from "antd";
 import {
-  CheckCircleFilled,
-  MessageFilled,
-  ShoppingCartOutlined,
-  StarFilled,
-  SmileFilled,
-  FacebookFilled,
-  InstagramFilled,
-  SkypeFilled,
-  TwitterCircleFilled,
+  CheckCircleFilled, FacebookFilled,
+  InstagramFilled, MessageFilled,
+  ShoppingCartOutlined, SkypeFilled, SmileFilled, StarFilled, TwitterCircleFilled
 } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-import { setLayoutStatus } from "redux/layout";
-import FormSearch from "components/Product/FormSearch";
+import { Col, Radio, Row } from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
-import "../../../node_modules/slick-carousel/slick/slick.css";
-import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+import FormSearch from "components/Product/FormSearch";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import Slider from "react-slick";
-import "styles/detail.scss";
-import { useParams, useHistory } from "react-router-dom";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { detailProduct, selectProducts } from "redux/product";
-import { useState } from "react";
-import { selectUsers } from "redux/user";
-import { ShowModalLogin } from "redux/modal";
 import { toast } from "react-toastify";
 import { addItemToCart } from "redux/cart";
+import { setLayoutStatus } from "redux/layout";
+import { ShowModalLogin } from "redux/modal";
+import { detailProduct, selectProducts } from "redux/product";
+import { selectUsers } from "redux/user";
+import "styles/detail.scss";
+import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+import "../../../node_modules/slick-carousel/slick/slick.css";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -101,7 +93,9 @@ export default function Detail() {
       });
     } else {
       dispatch(ShowModalLogin(false));
-      dispatch(addItemToCart({ product: product, qty: qty, color: color }));
+      dispatch(
+        addItemToCart({ product: product, quantity: qty, pickColor: color })
+      );
     }
   };
   return (

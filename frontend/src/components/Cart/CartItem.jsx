@@ -2,8 +2,8 @@ import { Col, Row, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectCarts,
-  addItemToCart,
   btnDecrement,
+  btnIncrement,
   removeCart,
 } from "redux/cart";
 import { useState, useEffect } from "react";
@@ -19,15 +19,14 @@ export default function CartItem() {
     dispath(btnDecrement(cartItems));
   };
   const handleIncrement = (cartItems) => {
-    dispath(addItemToCart(cartItems));
+    dispath(btnIncrement(cartItems));
   };
   const handleRemoveCart = (cartItems) => {
     dispath(removeCart(cartItems));
   };
   const handleChange = (e) => {
-    e.target.value = cartItems.quantity;
+    return e.target.value;
   };
-
   // re-render
   useEffect(() => {
     setstate(cartItems);
@@ -60,8 +59,8 @@ export default function CartItem() {
           <Row key={index} className="cart__product--main" align="middle">
             <Col span={10} className="main__img">
               <input type="checkbox" />
-              <img src={cartItem.image[0]} alt="" />
-              <h2>{cartItem.product_name}</h2>
+              <img src={cartItem.product.image[0]} alt="" />
+              <h2>{cartItem.product.product_name}</h2>
             </Col>
             <Col span={14}>
               <Row
@@ -70,8 +69,8 @@ export default function CartItem() {
                 align="middle"
               >
                 <Col className="main__list--color">
-                  {cartItem.color[0] === "#ffff" ||
-                  cartItem.color[0] === "white" ? (
+                  {cartItem.pickColor === "#ffff" ||
+                  cartItem.pickColor === "white" ? (
                     <Tag style={{ color: "black" }} color={cartItem.pickColor}>
                       {cartItem.pickColor}
                     </Tag>
@@ -80,7 +79,7 @@ export default function CartItem() {
                   )}
                 </Col>
                 <Col className="main__list--price">
-                  <span>${cartItem.price}</span>
+                  <span>${cartItem.product.price}</span>
                 </Col>
                 <Col>
                   <div className="btn-sl">
@@ -92,6 +91,7 @@ export default function CartItem() {
                     </button>
 
                     <input
+                      name="quantity"
                       type="number"
                       onChange={handleChange}
                       value={cartItem.quantity}
@@ -106,7 +106,7 @@ export default function CartItem() {
                   </div>
                 </Col>
                 <Col className="main__list--total">
-                  <span>${cartItem.price * cartItem.quantity}</span>
+                  <span>${cartItem.product.price * cartItem.quantity}</span>
                 </Col>
                 <Col className="main__list--delete">
                   <button

@@ -1,5 +1,5 @@
 import { Radio, Space } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -10,7 +10,6 @@ import { fetchOrders, getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
 import { selectUsers } from "redux/user";
 import { ShowModalLogin } from "redux/modal";
-import { selectAddress } from "redux/address";
 
 export default function PaymentMethod() {
   const { textAddress } = useSelector(selectProvince);
@@ -54,8 +53,9 @@ export default function PaymentMethod() {
 
       // lấy data order detail
       const order_detail = cartItems.map((item) => ({
-        id_product: item._id,
+        id_product: item.product._id,
         quantity: item.quantity,
+        color: item.pickColor
       }));
 
       // data để order lên db

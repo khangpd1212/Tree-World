@@ -6,9 +6,9 @@ import {
 } from "@reduxjs/toolkit";
 
 const initialState = {
-   textAddress: sessionStorage.getItem("address") 
-      ? JSON.parse(sessionStorage.getItem("address"))
-   : [],
+   textAddress: localStorage.getItem("address") 
+      ? JSON.parse(localStorage.getItem("address"))
+   : {},
    itemsProvince: [],
    loading: "idle",
    error: "",

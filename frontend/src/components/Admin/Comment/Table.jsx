@@ -13,9 +13,7 @@ export default function TableComment() {
     const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchGetComment())
-    }, [dispatch])
+
     function confirm(id) {
         requests.deleteProduct(token, id)
             .then(res => {

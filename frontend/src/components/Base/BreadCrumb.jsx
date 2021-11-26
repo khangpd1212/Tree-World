@@ -13,7 +13,7 @@ function BreadCrumb({ page, item }) {
       </Breadcrumb.Item>
       {item && (
         <Breadcrumb.Item>
-          <Link to={`/${item.toLowerCase()}`}>{item}</Link>
+          <Link to={`/detail/${item._id}`}>{item.product_name}</Link>
         </Breadcrumb.Item>
       )}
     </Breadcrumb>

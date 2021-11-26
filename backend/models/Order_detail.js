@@ -12,7 +12,11 @@ const OrderDetailSchema = new mongoose.Schema({
    quantity: {
       type: Number,
       required: true,
-   }
+   },
+   color: {
+      type: String,
+      required: true,
+   },
 });
 
 module.exports = mongoose.model("Order_detail", OrderDetailSchema);

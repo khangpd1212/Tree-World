@@ -1,6 +1,5 @@
-import { Button, message, Popconfirm, Table, Space, Image } from "antd";
+import { Tag, Table, Space, Image } from "antd";
 import { selectProducts } from "redux/product";
-import { selectOrders } from "redux/order";
 import { selectOrderDetails } from "redux/order_detail";
 import { useSelector } from "react-redux";
 export default function TableDetail(props) {
@@ -17,16 +16,19 @@ export default function TableDetail(props) {
   myOrder = order_orderDetailID.map((o1) =>
     Object.assign(
       {},
+      { idOrder: o1._id },
       { quantity: o1.quantity },
-      productList.filter((o2) => o1.id_product == o2._id)[0]
-    )
+      { pickColor: o1.color},
+      productList.filter((o2) => o1.id_product === o2._id)[0],
+    ),
   );
+
   const columns = [
     {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (value, record) => (
+      render: (value) => (
         <Space size="middle">
           <Image width={100} src={value} />
         </Space>
@@ -36,6 +38,21 @@ export default function TableDetail(props) {
       title: "Product Name",
       dataIndex: "product_name",
       key: "product_name",
+    },
+    {
+      title: "Color",
+      dataIndex: "pickColor",
+      key: "pickColor",
+      render: (record) => (
+        console.log(record),
+        record === "#ffff" || record === "white" ? (
+          <Tag style={{ color: "black" }} color={{ record }}>
+            {record}
+          </Tag>
+        ) : (
+          <Tag color={record}>{record}</Tag>
+        )
+      ),
     },
     {
       title: "Price",
@@ -55,13 +72,15 @@ export default function TableDetail(props) {
   ];
   const data = myOrder.map((item) => {
     return {
-      key: item._id,
+      key: item.idOrder,
       image: item.image,
       product_name: item.product_name,
+      pickColor: item.pickColor,
       price: item.price,
       quantity: item.quantity,
-      subTotal: item.quantity + item.price
+      subTotal: item.quantity + item.price,
     };
   });
+
   return <Table columns={columns} dataSource={data} pagination={false} />;
 }

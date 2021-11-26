@@ -25,7 +25,9 @@ export default function SliderProductComp(props) {
       });
     } else {
       dispatch(ShowModalLogin(false));
-      dispatch(addItemToCart({ product: prod, qty: 1, color: prod.color[0] }));
+      dispatch(
+        addItemToCart({ product: prod, quantity: 1, pickColor: prod.color[0] })
+      );
     }
   };
   return (

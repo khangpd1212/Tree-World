@@ -1,21 +1,32 @@
 import { Button, message, Popconfirm, Space,Table } from "antd";
 import TableDetail from "./TableDetail";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders, selectOrders, deleteOrders } from "redux/order";
 
 export default function TableOrder() {
   const { orderList } = useSelector(selectOrders);
-
+  const [data, setData] = useState([])
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setData(orderList.map((item) => {
+      return {
+        key: item._id,
+        username: item.username,
+        orderDate: item.orderDate,
+        address: item.address,
+        phoneNumber: item.phoneNumber,
+        toTal: item.toTal,
+        status: item.status
+      }
+    }))
+  }, []);
+  useEffect(() => {
     dispatch(getOrders());
-  }, [dispatch]);
-
+  }, [dispatch])
   function confirm(id) {
-    dispatch(deleteOrders(id));
-    dispatch(getOrders());
+    dispatch(deleteOrders(id))
     message.success("Delete success");
   }
   const columns = [
@@ -68,19 +79,7 @@ export default function TableOrder() {
       ),
     },
   ];
-
-    const data = orderList.map((item) => {
-      return {
-        key: item._id,
-        username: item.username,
-        orderDate: item.orderDate,
-        address: item.address,
-        phoneNumber: item.phoneNumber,
-        toTal: item.toTal,
-        status: item.status
-      }
-    })
-  return (
+return (
     <>
       <Table
         columns={columns}

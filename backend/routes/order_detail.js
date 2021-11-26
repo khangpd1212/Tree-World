@@ -13,11 +13,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-   const {id_order, id_product, quantity} = req.body;
+   const {id_order, id_product, quantity, color} = req.body;
    const newOrderDetail = new Order_detail({
       id_order,
       id_product,
-      quantity
+      quantity,
+      color,
    })
     try {
        const order_detail = await newOrderDetail.save();

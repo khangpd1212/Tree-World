@@ -1,13 +1,11 @@
-import { Modal, Form, Input, Row, Col,Button, Select } from 'antd';
-import { useEffect, useState } from "react"
-import { useSelector, useDispatch } from "react-redux";
-import { fetchProvince, selectProvince } from "redux/address/province";
+import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDistrict, selectDistrict } from "redux/address/district";
+import { fetchProvince, selectProvince } from "redux/address/province";
 import { fetchWard, selectWard } from "redux/address/ward";
 import {
-  selectModals,
-  onCancelAddress,
-  ShowModalDefaultAddress,
+  onCancelAddress, selectModals, ShowModalDefaultAddress
 } from "redux/modal";
 export default function ModalAddress({ handleCreate }) {
   const { Option } = Select;
@@ -17,9 +15,8 @@ export default function ModalAddress({ handleCreate }) {
   const { itemsWard } = useSelector(selectWard);
   const { isShowAddress } = useSelector(selectModals);
 
-  const [address, setAddress] = useState([]);
+  const [address, setAddress] = useState({});
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(fetchProvince());
@@ -42,15 +39,7 @@ export default function ModalAddress({ handleCreate }) {
   const handleWardChange = (key, value) => {
     setAddress({ ...address, ward_code: key, ward: value.children });
   };
-  const handleStreetChange = (e) => {
-    setAddress({ ...address, street: e.target.value });
-  };
-  const handleNameChange = (e) => {
-    setAddress({ ...address, name: e.target.value });
-  };
-  const handlePhoneChange = (e) => {
-    setAddress({ ...address, phone: e.target.value });
-  };
+
   const [form] = Form.useForm();
 
   return (
@@ -66,9 +55,9 @@ export default function ModalAddress({ handleCreate }) {
             onClick={() => {
               form
                 .validateFields()
-                .then(() => {
+                .then((value) => {
                   form.resetFields();
-                  handleCreate(address);
+                  handleCreate(Object.assign({}, value, address));
                 })
                 .catch((info) => {
                   console.log("Validate Failed:", info);
@@ -96,7 +85,7 @@ export default function ModalAddress({ handleCreate }) {
                 },
               ]}
             >
-              <Input onChange={handleNameChange} placeholder="Input name" />
+              <Input placeholder="Input name" />
             </Form.Item>
           </Col>
 
@@ -111,11 +100,7 @@ export default function ModalAddress({ handleCreate }) {
                 },
               ]}
             >
-              <Input
-                type="number"
-                onChange={handlePhoneChange}
-                placeholder="Input phone"
-              />
+              <Input type="number" placeholder="Input phone" />
             </Form.Item>
           </Col>
         </Row>
@@ -123,7 +108,6 @@ export default function ModalAddress({ handleCreate }) {
         <Row gutter={10}>
           <Col md={8}>
             <Form.Item
-              name="province"
               label="Province"
               rules={[
                 {
@@ -152,7 +136,6 @@ export default function ModalAddress({ handleCreate }) {
           <Col md={8}>
             <Form.Item
               label="District"
-              name="district"
               rules={[
                 {
                   required: true,
@@ -179,7 +162,6 @@ export default function ModalAddress({ handleCreate }) {
           </Col>
           <Col md={8}>
             <Form.Item
-              name="ward"
               label="Ward"
               rules={[
                 {
@@ -210,7 +192,6 @@ export default function ModalAddress({ handleCreate }) {
           ]}
         >
           <Input
-            onChange={handleStreetChange}
             placeholder="Input street"
             value={address.street}
           />

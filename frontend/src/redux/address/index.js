@@ -19,12 +19,7 @@ export const fetchAddress = createAsyncThunk(
   "POST_ALL_ADDRESS",
   async (data, thunkAPI) => {
     try {
-      let token = localStorage.getItem("token");
-      const response = await axios.post(`address`,data, {
-        headers: {
-          'Authorization': 'Bearer ' + token
-        }
-      })
+      const response = await axios.post(`address`,data)
       return await response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });

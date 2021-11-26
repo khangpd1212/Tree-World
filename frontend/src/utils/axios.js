@@ -67,6 +67,15 @@ export const requests = {
     const { data } = await instance.get('/catalog')
     return data
   },
+
+  async getAddressByUser(idUser) {
+    const config = {
+      method: 'get',
+      url: `/address/?idUser=${idUser}`,
+    };
+    const { data } = await instance(config)
+    return data
+  },
 }
 
 

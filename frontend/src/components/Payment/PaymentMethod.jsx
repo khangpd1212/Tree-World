@@ -10,6 +10,7 @@ import { fetchOrders, getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
 import { selectUsers } from "redux/user";
 import { ShowModalLogin } from "redux/modal";
+import { selectAddress } from "redux/address";
 
 export default function PaymentMethod() {
   const { textAddress } = useSelector(selectProvince);
@@ -27,50 +28,6 @@ export default function PaymentMethod() {
   };
 
   const handleOrder = () => {
-    var today = new Date();
-    var date =
-      today.getDate() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getFullYear();
-    var time =
-      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var orderDate = date + " " + time;
-
-    // nối chuỗi address
-    const textAddressChild = textAddress.map(
-      (item) =>
-        `${item.street}, ${item.ward}, ${item.district}, ${item.province}`
-    );
-
-    // lấy data order detail
-    const order_detail = cartItems.map((item) => ({
-      id_product: item._id,
-      quantity: item.quantity,
-    }));
-
-    // data để order lên db
-    let dataOrder = [
-      {
-        username: textAddress[0].name
-          ? textAddress[0].name
-          : userItems.username,
-        address: textAddress[0].address
-          ? textAddress[0].address
-          : textAddressChild.toString(),
-        phoneNumber: textAddress[0].phone
-          ? textAddress[0].phone
-          : userItems.phone_number,
-        toTal: cartTotalAmount.total + feeItem,
-        status: "Mới tạo",
-        idUser: userItems._id,
-        idVoucher: 1,
-        orderDate: orderDate,
-      },
-      order_detail,
-    ];
-
     // nếu không đăng nhập thì báo cần đăng nhập
     if (Object.values(userItems).length === 0) {
       dispatch(ShowModalLogin(true));
@@ -78,7 +35,45 @@ export default function PaymentMethod() {
         position: "bottom-left",
         autoClose: 2000,
       });
+    } else if (!cartItems[0] || !feeItems) {
+      toast.error(`You are not buying or payment method`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
     } else {
+      var today = new Date();
+      var date =
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
+      var time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var orderDate = date + " " + time;
+
+      // lấy data order detail
+      const order_detail = cartItems.map((item) => ({
+        id_product: item._id,
+        quantity: item.quantity,
+      }));
+
+      // data để order lên db
+      let dataOrder = [
+        {
+          username: textAddress.name,
+          address: textAddress.address,
+          phoneNumber: textAddress.phone,
+          toTal: feeItem
+            ? cartTotalAmount.total + feeItem
+            : cartTotalAmount.total,
+          status: "Mới tạo",
+          idUser: userItems._id,
+          idVoucher: 1,
+          orderDate: orderDate,
+        },
+        order_detail,
+      ];
       dispatch(ShowModalLogin(false));
       dispatch(fetchOrders(dataOrder));
       dispatch(getOrders());

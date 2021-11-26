@@ -13,9 +13,6 @@ export default function TableVoucher() {
     const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchGetVoucher())
-    }, [dispatch])
     function confirm(id) {
         requests.deleteProduct(token, id)
             .then(res => {

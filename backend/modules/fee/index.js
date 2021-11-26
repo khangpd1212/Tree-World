@@ -3,7 +3,6 @@ const axios = require("axios");
 exports.getFee = async (service_id, to_district_id, to_ward_code) => {
    var config = {
       method: "GET",
-      // url: "https://services.giaohangtietkiem.vn/services/shipment/fee",
       url: `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=${service_id}&to_district_id=${to_district_id}&to_ward_code=${to_ward_code}`,
       headers: {
          "Content-Type": "application/json",

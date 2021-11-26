@@ -61,7 +61,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         onRemoveUser: (state, action) => {
-            localStorage.removeItem('userItem');
+            localStorage.removeItem('userItems');
             state.userItems = {}
         }
     },

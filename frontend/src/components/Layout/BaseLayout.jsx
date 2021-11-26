@@ -36,7 +36,7 @@ export default function BaseLayout() {
       setThemeState(true);
     }
   }, []);
-  console.log(themeState);
+
   useEffect(() => {
     if (themeState) {
       localStorage.setItem("Theme", "dark");

@@ -29,6 +29,7 @@ export default function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const { product } = useSelector(selectProducts);
+  console.log(id);
   useEffect(() => {
     if (id) {
       dispatch(detailProduct(id));
@@ -36,6 +37,7 @@ export default function Detail() {
       history.push("/");
     }
   }, [dispatch, id, history]);
+  console.log(product);
   var settings = {
     dots: true,
     infinite: false,
@@ -77,7 +79,7 @@ export default function Detail() {
       <Row className="pro">
         {/* hinh anh san pham */}
         <Col className="avtpro" xs={24} sm={12}>
-          <img src={product.image} alt="" />
+          <img src={product.image[0]} alt="" />
           {/* hinh lien quan */}
           <Col className="image">
             <div className="imageCon">
@@ -105,6 +107,7 @@ export default function Detail() {
               $<span>{product.price}</span>
             </p>
           </div>
+          {/* màu số lượng  */}
           <div className="color_quantity">
             <div className="color">
               <p>color</p>
@@ -130,6 +133,7 @@ export default function Detail() {
               <button className="btn3">+</button>
             </div>
           </div>
+          {/* chia sẻ  */}
           <div className="stock">
             <p>
               {" "}
@@ -155,6 +159,7 @@ export default function Detail() {
             </div>
           </div>
         </Col>
+        {/* thong tin san pham  */}
         <Col className="textD" xs={24}>
           <div className="hrtext"></div>
           <span>{product.description}</span>

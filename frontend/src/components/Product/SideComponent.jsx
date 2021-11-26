@@ -62,14 +62,18 @@ function SideComponent() {
           }}
         >
           {catalogList &&
-            catalogList.map((catalog, index) => (
-              <Radio.Button
-                value={`${catalog.catalog_name}-cat.${catalog._id}`}
-                key={index}
-              >
-                {catalog.catalog_name}
-              </Radio.Button>
-            ))}
+            catalogList.map((catalog, index) => {
+              if (catalog.status) {
+                return (
+                  <Radio.Button
+                    value={`${catalog.catalog_name}-cat.${catalog._id}`}
+                    key={index}
+                  >
+                    {catalog.catalog_name}
+                  </Radio.Button>
+                );
+              }
+            })}
         </Radio.Group>
         <h3 className="side__title">Price range</h3>
         <div className="form__price--range">

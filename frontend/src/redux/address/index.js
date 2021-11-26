@@ -54,20 +54,6 @@ export const addressSlice = createSlice({
       state.error = action.error.message;
       state.loading = "error";
     });
-
-    // get by id user
-    builder.addCase(getAddressByUser.pending, (state) => {
-      state.addressUser = [];
-      state.loading = "loading";
-    });
-    builder.addCase(getAddressByUser.fulfilled, (state, action) => {
-      state.addressUser = action.payload;
-      state.loading = "loaded";
-    });
-    builder.addCase(getAddressByUser.rejected, (state, action) => {
-      state.error = action.error.message;
-      state.loading = "error";
-    });
   },
 })
 export const selectAddress = (state) => state.addressState.addressReducer;

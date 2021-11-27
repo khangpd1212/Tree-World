@@ -35,7 +35,7 @@ export default function TableOrder() {
       key: "address",
     },
     {
-      title: "Phone_Number",
+      title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
@@ -58,7 +58,7 @@ export default function TableOrder() {
           <Popconfirm
             placement="rightTop"
             title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record._id)}
+            onConfirm={() => confirm(record.key)}
             okText="Yes"
             cancelText="No"
           >
@@ -85,7 +85,7 @@ export default function TableOrder() {
       <Table
         columns={columns}
         expandable={{
-          expandedRowRender: () => <TableDetail/>,
+          expandedRowRender: (record) => <TableDetail id={record.key} />,
         }}
         dataSource={data}
       />

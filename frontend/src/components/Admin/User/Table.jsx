@@ -13,9 +13,6 @@ export default function TableUser() {
     const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
-    useEffect( () => {
-        dispatch(fetchGetUser())
-    },[dispatch])
     function confirm(id) {
         requests.deleteProduct(token, id)
             .then(res => {

@@ -27,22 +27,22 @@ export default function DefaultAddress() {
   const handleCreate = (values) => {
     sessionStorage.setItem(
       "address",
-      JSON.stringify([
+      JSON.stringify(
         {
           ...values,
           district_id: addressRender[0].district_id,
           ward_code: addressRender[0].ward_code,
         },
-      ])
+      )
     );
     dispatch(
-      showTextAddress([
+      showTextAddress(
         {
           ...values,
           district_id: addressRender[0].district_id,
           ward_code: addressRender[0].ward_code,
         },
-      ])
+      )
     );
     dispatch(onCancelDefaultAddress(false));
   };

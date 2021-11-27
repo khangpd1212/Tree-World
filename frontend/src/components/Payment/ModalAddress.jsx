@@ -68,7 +68,7 @@ export default function ModalAddress({ handleCreate }) {
                 .validateFields()
                 .then(() => {
                   form.resetFields();
-                  handleCreate([address]);
+                  handleCreate(address);
                 })
                 .catch((info) => {
                   console.log("Validate Failed:", info);

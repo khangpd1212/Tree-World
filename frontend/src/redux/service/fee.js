@@ -8,7 +8,7 @@ import {
 } from "@reduxjs/toolkit";
 
 const initialState = {
-   feeItems: [],
+   feeItems: 0,
    loading: "idle",
    error: "",
 };
@@ -21,12 +21,12 @@ export const fetchFee = createAsyncThunk(
          const response = await axios.get("payment/fee",
            {
               params: {
-                 to_district_id: address[0].district_id,
-                 service_id: address[0].service_id,
-                 to_ward_code: address[0].ward_code,
+                 to_district_id: address.district_id,
+                 service_id: address.service_id,
+                 to_ward_code: address.ward_code,
               }
          })
-         return await response.data.data;
+         return await response.data.data.service_fee;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
@@ -43,7 +43,7 @@ export const feeSlice = createSlice({
          state.loading = "loading";
       });
       builder.addCase(fetchFee.fulfilled, (state, action) => {
-         state.feeItems = action.payload;
+         state.feeItems = action.payload / 10000;
          state.loading = "loaded";
       });
       builder.addCase(fetchFee.rejected, (state, action) => {

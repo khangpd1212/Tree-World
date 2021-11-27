@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
 
 //user is not allowed create, update or delete
 //CREATE
-router.post("/", verify, async (req, res) => {
+router.post("/", async (req, res) => {
     const {
         username,
         address,

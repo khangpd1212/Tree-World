@@ -61,6 +61,7 @@ export const requests = {
     const { data } = await instance.get("/catalog");
     return data;
   },
+
   //blog
   async addBlog(token, body, img, id) {
     const config = {
@@ -76,10 +77,22 @@ export const requests = {
         id_user: id,
       },
     };
-
-    const { data } = await instance(config);
+   const { data } = await instance(config);
     return data;
   },
+
+  async getAddressByUser(idUser) {
+    const config = {
+      method: 'get',
+      url: `/address/?idUser=${idUser}`,
+    };
+    const { data } = await instance(config)
+    return data
+  },
+
+
+
+ 
   async editBlog(token, body, id) {
     const config = {
       method: "put",

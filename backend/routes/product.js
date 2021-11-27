@@ -103,7 +103,9 @@ router.post("/", verify, async (req, res) => {
     try {
       const product = await newProduct.save();
       if (!product) throw new Error("Something were wrong with saving product");
-      res.status(200).json({ message: "Create successfully", product });
+      res
+        .status(200)
+        .json({ message: "Create successfully", status: true, product });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -139,7 +141,9 @@ router.put("/:id", verify, async (req, res) => {
       );
       if (!updatedProduct)
         throw new Error("Something went wrong with updating product");
-      res.status(200).json({ message: "update successfully", updatedProduct });
+      res
+        .status(200)
+        .json({ message: "update successfully", status: true, updatedProduct });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

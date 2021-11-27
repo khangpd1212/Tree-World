@@ -19,15 +19,19 @@ function ProductList({ products }) {
       )}
       <Row gutter={24}>
         {products &&
-          products.map((product, index) => (
-            <ProductComponent
-              key={index}
-              src={product.image[0]}
-              name={product.product_name}
-              price={product.price}
-              id={product._id}
-            />
-          ))}
+          products.map((product, index) => {
+            if (product.status) {
+              return (
+                <ProductComponent
+                  key={index}
+                  src={product.image[0]}
+                  name={product.product_name}
+                  price={product.price}
+                  id={product._id}
+                />
+              );
+            }
+          })}
       </Row>
     </div>
   );

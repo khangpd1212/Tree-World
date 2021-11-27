@@ -1,7 +1,8 @@
-import { Button, Image, message, Popconfirm, Space, Table } from "antd";
+import { Button, Image, message, Popconfirm, Space, Switch, Table } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { fetchProducts, selectProducts } from "redux/product";
 import { requests } from "utils/axios";
 import ModalAddProduct from "./ModalAddProduct";
@@ -21,6 +22,17 @@ export default function TableProducts() {
       message.success("Delete success");
     });
   }
+  const handleChangeStatus = (e, id) => {
+    requests.editProduct(token, { status: e }, id).then((res) => {
+      console.log(res);
+      if (res.status) {
+        dispatch(fetchProducts());
+        toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
+          autoClose: 2000,
+        });
+      }
+    });
+  };
 
   const onEdit = (data) => {
     setSelected(data);
@@ -46,6 +58,19 @@ export default function TableProducts() {
         <Space size="middle">
           <Image width={100} src={value} />
         </Space>
+      ),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (value, record) => (
+        <Switch
+          defaultChecked={record.status}
+          onChange={(e) => {
+            handleChangeStatus(e, record._id);
+          }}
+        />
       ),
     },
     {

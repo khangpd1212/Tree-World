@@ -29,7 +29,6 @@ export default function TableCategory() {
             title: 'Name',
             dataIndex: 'catalog_name',
             key: 'catalog_name',
-            render: text => <a>{text}</a>,
         },
         {
             title: 'Status',

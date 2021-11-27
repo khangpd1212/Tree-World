@@ -61,7 +61,7 @@ export const deleteOrders = createAsyncThunk(
             headers: {
                'Authorization': 'Bearer ' + userItem.accessToken
             }
-         });
+         })
          return await response.data;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });

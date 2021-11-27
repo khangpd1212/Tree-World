@@ -14,9 +14,12 @@ export default function TableOrder() {
   }, [dispatch]);
 
   function confirm(id) {
-    dispatch(deleteOrders(id));
-    dispatch(getOrders());
-    message.success("Delete success");
+    dispatch(deleteOrders(id)).then((result) => {
+      dispatch(getOrders());
+      message.success("Delete success");
+    }).catch((err) => {
+      message.warning("oh no");
+    });;
   }
   const columns = [
     {
@@ -58,7 +61,7 @@ export default function TableOrder() {
           <Popconfirm
             placement="rightTop"
             title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record._id)}
+            onConfirm={() => confirm(record.key)}
             okText="Yes"
             cancelText="No"
           >

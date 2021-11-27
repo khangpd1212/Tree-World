@@ -13,23 +13,17 @@ export const requests = {
     const { data } = await instance.get("/product/" + id);
     return data;
   },
-  async editProduct(token, body, id, img) {
+  async editProduct(token, body, id) {
     const config = {
       method: "put",
       url: "/product/" + id,
       headers: {
         Authorization: "Bearer " + token,
       },
-      data: {
-        ...body,
-        image: img,
-      },
+      data: body,
     };
-    if (img !== "") {
-      const { data } = await instance(config);
-      return data;
-    }
-    return Promise.reject();
+    const { data } = await instance(config);
+    return data;
   },
   async addProduct(token, body, img) {
     console.log("img", img);

@@ -1,9 +1,8 @@
-import { Button, Form, Input, Modal, Switch} from 'antd';
-import React, { useCallback, useState } from 'react';
+import { Button, Form, Input, Modal, Switch } from 'antd';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { selectCatalogs } from 'redux/catalog';
-import { fetchProducts } from "redux/product";
+import { fetchCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
 
 
@@ -17,56 +16,26 @@ const formItemLayout = {
 };
 
 export default function ModalAddCategory({ visible, setVisible }) {
-    const { catalogList } = useSelector(selectCatalogs);
-    const [imgBase64, setImgBase64] = useState("")
-    const dispatch = useDispatch()
-    const token = localStorage.getItem("token");
+    const { userItems } = useSelector((state) => state.userState);
+    const dispatch = useDispatch();
+    const token = userItems.isAdmin ? userItems.accessToken : null;
+    const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        requests.addProduct(token, values, imgBase64)
-            .then(res => {
-                console.log(res);
-                dispatch(fetchProducts())
-                setVisible(false)
-                toast.success("Add new product succesfully!")
-            })
+        requests.addCatalog(token, values, userItems._id).then((res) => {
+            if (res.catalog.status) {
+                dispatch(fetchCatalogs());
+                form.resetFields();
+                setVisible(false);
+                toast.success("Add new category succesfully!");
+            } else {
+                toast.error("Failed");
+            }
+        });
     };
-
-
-
-    const FromEdit = useCallback(() => {
-
-        return <Form
-            name="validate_other"
-            {...formItemLayout}
-            onFinish={onFinish}
-        >
-            <Form.Item
-                name="category_name"
-                label="Category Name"
-                hasFeedback
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item name="status" label="Status" valuePropName="status">
-                <Switch defaultChecked={true} />
-            </Form.Item>
-
-            <Form.Item
-                wrapperCol={{
-                    span: 12,
-                    offset: 6,
-                }}
-            >
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-                <Button onClick={() => setVisible(false)}>
-                    Cancel
-                </Button>
-            </Form.Item>
-        </Form>
-    }, [catalogList, imgBase64])
+    const onFinishFailed = (err) => {
+        toast.error(`Failed: ${err}`);
+    };
 
     return <>
         <Modal
@@ -77,9 +46,45 @@ export default function ModalAddCategory({ visible, setVisible }) {
             onCancel={() => setVisible(false)}
             footer={false}
             width="50%"
-            className="edit-product"
+            className="edit-category"
         >
-            <FromEdit />
+            <Form
+                form={form}
+                name="validate_other"
+                {...formItemLayout}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+            >
+                <Form.Item
+                    name="catalog_name"
+                    label="Category Name"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input category name!",
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input/>
+                </Form.Item>
+
+                <Form.Item name="status" label="Status" valuePropName="status">
+                    <Switch defaultChecked={true}/>
+                </Form.Item>
+
+                <Form.Item
+                    wrapperCol={{
+                        span: 12,
+                        offset: 6,
+                    }}
+                >
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                    <Button onClick={() => setVisible(false)}>Cancel</Button>
+                </Form.Item>
+            </Form>
         </Modal>
     </>
 

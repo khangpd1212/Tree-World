@@ -61,6 +61,59 @@ export const requests = {
     const { data } = await instance.get("/catalog");
     return data;
   },
+  async addCatalog(token, body) {
+    const config = {
+      method: "post",
+      url: "/catalog/",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async editCatalog(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/catalog/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  //voucher
+  async addVoucher(token, body) {
+    const config = {
+      method: "post",
+      url: "/voucher/",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async editVoucher(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/voucher/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
 
   //blog
   async addBlog(token, body, img, id) {
@@ -90,9 +143,6 @@ export const requests = {
     return data
   },
 
-
-
- 
   async editBlog(token, body, id) {
     const config = {
       method: "put",

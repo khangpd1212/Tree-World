@@ -17,6 +17,10 @@ const VoucherSchema = new mongoose.Schema({
       type: Number,
       required: true,
    },
+   voucherCode: {
+      type: String,
+      required: true,
+   },
    status: {
       type: Boolean,
       default: true,

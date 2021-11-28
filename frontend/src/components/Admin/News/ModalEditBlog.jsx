@@ -67,7 +67,7 @@ export default function ModalEditBlog({
           } else {
             toast.error("Failed");
           }
-        });
+        }); 
     } else {
       requests.editBlog(token, values, selected._id).then((res) => {
         console.log(res);
@@ -146,10 +146,6 @@ export default function ModalEditBlog({
           hasFeedback
         >
           <Input.TextArea rows={10} defaultValue={selected.content} />
-        </Form.Item>
-
-        <Form.Item name="status" label="Status" valuePropName="status">
-          <Switch defaultChecked={selected.status} />
         </Form.Item>
 
         <Form.Item

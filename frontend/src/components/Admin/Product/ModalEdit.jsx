@@ -4,9 +4,7 @@ import {
   Form,
   Input,
   Modal,
-  Rate,
   Select,
-  Switch,
   Upload,
   InputNumber,
   Image,
@@ -51,7 +49,7 @@ export default function ModalEdit({
   let catalogSeleted =
     catalogList &&
     selected &&
-    catalogList.find((f) => f._id == selected.catalog_id);
+    catalogList.find((f) => f._id === selected.catalog_id);
   const dispatch = useDispatch();
   const userItem = JSON.parse(localStorage.getItem("userItems"));
   const token = userItem ? userItem.accessToken : null;
@@ -113,9 +111,10 @@ export default function ModalEdit({
           isHot: selected.isHot ?? false,
           status: selected.status ?? false,
           description: selected.description,
+          color: selected.color,
         }}
       >
-        <Form.Item name="product_name" label="Name" hasFeedback>
+        <Form.Item name="product_name" label="Product Name" hasFeedback>
           <Input
             placeholder={selected.product_name}
             defaultValue={selected.product_name}
@@ -124,7 +123,7 @@ export default function ModalEdit({
         </Form.Item>
         <Form.Item
           name="catalog_id"
-          label="Catalog"
+          label="Catalog Name"
           hasFeedback
           placeholder="Catalog"
         >
@@ -145,24 +144,12 @@ export default function ModalEdit({
           <Form.Item name="inventory" noStyle>
             <InputNumber min={1} defaultValue={selected.inventory} />
           </Form.Item>
-          <span className="ant-form-text"> Price</span>
+          <span className="ant-form-text"> Price:</span>
           <Form.Item name="price" noStyle>
             <InputNumber min={1} defaultValue={selected.price} />
           </Form.Item>
         </Form.Item>
-
-        <Form.Item name="isHot" label="isHot" valuePropName="isHot">
-          <Switch defaultChecked={selected.isHot} />
-        </Form.Item>
-
-        <Form.Item name="status" label="Status" valuePropName="status">
-          <Switch defaultChecked={selected.status} />
-        </Form.Item>
-
-        <Form.Item name="star" label="Star">
-          <Rate defaultValue={selected.star} />
-        </Form.Item>
-
+        
         <Form.Item
           label="Image"
           valuePropName="fileList"
@@ -182,8 +169,15 @@ export default function ModalEdit({
             )}
           </Upload>
         </Form.Item>
+        <Form.Item name="color" label="Color" hasFeedback>
+          <Input
+            placeholder={selected.color}
+            defaultValue={selected.color}
+            value={selected.color}
+          />
+        </Form.Item>
 
-        <Form.Item label="description">
+        <Form.Item label="Description">
           <Form.Item
             name="description"
             valuePropName="fileList"
@@ -218,7 +212,7 @@ export default function ModalEdit({
         onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
         footer={false}
-        width="100%"
+        width="50%"
         className="edit-product"
       >
         <FromEdit />

@@ -40,18 +40,7 @@ export default function TableProducts() {
   };
   const columns = [
     {
-      title: "Name",
-      dataIndex: "product_name",
-      key: "product_name",
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-    },
-    {
-      title: "Image",
+      title: "Image URL",
       dataIndex: "image",
       key: "image",
       render: (value, record) => (
@@ -60,6 +49,32 @@ export default function TableProducts() {
         </Space>
       ),
     },
+    {
+      title: "Product Name",
+      dataIndex: "product_name",
+      key: "product_name",
+    },
+    {
+      title: "Color",
+      dataIndex: "color",
+      key: "color",
+    },
+    {
+      title: "Price ($)",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Inventory",
+      dataIndex: "inventory",
+      key: "inventory",
+    },
+    
     {
       title: "Status",
       dataIndex: "status",
@@ -81,15 +96,6 @@ export default function TableProducts() {
           <Button type="primary" onClick={() => onEdit(record)}>
             Edit
           </Button>
-          <Popconfirm
-            placement="rightTop"
-            title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record._id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button>Delete</Button>
-          </Popconfirm>
         </Space>
       ),
     },

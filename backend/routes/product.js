@@ -21,7 +21,7 @@ router.get("/filter", async (req, res) => {
   const isHot = req.query.hot;
   const match = {};
   //sort
-  let sort = { _id: 1 };
+  let sort = { _id: -1 };
   //filter by price
   const price = req.query.price;
   const priceMin = req.query.priceMin;

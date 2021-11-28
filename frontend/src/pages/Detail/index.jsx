@@ -1,10 +1,17 @@
 import {
-  CheckCircleFilled, FacebookFilled,
-  InstagramFilled, MessageFilled,
-  ShoppingCartOutlined, SkypeFilled, SmileFilled, StarFilled, TwitterCircleFilled
+  CheckCircleFilled,
+  FacebookFilled,
+  InstagramFilled,
+  MessageFilled,
+  ShoppingCartOutlined,
+  SkypeFilled,
+  SmileFilled,
+  StarFilled,
+  TwitterCircleFilled,
 } from "@ant-design/icons";
 import { Col, Radio, Row } from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
+import SliderProductComp from "components/Home/SliderProductComp";
 import FormSearch from "components/Product/FormSearch";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,12 +51,12 @@ export default function Detail() {
 
   console.log(color);
 
-  var settings = {
+  const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
       {
@@ -105,7 +112,6 @@ export default function Detail() {
       <Row className="pro">
         {/* hinh anh san pham */}
         <Col className="avtpro" xs={24} sm={12}>
-
           <img src={product.image && product.image[0]} alt="" />
 
           {/* hinh lien quan */}
@@ -376,16 +382,10 @@ export default function Detail() {
         </Col>
         <Col className="slidePro">
           <div>
-            <Slider {...settings}>
+            <Slider className="h_product-main" {...settings}>
               {productList &&
-                productList.map((item, index) => (
-                  <div className="itemPro" key={index}>
-                    <img className="itemImg" src={item.image[0]} alt="" />
-                    <div className="info">
-                      <h4>{item.product_name}</h4>
-                      <p>{item.price}</p>
-                    </div>
-                  </div>
+                productList.map((productItem, index) => (
+                  <SliderProductComp key={index} product={productItem} />
                 ))}
             </Slider>
           </div>
@@ -398,4 +398,3 @@ export default function Detail() {
 function onChange(a, b, c) {
   console.log(a, b, c);
 }
-

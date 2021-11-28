@@ -121,7 +121,7 @@ function BaseHeader() {
                 </div>
               </div>
               <div>
-                <LinkRoute to={"/"}>Blog</LinkRoute>
+                <LinkRoute to={"/blog"}>Blog</LinkRoute>
               </div>
               <div>
                 <LinkRoute to={"/contact"}>Contact</LinkRoute>
@@ -210,7 +210,7 @@ function BaseHeader() {
                     </Menu>
                   </div>
                   <div className="navbar__menu">
-                    <LinkRoute to={"/"} onClick={onClose}>
+                    <LinkRoute to={"/blog"} onClick={onClose}>
                       Blog
                     </LinkRoute>
                   </div>

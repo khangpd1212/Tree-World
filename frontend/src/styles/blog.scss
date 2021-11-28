@@ -1,0 +1,78 @@
+@import "fonts";
+#blog{
+    margin: 0 5vw;
+}
+.cloud-img{
+    width: 300px;
+}
+.ourblog{
+    display: flex;
+    gap: 100px;
+    align-items: center;
+    justify-content: center;
+}
+.our-text {
+    h1{
+        font-size: 120px;
+        
+    }
+}
+.banner{
+    display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 20px;
+  img{
+      width:650px;
+  }
+}
+.info{
+    display: flex;
+    gap: 20px;
+}
+.icon-blog{
+    display: flex;
+    gap: 10px;
+}
+
+.content{
+    display: flex;
+    gap: 100px;
+    
+}
+.content-left{
+    width:80%;
+}
+.content-right {
+    width: 20%;
+}
+.posts-list-1{
+    display: flex;
+    gap: 10px;
+}
+.icon-down{
+    text-align: center;
+    margin-top: 50px;
+}
+.posts-list-1{
+    h1{
+        font-size: 50px;
+       
+    }
+}
+.content-left{
+    h1{
+        font-size: 40px;
+    }
+}
+
+.content-img{
+    margin-bottom: 30px;
+}
+.default-setting{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+.banner-5{
+    margin-bottom: 50px;
+}

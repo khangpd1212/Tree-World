@@ -66,7 +66,15 @@ function BaseHeader() {
           <div className="mobileHidden">
             <Anchor affix={false}>
               <div>
-                <LinkRoute to={"/"}>Home</LinkRoute>
+                <LinkRoute
+                  to={"/"}
+                  onClick={() => {
+                    dispatch(setDefault());
+                    dispatch(setDefaultStatus());
+                  }}
+                >
+                  Home
+                </LinkRoute>
               </div>
               <div>
                 <LinkRoute to={"/about"}>About</LinkRoute>
@@ -113,7 +121,7 @@ function BaseHeader() {
                 </div>
               </div>
               <div>
-                <LinkRoute to={"/"}>Blog</LinkRoute>
+                <LinkRoute to={"/blog"}>Blog</LinkRoute>
               </div>
               <div>
                 <LinkRoute to={"/contact"}>Contact</LinkRoute>
@@ -152,7 +160,14 @@ function BaseHeader() {
               <Anchor>
                 <div className="navbar__link">
                   <div className="navbar__menu">
-                    <LinkRoute to={"/"} onClick={onClose}>
+                    <LinkRoute
+                      to={"/"}
+                      onClick={() => {
+                        dispatch(setDefault());
+                        dispatch(setDefaultStatus());
+                        onClose();
+                      }}
+                    >
                       Home
                     </LinkRoute>
                   </div>
@@ -195,7 +210,7 @@ function BaseHeader() {
                     </Menu>
                   </div>
                   <div className="navbar__menu">
-                    <LinkRoute to={"/"} onClick={onClose}>
+                    <LinkRoute to={"/blog"} onClick={onClose}>
                       Blog
                     </LinkRoute>
                   </div>

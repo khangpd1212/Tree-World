@@ -36,7 +36,7 @@ export default function Contact() {
           width="100%"
           height="450px"
           style={{ border: "0" }}
-          allowfullscreen=""
+          allowFullScreen=""
           loading="lazy"
           title="map"
         ></iframe>

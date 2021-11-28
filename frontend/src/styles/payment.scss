@@ -1,66 +1,84 @@
 @import "fonts";
 @import "media-queries";
 @import "colors";
+
 #payment {
    font-family: $font-SFRMeta;
+   color: #454242;
+
    .address {
-      margin-top: 20px;
-      background-color: $light-color;
+      margin-top: 15px;
+      background-color: #f3f1f1;
+      border: 1px solid #bab3b3;
+
       &__main {
          padding: 30px 40px;
-         @include mobile{
+
+         @include mobile {
             padding: 30px 20px;
          }
+
          position: relative;
+
          &--top {
-            .top__title--text{
+            .top__title--text {
                padding-left: 10px;
-               color: red;
+               color: #d64848;
                font-size: 20px;
-               @include desktop{
+               color: #d64848;
+
+               @include desktop {
                   font-size: 18px;
                }
-               @include tablet{
+
+               @include tablet {
                   font-size: 16px;
-               } 
+               }
             }
          }
-         &--bottom{
+
+         &--bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-           
-            .bottom__content{
+
+            .bottom__content {
                max-width: 60%;
-               font-size: 22px;
+               font-size: 20px;
                font-family: $font-SFUHelveticaLight;
-               @include desktop{
+
+               @include desktop {
                   font-size: 20px;
                }
-               @include tablet{
+
+               @include tablet {
                   margin-left: 30px;
                   font-size: 18px;
-               } 
-               @include tablet-sm{
+               }
+
+               @include tablet-sm {
                   max-width: 78%;
                }
-               @include mobile-plus{
+
+               @include mobile-plus {
                   font-size: 14px;
-               } 
+               }
             }
-            .bottom__button{
+
+            .bottom__button {
                display: flex;
                gap: 20px;
 
-               @include tablet{
+               @include tablet {
                   display: none;
                }
             }
          }
-         .icon-right{
+
+         .icon-right {
             display: none;
 
-            @include tablet{
+            @include tablet {
                display: block !important;
                position: absolute;
                top: 50%;
@@ -70,4 +88,230 @@
          }
       }
    }
+
+
+   .product__items--top::after {
+      border: 1px dashed #454242;
+   }
+
+   .cartItemPayment {
+      background-color: #f3f1f1;
+      border: 1px solid #bab3b3;
+      margin-top: 5px;
+
+      .product__items--container {
+         border-top: 1px dashed #ded9d9;
+         border-bottom: 1px dashed #ded9d9;
+         padding: 10px 40px;
+
+         .left__items {
+            border-right: 1px dashed #ded9d9;
+            font-family: $font-SFUHelveticaLight;
+         }
+
+         .right__items {
+            font-size: 16px;
+            display: flex;
+            gap: 15px;
+            text-transform: lowercase;
+
+            .shipping__title {
+               display: flex;
+               flex-direction: column;
+
+               span:nth-child(2) {
+                  padding-top: 70px;
+               }
+            }
+
+            .shipping__inf {
+               text-transform: none;
+               font-family: $font-SFUHelveticaLight;
+               justify-content: space-between;
+               display: flex;
+               flex-direction: column;
+
+               span:nth-child(1) {
+                  font-weight: bold;
+               }
+
+               span:nth-child(3) {
+                  color: #978f8f;
+               }
+
+               span:nth-child(4) {
+                  padding-top: 22px;
+                  font-weight: bold;
+               }
+            }
+         }
+      }
+
+      .product__items--bottom {
+         padding: 14px 40px;
+         font-size: 24px;
+         color: #d64848;
+         text-align: right;
+      }
+   }
+
+
+
+   .voucher {
+      background-color: #f3f1f1;
+      border: 1px solid #bab3b3;
+      padding: 10px 40px;
+      margin-top: 5px;
+
+
+      &__left {
+         font-size: 20px;
+         text-transform: lowercase;
+      }
+   }
+
+   .method {
+      background-color: #f3f1f1;
+      border: 1px solid #bab3b3;
+      margin-top: 5px;
+      margin-bottom: 50px;
+
+
+      &__top {
+         padding: 10px 40px;
+         display: flex;
+         align-items: baseline;
+         gap: 30px;
+
+         &--title {
+            font-size: 20px;
+            text-transform: lowercase;
+         }
+
+         &--wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+         }
+
+         &--btn {
+            text-transform: lowercase;
+            padding: 4px 10px 6px;
+            outline: 1px solid #898989;
+            border: none;
+         }
+
+         &--btn:hover {
+            color: #d64848;
+            outline: 1px solid #d64848;
+         }
+      }
+
+      hr {
+         border: 1px dashed #ded9d9;
+      }
+
+      &__container {
+         padding: 20px 40px;
+         border-top: 1px dashed #ded9d9;
+         border-bottom: 1px dashed #ded9d9;
+         font-family: $font-SFUHelveticaLight;
+
+         .momo {
+            margin-bottom: 15px;
+         }
+
+         .method__wrapper {
+            align-items: center;
+            gap: 10px;
+
+            .radio_flex {
+               display: flex;
+               align-items: center;
+               gap: 10px;
+            }
+
+            img {
+               width: 40px;
+            }
+
+            &--title {
+               color: #a09f9f;
+
+               &_1 {
+                  color: #585656;
+                  display: block;
+               }
+            }
+
+
+         }
+      }
+
+      &__bottom {
+         text-transform: none;
+         border-bottom: 1px dashed #ded9d9;
+         font-family: $font-SFUHelveticaLight;
+         padding: 20px 40px;
+         display: flex;
+         justify-content: flex-end;
+
+         .title-submenu {
+            display: flex;
+            width: 250px;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: #a09f9f;
+         }
+
+         .total__payment {
+            .total__title {
+               line-height: 60px;
+            }
+
+            .total {
+               font-family: $font-SFRMeta;
+               font-size: 30px;
+               color: #d64848;
+            }
+         }
+      }
+
+      .order__now {
+         display: flex;
+         justify-content: space-between;
+         padding: 20px 40px;
+         font-size: 16px;
+
+         .back__button {
+            color: #817d7d;
+            cursor: pointer;
+
+            .back__icon {
+               width: 20px;
+               font-size: 12px;
+            }
+         }
+
+         .back__button:hover {
+            color: $forth-color;
+         }
+
+         .order__button {
+            color: #fff;
+            text-transform: lowercase;
+            border: none;
+            background-color: #d64848;
+            padding-bottom: 5px;
+            width: 100px;
+            height: 36px;
+         }
+
+         .order__button:hover {
+            background-color: #454242;
+         }
+
+      }
+   }
+
 }

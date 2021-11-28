@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from "antd";
 import { CloseOutlined } from '@ant-design/icons';
-import "styles/login.scss";
+import "styles/Login/LoginMobile.scss";
 import { Link } from 'react-router-dom';
 export default function Login() {
     return (
@@ -23,18 +23,18 @@ export default function Login() {
           <div className="login_mobile-connect">
               <p>or connect with:</p>
               <div className="content-connect">
-                <a href="#" className="icon fb_connect">
+                <Link to="#" className="icon fb_connect">
                   <img src="/images/fb_mobile.png" alt="icon-fb_mobile"/>
                   <span>facebook</span>
-                </a>
-                <a href="#" className="icon twitter_connect">
+                </Link>
+                <Link to="#" className="icon twitter_connect">
                   <img src="/images/twitter_mobile.png" alt="icon-twitter_mobile"/>
                   <span>twitter</span>
-                </a>
-                <a href="#" className="icon gg_connect">
+                </Link>
+                <Link to="#" href="#" className="icon gg_connect">
                   <img src="/images/gg_mobile.png" alt="icon-gg_mobile"/>
                   <span>google+</span>
-                </a>
+                </Link>
               </div>
           </div>
           <div className="sign-up">

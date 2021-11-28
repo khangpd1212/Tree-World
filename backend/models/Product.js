@@ -45,6 +45,45 @@ const ProductSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  sold: {
+    type: Number,
+    default: 0,
+  },
 });
+
+ProductSchema.index(
+  { product_name: "text", description: "text" },
+  {
+    weights: { product_name: 5, description: 3 },
+  }
+);
+ProductSchema.statics = {
+  searchPartial: function (q, callback) {
+    return this.find(
+      {
+        $or: [
+          { product_name: new RegExp(q, "gi") },
+          { description: new RegExp(q, "gi") },
+        ],
+      },
+      callback
+    );
+  },
+  searchFull: function (q, callback) {
+    return this.find(
+      {
+        $text: { $search: q, $caseSensitive: false },
+      },
+      callback
+    );
+  },
+  search: function (q, callback) {
+    this.searchFull(q, (err, data) => {
+      if (err) return callback(err, data);
+      if (!err && data.length) return callback(err, data);
+      if (!err && data.length === 0) return this.searchPartial(q, callback);
+    });
+  },
+};
 
 module.exports = mongoose.model("Product", ProductSchema);

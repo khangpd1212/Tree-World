@@ -18,11 +18,6 @@ body.dark {
     display: none;
   }
 
-  .h_product-flex * {
-    -webkit-transition: all 0.6s ease;
-    transition: all 0.6s ease;
-  }
-
   .slick-arrow {
     opacity: 0;
     top: 40%;
@@ -38,14 +33,25 @@ body.dark {
     }
 
     &_hover {
-
       overflow: hidden;
       position: relative;
-      transition: .5s;
+
+      .icon-card {
+        font-size: 2.5vw;
+
+        @include tablet-sm {
+          font-size: 3vw !important;
+        }
+
+        @include mobile {
+          font-size: 12vw !important;
+        }
+      }
 
       img {
+        -webkit-transition: all 0.6s ease;
+        transition: all 0.6s ease;
         object-fit: cover;
-        display: block;
         height: 28vw;
 
         @include tablet-sm {
@@ -60,12 +66,73 @@ body.dark {
       &:hover img {
         transform: scale(1.1);
         -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
       }
 
-      &:hover .h_product-flex_icon {
-        -webkit-transform: translate(0, 0);
-        transform: translate(0, 0);
-        opacity: 1;
+      &:hover .h_product-flex_sidebar {
+        display: block;
+        animation: iconBlock 1s ease-out 1 normal;
+        -webkit-animation: iconBlock 1s ease-out 1 normal;
+      }
+
+      @keyframes iconBlock {
+        from {
+          transform: translateX(100%);
+          -webkit-transform: translateX(100%);
+          -moz-transform: translateX(100%);
+          -ms-transform: translateX(100%);
+          -o-transform: translateX(100%);
+        }
+
+        to {
+          transform: translateX(0%);
+          -webkit-transform: translateX(0%);
+          -moz-transform: translateX(0%);
+          -ms-transform: translateX(0%);
+          -o-transform: translateX(0%);
+        }
+      }
+    }
+
+    .h_product-flex_sidebar {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: $primary-color;
+      display: none;
+
+      .icon_hidden {
+        border: none;
+        padding: 14px 16px;
+        color: white;
+        transition: all 0.2s;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+
+
+        &:hover {
+          background-color: white;
+          color: $primary-color;
+        }
+      }
+    }
+
+    .h_product-flex_icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      .icon-like {
+        color: #E44343;
+        padding: 1vw 1.2vw;
+
+        @include mobile {
+          padding: 1rem 1.2rem;
+        }
       }
     }
 
@@ -89,38 +156,6 @@ body.dark {
         margin-bottom: 0;
       }
     }
-
-    &_icon {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-
-      a {
-        position: absolute;
-      }
-
-
-      .icon-like {
-        right: 0;
-        padding: 1vw 1.2vw;
-
-        @include tablet-sm {
-          .anticon-heart {
-            font-size: 3vw !important;
-          }
-        }
-
-        @include mobile {
-          padding: 1rem 1.2rem;
-
-          .anticon-heart {
-            font-size: 12vw !important;
-          }
-        }
-      }
-    }
   }
 
   .slick-list {
@@ -128,23 +163,15 @@ body.dark {
   }
 
   .slick-next {
-    right: 2.5%;
-
-    @include desktop-plus {
-      right: 2.1%;
-    }
-
-    @include desktop {
-      right: 1.8%;
-    }
+    right: -3%;
 
     @include tablet-plus {
-      right: 1.4%;
+      right: -4%;
     }
   }
 
   .slick-prev {
-    left: 1%;
+    left: -5%;
   }
 
   .slick-prev:before,
@@ -152,7 +179,9 @@ body.dark {
     color: black;
     z-index: 1;
     font-size: 3vw;
-
+    @include tablet-plus{
+      font-size: 22px;
+    }
     @include mobile {
       display: none;
     }

@@ -1,0 +1,175 @@
+@import "../media-queries";
+@import "../colors";
+@import "../fonts";
+
+// noi dung san pham
+.cart__product {
+  background-color: #f3f1f1;
+  padding: 15px 3vw;
+
+  .cart-empty {
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  // title
+  &--title {
+    .title__only {
+      color: #696868;
+      font-size: 18px;
+    }
+
+    .title__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h2 {
+        font-size: 16px;
+        font-family: $font-SFUHelveticaLight;
+        color: #bdbebe;
+        text-transform: none;
+
+        @include tablet-plus {
+          font-size: 14px;
+        }
+      }
+
+      @include mobile-plus {
+        h2 {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.cart__product--main {
+  padding: 30px 0;
+  border-bottom: 1px solid gray;
+
+  &:last-child {
+    border: none;
+  }
+
+  .main__img {
+    gap: 40px;
+    display: flex;
+    align-items: center;
+
+    @include tablet-plus {
+      gap: 15px;
+    }
+
+    img {
+      width: 100px;
+      object-fit: cover;
+      height: 100px;
+    }
+
+    h2 {
+      font-family: $font-SFUToledoMedium;
+      text-transform: none;
+      font-size: 22px;
+      color: #696868;
+
+      @include tablet-plus {
+        font-size: 18px;
+      }
+    }
+
+    @include mobile-plus {
+      gap: 15px;
+    }
+  }
+}
+
+.main__list {
+  color: #696868;
+  font-family: Helvetica, sans-serif;
+  text-transform: none;
+  transition: none;
+
+  @include tablet-plus {
+    font-size: 13px;
+  }
+
+  &--color {
+    width: 20px;
+    height: 20px;
+  }
+
+  &--price {
+    margin-left: 38px;
+  }
+
+  .btn-sl {
+    background-color: #fcf8f8;
+    display: flex;
+
+    input {
+      width: 50px;
+      border-radius: unset;
+      text-align: center;
+      border: 1px solid black;
+      -webkit-border-radius: unset;
+      -moz-border-radius: unset;
+      -ms-border-radius: unset;
+      -o-border-radius: unset;
+
+      @include tablet-plus {
+        width: 40px;
+      }
+
+      &::-webkit-outer-spin-button {
+        display: none;
+      }
+
+      &::-webkit-inner-spin-button {
+        display: none;
+      }
+    }
+
+    .btn-increment {
+      border-radius: unset;
+      border: 1px solid black;
+      border-left: none;
+      padding: 5px 12px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      -webkit-border-radius: unset;
+      -moz-border-radius: unset;
+      -ms-border-radius: unset;
+      -o-border-radius: unset;
+
+      @include tablet-plus {
+        padding: 3px 10px;
+      }
+    }
+
+    .btn-decrement {
+      border-radius: unset;
+      padding: 5px 12px;
+      border: 1px solid black;
+      border-right: none;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      -webkit-border-radius: unset;
+      -moz-border-radius: unset;
+      -ms-border-radius: unset;
+      -o-border-radius: unset;
+
+      @include tablet-plus {
+        padding: 3px 10px;
+      }
+    }
+  }
+
+  &--total {
+    margin-right: 28px;
+  }
+
+  &--delete {
+    margin-right: 10px;
+  }
+}

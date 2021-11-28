@@ -20,19 +20,23 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";
-import { fetchUsers } from "redux/user";
+import { fetchGetUser } from "redux/user";
+import { getOrders } from "redux/order";
+import { getOrderDetail } from "redux/order_detail";
+import { getAddress } from "redux/address";
 const { Content } = Layout;
 export default function BaseLayout() {
   const dispatch = useDispatch();
   const layout = useSelector((state) => state.layoutState.layoutStatus);
-
   const [themeState, setThemeState] = useState(false);
+
   useEffect(() => {
     const getTheme = localStorage.getItem("Theme");
     if (getTheme === "dark") {
       setThemeState(true);
     }
   }, []);
+
   useEffect(() => {
     if (themeState) {
       localStorage.setItem("Theme", "dark");
@@ -44,9 +48,12 @@ export default function BaseLayout() {
   }, [themeState]);
 
   useEffect(() => {
-    // dispatch(fetchProducts());
+    dispatch(fetchGetUser());
+    dispatch(fetchProducts());
     dispatch(fetchCatalogs());
-    dispatch(fetchUsers());
+    dispatch(getOrders());
+    dispatch(getOrderDetail());
+    dispatch(getAddress());
   }, [dispatch]);
 
   return (
@@ -57,6 +64,7 @@ export default function BaseLayout() {
             type="checkbox"
             id="checkbox"
             checked={themeState}
+            onChange={() => themeState}
             onClick={() => setThemeState(!themeState)}
           />
           <div className="slider round"></div>
@@ -71,6 +79,7 @@ export default function BaseLayout() {
             <Route path="/product" exact component={Product} />
             <Route path="/product/:catalog" exact component={Product} />
             <Route path="/detail" exact component={Detail} />
+            <Route path="/detail/:id" exact component={Detail} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/payment" exact component={Payment} />
             <Route path="/blog" exact component={Blog} />

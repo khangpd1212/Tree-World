@@ -12,16 +12,16 @@
     @include mobile {
       padding-top: 30px;
     }
+
     &--item {
       cursor: pointer;
-      margin: 0 15px;
       position: relative;
       overflow: hidden;
       @include tablet1 {
-        margin: 15px;
+        margin: 15px 0 0;
       }
       @include tablet-sm {
-        margin: 15px;
+        margin: 10px 0 0;
       }
       @include mobile {
         margin: 15px 0;
@@ -74,6 +74,17 @@
       @include tablet1 {
         display: block;
       }
+      &--sm {
+        display: none;
+        @include mobile1 {
+          display: block;
+        }
+      }
+      &--plus {
+        @include mobile1 {
+          display: none;
+        }
+      }
     }
   }
   &__section {
@@ -96,7 +107,7 @@
       border: 1px solid $light-gray-color;
       margin-bottom: 10px;
       @include desktop {
-        width: 200px;
+        width: 100%;
       }
       @include tablet-plus {
         width: 100%;
@@ -119,8 +130,8 @@
       border: 1px solid $light-gray-color;
       padding: 15px 0;
       @include desktop {
-        max-width: 200px !important;
-        min-width: 200px !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
       }
       @include tablet-plus {
         max-width: 100% !important;
@@ -136,6 +147,7 @@
         color: $gray-color;
         @include desktop {
           font-size: 20px;
+          padding-left: 3vw;
         }
         @include tablet-plus {
           font-size: 18px;
@@ -157,6 +169,7 @@
             background: $light--white-color;
             @include desktop {
               font-size: 18px;
+              padding-left: 3vw;
             }
             @include tablet-plus {
               font-size: 16px;
@@ -191,6 +204,9 @@
       .form__price--range {
         padding-left: 30px;
         margin-bottom: 1rem;
+        @include desktop {
+          padding-left: 3vw;
+        }
         @include tablet-plus {
           padding-left: 20px;
         }
@@ -277,6 +293,9 @@
       }
       .side__tags {
         padding-left: 30px;
+        @include desktop {
+          padding-left: 3vw;
+        }
         @include tablet-plus {
           padding-left: 20px;
         }
@@ -298,10 +317,12 @@
     &--filter {
       @include desktop-plus {
         margin-left: 15px;
-        margin-right: 15px;
       }
       @include desktop {
         margin-left: 15px;
+      }
+      @include tablet1 {
+        margin-left: 0;
       }
       .tabletVisible {
         display: none;
@@ -328,9 +349,9 @@
               line-height: 25px;
             }
             @include tablet-sm {
-              font-size: 11px;
-              height: 20px;
-              line-height: 15px;
+              font-size: 12px;
+              height: 30px;
+              line-height: 2;
             }
             &:hover {
               color: $light-color;
@@ -407,11 +428,15 @@
           &:not(.ant-select-customize-input) .ant-select-selector {
             width: 10vw;
             height: 40px;
+            @include tablet-plus {
+              width: 13vw;
+            }
             @include tablet1 {
+              width: auto;
               height: 30px;
             }
             @include tablet-sm {
-              height: 20px;
+              height: 30px;
             }
           }
         }
@@ -420,7 +445,7 @@
             line-height: 25px;
           }
           @include tablet-sm {
-            line-height: 15px;
+            line-height: 2;
           }
         }
         &-arrow {
@@ -437,6 +462,14 @@
           color: $dark-color;
           &:hover {
             color: $light-color;
+          }
+        }
+        &-single .ant-select-selector .ant-select-selection-placeholder {
+          @include tablet1 {
+            line-height: 25px;
+          }
+          @include tablet-sm {
+            line-height: 2;
           }
         }
       }
@@ -473,6 +506,9 @@
               background: $orange-color;
               color: $light-color;
             }
+            @include desktop-plus {
+              width: 47px;
+            }
           }
         }
       }
@@ -480,15 +516,26 @@
 
     &--list {
       margin-top: 10px;
+      @include desktop-plus {
+        margin-left: 15px;
+      }
+      @include tablet1 {
+        margin-left: 0;
+      }
     }
     &--product {
-      margin-left: 15px;
-      margin-right: 15px;
       overflow: hidden;
       cursor: pointer;
       &--img {
         margin-bottom: 5px;
         overflow: hidden;
+        height: 25vw;
+        @include tablet1 {
+          height: 35vw;
+        }
+        @include mobile1 {
+          height: 50vw;
+        }
         img {
           transition: all 0.4s;
         }
@@ -516,7 +563,7 @@
         text-align: center;
         margin-bottom: 30px;
         h2 {
-          font-size: 22px;
+          font-size: 20px;
           color: $gray-color;
           margin-bottom: 0;
           transition: all 0.4s;
@@ -532,13 +579,16 @@
           @include mobile-plus {
             font-size: 18px;
           }
-          @include mobile-sm {
-            font-size: 14px;
+          @include mobile {
+            font-size: 4vw;
           }
+          // @include mobile-sm {
+          //   font-size: 14px;
+          // }
         }
         p {
           margin: 0;
-          font-size: 22px;
+          font-size: 20px;
           color: $gray-color;
           @include desktop {
             font-size: 20px;
@@ -552,9 +602,12 @@
           @include mobile-plus {
             font-size: 18px;
           }
-          @include mobile-sm {
-            font-size: 14px;
+          @include mobile {
+            font-size: 4vw;
           }
+          // @include mobile-sm {
+          //   font-size: 14px;
+          // }
         }
       }
     }
@@ -648,5 +701,17 @@
         }
       }
     }
+  }
+}
+@media (min-width: 576px) {
+  .product__collections .ant-col-sm-15 {
+    display: block;
+    flex: 0 0 64%;
+    max-width: 64%;
+  }
+  .product__collections .ant-col-sm-9 {
+    display: block;
+    flex: 0 0 36%;
+    max-width: 36%;
   }
 }

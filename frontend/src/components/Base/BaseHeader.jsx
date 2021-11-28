@@ -1,20 +1,28 @@
 import { MenuOutlined } from "@ant-design/icons";
-import LoginDesktop from "../../pages/Login/LoginDesktop";
 import { Layout, Anchor, Button, Drawer, Row, Col, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectCatalogs } from "redux/catalog";
+import { ShowModalLogin } from "redux/modal";
 import "styles/header.scss";
-import "styles/login.scss";
+import DropdownOverlay from "components/utils/Dropdown";
+import LoginDesktop from "pages/Login/LoginDesktop";
+import SignUpDesktop from "pages/SignUp/SignUpDesktop";
+import { selectUsers } from "redux/user";
+import { setCatalog, setDefault } from "redux/filter";
+import { setDefaultStatus, setFilterStatus } from "redux/layout";
 
 function BaseHeader() {
   const { Header } = Layout;
   const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [show, handleShow] = useState(false);
+
+  const dispath = useDispatch();
+  const { userItems } = useSelector(selectUsers);
   const { catalogList } = useSelector(selectCatalogs);
+
   const transitionNavBar = () => {
     if (window.scrollY > 10) {
       handleShow(true);
@@ -22,24 +30,14 @@ function BaseHeader() {
       handleShow(false);
     }
   };
+
   const showDrawer = () => {
     setVisible(true);
   };
   const onClose = () => {
     setVisible(false);
   };
-
   // modal login
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
   useEffect(() => {
     window.addEventListener("scroll", transitionNavBar);
@@ -47,11 +45,16 @@ function BaseHeader() {
       window.removeEventListener("scroll", transitionNavBar);
     };
   });
+  const dispatch = useDispatch();
 
   return (
     <Header
       className={show ? "bg__change" : ""}
-      style={{ position: "fixed", zIndex: 999, width: "100%" }}
+      style={
+        show
+          ? { position: "fixed", zIndex: 999, width: "100%" }
+          : { width: "100%" }
+      }
     >
       <Row justify="space-between" align="middle">
         <Col className="gutter-row" xs={16} sm={7} md={6} xl={6}>
@@ -63,13 +66,29 @@ function BaseHeader() {
           <div className="mobileHidden">
             <Anchor affix={false}>
               <div>
-                <LinkRoute to={"/"}>Home</LinkRoute>
+                <LinkRoute
+                  to={"/"}
+                  onClick={() => {
+                    dispatch(setDefault());
+                    dispatch(setDefaultStatus());
+                  }}
+                >
+                  Home
+                </LinkRoute>
               </div>
               <div>
                 <LinkRoute to={"/about"}>About</LinkRoute>
               </div>
               <div className="dropdown__menu">
-                <LinkRoute to={"/product"}>Product</LinkRoute>
+                <LinkRoute
+                  to={"/product"}
+                  onClick={() => {
+                    dispatch(setDefault());
+                    dispatch(setDefaultStatus());
+                  }}
+                >
+                  Product
+                </LinkRoute>
                 <div
                   className={
                     show
@@ -79,17 +98,25 @@ function BaseHeader() {
                 >
                   <Row>
                     {catalogList &&
-                      catalogList.map((item, index) => (
-                        <Col span={12} key={index}>
-                          <li>
-                            <LinkRoute
-                              to={`/product/${item.catalog_name}-cat.${item._id}`}
-                            >
-                              {item.catalog_name}
-                            </LinkRoute>
-                          </li>
-                        </Col>
-                      ))}
+                      catalogList.map((item, index) => {
+                        if (item.status) {
+                          return (
+                            <Col span={12} key={index}>
+                              <li>
+                                <LinkRoute
+                                  to={`/product/${item.catalog_name}-cat.${item._id}`}
+                                  onClick={() => {
+                                    dispatch(setCatalog(item._id));
+                                    dispatch(setFilterStatus());
+                                  }}
+                                >
+                                  {item.catalog_name}
+                                </LinkRoute>
+                              </li>
+                            </Col>
+                          );
+                        }
+                      })}
                   </Row>
                 </div>
               </div>
@@ -105,12 +132,19 @@ function BaseHeader() {
               <div>
                 <LinkRoute to={"/payment"}>Payment</LinkRoute>
               </div>
-              <div className="div__login" onClick={showModal}>
-                Login
-              </div>
               <div>
                 <LinkRoute to={"/admin"}>Admin</LinkRoute>
               </div>
+              {Object.values(userItems).length === 0 ? (
+                <div
+                  className="div__login"
+                  onClick={() => dispath(ShowModalLogin(true))}
+                >
+                  Login
+                </div>
+              ) : (
+                <DropdownOverlay />
+              )}
             </Anchor>
           </div>
           <div className="mobileVisible">
@@ -126,7 +160,14 @@ function BaseHeader() {
               <Anchor>
                 <div className="navbar__link">
                   <div className="navbar__menu">
-                    <LinkRoute to={"/"} onClick={onClose}>
+                    <LinkRoute
+                      to={"/"}
+                      onClick={() => {
+                        dispatch(setDefault());
+                        dispatch(setDefaultStatus());
+                        onClose();
+                      }}
+                    >
                       Home
                     </LinkRoute>
                   </div>
@@ -136,17 +177,35 @@ function BaseHeader() {
                     </LinkRoute>
                   </div>
                   <div className="navbar__menu dropdown__menu">
-                    <LinkRoute to={"/product"} onClick={onClose}>
+                    <LinkRoute
+                      to={"/product"}
+                      onClick={() => {
+                        dispatch(setDefault());
+                        dispatch(setDefaultStatus());
+                        onClose();
+                      }}
+                    >
                       Product
                     </LinkRoute>
                     <Menu mode="inline">
                       <SubMenu>
                         {catalogList &&
-                          catalogList.map((item, index) => (
-                            <Menu.Item key={index}>
-                              {item.catalog_name}
-                            </Menu.Item>
-                          ))}
+                          catalogList.map((item, index) => {
+                            if (item.status) {
+                              return (
+                                <Menu.Item
+                                  key={index}
+                                  onClick={() => {
+                                    dispatch(setCatalog(item._id));
+                                    dispatch(setFilterStatus());
+                                    onClose();
+                                  }}
+                                >
+                                  {item.catalog_name}
+                                </Menu.Item>
+                              );
+                            }
+                          })}
                       </SubMenu>
                     </Menu>
                   </div>
@@ -185,13 +244,8 @@ function BaseHeader() {
           </div>
         </Col>
       </Row>
-
-      {/* login */}
-      <LoginDesktop
-        showModal={isModalVisible}
-        handleOk={handleOk}
-        handleCancel={handleCancel}
-      />
+      <LoginDesktop />
+      <SignUpDesktop />
     </Header>
   );
 }

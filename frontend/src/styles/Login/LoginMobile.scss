@@ -1,0 +1,188 @@
+@import "../media-queries";
+@import "../colors";
+@import "../fonts";
+
+
+
+// login mobile
+.login_mobile {
+    position: relative;
+
+    &-icon {
+        color: white;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+
+        &:hover {
+            color: #C5B267
+        }
+    }
+
+    .login_mobile-bg {
+        width: 100%;
+        height: 70vh;
+    }
+
+    .login_mobile-title {
+        position: absolute;
+        top: 12%;
+        left: 34%;
+        font-size: 7.5vw;
+        color: #F1EFEF;
+        font-family: $font-SFUToledoMedium;
+    }
+
+    .login_mobile-content {
+        font-family: $font-SFUHelveticaLight;
+        position: absolute;
+        left: 14%;
+        top: 22%;
+
+        input {
+            font-size: 3vw;
+            color: white;
+            border-left: none;
+            border-top: none;
+            border-right: none;
+            border-bottom: 1px solid white;
+            display: block;
+            width: 70vw;
+            background: transparent;
+            outline: none;
+            padding: 4px;
+            margin-bottom: 4vw;
+
+            &::placeholder {
+                color: #BFDAD5;
+            }
+        }
+
+        .login-forget {
+            color: #BFDAD5;
+            font-size: 3vw;
+        }
+
+        .login_mobile-remember {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .ant-checkbox-wrapper {
+                align-items: center;
+
+                span {
+                    font-size: 3vw;
+                    color: #C5B267;
+                }
+
+                .ant-checkbox {
+                    top: 0 !important;
+
+                    .ant-checkbox-inner {
+                        width: 3vw !important;
+                        height: 3vw !important;
+                    }
+                }
+            }
+        }
+
+        .login-btn_submit {
+            margin-left: 26%;
+            margin-top: 16%;
+            padding: 1vw 12vw !important;
+            display: block;
+            border-radius: 30px;
+            background-color: transparent;
+            color: #F1EFEF;
+            border: 1px solid #F1EFEF;
+            font-family: "SFUMetaCaps";
+            cursor: pointer;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+            outline: 1px solid;
+            outline-color: rgba(255, 255, 255, 0);
+            outline-offset: 0px;
+            text-shadow: none;
+            -webkit-transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+            transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+            outline-color: rgba(255, 255, 255, 0.5);
+            outline-offset: 0px;
+
+            &:hover {
+                border: 1px solid;
+                box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+                outline-offset: 15px;
+                outline-color: rgba(255, 255, 255, 0);
+                text-shadow: 1px 1px 2px #427388;
+            }
+        }
+    }
+
+    .login_mobile-connect {
+        font-family: $font-SFUHelveticaLight;
+        text-align: center;
+        margin-top: 10vw;
+        margin-bottom: 8vw;
+
+        p {
+            color: #838484;
+        }
+
+        .content-connect {
+            padding: 4px;
+            display: flex;
+            padding-right: 20px;
+            padding-left: 20px;
+            justify-content: space-evenly;
+
+            .icon {
+                // display: flex;
+                // justify-content: center;
+                border-radius: 26px;
+                color: white;
+                font-size: 3vw;
+                height: 5.6vw;
+                width: 26vw;
+
+                img {
+                    margin-right: 3vw;
+                    width: 4vw;
+                }
+            }
+
+            span {
+                font-family: $font-SFRMeta;
+            }
+
+            .fb_connect {
+                background-color: #4267B2;
+
+                img {
+                    width: 3vw !important;
+                }
+            }
+
+            .twitter_connect {
+                background-color: #29ABE2;
+            }
+
+            .gg_connect {
+                background-color: #DD5348;
+            }
+        }
+    }
+
+    .sign-up {
+        text-align: center;
+        font-family: $font-SFUHelveticaLight;
+
+        span {
+            color: #838484;
+
+            a {
+                margin-left: 0.4rem;
+                color: #1860F3;
+            }
+        }
+    }
+}

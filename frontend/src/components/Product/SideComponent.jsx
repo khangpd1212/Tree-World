@@ -1,22 +1,39 @@
 import { FilterOutlined } from "@ant-design/icons";
 import { Button, Input, Layout, Radio, Row } from "antd";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { selectCatalogs } from "redux/catalog";
 import { useSelector } from "react-redux";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCatalog, setPrice } from "redux/filter";
+import { setFilterStatus } from "redux/layout";
 const { Sider } = Layout;
 
 function SideComponent() {
   const history = useHistory();
-  const params = useParams();
+  const dispatch = useDispatch();
   const { catalogList } = useSelector(selectCatalogs);
-  const { catalog } = params;
-  // let location = useLocation();
-  const [state, setState] = useState(catalog);
-  useEffect(() => {
-    setState(catalog);
-  }, [catalog]);
-  console.log(catalog, state);
+  const { catalog } = useParams();
+  const [priceMin, setPriceMin] = useState("");
+  const [priceMax, setPriceMax] = useState("");
+
+  const [err, setErr] = useState(false);
+  const handleSubmit = () => {
+    console.log(priceMin, priceMax);
+    if (
+      Number(priceMin) > Number(priceMax) ||
+      Number(priceMin) < 0 ||
+      Number(priceMax) < 0
+    ) {
+      setErr(true);
+    } else {
+      setErr(false);
+      dispatch(setFilterStatus());
+      dispatch(setPrice({ priceMin, priceMax }));
+    }
+  };
+  // console.log(catalog.substring(catalog.indexOf(".") + 1, catalog.length));
   return (
     <div className="tabletHidden">
       <div className="product__section--title">
@@ -27,33 +44,74 @@ function SideComponent() {
       <Sider className="site-layout-background">
         <h3 className="side__title">Categories</h3>
         <Radio.Group
-          defaultValue={state}
+          defaultValue=""
+          value={catalog ? catalog : ""}
           buttonStyle="solid"
           onChange={(e) => {
+            dispatch(
+              setCatalog(
+                e.target.value.substring(
+                  e.target.value.indexOf(".") + 1,
+                  e.target.value.length
+                )
+              )
+            );
+            dispatch(setFilterStatus());
+
             history.push(`/product/${e.target.value}`);
-            // setState({status: true, content: e.target.value})
           }}
         >
           {catalogList &&
-            catalogList.map((catalog, index) => (
-              <Radio.Button
-                value={`${catalog.catalog_name}-cat.${catalog._id}`}
-                key={index}
-              >
-                {catalog.catalog_name}
-              </Radio.Button>
-            ))}
+            catalogList.map((catalog, index) => {
+              if (catalog.status) {
+                return (
+                  <Radio.Button
+                    value={`${catalog.catalog_name}-cat.${catalog._id}`}
+                    key={index}
+                  >
+                    {catalog.catalog_name}
+                  </Radio.Button>
+                );
+              }
+            })}
         </Radio.Group>
         <h3 className="side__title">Price range</h3>
         <div className="form__price--range">
           <Row>
-            <Input type="number" placeholder="From" />{" "}
+            <Input
+              type="number"
+              placeholder="From"
+              value={priceMin}
+              onChange={(e) => setPriceMin(e.target.value)}
+            />{" "}
             <span style={{ padding: "0 5px" }}>-</span>
-            <Input type="number" placeholder="To" />
+            <Input
+              type="number"
+              placeholder="To"
+              value={priceMax}
+              onChange={(e) => setPriceMax(e.target.value)}
+            />
           </Row>
+          {err ? (
+            <p
+              style={{ fontStyle: "italic", color: "red", paddingTop: "10px" }}
+            >
+              Please fill in the appropriate price
+            </p>
+          ) : (
+            <></>
+          )}
           <Row align="middle">
-            <Button>Apply</Button>
-            <p className="price--range__show">$50 - $300</p>
+            <Button onClick={handleSubmit}>Apply</Button>
+            {/* {err ? (
+              <></>
+            ) : priceMin === "" || priceMax === "" ? (
+              <></>
+            ) : (
+              <p className="price--range__show">
+                ${priceMin} - ${priceMax}
+              </p>
+            )} */}
           </Row>
         </div>
         <h3 className="side__title">tags</h3>

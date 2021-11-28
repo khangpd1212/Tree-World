@@ -11,9 +11,9 @@ import addressReducer from "./address";
 import modalReducer from "./modal";
 import serviceReducer from "./service";
 import filterReducer from "./filter";
-import voucherReducer  from "./voucher";
-import commentReducer from "./comment"
-
+import voucherReducer from "./voucher";
+import commentReducer from "./comment";
+import blogReducer from "./blog";
 export const store = configureStore({
   reducer: {
     commentState: commentReducer,
@@ -31,5 +31,6 @@ export const store = configureStore({
     addressState: addressReducer,
     serviceState: serviceReducer,
     filterState: filterReducer,
+    blogState: blogReducer,
   },
 });

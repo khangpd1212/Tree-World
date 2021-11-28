@@ -27,8 +27,7 @@ router.get("/filter", async (req, res) => {
   const priceMin = req.query.priceMin;
   const priceMax = req.query.priceMax;
   const order = req.query.order;
-  //pagination
-  let page = 0;
+
   let products = [];
   if (catalog) {
     match.catalog_id = catalog;
@@ -52,9 +51,6 @@ router.get("/filter", async (req, res) => {
   if (order && price.toLowerCase() === "true") {
     sort = { price: order.toLowerCase() === "asc" ? 1 : -1 };
   }
-  if (req.query.page) {
-    page = req.query.page;
-  }
 
   try {
     products = await Product.aggregate([
@@ -62,8 +58,6 @@ router.get("/filter", async (req, res) => {
         $match: match,
       },
       { $sort: sort },
-      { $skip: 5 * parseInt(page) },
-      { $limit: 5 },
     ]);
     res.status(200).json(products);
   } catch (error) {
@@ -92,7 +86,7 @@ router.post("/", verify, async (req, res) => {
       catalog_id,
       image,
       inventory,
-      color
+      color,
     } = req.body;
 
     const newProduct = new Product({
@@ -109,7 +103,9 @@ router.post("/", verify, async (req, res) => {
     try {
       const product = await newProduct.save();
       if (!product) throw new Error("Something were wrong with saving product");
-      res.status(200).json({ message: "Create successfully", product });
+      res
+        .status(200)
+        .json({ message: "Create successfully", status: true, product });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -145,7 +141,9 @@ router.put("/:id", verify, async (req, res) => {
       );
       if (!updatedProduct)
         throw new Error("Something went wrong with updating product");
-      res.status(200).json({ message: "update successfully", updatedProduct });
+      res
+        .status(200)
+        .json({ message: "update successfully", status: true, updatedProduct });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

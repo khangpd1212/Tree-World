@@ -3,14 +3,33 @@ const Address = require("../models/Address");
 const verify = require("../middlewares/verify");
 
 router.get("/", async (req, res) => {
+   const { idUser } = req.query;
    try {
-      const addresses = await Address.find();
+      let addresses;
+      if (idUser){
+         addresses = await Address.find({ idUser: idUser });
+      }else{
+         addresses = await Address.find();
+      }
       if (!addresses) throw new Error("No items");
       res.status(200).json(addresses);
    } catch (error) {
       res.status(400).json({ message: error.message });
    }
 });
+
+// get address by order id
+router.get("/a", async (req, res) => {
+   const { idUser } = req.body;
+   try {
+      
+      if (!addresses) throw new Error("No items");
+      res.status(200).json(addresses);
+   } catch (error) {
+      res.status(400).json({ message: error.message });
+   }
+});
+
 // get address by id
 router.get("/:id", async (req, res) => {
    try {
@@ -23,7 +42,7 @@ router.get("/:id", async (req, res) => {
 });
 //user is not allowed create, update or delete
 //CREATE
-router.post("/", verify, async (req, res) => {
+router.post("/", async (req, res) => {
    const { idUser, content, district_id, ward_code } = req.body;
    const newAddress = new Address({ idUser, content, district_id, ward_code});
    try {

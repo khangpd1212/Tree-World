@@ -1,28 +1,22 @@
-import { Button, message, Popconfirm, Space, Table, Switch } from 'antd';
+import { Button, Space, Table, Switch } from 'antd';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetVoucher, selectVouchers } from 'redux/voucher';
-import { requests } from 'utils/axios';
-// import ModalEdit from './ModalEdit';
+import ModalEdit from './ModalEdit';
 
 
 
 export default function TableVoucher() {
+    const { voucherList } = useSelector(selectVouchers)
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState({})
-    const token = localStorage.getItem("token")
     const dispatch = useDispatch()
+
     useEffect(() => {
-        dispatch(fetchGetVoucher())
+        dispatch(fetchGetVoucher());
     }, [dispatch])
-    function confirm(id) {
-        requests.deleteProduct(token, id)
-            .then(res => {
-                dispatch(fetchGetVoucher())
-                message.success('delete success')
-            })
-    }
+    console.log(voucherList)
 
     const onEdit = (data) => {
         setSelected(data)
@@ -30,10 +24,14 @@ export default function TableVoucher() {
     }
     const columns = [
         {
-            title: 'Percent',
+            title: 'Voucher Code',
+            dataIndex: 'voucherCode',
+            key: 'voucherCode',
+        },
+        {
+            title: 'Percent (%)',
             dataIndex: 'percent',
             key: 'percent',
-            render: text => <a>{text}</a>,
         },
         {
             title: 'Created_Date',
@@ -69,29 +67,18 @@ export default function TableVoucher() {
                     >
                         Edit
                     </Button>
-                    <Popconfirm
-                        placement="rightTop"
-                        title={"Do you want delete this ?"}
-                        onConfirm={() => confirm(record._id)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button>Delete</Button>
-                    </Popconfirm>
                 </Space>
             ),
         },
     ];
 
-    const { voucherList } = useSelector(selectVouchers)
-    console.log(voucherList);
     return <>
         <Table columns={columns} dataSource={voucherList} />
-        {/* <ModalEdit
+        <ModalEdit
             visible={visible}
             setVisible={setVisible}
             selected={selected}
             setSelected={setSelected}
-        /> */}
+        />
     </>
 }

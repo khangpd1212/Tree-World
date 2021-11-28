@@ -1,67 +1,55 @@
 import { EnvironmentFilled, RightOutlined } from "@ant-design/icons";
-import { BtnOutlineGray, BtnOutlineBlue } from "../utils/Button";
-import ModalAddress from "./ModalAddress";
-import DefaultAddress from "./DefaultAddress";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAddress, getAddress, selectAddress } from "redux/address";
-import { selectUsers } from "redux/user";
-import { showTextAddress, selectProvince } from "redux/address/province";
-import {
-  ShowModalDefaultAddress,
-  onCancelAddress,
-  ShowModalLogin,
-} from "redux/modal";
 import { toast } from "react-toastify";
+import { fetchAddress, getAddress, selectAddress } from "redux/address";
+import { selectProvince, showTextAddress } from "redux/address/province";
+import {
+  onCancelAddress, ShowModalDefaultAddress, ShowModalLogin
+} from "redux/modal";
+import { selectUsers } from "redux/user";
+import { requests } from "utils/axios";
+import { BtnOutlineBlue, BtnOutlineGray } from "../utils/Button";
+import DefaultAddress from "./DefaultAddress";
+import ModalAddress from "./ModalAddress";
 export default function AddressPayment() {
-  const [addressItems, setAddressItems] = useState({});
   const dispatch = useDispatch();
   const { userItems } = useSelector(selectUsers);
   const { textAddress } = useSelector(selectProvince);
   const { addressList } = useSelector(selectAddress);
+  const [address, setAddress] = useState({});
 
-  const addressSession = sessionStorage.getItem("address");
+  let addressChild = textAddress.province
+    ? `${textAddress.street}, ${textAddress.ward}, ${textAddress.district}, ${textAddress.province}`
+    : "";
 
-  let addressChild = textAddress
-    .map(
-      (item) =>
-        `${item.street}, ${item.ward}, ${item.district}, ${item.province}`
-    )
-    .toString();
   useEffect(() => {
-    let addressFilter = addressList.filter(
-      (item) => userItems._id === item.idUser
-    );
-    if (!addressSession && !textAddress[0]) {
-      setAddressItems({
-        address:
-          addressFilter.length > 0
-            ? addressFilter[addressFilter.length - 1].content
-            : null,
-        name: userItems.username,
-        phone: userItems.phone_number,
-      });
-    } else if (addressSession && !textAddress[0].province) {
-      setAddressItems({
-        address: textAddress[0].address,
-        name: textAddress[0].name,
-        phone: textAddress[0].phone,
-      });
-    } else if (addressSession && textAddress[0].province) {
-      setAddressItems({
-        address: addressChild,
-        name: textAddress[0].name,
-        phone: textAddress[0].phone,
-      });
-    }
-  }, [textAddress, addressList, userItems]);
-
+    requests.getAddressByUser(userItems._id).then((result) => {
+      let addressLast = result.slice(-1)[0];
+      dispatch(
+        showTextAddress({
+          address: addressLast && addressLast.content,
+          district_id: addressLast && addressLast.district_id,
+          ward_code: addressLast && addressLast.ward_code,
+          name: userItems && userItems.username,
+          phone: userItems && userItems.phone_number,
+        })
+      );
+    });
+  }, [userItems]);
+  
+  useEffect(() => {
+    setAddress(textAddress);
+  });
 
   const handleDefaultAddress = () => {
     let dataAddress = {};
+
     const compareAddress = addressList.find(
-      (item) => item.content === addressChild
+      (item) => item.content === textAddress.address
     );
+
+    // so sanh address
     if (textAddress.length < 1 || compareAddress) {
       toast.error(`You can't choose this address anymore`, {
         position: "bottom-left",
@@ -76,9 +64,10 @@ export default function AddressPayment() {
       dataAddress = {
         idUser: userItems._id,
         content: addressChild,
-        district_id: textAddress[0].district_id,
-        ward_code: textAddress[0].ward_code,
+        district_id: textAddress.district_id,
+        ward_code: textAddress.ward_code,
       };
+
       dispatch(fetchAddress(dataAddress));
       dispatch(getAddress());
       toast.success(`You have successfully selected defaults`, {
@@ -119,8 +108,9 @@ export default function AddressPayment() {
         </div>
         <div className="address__main--bottom">
           <span className="bottom__content">
-            {addressItems.name} - {addressItems.phone} <br />
-            {addressItems.address}
+            {address.name} - {address.phone}
+            <br />
+            {address.address ? address.address : addressChild}
           </span>
           <div className="bottom__button">
             <BtnOutlineGray

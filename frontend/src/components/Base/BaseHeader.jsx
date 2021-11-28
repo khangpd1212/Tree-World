@@ -1,13 +1,5 @@
 import { MenuOutlined } from "@ant-design/icons";
-import {
-  Layout,
-  Anchor,
-  Button,
-  Drawer,
-  Row,
-  Col,
-  Menu,
-} from "antd";
+import { Layout, Anchor, Button, Drawer, Row, Col, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link as LinkRoute } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,8 +7,8 @@ import { selectCatalogs } from "redux/catalog";
 import { ShowModalLogin } from "redux/modal";
 import "styles/header.scss";
 import DropdownOverlay from "components/utils/Dropdown";
-import LoginDesktop from 'pages/Login/LoginDesktop';
-import SignUpDesktop from 'pages/SignUp/SignUpDesktop';
+import LoginDesktop from "pages/Login/LoginDesktop";
+import SignUpDesktop from "pages/SignUp/SignUpDesktop";
 import { selectUsers } from "redux/user";
 import { setCatalog, setDefault } from "redux/filter";
 import { setDefaultStatus, setFilterStatus } from "redux/layout";
@@ -26,7 +18,7 @@ function BaseHeader() {
   const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
   const [show, handleShow] = useState(false);
-  
+
   const dispath = useDispatch();
   const { userItems } = useSelector(selectUsers);
   const { catalogList } = useSelector(selectCatalogs);
@@ -98,21 +90,25 @@ function BaseHeader() {
                 >
                   <Row>
                     {catalogList &&
-                      catalogList.map((item, index) => (
-                        <Col span={12} key={index}>
-                          <li>
-                            <LinkRoute
-                              to={`/product/${item.catalog_name}-cat.${item._id}`}
-                              onClick={() => {
-                                dispatch(setCatalog(item._id));
-                                dispatch(setFilterStatus());
-                              }}
-                            >
-                              {item.catalog_name}
-                            </LinkRoute>
-                          </li>
-                        </Col>
-                      ))}
+                      catalogList.map((item, index) => {
+                        if (item.status) {
+                          return (
+                            <Col span={12} key={index}>
+                              <li>
+                                <LinkRoute
+                                  to={`/product/${item.catalog_name}-cat.${item._id}`}
+                                  onClick={() => {
+                                    dispatch(setCatalog(item._id));
+                                    dispatch(setFilterStatus());
+                                  }}
+                                >
+                                  {item.catalog_name}
+                                </LinkRoute>
+                              </li>
+                            </Col>
+                          );
+                        }
+                      })}
                   </Row>
                 </div>
               </div>
@@ -179,18 +175,22 @@ function BaseHeader() {
                     <Menu mode="inline">
                       <SubMenu>
                         {catalogList &&
-                          catalogList.map((item, index) => (
-                            <Menu.Item
-                              key={index}
-                              onClick={() => {
-                                dispatch(setCatalog(item._id));
-                                dispatch(setFilterStatus());
-                                onClose();
-                              }}
-                            >
-                              {item.catalog_name}
-                            </Menu.Item>
-                          ))}
+                          catalogList.map((item, index) => {
+                            if (item.status) {
+                              return (
+                                <Menu.Item
+                                  key={index}
+                                  onClick={() => {
+                                    dispatch(setCatalog(item._id));
+                                    dispatch(setFilterStatus());
+                                    onClose();
+                                  }}
+                                >
+                                  {item.catalog_name}
+                                </Menu.Item>
+                              );
+                            }
+                          })}
                       </SubMenu>
                     </Menu>
                   </div>

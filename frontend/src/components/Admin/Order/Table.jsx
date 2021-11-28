@@ -1,26 +1,30 @@
-import { Button, message, Popconfirm, Space,Table } from "antd";
+import { Table, Switch } from "antd";
 import TableDetail from "./TableDetail";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, selectOrders, deleteOrders } from "redux/order";
+import { getOrders, selectOrders } from "redux/order";
 
 export default function TableOrder() {
   const { orderList } = useSelector(selectOrders);
-
+  const [data, setData] = useState([])
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setData(orderList.map((item) => {
+      return {
+        key: item._id,
+        username: item.username,
+        orderDate: item.orderDate,
+        address: item.address,
+        phoneNumber: item.phoneNumber,
+        toTal: item.toTal,
+        status: item.status
+      }
+    }))
+  }, [orderList]);
+  useEffect(() => {
     dispatch(getOrders());
-  }, [dispatch]);
-
-  function confirm(id) {
-    dispatch(deleteOrders(id)).then((result) => {
-      dispatch(getOrders());
-      message.success("Delete success");
-    }).catch((err) => {
-      message.warning("oh no");
-    });;
-  }
+  }, [dispatch])
   const columns = [
     {
       title: "Name",
@@ -38,7 +42,7 @@ export default function TableOrder() {
       key: "address",
     },
     {
-      title: "Phone_Number",
+      title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
@@ -48,47 +52,24 @@ export default function TableOrder() {
       key: "toTal",
     },
     {
-      title: "Status",
+      title: "Order Status",
       dataIndex: "status",
       key: "status",
     },
-
     {
-      title: "Action",
-      key: "action",
+      title: 'Status',
+      key: 'order_status',
       render: (text, record) => (
-        <Space size="middle">
-          <Popconfirm
-            placement="rightTop"
-            title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button>Delete</Button>
-          </Popconfirm>
-        </Space>
-      ),
+        <Switch defaultChecked={true} />
+      )
     },
   ];
-
-    const data = orderList.map((item) => {
-      return {
-        key: item._id,
-        username: item.username,
-        orderDate: item.orderDate,
-        address: item.address,
-        phoneNumber: item.phoneNumber,
-        toTal: item.toTal,
-        status: item.status
-      }
-    })
-  return (
+return (
     <>
       <Table
         columns={columns}
         expandable={{
-          expandedRowRender: () => <TableDetail/>,
+          expandedRowRender: (record) => <TableDetail id={record.key} />,
         }}
         dataSource={data}
       />

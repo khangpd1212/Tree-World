@@ -1,35 +1,37 @@
-import { Col, Row, Input, Select, Form, Tag } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchService, selectService } from "redux/service/service";
-import { fetchFee, selectFee } from "redux/service/fee";
-import { selectCarts, getTotals } from "redux/cart";
-import { selectProvince, showTextAddress } from "redux/address/province";
+import { Col, Form, Input, Row, Select, Tag } from "antd";
 import { useEffect } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { selectProvince } from "redux/address/province";
+import { getTotals, selectCarts } from "redux/cart";
+import { fetchFee, selectFee } from "redux/service/fee";
+import { fetchService, selectService } from "redux/service/service";
+import { selectUsers } from "redux/user";
+import { requests } from "utils/axios";
 export default function CartItemPayment() {
   const { Option } = Select;
   const { TextArea } = Input;
-
+  const dispatch = useDispatch();
   const { textAddress } = useSelector(selectProvince);
   const { cartTotalAmount, cartItems } = useSelector(selectCarts);
   const { feeItems } = useSelector(selectFee);
   const { serviceItems } = useSelector(selectService);
-  const dispatch = useDispatch();
-  const feeItem = feeItems ? feeItems.service_fee : 0;
+  const { userItems } = useSelector(selectUsers);
+
   useEffect(() => {
-    dispatch(fetchService(textAddress));
-    dispatch(fetchFee(textAddress));
-  }, [dispatch, textAddress]);
+    requests.getAddressByUser(userItems._id).then((result) => {
+      let addressLast = result.slice(-1)[0];
+      dispatch(fetchService(addressLast && addressLast.district_id));
+    });
+  }, [textAddress, userItems]);
 
   useEffect(() => {
     dispatch(getTotals());
-  }, [cartItems, dispatch]);
+  }, [cartItems]);
 
   const handleServiceChange = (key) => {
-    const objectNew = Object.assign({}, textAddress[0], { service_id: key });
-    dispatch(showTextAddress([objectNew]));
-    dispatch(fetchFee([objectNew]));
-    sessionStorage.setItem("address", JSON.stringify([objectNew]));
+    const objectNew = Object.assign({}, textAddress, { service_id: key });
+    dispatch(fetchFee(objectNew));
+    sessionStorage.setItem("address", JSON.stringify(objectNew));
   };
   return (
     <div className="cartItemPayment">
@@ -54,7 +56,7 @@ export default function CartItemPayment() {
           cartItems.map((cartItem, index) => (
             <Row key={index} className="cart__product--main" align="middle">
               <Col span={10} className="main__img">
-                <img src={cartItem.image[0]} alt="" />
+                <img src={cartItem.product.image[0]} alt="" />
                 <h2>{cartItem.product_name}</h2>
               </Col>
               <Col span={14}>
@@ -64,23 +66,26 @@ export default function CartItemPayment() {
                   align="middle"
                 >
                   <Col className="main__list--color">
-                    {cartItem.color[0] === "#ffff" ||
-                    cartItem.color[0] === "white" ? (
-                      <Tag style={{ color: "black" }} color={cartItem.color[0]}>
-                        {cartItem.color[0]}
+                    {cartItem.pickColor === "#ffff" ||
+                    cartItem.pickColor === "white" ? (
+                      <Tag
+                        style={{ color: "black" }}
+                        color={cartItem.pickColor}
+                      >
+                        {cartItem.pickColor}
                       </Tag>
                     ) : (
-                      <Tag color={cartItem.color[0]}>{cartItem.color[0]}</Tag>
+                      <Tag color={cartItem.pickColor}>{cartItem.pickColor}</Tag>
                     )}
                   </Col>
                   <Col className="main__list--price" style={{ margin: 0 }}>
-                    <span>${cartItem.price}</span>
+                    <span>${cartItem.product.price}</span>
                   </Col>
                   <Col>
                     <div>{cartItem.quantity}</div>
                   </Col>
                   <Col>
-                    <span>${cartItem.price * cartItem.quantity}</span>
+                    <span>${cartItem.product.price * cartItem.quantity}</span>
                   </Col>
                 </Row>
               </Col>
@@ -119,13 +124,7 @@ export default function CartItemPayment() {
                     },
                   ]}
                 >
-                  <Select
-                    // defaultValue={
-                    //     serviceItems.find(x => x.service_type_id === 1).short_name
-                    // }
-                    placeholder="Service"
-                    onChange={handleServiceChange}
-                  >
+                  <Select placeholder="Service" onChange={handleServiceChange}>
                     {serviceItems &&
                       serviceItems.map((service) => (
                         <Option key={service.service_id}>
@@ -137,14 +136,17 @@ export default function CartItemPayment() {
                 <span style={{ marginTop: "-45px" }}>
                   Receive goods on Oct 17 - Dec 11
                 </span>
-                <span>${feeItem}</span>
+                <span>${feeItems}</span>
               </div>
             </div>
           </Col>
         </Row>
       </div>
       <div className="product__items--bottom">
-        <span className="total">total: ${cartTotalAmount.total + feeItem}</span>
+        <span className="total">
+          total: $
+          {feeItems ? cartTotalAmount.total + feeItems : cartTotalAmount.total}
+        </span>
       </div>
     </div>
   );

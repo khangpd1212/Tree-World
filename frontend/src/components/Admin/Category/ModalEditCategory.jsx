@@ -1,11 +1,10 @@
-import { Button, Form, Modal, Select, Switch } from 'antd';
+import { Button, Form, Modal, Select, Switch, Input } from 'antd';
 import React, { useState } from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from "react-redux";
 import { useSelector, useEffect } from 'react-redux';
 import { toast } from "react-toastify";
-import { selectCatalogs } from 'redux/catalog';
-import { fetchProducts } from "redux/product";
+import { fetchCatalogs, selectCatalogs } from 'redux/catalog';
 import { requests } from 'utils/axios';
 
 const { Option } = Select;
@@ -20,49 +19,44 @@ const formItemLayout = {
 
 export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
     const { catalogList } = useSelector(selectCatalogs);
-    const [imgBase64, setImgBase64] = useState("")
-    let catalogSeleted = catalogList && selected && catalogList.find(f => f._id === selected.catalog_id);
+
     const dispatch = useDispatch()
-    const token = localStorage.getItem("token");
-
+    const userItems = JSON.parse(localStorage.getItem("userItems"));
+    const token = userItems.accessToken;
+    console.log(selected)
     const onFinish = (values) => {
-        requests.editProduct(
-            token, values, selected._id,imgBase64
-        ).then(res=> {
-            dispatch(fetchProducts())
-            setVisible(false)
-            toast.success("Update product success")
-        }).catch(err=> toast.warning(err))
-
+        requests
+            .editCatalog(token, values, selected._id)
+            .then((res) => {
+                console.log(res);
+                if (res.updatedCatalog.status) {
+                    dispatch(fetchCatalogs());
+                    setVisible(false);
+                    toast.success(`Update successfully!`);
+                } else {
+                    toast.error("Failed");
+                }
+            });
     };
 
 
     const FromEdit = useCallback(() => {
-
         return <Form
             name="validate_other"
             {...formItemLayout}
             onFinish={onFinish}
             initialValues={{
-                'catalog_id': selected.catalog_id,
+                'catalog_name': selected.catalog_name,
                 'status': selected.status ?? false,
             }}
         >
             <Form.Item
-                name="catalog_id"
+                name="catalog_name"
                 label="Catalog"
                 hasFeedback
                 placeholder="Catalog"
             >
-                <Select placeholder={catalogSeleted?.catalog_name} defaultValue={selected.catalog_id}>
-                    {
-                        catalogList && catalogList.filter(f => f.status).map(cata => <Option value={cata._id}>{cata.catalog_name}</Option>)
-                    }
-                </Select>
-            </Form.Item>
-
-            <Form.Item name="status" label="Status" valuePropName="status">
-                <Switch defaultChecked={selected.status} />
+                <Input defaultValue={selected.catalog_name}/>
             </Form.Item>
 
             <Form.Item
@@ -79,7 +73,7 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
                 </Button>
             </Form.Item>
         </Form>
-    }, [selected, imgBase64])
+    }, [selected, setVisible])
 
     return <>
         <Modal

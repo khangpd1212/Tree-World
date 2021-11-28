@@ -5,7 +5,6 @@ import {
   Input,
   InputNumber,
   Modal,
-  Rate,
   Select,
   Switch,
   Upload,
@@ -73,16 +72,6 @@ export default function ModalAddProduct({ visible, setVisible }) {
         name="validate_other"
         {...formItemLayout}
         onFinish={onFinish}
-        // initialValues={{
-        //     'product_name': selected.product_name,
-        //     'star': selected.star,
-        //     'catalog_id': selected.catalog_id,
-        //     'inventory': selected.inventory ?? 0,
-        //     'price': selected.price,
-        //     'isHot': selected.isHot ?? false,
-        //     'status': selected.status ?? false,
-        //     'description': selected.description
-        // }}
       >
         <Form.Item name="product_name" label="Product Name" hasFeedback>
           <Input />
@@ -97,6 +86,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
                 ))}
           </Select>
         </Form.Item>
+        
 
         <Form.Item name="inventory" label="Iventory" valuePropName="isHot">
           <Form.Item name="inventory" noStyle>
@@ -107,18 +97,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
             <InputNumber min={1} defaultValue={0} />
           </Form.Item>
         </Form.Item>
-
-        <Form.Item name="isHot" label="isHot" valuePropName="isHot">
-          <Switch defaultChecked={true} />
-        </Form.Item>
-
-        <Form.Item name="status" label="Status" valuePropName="status">
-          <Switch defaultChecked={true} />
-        </Form.Item>
-
-        <Form.Item name="star" label="Star">
-          <Rate defaultValue={1} />
-        </Form.Item>
+        
 
         <Form.Item
           label="Image"
@@ -138,6 +117,10 @@ export default function ModalAddProduct({ visible, setVisible }) {
             )}
           </Upload>
         </Form.Item>
+        <Form.Item name="color" label="Color" hasFeedback>
+          <Input />
+        </Form.Item>
+        
 
         <Form.Item label="Description">
           <Form.Item
@@ -148,6 +131,10 @@ export default function ModalAddProduct({ visible, setVisible }) {
           >
             <Input.TextArea />
           </Form.Item>
+        </Form.Item>
+
+        <Form.Item name="status" label="Status" valuePropName="status">
+          <Switch defaultChecked={true} />
         </Form.Item>
 
         <Form.Item

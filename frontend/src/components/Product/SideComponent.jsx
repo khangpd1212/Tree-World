@@ -21,7 +21,11 @@ function SideComponent() {
   const [err, setErr] = useState(false);
   const handleSubmit = () => {
     console.log(priceMin, priceMax);
-    if (Number(priceMin) > Number(priceMax)) {
+    if (
+      Number(priceMin) > Number(priceMax) ||
+      Number(priceMin) < 0 ||
+      Number(priceMax) < 0
+    ) {
       setErr(true);
     } else {
       setErr(false);
@@ -58,14 +62,18 @@ function SideComponent() {
           }}
         >
           {catalogList &&
-            catalogList.map((catalog, index) => (
-              <Radio.Button
-                value={`${catalog.catalog_name}-cat.${catalog._id}`}
-                key={index}
-              >
-                {catalog.catalog_name}
-              </Radio.Button>
-            ))}
+            catalogList.map((catalog, index) => {
+              if (catalog.status) {
+                return (
+                  <Radio.Button
+                    value={`${catalog.catalog_name}-cat.${catalog._id}`}
+                    key={index}
+                  >
+                    {catalog.catalog_name}
+                  </Radio.Button>
+                );
+              }
+            })}
         </Radio.Group>
         <h3 className="side__title">Price range</h3>
         <div className="form__price--range">
@@ -95,7 +103,7 @@ function SideComponent() {
           )}
           <Row align="middle">
             <Button onClick={handleSubmit}>Apply</Button>
-            {err ? (
+            {/* {err ? (
               <></>
             ) : priceMin === "" || priceMax === "" ? (
               <></>
@@ -103,7 +111,7 @@ function SideComponent() {
               <p className="price--range__show">
                 ${priceMin} - ${priceMax}
               </p>
-            )}
+            )} */}
           </Row>
         </div>
         <h3 className="side__title">tags</h3>

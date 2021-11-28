@@ -2,8 +2,7 @@ import { Button, Form, Input, Modal, Switch } from 'antd';
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { selectCatalogs } from 'redux/catalog';
-import { fetchProducts } from "redux/product";
+import { fetchGetVoucher } from 'redux/voucher';
 import { requests } from "utils/axios";
 
 
@@ -16,78 +15,27 @@ const formItemLayout = {
     },
 };
 
-export default function ModalAddVoucher({ visible, setVisible }) {
-    const { catalogList } = useSelector(selectCatalogs);
-    const [imgBase64, setImgBase64] = useState("")
-    const dispatch = useDispatch()
-    const token = localStorage.getItem("token");
+export default function ModalAddCVoucher({ visible, setVisible }) {
+    const { userItems } = useSelector((state) => state.userState);
+    const dispatch = useDispatch();
+    const token = userItems.isAdmin ? userItems.accessToken : null;
+    const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        requests.addProduct(token, values, imgBase64)
-            .then(res => {
-                console.log(res);
-                dispatch(fetchProducts())
-                setVisible(false)
-                toast.success("Add new product succesfully!")
-            })
+        requests.addVoucher(token, values, userItems._id).then((res) => {
+            if (res.voucher.status) {
+                dispatch(fetchGetVoucher());
+                form.resetFields();
+                setVisible(false);
+                toast.success("Add new category succesfully!");
+            } else {
+                toast.error("Failed");
+            }
+        });
     };
-
-
-
-    const FromEdit = useCallback(() => {
-
-        return <Form
-            name="validate_other"
-            {...formItemLayout}
-            onFinish={onFinish}
-        >
-            <Form.Item
-                name="percent"
-                label="Percent (%)"
-                hasFeedback
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                name="createdDate"
-                label="Created Date"
-                hasFeedback
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                name="expiryDate"
-                label="Expiry Date"
-                hasFeedback
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                name="maximum"
-                label="Maximum"
-                hasFeedback
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item name="status" label="Status" valuePropName="status">
-                <Switch defaultChecked={true} />
-            </Form.Item>
-
-            <Form.Item
-                wrapperCol={{
-                    span: 12,
-                    offset: 6,
-                }}
-            >
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-                <Button onClick={() => setVisible(false)}>
-                    Cancel
-                </Button>
-            </Form.Item>
-        </Form>
-    }, [catalogList, imgBase64])
+    const onFinishFailed = (err) => {
+        toast.error(`Failed: ${err}`);
+    };
 
     return <>
         <Modal
@@ -98,9 +46,97 @@ export default function ModalAddVoucher({ visible, setVisible }) {
             onCancel={() => setVisible(false)}
             footer={false}
             width="50%"
-            className="edit-product"
+            className="edit-voucher"
         >
-            <FromEdit />
+            <Form
+                form={form}
+                name="validate_other"
+                {...formItemLayout}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+            >
+                <Form.Item
+                    name="voucherCode"
+                    label="Voucher Code:"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input voucher code!",
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="percent"
+                    label="Percent (%):"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input percent!",
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="createDate"
+                    label="Create Date:"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input created date!",
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="expiryDate"
+                    label="Expiry Date:"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input expiry date!",
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    name="maximum"
+                    label="Maximum:"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please input maximum!",
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item name="status" label="Status" valuePropName="status">
+                    <Switch defaultChecked={true} />
+                </Form.Item>
+
+                <Form.Item
+                    wrapperCol={{
+                        span: 12,
+                        offset: 6,
+                    }}
+                >
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                    <Button onClick={() => setVisible(false)}>Cancel</Button>
+                </Form.Item>
+            </Form>
         </Modal>
     </>
 

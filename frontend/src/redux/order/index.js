@@ -8,22 +8,12 @@ export const fetchOrders = createAsyncThunk(
    "POST_ORDER",
    async (data, thunkAPI) => {
       try {
-         let userItem = JSON.parse(localStorage.getItem("userItems"));
-         await axios.post("order", data[0],
-            {
-               headers: {
-                  'Authorization': 'Bearer ' + userItem.accessToken
-               }
-            }).then(res => {
+         await axios.post("order", data[0]).then(res => {
                const id_order = res.data.order._id
                data[1].map((item) => (
                   axios.post("order_detail", {
                      ...item,
                      id_order,
-                  }, {
-                     headers: {
-                        'Authorization': 'Bearer ' + userItem.accessToken
-                     }
                   })
                ))
             })

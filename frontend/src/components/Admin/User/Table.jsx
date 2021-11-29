@@ -1,4 +1,4 @@
-import { Button, message, Popconfirm, Space, Table } from 'antd';
+import { Button, message, Popconfirm, Space, Table, Switch } from 'antd';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +30,6 @@ export default function TableUser() {
             title: 'Name',
             dataIndex: 'username',
             key: 'username',
-            render: text => <a>{text}</a>,
         },
         {
             title: 'Email',
@@ -38,38 +37,17 @@ export default function TableUser() {
             key: 'email',
         },
         {
-            title: 'Password',
-            dataIndex: 'password',
-            key: 'password',
-        },
-        {
             title: 'Phone_Number',
             dataIndex: 'phone_number',
             key: 'phone_number',
         },
-       
         {
-            title: 'Action',
-            key: 'action',
+            title: 'Status',
+            key: 'status',
             render: (text, record) => (
-                <Space size="middle">
-                    <Button
-                        type="primary"
-                        onClick={() => onEdit(record)}
-                    >
-                        Edit
-                    </Button>
-                    <Popconfirm
-                        placement="rightTop"
-                        title={"Do you want delete this ?"}
-                        onConfirm={() => confirm(record._id)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button>Delete</Button>
-                    </Popconfirm>
-                </Space>
-            ),
+                <Switch defaultChecked={true} />
+            )
+
         },
     ];
 

@@ -1,20 +1,9 @@
-import {
-  Button,
-  message,
-  Popconfirm,
-  Select,
-  Space,
-  Table,
-  Tooltip,
-} from "antd";
+import { message, Select, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteOrders,
-  getOrders,
-  updateOrders,
-  selectOrders,
-  onStatusChange,
+  getOrders, selectOrders, updateOrders
 } from "redux/order";
 import TableDetail from "./TableDetail";
 
@@ -49,11 +38,11 @@ export default function TableOrder() {
     const dataStatus = { id: id, status: status };
     dispatch(updateOrders(dataStatus));
   };
-  
+
   const confirm = (id) => {
     dispatch(deleteOrders(id));
     message.success("Delete success");
-  }
+  };
 
   const columns = [
     {
@@ -91,7 +80,7 @@ export default function TableOrder() {
       width: 80,
     },
     {
-      title: "Status",
+      title: "Order Status",
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
@@ -109,23 +98,10 @@ export default function TableOrder() {
         </Select>
       ),
     },
-
     {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Popconfirm
-            placement="rightTop"
-            title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button>Delete</Button>
-          </Popconfirm>
-        </Space>
-      ),
+      title: "Status",
+      key: "order_status",
+      render: (text, record) => <Switch defaultChecked={true} />,
     },
   ];
   return (

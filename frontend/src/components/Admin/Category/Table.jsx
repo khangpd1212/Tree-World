@@ -1,25 +1,20 @@
-import { Button, message, Popconfirm, Space, Table, Switch } from 'antd';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { Button, Space, Switch, Table } from 'antd';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchCatalogs, selectCatalogs } from 'redux/catalog';
-import { requests } from 'utils/axios';
-// import ModalEdit from './ModalEdit';
+import ModalEdit from './ModalEditCategory';
 
 export default function TableCategory() {
+
+    const { catalogList } = useSelector(selectCatalogs)
     const [visible, setVisible] = useState(false)
     const [selected, setSelected] = useState({})
-    const token = localStorage.getItem("token")
     const dispatch = useDispatch()
-    function confirm(id) {
-        requests.deleteProduct(token, id)
-            .then(res => {
-                console.log(res);
-                dispatch(fetchCatalogs())
-                message.success('delete success')
-            })
-    }
 
+    useEffect(() => {
+        dispatch(fetchCatalogs());
+    }, [dispatch])
+    console.log(catalogList)
     const onEdit = (data) => {
         setSelected(data)
         setVisible(true)
@@ -29,12 +24,11 @@ export default function TableCategory() {
             title: 'Name',
             dataIndex: 'catalog_name',
             key: 'catalog_name',
-            render: text => <a>{text}</a>,
         },
         {
             title: 'Status',
             key: 'status',
-            render: (text, record)=> (
+            render: (text, record) => (
                 <Switch defaultChecked={true} />
             )
 
@@ -50,29 +44,18 @@ export default function TableCategory() {
                     >
                         Edit
                     </Button>
-                    <Popconfirm
-                        placement="rightTop"
-                        title={"Do you want delete this ?"}
-                        onConfirm={() => confirm(record._id)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button>Delete</Button>
-                    </Popconfirm>
                 </Space>
             ),
         },
     ];
 
-    const { catalogList } = useSelector(selectCatalogs)
-    console.log(catalogList)
     return <>
         <Table columns={columns} dataSource={catalogList} />
-        {/* <ModalEdit
+        <ModalEdit
             visible={visible}
             setVisible={setVisible}
             selected={selected}
             setSelected={setSelected}
-        /> */}
+        />
     </>
 }

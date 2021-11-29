@@ -34,7 +34,6 @@ export default function AdminLayout() {
     dispatch(fetchGetComment())
     dispatch(fetchGetUser());
     dispatch(fetchProducts());
-    dispatch(fetchCatalogs());
     dispatch(fetchBlogs());
     dispatch(getOrders());
     dispatch(getOrderDetail());

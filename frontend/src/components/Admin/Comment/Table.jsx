@@ -1,6 +1,5 @@
-import { Button, message, Popconfirm, Space, Table,Image, Switch } from 'antd';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import {message, Space, Table,Image, Switch } from 'antd';
+// import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetComment, selectComment } from 'redux/comment';
 import { requests } from 'utils/axios';
@@ -9,8 +8,6 @@ import { requests } from 'utils/axios';
 
 
 export default function TableComment() {
-    const [visible, setVisible] = useState(false)
-    const [selected, setSelected] = useState({})
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
 
@@ -22,10 +19,6 @@ export default function TableComment() {
             })
     }
 
-    const onEdit = (data) => {
-        setSelected(data)
-        setVisible(true)
-    }
     const columns = [
         {
             title: 'Image URL',
@@ -44,7 +37,6 @@ export default function TableComment() {
             title: 'Name',
             dataIndex: 'nameUser',
             key: 'nameUser',
-            render: text => <a>{text}</a>,
         },
         {
             title: 'Star',
@@ -68,30 +60,6 @@ export default function TableComment() {
                 <Switch defaultChecked={true} />
             )
 
-        },
-
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <Button
-                        type="primary"
-                        onClick={() => onEdit(record)}
-                    >
-                        Edit
-                    </Button>
-                    <Popconfirm
-                        placement="rightTop"
-                        title={"Do you want delete this ?"}
-                        onConfirm={() => confirm(record._id)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button>Delete</Button>
-                    </Popconfirm>
-                </Space>
-            ),
         },
     ];
 

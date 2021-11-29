@@ -1,4 +1,4 @@
-import { Space, Table, Switch, Button } from "antd";
+import { Space, Table, Switch, Button, Image } from "antd";
 import ModalAddBlog from "components/Admin/News/ModalAddBlog";
 import ModalEditBlog from "components/Admin/News/ModalEditBlog";
 import BtnAdd from "components/BtnAdd";
@@ -36,6 +36,13 @@ export default function News() {
     <>
       <BtnAdd page="new" setOpen={setOpenAddBlog} />
       <Table dataSource={blogList}>
+        <Column
+          title="Image"
+          dataIndex="image"
+          key="image"
+          render={(text, record) => <Image src={record.image} width="150px" />}
+        />
+
         <Column title="Title" dataIndex="title" key="title" />
         <Column title="Date" dataIndex="create_date" key="create_date" />
         <Column title="Content" dataIndex="content" key="content" />
@@ -44,9 +51,9 @@ export default function News() {
           key="status"
           render={(text, record) => (
             <Switch
-              defaultChecked={text.status}
+              defaultChecked={record.status}
               onChange={(e) => {
-                handleChangeStatus(e, text._id);
+                handleChangeStatus(e, record._id);
               }}
             />
           )}

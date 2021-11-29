@@ -53,40 +53,40 @@ export default function ModalEditBlog({
   });
 
   const onFinish = (values) => {
-    console.log(imgBase64);
-    // if (imgBase64 !== "") {
-    //   console.log(values, imgBase64);
-    //   //   requests
-    //   //     .editBlog(token, { ...values, image: imgBase64 }, selected._id)
-    //   //     .then((res) => {
-    //   //       console.log(res);
-    //   //       if (res.status) {
-    //   //         dispatch(fetchBlogs());
-    //   //         setVisible(false);
-    //   //         toast.success(`Update successfully!`);
-    //   //       } else {
-    //   //         toast.error("Failed");
-    //   //       }
-    //   //     });
-    // } else {
-    //   requests.editBlog(token, values, selected._id).then((res) => {
-    //     console.log(res);
-    //     if (res.status) {
-    //       dispatch(fetchBlogs());
-    //       setVisible(false);
-    //       toast.success(`Update successfully!`);
-    //     } else {
-    //       toast.error("Failed");
-    //     }
-    //   });
-    // }
+    // console.log(imgBase64, previewImage, previewTitle, previewVisible);
+    if (imgBase64 !== "") {
+      // console.log(values, imgBase64);
+      requests
+        .editBlog(token, { ...values, image: imgBase64 }, selected._id)
+        .then((res) => {
+          console.log(res);
+          if (res.status) {
+            dispatch(fetchBlogs());
+            setVisible(false);
+            toast.success(`Update successfully!`);
+          } else {
+            toast.error("Failed");
+          }
+        }); 
+    } else {
+      requests.editBlog(token, values, selected._id).then((res) => {
+        console.log(res);
+        if (res.status) {
+          dispatch(fetchBlogs());
+          setVisible(false);
+          toast.success(`Update successfully!`);
+        } else {
+          toast.error("Failed");
+        }
+      });
+    }
   };
   const onFinishFailed = (err) => {
     toast.error(`Failed`);
   };
 
   const handleCancel = () => setPreviewVisible(false);
-  const handlePreview = async (file) => {
+  const handlePreview = useCallback(async (file) => {
     setPreviewVisible(true);
 
     if (!file.url && !file.preview) {
@@ -96,11 +96,17 @@ export default function ModalEditBlog({
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
-  };
-  const handleChange = async (info) => {
-    const hash = await getBase64(info.file.originFileObj);
-    setImgBase64(hash);
-  };
+  }, []);
+  const handleChange = useCallback(async (info) => {
+    if (info.file.status === "uploading") {
+      info.file.status = "done";
+    }
+    if (info.file.status === "done") {
+      const hash = await getBase64(info.file.originFileObj);
+      setImgBase64(hash);
+      setFileList(info.fileList);
+    }
+  }, []);
   const FormEdit = useCallback(() => {
     return (
       <Form
@@ -142,10 +148,6 @@ export default function ModalEditBlog({
           <Input.TextArea rows={10} defaultValue={selected.content} />
         </Form.Item>
 
-        <Form.Item name="status" label="Status" valuePropName="status">
-          <Switch defaultChecked={selected.status} />
-        </Form.Item>
-
         <Form.Item
           label="Image"
           valuePropName="fileList"
@@ -156,6 +158,7 @@ export default function ModalEditBlog({
             listType="picture-card"
             fileList={fileList}
             onChange={handleChange}
+            onPreview={handlePreview}
           >
             {fileList.length >= 1 ? null : (
               <div>
@@ -164,14 +167,14 @@ export default function ModalEditBlog({
               </div>
             )}
           </Upload>
-          {/* <Modal
+          <Modal
             visible={previewVisible}
             title={previewTitle}
             footer={null}
             onCancel={handleCancel}
           >
             <img alt="example" style={{ width: "100%" }} src={previewImage} />
-          </Modal> */}
+          </Modal>
         </Form.Item>
 
         <Form.Item
@@ -194,7 +197,14 @@ export default function ModalEditBlog({
         </Form.Item>
       </Form>
     );
-  }, [selected]);
+  }, [
+    selected,
+    imgBase64,
+    fileList,
+    previewImage,
+    previewTitle,
+    previewVisible,
+  ]);
   return (
     <>
       <Modal

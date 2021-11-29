@@ -1,20 +1,39 @@
 import { Row, Col, Space } from "antd";
-export default function TotalOrder() {
+import { useState, useEffect } from "react";
+export default function TotalOrder(data) {
+  const [orderTotal, setOrderTotal] = useState(0);
 
-    return (
-      <Space direction="vertical" size={[20, 0]}  style={{ width: "100%", fontSize: 14 }}>
-        <Row justify="space-between" align="center">
-          <Col className="title">Subtotal</Col>
-          <Col className="content">$999</Col>
-        </Row>
-        <Row justify="space-between" align="center">
-          <Col className="title">Discount</Col>
-          <Col className="content">-$999</Col>
-        </Row>
-        <Row justify="space-between" align="center" style={{fontWeight: 600}}>
-          <Col className="title">Total</Col>
-          <Col className="content">$999</Col>
-        </Row>
-      </Space>
-    );
+  useEffect(() => {
+    setOrderTotal(data.order.reduce(
+      (orderTotal, item) => {
+        const { price, quantity } = item;
+        const itemTotal = price * quantity;
+        orderTotal.total += itemTotal;
+        return orderTotal;
+      },
+      {
+        total: 0,
+      }
+    ))
+  }, []);
+  return (
+    <Space
+      direction="vertical"
+      size={[20, 0]}
+      style={{ width: "100%", fontSize: 14 }}
+    >
+      <Row justify="space-between" align="center">
+        <Col className="title">Subtotal</Col>
+        <Col className="content">${orderTotal.total}</Col>
+      </Row>
+      <Row justify="space-between" align="center">
+        <Col className="title">Discount</Col>
+        <Col className="content">-$999</Col>
+      </Row>
+      <Row justify="space-between" align="center" style={{ fontWeight: 600 }}>
+        <Col className="title">Total</Col>
+        <Col className="content">$999</Col>
+      </Row>
+    </Space>
+  );
 }

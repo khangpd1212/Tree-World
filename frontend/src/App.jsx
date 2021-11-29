@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { AdminLayout, BaseLayout, LoginLayout } from "components/Layout";
+import { AdminLayout, BaseLayout, AnotherLayout } from "components/Layout";
 
 function App() {
   return (
@@ -16,7 +16,8 @@ function App() {
         <Route path="/payment" exact component={BaseLayout} />
         <Route path="/contact" exact component={BaseLayout} />
         <Route path="/order" exact component={BaseLayout} />
-        <Route path="/login" exact component={LoginLayout} />
+        <Route path="/result" exact component={AnotherLayout} />
+        <Route path="/login" exact component={AnotherLayout} />
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/dashboard" component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />

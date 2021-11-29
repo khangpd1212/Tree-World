@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "styles/BaseLayout.scss";
-import "../../styles/handleDarkMode.scss";
+import "styles/handleDarkMode.scss";
 import "styles/global.scss";
 import { Layout } from "antd";
 import Backtop from "components/Base/Backtop";
@@ -16,7 +16,7 @@ import {
   Contact,
   Payment,
   About,
-} from "../../pages";
+} from "pages";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";

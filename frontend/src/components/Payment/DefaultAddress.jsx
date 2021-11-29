@@ -49,13 +49,13 @@ export default function DefaultAddress() {
   const [form] = Form.useForm();
   return (
     <Modal
-      title="Title"
+      title="Choose My Address"
       visible={isShowDefaultAddress}
       onCancel={() => dispatch(onCancelDefaultAddress(false))}
       footer={
         <>
-          <Button type="ghost" onClick={showAddress}>
-            Hand Input
+          <Button onClick={showAddress}>
+            New Address
           </Button>
           <Button
             onClick={() => {

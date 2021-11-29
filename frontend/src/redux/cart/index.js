@@ -38,7 +38,6 @@ export const cartSlice = createSlice({
         (item) => item.product._id === action.payload.product._id &&
           item.pickColor === action.payload.pickColor
       );
-      console.log(itemIndex)
       if (itemIndex >= 0){
         state.cartItems[itemIndex].quantity += 1;
       }

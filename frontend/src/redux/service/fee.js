@@ -43,7 +43,8 @@ export const feeSlice = createSlice({
          state.loading = "loading";
       });
       builder.addCase(fetchFee.fulfilled, (state, action) => {
-         state.feeItems = action.payload / 10000;
+         const feeRound =  Math.round(action.payload / 10000);
+         state.feeItems = feeRound;
          state.loading = "loaded";
       });
       builder.addCase(fetchFee.rejected, (state, action) => {

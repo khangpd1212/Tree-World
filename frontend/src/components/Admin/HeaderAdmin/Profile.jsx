@@ -28,7 +28,7 @@ export default function Profile() {
   };
 
   const handleCancel = () => {
-    setIsOpenLogin(false);
+    !token ? setIsOpenLogin(true) : setIsOpenLogin(false);
   };
 
   useEffect(() => {

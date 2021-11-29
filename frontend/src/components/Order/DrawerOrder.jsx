@@ -38,8 +38,6 @@ export default function DrawerOrder(props) {
       <StepOrder />
       <Divider />
       <ListOrder />
-      <Divider />
-      <TotalOrder/>
     </Drawer>
   );
 }

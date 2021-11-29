@@ -1,16 +1,22 @@
-import { Table, Switch } from "antd";
-import TableDetail from "./TableDetail";
+import {
+  Select, Table, Tooltip
+} from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, selectOrders } from "redux/order";
+import {
+  getOrders, selectOrders, updateOrders
+} from "redux/order";
+import TableDetail from "./TableDetail";
 
 export default function TableOrder() {
-  const { orderList } = useSelector(selectOrders);
-  const [data, setData] = useState([])
+  const { Option } = Select;
+  const { orderList, loading } = useSelector(selectOrders);
+  const [loaded, setLoaded] = useState(true);
+  const [dataOrder, setDataOrder] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setData(orderList.map((item) => {
+    const orderMap = orderList.map((item) => {
       return {
         key: item._id,
         username: item.username,
@@ -18,13 +24,22 @@ export default function TableOrder() {
         address: item.address,
         phoneNumber: item.phoneNumber,
         toTal: item.toTal,
-        status: item.status
-      }
-    }))
+        status: item.status,
+      };
+    });
+    setDataOrder(orderMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [orderList]);
+
   useEffect(() => {
     dispatch(getOrders());
-  }, [dispatch])
+  }, [dispatch]);
+
+  const handleStatusChange = (id, status) => {
+    const dataStatus = { id: id, status: status };
+    dispatch(updateOrders(dataStatus));
+  };
+
   const columns = [
     {
       title: "Name",
@@ -40,6 +55,14 @@ export default function TableOrder() {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (address) => (
+        <Tooltip placement="topLeft" title={address}>
+          {address}
+        </Tooltip>
+      ),
     },
     {
       title: "Phone Number",
@@ -50,28 +73,38 @@ export default function TableOrder() {
       title: "Total",
       dataIndex: "toTal",
       key: "toTal",
+      width: 80,
     },
     {
       title: "Order Status",
       dataIndex: "status",
       key: "status",
-    },
-    {
-      title: 'Status',
-      key: 'order_status',
-      render: (text, record) => (
-        <Switch defaultChecked={true} />
-      )
+      render: (status, record) => (
+        <Select
+          onChange={(status) => handleStatusChange(record.key, status)}
+          style={{ width: "100%" }}
+          defaultValue={status}
+        >
+          <Option value="Pending">Pending</Option>
+          <Option value="Awaiting Payment">Awaiting Payment</Option>
+          <Option value="Awaiting Shipment">Awaiting Shipment</Option>
+          <Option value="Shipped">Shipped</Option>
+          <Option value="Completed">Completed</Option>
+          <Option value="Cancelled">Cancelled</Option>
+        </Select>
+      ),
     },
   ];
-return (
+  return (
     <>
       <Table
+        loading={loaded}
         columns={columns}
         expandable={{
           expandedRowRender: (record) => <TableDetail id={record.key} />,
         }}
-        dataSource={data}
+        scroll={{ y: 800 }}
+        dataSource={dataOrder}
       />
     </>
   );

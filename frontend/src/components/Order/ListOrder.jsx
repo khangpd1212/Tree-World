@@ -1,5 +1,4 @@
-import { Collapse, Image, List, Skeleton, Divider, Tag } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Collapse, Image, List, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectOrders } from "redux/order";
@@ -7,7 +6,6 @@ import { selectOrderDetails } from "redux/order_detail";
 import { selectProducts } from "redux/product";
 import { selectUsers } from "redux/user";
 import TotalOrder from "./TotalOrder";
-import PaginationComponent from "components/Product/PaginationComponent";
 export default function ListOrder() {
   const { Panel } = Collapse;
 
@@ -16,15 +14,7 @@ export default function ListOrder() {
   const { productList } = useSelector(selectProducts);
   const { orderList } = useSelector(selectOrders);
   const [orderUser, setOrderUser] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
 
-  const indexOfLast = currentPage * pageSize;
-  const indexOfFirst = indexOfLast - pageSize;
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
   useEffect(() => {
     let myOrder = [];
 
@@ -51,7 +41,7 @@ export default function ListOrder() {
       ),
     }));
 
-    setOrderUser(myOrder.reverse());
+    setOrderUser(myOrder);
   }, [orderList, userItems]);
   // Lấy order mới nhất
 
@@ -78,39 +68,30 @@ export default function ListOrder() {
         ghost
       >
         {orderUser &&
-          orderUser.map(
-            (itemOrder, keyOrder) => (
-              (
-                <Panel header={itemOrder.orderDate} key={keyOrder}>
-                  <List
-                    key={keyOrder}
-                    itemLayout="horizontal"
-                    dataSource={itemOrder.product}
-                    footer={
-                      <TotalOrder
-                        order={itemOrder.product}
-                        // price={itemOrder.product}
-                      />
-                    }
-                    renderItem={(itemChild) => (
-                      <List.Item>
-                        <List.Item.Meta
-                          avatar={<Image width={80} src={itemChild.image[0]} />}
-                          title={itemChild.product_name}
-                          description={description(
-                            itemChild.description,
-                            itemChild.quantity,
-                            itemChild.pickColor
-                          )}
-                        />
-                        <div>${itemChild.price}</div>
-                      </List.Item>
-                    )}
-                  />
-                </Panel>
-              )
-            )
-          )}
+          orderUser.map((itemOrder, keyOrder) => (
+            <Panel header={itemOrder.orderDate} key={keyOrder}>
+              <List
+                key={keyOrder}
+                itemLayout="horizontal"
+                dataSource={itemOrder.product}
+                footer={<TotalOrder order={itemOrder.product} />}
+                renderItem={(itemChild) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={<Image width={80} src={itemChild.image[0]} />}
+                      title={itemChild.product_name}
+                      description={description(
+                        itemChild.description,
+                        itemChild.quantity,
+                        itemChild.pickColor
+                      )}
+                    />
+                    <div>${itemChild.price}</div>
+                  </List.Item>
+                )}
+              />
+            </Panel>
+          ))}
       </Collapse>
       {/* <PaginationComponent
         total={orderUser.length}

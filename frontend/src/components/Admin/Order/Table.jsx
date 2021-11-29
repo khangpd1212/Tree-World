@@ -1,8 +1,9 @@
-import { message, Select, Table, Tooltip } from "antd";
+import {
+  Select, Table, Tooltip
+} from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteOrders,
   getOrders, selectOrders, updateOrders
 } from "redux/order";
 import TableDetail from "./TableDetail";
@@ -37,11 +38,6 @@ export default function TableOrder() {
   const handleStatusChange = (id, status) => {
     const dataStatus = { id: id, status: status };
     dispatch(updateOrders(dataStatus));
-  };
-
-  const confirm = (id) => {
-    dispatch(deleteOrders(id));
-    message.success("Delete success");
   };
 
   const columns = [
@@ -97,11 +93,6 @@ export default function TableOrder() {
           <Option value="Cancelled">Cancelled</Option>
         </Select>
       ),
-    },
-    {
-      title: "Status",
-      key: "order_status",
-      render: (text, record) => <Switch defaultChecked={true} />,
     },
   ];
   return (

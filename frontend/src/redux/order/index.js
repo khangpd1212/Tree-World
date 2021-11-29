@@ -96,15 +96,7 @@ export const deleteOrders = createAsyncThunk(
 export const orderSlice = createSlice({
    name: "order",
    initialState,
-   reducers: {
-      onStatusChange: (state, action) => {
-         const dataIndex = state.orderList.findIndex((item) => item._id === action.payload);
-         console.log(state.orderList)
-         const dataSplice = state.orderList.splice(dataIndex, 1);
-         console.log(dataSplice)
-         // state.orderList.push(dataSplice[0])
-      }
-   },
+   reducers: {},
    extraReducers: (builder) => {
       builder.addCase(getOrders.pending, (state) => {
          state.orderList = [];

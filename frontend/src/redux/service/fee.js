@@ -22,11 +22,11 @@ export const fetchFee = createAsyncThunk(
            {
               params: {
                  to_district_id: address.district_id,
-                 service_id: address.service_id,
+                 service_id: address.service_id ? address.service_id : '',
                  to_ward_code: address.ward_code,
               }
          })
-         return await response.data.data.service_fee;
+         return await response.data.data.total;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
@@ -39,7 +39,7 @@ export const feeSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder.addCase(fetchFee.pending, (state) => {
-         state.feeItems = [];
+         state.feeItems = 0;
          state.loading = "loading";
       });
       builder.addCase(fetchFee.fulfilled, (state, action) => {

@@ -1,11 +1,9 @@
-import {
-  Select, Table, Tooltip
-} from "antd";
+import { Select, Table, Tooltip } from "antd";
+import useConvertISO from "hooks/useConvertISO";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getOrders, selectOrders, updateOrders
-} from "redux/order";
+import { toast } from "react-toastify";
+import { getOrders, selectOrders, updateOrders } from "redux/order";
 import TableDetail from "./TableDetail";
 
 export default function TableOrder() {
@@ -14,13 +12,13 @@ export default function TableOrder() {
   const [loaded, setLoaded] = useState(true);
   const [dataOrder, setDataOrder] = useState([]);
   const dispatch = useDispatch();
-
+  const { convertISO } = useConvertISO();
   useEffect(() => {
     const orderMap = orderList.map((item) => {
       return {
         key: item._id,
         username: item.username,
-        orderDate: item.orderDate,
+        orderDate: convertISO(item.orderDate),
         address: item.address,
         phoneNumber: item.phoneNumber,
         toTal: item.toTal,
@@ -30,21 +28,30 @@ export default function TableOrder() {
     setDataOrder(orderMap);
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [orderList]);
-
+  console.log(dataOrder);
   useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
 
   const handleStatusChange = (id, status) => {
     const dataStatus = { id: id, status: status };
-    dispatch(updateOrders(dataStatus));
+    dispatch(updateOrders(dataStatus)).then((res) => {
+      toast.success(`Status update success`, {
+        position: "top-right",
+        autoClose: 2000,
+      });
+    });
   };
 
+  // const onChange = (pagination, filters, sorter, extra) => {
+  //   console.log("params", pagination, filters, sorter, extra);
+  // }
   const columns = [
     {
       title: "Name",
       dataIndex: "username",
       key: "username",
+      sorter: (a, b) => a.username.length - b.username.length,
     },
     {
       title: "Date",
@@ -55,6 +62,9 @@ export default function TableOrder() {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      onFilter: (value, record) => record.address.includes(value),
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ["descend", "ascend"],
       ellipsis: {
         showTitle: false,
       },
@@ -73,12 +83,24 @@ export default function TableOrder() {
       title: "Total",
       dataIndex: "toTal",
       key: "toTal",
+      sorter: (a, b) => a.toTal - b.toTal,
       width: 80,
     },
     {
       title: "Order Status",
       dataIndex: "status",
       key: "status",
+      onFilter: (value, record) => record.status.startsWith(value),
+      filterSearch: true,
+      filters: [
+        { text: "Pending", value: "Pending" },
+        { text: "Awaiting Payment", value: "Awaiting Payment" },
+        { text: "Payment Success", value: "Payment Success" },
+        { text: "Awaiting Shipment", value: "Awaiting Shipment" },
+        { text: "Shipped", value: "Shipped" },
+        { text: "Completed", value: "Completed" },
+        { text: "Cancelled", value: "Cancelled" },
+      ],
       render: (status, record) => (
         <Select
           onChange={(status) => handleStatusChange(record.key, status)}
@@ -100,11 +122,13 @@ export default function TableOrder() {
       <Table
         loading={loaded}
         columns={columns}
+        // rowKey={(record) => record.login.uuid}
         expandable={{
           expandedRowRender: (record) => <TableDetail id={record.key} />,
         }}
         scroll={{ y: 800 }}
         dataSource={dataOrder}
+        // onChange={handleTableChange}
       />
     </>
   );

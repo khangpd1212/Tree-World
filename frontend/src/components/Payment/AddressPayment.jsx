@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 import { fetchAddress, getAddress, selectAddress } from "redux/address";
 import { selectProvince, showTextAddress } from "redux/address/province";
 import {
-  onCancelAddress, ShowModalDefaultAddress, ShowModalLogin
+  onCancelAddress,
+  ShowModalDefaultAddress,
+  ShowModalLogin,
 } from "redux/modal";
 import { selectUsers } from "redux/user";
-import { requests } from "utils/axios";
 import { BtnOutlineBlue, BtnOutlineGray } from "../utils/Button";
 import DefaultAddress from "./DefaultAddress";
 import ModalAddress from "./ModalAddress";
@@ -17,38 +18,37 @@ export default function AddressPayment() {
   const { userItems } = useSelector(selectUsers);
   const { textAddress } = useSelector(selectProvince);
   const { addressList } = useSelector(selectAddress);
-  const [address, setAddress] = useState({});
 
   let addressChild = textAddress.province
     ? `${textAddress.street}, ${textAddress.ward}, ${textAddress.district}, ${textAddress.province}`
-    : "";
+    : textAddress.address;
 
   useEffect(() => {
-    requests.getAddressByUser(userItems._id).then((result) => {
-      let addressLast = result.slice(-1)[0];
-      dispatch(
-        showTextAddress({
-          address: addressLast && addressLast.content,
-          district_id: addressLast && addressLast.district_id,
-          ward_code: addressLast && addressLast.ward_code,
-          name: userItems && userItems.username,
-          phone: userItems && userItems.phone_number,
-        })
-      );
-    });
-  }, [userItems]);
+    localStorage.setItem("address", JSON.stringify(textAddress));
+  }, [textAddress]);
+
+  // show default address
+  const handleShowDefaultAddress = () => {
+    if (Object.values(userItems).length === 0) {
+      dispatch(ShowModalLogin(true));
+      toast.error(`You need to login`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+    } else {
+      dispatch(ShowModalLogin(false));
+      dispatch(ShowModalDefaultAddress(true));
+    }
+  };
   
-  useEffect(() => {
-    setAddress(textAddress);
-  });
-
+  //handle default address
   const handleDefaultAddress = () => {
     let dataAddress = {};
 
     const compareAddress = addressList.find(
-      (item) => item.content === textAddress.address
+      (item) => item.content === addressChild
     );
-
+    console.log(compareAddress);
     // so sanh address
     if (textAddress.length < 1 || compareAddress) {
       toast.error(`You can't choose this address anymore`, {
@@ -77,21 +77,8 @@ export default function AddressPayment() {
     }
   };
 
-  const handleShowDefaultAddress = () => {
-    if (Object.values(userItems).length === 0) {
-      dispatch(ShowModalLogin(true));
-      toast.error(`You need to login`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else {
-      dispatch(ShowModalLogin(false));
-      dispatch(ShowModalDefaultAddress(true));
-    }
-  };
-
+  // handle tạo address mới
   const onCreate = (values) => {
-    sessionStorage.setItem("address", JSON.stringify(values));
     dispatch(showTextAddress(values));
     dispatch(onCancelAddress(false));
   };
@@ -108,9 +95,9 @@ export default function AddressPayment() {
         </div>
         <div className="address__main--bottom">
           <span className="bottom__content">
-            {address.name} - {address.phone}
+            {textAddress.name} - {textAddress.phone}
             <br />
-            {address.address ? address.address : addressChild}
+            {addressChild}
           </span>
           <div className="bottom__button">
             <BtnOutlineGray

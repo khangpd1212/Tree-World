@@ -14,8 +14,6 @@ export default function PaymentMethod() {
   const [radio, setRadio] = useState(1);
   const [disabled, setDisabled] = useState(true);
 
-  const feeItem = feeItems ? feeItems : 0;
-
   const onChangeRadio = (e) => {
     setRadio(e.target.value);
   };
@@ -106,7 +104,7 @@ export default function PaymentMethod() {
           </div>
           <div className="shipping__fee title-submenu">
             <span>Shipping fee:</span>
-            <span>${feeItem}</span>
+            <span>${feeItems}</span>
           </div>
           <div className="shop__voucher title-submenu">
             <span>Shop Voucher:</span>

@@ -8,15 +8,16 @@ export const fetchOrders = createAsyncThunk(
    "POST_ORDER",
    async (data, thunkAPI) => {
       try {
-         await axios.post("order", data[0]).then(res => {
-            const id_order = res.data.order._id
-            data[1].map((item) => (
-               axios.post("order_detail", {
-                  ...item,
-                  id_order,
-               })
-            ))
-         })
+         const postOrder = await axios.post("order", data[0]);
+         const id_order = postOrder.data.order._id;
+         const postOrderDetail = await data[1].map(item => (
+            axios.post("order_detail", {
+               id_order,
+               ...item,
+            })
+         ));
+         await Promise.all([postOrder, postOrderDetail])
+         return id_order;
       } catch (error) {
          toast.error(`Error order`, {
             position: "bottom-left",
@@ -30,21 +31,8 @@ export const fetchMomo = createAsyncThunk(
    "POST_MOMO",
    async (data, thunkAPI) => {
       try {
-         const response = await axios.post("order", data[0]).then(res => {
-            const id_order = res.data.order._id
-            data[1].map((item) => (
-               axios.post("order_detail", {
-                  id_order,
-                  ...item,
-               })
-            ))
-            const dataRes = axios.post("payment", {
-               id_order,
-               ...data[2],
-            }).then(data => data.data.payUrl)
-            return dataRes
-         })
-         return response
+         const response = await axios.post("payment", data);
+         return response.data.payUrl
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
@@ -71,23 +59,6 @@ export const updateOrders = createAsyncThunk(
                'Authorization': 'Bearer ' + userItem.accessToken
             }
          });
-      } catch (error) {
-         return thunkAPI.rejectWithValue({ error: error.message });
-      }
-   }
-);
-// Xóa order
-export const deleteOrders = createAsyncThunk(
-   "DELETE_ORDER",
-   async (id, thunkAPI) => {
-      try {
-         let userItem = JSON.parse(localStorage.getItem("userItems"));
-         const response = await axios.delete("order/" + id, {
-            headers: {
-               'Authorization': 'Bearer ' + userItem.accessToken
-            }
-         })
-         return await response.data;
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }

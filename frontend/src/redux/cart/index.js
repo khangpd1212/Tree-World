@@ -93,6 +93,7 @@ export const cartSlice = createSlice({
         }
       );
       state.cartTotalAmount = total;
+      action.payload = total;
     },
   },
 });

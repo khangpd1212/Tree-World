@@ -19,8 +19,8 @@ export default function TotalOrder(data) {
   return (
     <Space
       direction="vertical"
-      size={[20, 0]}
-      style={{ width: "100%", fontSize: 14 }}
+      size={[0, 14]}
+      style={{ width: "100%"}}
     >
       <Row justify="space-between" align="center">
         <Col className="title">Subtotal</Col>

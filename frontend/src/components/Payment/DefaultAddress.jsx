@@ -25,7 +25,7 @@ export default function DefaultAddress() {
     dispatch(ShowModalAddress(true));
   };
   const handleCreate = (values) => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       "address",
       JSON.stringify(
         {

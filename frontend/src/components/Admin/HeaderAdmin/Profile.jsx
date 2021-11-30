@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Avatar, Badge, Menu, Dropdown } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { onRemoveUser, selectUsers } from "redux/user";
@@ -48,6 +49,9 @@ export default function Profile() {
           <div>Logout</div>
         </Menu.Item>
       )}
+      <Menu.Item key="3">
+        <Link to="../">Client</Link>
+      </Menu.Item>
     </Menu>
   );
   return (

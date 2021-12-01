@@ -7,7 +7,7 @@ import PaymentMethod from 'components/Payment/PaymentMethod';
 import CartItemPayment from 'components/Payment/CartItemPayment';
 export default function Payment() {
    return (
-      <div id="payment" className="container">
+      <div id="payment">
          <BreadCrumb className="breadcrumb" page="Payment" />
          <AddressPayment  />
          <CartItemPayment />

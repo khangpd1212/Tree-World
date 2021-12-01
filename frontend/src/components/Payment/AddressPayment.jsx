@@ -85,7 +85,7 @@ export default function AddressPayment() {
 
   return (
     <div className="address">
-      <img srcSet="./images/address.png" alt="address" />
+      <img src="./images/address.png" alt="address" />
       <div className="address__main">
         <div className="address__main--top">
           <p className="top__title">

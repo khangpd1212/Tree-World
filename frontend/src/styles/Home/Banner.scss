@@ -1,9 +1,11 @@
 @import "../media-queries";
 @import "../colors";
 @import "../fonts";
-
 .slider {
   font-family: $font-SFRMeta;
+  .container_home {
+    padding: 0 5vw;
+  }
 
   .slider-left img {
     animation: slide_left 1s ease-out alternate 1;
@@ -19,7 +21,7 @@
       -moz-transform: translateX(-100%);
       -ms-transform: translateX(-100%);
       -o-transform: translateX(-100%);
-}
+    }
 
     to {
       transform: translateX(0%);
@@ -27,7 +29,7 @@
       -moz-transform: translateX(0%);
       -ms-transform: translateX(0%);
       -o-transform: translateX(0%);
-}
+    }
   }
 
   .slider-right {
@@ -61,9 +63,7 @@
       }
     }
 
-
     .slider-right_title {
-
       margin-left: -28%;
       font-family: $font-SFUToledoMedium;
       animation: outer-title 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both;

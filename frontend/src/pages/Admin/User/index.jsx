@@ -1,18 +1,12 @@
-
-import TableUser from "components/Admin/User/Table";
-
+import TableUser from "components/Admin/Voucher/Table";
 
 export default function UserAdmin() {
-
-
-    return (
-        <>
-        
-            <TableUser />
-            
-        </>
-    )
+  return (
+    <>
+      <TableUser />
+    </>
+  );
 }
 function onChange(checked) {
-    console.log(`switch to ${checked}`);
+  console.log(`switch to ${checked}`);
 }

@@ -46,7 +46,6 @@ export default function ModalAddBlog({ visible, setVisible }) {
     status: true,
   });
   const onFinish = (values) => {
-    // console.log(imgBase64);
     requests.addBlog(token, blog, imgBase64, userItems._id).then((res) => {
       console.log(res);
       if (res.status) {

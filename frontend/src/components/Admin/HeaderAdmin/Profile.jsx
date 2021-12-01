@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Avatar, Badge, Menu, Dropdown } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { onRemoveUser, selectUsers } from "redux/user";
-import { useDispatch, useSelector } from "react-redux";
+import { UserOutlined, CaretDownFilled } from "@ant-design/icons";
+import { Avatar, Badge, Dropdown, Menu } from "antd";
 import LoginAdmin from "components/Admin/Login";
-import { fetchLogin } from "redux/user";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { fetchLogin, onRemoveUser, selectUsers } from "redux/user";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -67,7 +66,7 @@ export default function Profile() {
             <p>{userItems ? userItems.username : null}</p>
             <span>Admin Profile</span>
           </div>
-          <Dropdown overlay={menu} placement="bottomLeft">
+          <Dropdown overlay={menu} placement="bottomLeft" arrow="true">
             <Badge count={1}>
               <Avatar
                 style={{
@@ -77,6 +76,15 @@ export default function Profile() {
                   lineHeight: "40px",
                 }}
                 icon={<UserOutlined style={{ fontSize: "20px" }} />}
+              />
+              <CaretDownFilled
+                style={{
+                  position: "absolute",
+                  transform: "translateX(50%)",
+                  right: "50%",
+                  bottom: "-9px",
+                  color: "#87d068",
+                }}
               />
             </Badge>
           </Dropdown>

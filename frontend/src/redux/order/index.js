@@ -2,30 +2,38 @@ import axios from "utils/axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 const initialState = {
-   orderList: []
+   orderList: [],
 }
 export const fetchOrders = createAsyncThunk(
    "POST_ORDER",
    async (data, thunkAPI) => {
       try {
-         await axios.post("order", data[0]).then(res => {
-               const id_order = res.data.order._id
-               data[1].map((item) => (
-                  axios.post("order_detail", {
-                     ...item,
-                     id_order,
-                  })
-               ))
+         const postOrder = await axios.post("order", data[0]);
+         const id_order = postOrder.data.order._id;
+         const postOrderDetail = await data[1].map(item => (
+            axios.post("order_detail", {
+               id_order,
+               ...item,
             })
-         toast.success(`You success order`, {
-            position: "bottom-left",
-            autoClose: 2000,
-         })
+         ));
+         await Promise.all([postOrder, postOrderDetail])
+         return id_order;
       } catch (error) {
          toast.error(`Error order`, {
             position: "bottom-left",
             autoClose: 2000,
          });
+         return thunkAPI.rejectWithValue({ error: error.message });
+      }
+   }
+);
+export const fetchMomo = createAsyncThunk(
+   "POST_MOMO",
+   async (data, thunkAPI) => {
+      try {
+         const response = await axios.post("payment", data);
+         return response.data.payUrl
+      } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
    }
@@ -41,18 +49,16 @@ export const getOrders = createAsyncThunk(
       }
    }
 );
-// Xóa order
-export const deleteOrders = createAsyncThunk(
-   "DELETE_ORDER",
-   async (id, thunkAPI) => {
+export const updateOrders = createAsyncThunk(
+   "UPDATE_ORDER_STATUS",
+   async (data, thunkAPI) => {
       try {
          let userItem = JSON.parse(localStorage.getItem("userItems"));
-         const response = await axios.delete("order/" + id, {
+         await axios.put(`order/${data.id}`, { status: data.status }, {
             headers: {
                'Authorization': 'Bearer ' + userItem.accessToken
             }
-         })
-         return await response.data;
+         });
       } catch (error) {
          return thunkAPI.rejectWithValue({ error: error.message });
       }
@@ -80,5 +86,5 @@ export const orderSlice = createSlice({
 })
 
 export const selectOrders = (state) => state.orderState;
-
+export const { onStatusChange } = orderSlice.actions;
 export default orderSlice.reducer;

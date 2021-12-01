@@ -6,14 +6,13 @@ const feeController = require("../modules/fee");
 const serviceController = require("../modules/service")
 
 router.post("/", async (req, res) => {
-    const {amount, extraData, orderId, orderInfo} = req.body;
+    const {toTal, extraData, id_order, orderInfo} = req.body;
     try {
-        const data = await payment(amount, extraData, orderId, orderInfo);
+        const data = await payment(toTal, extraData, id_order, orderInfo);
         res.json(data)
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-
 });
 
 // Tính phí vận chuyển

@@ -13,7 +13,7 @@ const payment = async (amount, extraData, orderId, orderInfo) => {
         },
         data: dataSign
     };
-
+    
     const result = await axios(config)
         .then(function ({data}) {
             return data

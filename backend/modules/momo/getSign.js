@@ -7,7 +7,8 @@ const getSign = (
     orderInfo
 ) => {
     const partnerCode = "MOMO";
-    const redirectUrl = "https://treeword.net/return";
+    // const redirectUrl = "https://treeword.net/return";
+    const redirectUrl = "http://localhost:3000/result";
     const ipnUrl = "https://treeword.net/notify";
     const requestType = "captureWallet";
     const requestId = partnerCode + new Date().getTime();

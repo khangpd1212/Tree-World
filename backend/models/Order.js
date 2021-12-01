@@ -19,11 +19,13 @@ const OrderSchema = new mongoose.Schema({
    },
    status: {
       type: String,
+      text: true,
       required: true,
    },
    orderDate: {
-      type: String,
+      type: Date,
       required: true,
+      default: Date.now,
    },
    activatedVoucher: {
       type: Boolean,

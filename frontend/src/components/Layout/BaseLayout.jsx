@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "styles/BaseLayout.scss";
-import "../../styles/handleDarkMode.scss";
+import "styles/handleDarkMode.scss";
 import "styles/global.scss";
 import { Layout } from "antd";
 import Backtop from "components/Base/Backtop";
@@ -15,8 +15,9 @@ import {
   Detail,
   Contact,
   Payment,
-  News,
-} from "../../pages";
+  Blog,
+  About,
+} from "pages";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";
@@ -76,13 +77,14 @@ export default function BaseLayout() {
           <div className="head">
             <Route path="/" exact component={Home} />
             <Route path="/users" exact component={Users} />
+            <Route path="/about" exact component={About} />
             <Route path="/product" exact component={Product} />
             <Route path="/product/:catalog" exact component={Product} />
             <Route path="/detail" exact component={Detail} />
             <Route path="/detail/:id" exact component={Detail} />
             <Route path="/cart" exact component={Cart} />
             <Route path="/payment" exact component={Payment} />
-            <Route path="/blog" exact component={News} />
+            <Route path="/blog" exact component={Blog} />
             <Route path="/contact" exact component={Contact} />
             {layout ? <div className="head__change"></div> : <></>}
           </div>

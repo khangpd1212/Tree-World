@@ -1,9 +1,12 @@
-import { List, Collapse, Image } from "antd";
-import { selectProducts } from "redux/product";
-import { selectUsers } from "redux/user";
+import { Collapse, Image, List, Tag, Pagination, Divider } from "antd";
+import useConvertISO from "hooks/useConvertISO";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { selectOrders } from "redux/order";
 import { selectOrderDetails } from "redux/order_detail";
-import { useSelector } from "react-redux";
+import { selectProducts } from "redux/product";
+import { selectUsers } from "redux/user";
+import TotalOrder from "./TotalOrder";
 export default function ListOrder() {
   const { Panel } = Collapse;
 
@@ -11,63 +14,111 @@ export default function ListOrder() {
   const { orderDetailList } = useSelector(selectOrderDetails);
   const { productList } = useSelector(selectProducts);
   const { orderList } = useSelector(selectOrders);
-  let myOrder = [];
-  // tìm kiếm danh sách order theo id user
-  const order_userID = orderList.filter((x) =>
-    userItems._id.includes(x.idUser)
-  );
-  // tìm kiếm danh sách order detail theo id order
-  let order_orderDetailID = order_userID.map((o1) => ({
-    orderDate: o1.orderDate,
-    orderDetail: orderDetailList.filter((o2) => o1._id == o2.id_order),
-  }));
-
-  // tìm kiếm danh sách product theo id product trong order detail
-
-  myOrder = order_orderDetailID.map((o1) => ({
-    orderDate: o1.orderDate,
-    product: o1.orderDetail.map((o2) =>
-      Object.assign(
-        {},
-        { quantity: o2.quantity },
-        productList.filter((o3) => o2.id_product == o3._id)[0]
-      )
-    ),
-  }));
-  // Lấy order mới nhất
-  let reverseOrder = myOrder.reverse();
+  const [orderUser, setOrderUser] = useState([]);
   
-  const description = (description, quantity) => (
+  const { convertISO } = useConvertISO();
+  const numEachPage = 5;
+  const [currentPage, setCurrentPage] = useState(1)
+  const [page, setPage] = useState({
+    minValue: 0 * numEachPage,
+    maxValue: 1 * numEachPage,
+  });
+
+  useEffect(() => {
+    let myOrder = [];
+
+    // tìm kiếm danh sách order theo id user
+    const order_userID = orderList.filter((x) =>
+      userItems._id.includes(x.idUser)
+    );
+    // tìm kiếm danh sách order detail theo id order
+    let order_orderDetailID = order_userID.map((o1) => ({
+      orderDate: convertISO(o1.orderDate),
+      orderDetail: orderDetailList.filter((o2) => o1._id == o2.id_order),
+    }));
+
+    // tìm kiếm danh sách product theo id product trong order detail
+    myOrder = order_orderDetailID.map((o1) => ({
+      orderDate: o1.orderDate,
+      product: o1.orderDetail.map((o2) =>
+        Object.assign(
+          {},
+          { pickColor: o2.color },
+          { quantity: o2.quantity },
+          productList.filter((o3) => o2.id_product == o3._id)[0]
+        )
+      ),
+    }));
+
+    setOrderUser(myOrder);
+  }, [orderList, userItems]);
+
+  const description = (description, quantity, color) => (
     <>
-      <span style={{ display: "block" }}>{description}</span>
-      <span>{quantity}</span>
+      <span style={{ display: "block" }}>Description: {description}</span>
+      <p>Quantity: {quantity}</p>
+      {color === "#ffff" || color === "white" ? (
+        <Tag style={{ color: "black" }} color={color}>
+          {color}
+        </Tag>
+      ) : (
+        <Tag color={color}>{color}</Tag>
+      )}
     </>
   );
+  const handleChangePage = (value) => {
+    setCurrentPage(value);
+    setPage({
+      minValue: (value - 1) * numEachPage,
+      maxValue: value * numEachPage,
+    });
+  };
   return (
-    <Collapse defaultActiveKey={["0"]} expandIconPosition="right" ghost>
-      {reverseOrder &&
-        reverseOrder.map((itemOrder, keyOrder) => (
-          <Panel header={itemOrder.orderDate} key={keyOrder}>
-            <List
-              key={keyOrder}
-              itemLayout="horizontal"
-              dataSource={itemOrder.product}
-              renderItem={(itemChild) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={<Image width={80} src={itemChild.image[0]} />}
-                    title={itemChild.product_name}
-                    description={description(
-                      itemChild.description,
-                      itemChild.quantity
-                    )}
-                  />
-                  <div>${itemChild.price}</div>
-                </List.Item>
-              )}
-            />
-          </Panel>
-        ))}
-    </Collapse>
+    <>
+      <Collapse
+        accordion
+        defaultActiveKey={["0"]}
+        expandIconPosition="right"
+        ghost
+      >
+        {orderUser &&
+          orderUser.length > 0 &&
+          orderUser
+            .slice(page.minValue, page.maxValue)
+            .map((itemOrder, keyOrder) => (
+              <Panel header={itemOrder.orderDate} key={keyOrder}>
+                <List
+                  key={keyOrder}
+                  itemLayout="horizontal"
+                  dataSource={itemOrder.product}
+                  footer={<TotalOrder order={itemOrder.product} />}
+                  renderItem={(itemChild) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={<Image width={80} src={itemChild.image[0]} />}
+                        title={itemChild.product_name}
+                        description={description(
+                          itemChild.description,
+                          itemChild.quantity,
+                          itemChild.pickColor
+                        )}
+                      />
+                      <div>${itemChild.price}</div>
+                    </List.Item>
+                  )}
+                />
+              </Panel>
+            ))}
+      </Collapse>
+      <Divider />
+      <Pagination
+        style={{ textAlign: "right" }}
+        current={currentPage}
+        defaultPageSize={numEachPage}
+        onChange={handleChangePage}
+        total={orderUser.length}
+        showTotal={(total) => `Total ${total} items`}
+      />
+    </>
   );
 }

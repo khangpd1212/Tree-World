@@ -24,13 +24,9 @@ export default function TableProducts() {
   }
   const handleChangeStatus = (e, id) => {
     requests.editProduct(token, { status: e }, id).then((res) => {
-      console.log(res);
-      if (res.status) {
-        dispatch(fetchProducts());
-        toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
-          autoClose: 2000,
-        });
-      }
+      toast.success(`Status update success`, {
+        autoClose: 2000,
+      });
     });
   };
 
@@ -74,7 +70,7 @@ export default function TableProducts() {
       dataIndex: "inventory",
       key: "inventory",
     },
-    
+
     {
       title: "Status",
       dataIndex: "status",

@@ -1,7 +1,7 @@
 import { Col, Form, Input, Row, Select, Tag } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProvince } from "redux/address/province";
+import { selectProvince, showTextAddress } from "redux/address/province";
 import { getTotals, selectCarts } from "redux/cart";
 import { fetchFee, selectFee } from "redux/service/fee";
 import { fetchService, selectService } from "redux/service/service";
@@ -18,20 +18,40 @@ export default function CartItemPayment() {
   const { userItems } = useSelector(selectUsers);
 
   useEffect(() => {
-    requests.getAddressByUser(userItems._id).then((result) => {
-      let addressLast = result.slice(-1)[0];
-      dispatch(fetchService(addressLast && addressLast.district_id));
-    });
-  }, [textAddress, userItems]);
+    dispatch(fetchService(textAddress.district_id));
+    dispatch(fetchFee(textAddress));
+  }, [textAddress]);
 
   useEffect(() => {
     dispatch(getTotals());
   }, [cartItems]);
 
+    // address từ db
+  useEffect(() => {
+    requests.getAddressByUser(userItems._id).then((result) => {
+      let addressLast = result.slice(-1)[0];
+      let addressLocal = JSON.parse(localStorage.getItem("address"));
+      if (Object.keys(addressLocal).length === 0) {
+        dispatch(
+          showTextAddress({
+            address: addressLast && addressLast.content,
+            district_id: addressLast && addressLast.district_id,
+            ward_code: addressLast && addressLast.ward_code,
+            name: userItems && userItems.username,
+            phone: userItems && userItems.phone_number,
+            service_id: textAddress.service_id && textAddress.service_id,
+          })
+        );
+      } else {
+        return;
+      }
+    });
+  }, [userItems]);
+
   const handleServiceChange = (key) => {
     const objectNew = Object.assign({}, textAddress, { service_id: key });
     dispatch(fetchFee(objectNew));
-    sessionStorage.setItem("address", JSON.stringify(objectNew));
+    dispatch(showTextAddress(objectNew));
   };
   return (
     <div className="cartItemPayment">

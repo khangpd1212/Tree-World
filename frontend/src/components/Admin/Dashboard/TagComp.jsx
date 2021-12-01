@@ -16,8 +16,11 @@ export default function TagComp() {
   const completeOrder =
     orderList && orderList.filter((item) => item.status === "Completed");
   const total =
-    completeOrder &&
-    completeOrder.reduce((prev, current) => prev.toTal + current.toTal);
+    completeOrder.length > 0
+      ? completeOrder.length > 1
+        ? completeOrder.reduce((prev, current) => prev.toTal + current.toTal)
+        : completeOrder[0].toTal
+      : 0;
   return (
     <div className="wrapper__tag">
       <ItemTagComp
@@ -25,7 +28,7 @@ export default function TagComp() {
         bgColorTag="#368978ab"
         bgColorIcon="#368978"
         title="Tổng doanh thu"
-        content={`${total || 0} VNĐ`}
+        content={`${total} VNĐ`}
       />
       <ItemTagComp
         icon={<CreditCardOutlined />}

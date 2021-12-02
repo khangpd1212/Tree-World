@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs } from "redux/blog";
 import { requests } from "utils/axios";
-
+import { validations } from "utils/validation";
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -47,18 +47,25 @@ export default function ModalAddBlog({ visible, setVisible }) {
   });
   const onFinish = (values) => {
     // console.log(imgBase64);
-    requests.addBlog(token, blog, imgBase64, userItems._id).then((res) => {
-      console.log(res);
-      if (res.status) {
-        dispatch(fetchBlogs());
-        form.resetFields();
-        setFileList([]);
-        setVisible(false);
-        toast.success("Add new blog succesfully!");
-      } else {
-        toast.error("Failed");
-      }
-    });
+    if (
+      !validations.checkBlankSpace(values.title) ||
+      !validations.checkBlankSpace(values.content)
+    ) {
+      toast.error("You are not allowed text only white space");
+    } else {
+      requests.addBlog(token, blog, imgBase64, userItems._id).then((res) => {
+        console.log(res);
+        if (res.status) {
+          dispatch(fetchBlogs());
+          form.resetFields();
+          setFileList([]);
+          setVisible(false);
+          toast.success("Add new blog succesfully!");
+        } else {
+          toast.error("Failed");
+        }
+      });
+    }
   };
   const onFinishFailed = (err) => {
     toast.error(`Failed: ${err}`);

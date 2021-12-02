@@ -55,7 +55,7 @@ router.post("/token", async (req, res) => {
       jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
         if (err) res.status(403).json("Token is invalid.");
         req.user = user;
-        res.status(200).json("token is working")
+        res.status(200).json("token is working");
       });
     } else {
       return res.status(401).json("You are not authenticated");
@@ -66,4 +66,3 @@ router.post("/token", async (req, res) => {
 });
 
 module.exports = router;
-

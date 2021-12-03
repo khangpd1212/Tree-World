@@ -1,6 +1,6 @@
 import { Button, Image, Space, Switch, Table, Tag } from "antd";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { selectProducts } from "redux/product";
 import { requests } from "utils/axios";
@@ -9,8 +9,7 @@ import ModalEdit from "./ModalEdit";
 export default function TableProducts() {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
+  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   
   const { productList } = useSelector(selectProducts);
 

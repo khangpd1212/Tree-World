@@ -4,8 +4,10 @@ import DrawerOrder from "components/Order/DrawerOrder";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { onRemoveUser } from "redux/user";
+import { useHistory } from "react-router-dom";
 export default function DropdownOverlay() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -15,13 +17,18 @@ export default function DropdownOverlay() {
   const onClose = () => {
     setVisible(false);
   };
+  const handleLogout = () => {
+    dispatch(onRemoveUser())
+    localStorage.removeItem("address");
+    history.push("/");
+  }
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={showDrawer}>
         <div>My order</div>
       </Menu.Item>
       <DrawerOrder onClose={onClose} visible={visible} />
-      <Menu.Item key="2" onClick={() => dispatch(onRemoveUser())}>
+      <Menu.Item key="2" onClick={handleLogout}>
         <div>Logout</div>
       </Menu.Item>
     </Menu>

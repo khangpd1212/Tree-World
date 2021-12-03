@@ -16,9 +16,9 @@ const formItemLayout = {
 };
 
 export default function ModalAddCategory({ visible, setVisible }) {
-    const { userItems } = useSelector((state) => state.userState);
+    const { adminItems } = useSelector((state) => state.userState);
     const dispatch = useDispatch();
-    const token = userItems.isAdmin ? userItems.accessToken : null;
+    const token = adminItems.isAdmin ? adminItems.accessToken : null;
     const [form] = Form.useForm();
 
     const onFinish = (values) => {

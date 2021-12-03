@@ -16,13 +16,13 @@ const formItemLayout = {
 };
 
 export default function ModalAddCVoucher({ visible, setVisible }) {
-    const { userItems } = useSelector((state) => state.userState);
+    const { adminItems } = useSelector((state) => state.userState);
     const dispatch = useDispatch();
-    const token = userItems.isAdmin ? userItems.accessToken : null;
+    const token = adminItems.isAdmin ? adminItems.accessToken : null;
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        requests.addVoucher(token, values, userItems._id).then((res) => {
+        requests.addVoucher(token, values, adminItems._id).then((res) => {
             if (res.voucher.status) {
                 dispatch(fetchGetVoucher());
                 form.resetFields();

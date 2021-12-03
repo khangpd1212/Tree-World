@@ -8,7 +8,7 @@ import { fetchMomo } from "redux/order";
 import { selectFee } from "redux/service/fee";
 import { selectUsers } from "redux/user";
 
-export default function useHandleOrder() {
+export default function useOrderMomo() {
   const { textAddress } = useSelector(selectProvince);
   const { feeItems } = useSelector(selectFee);
   const { cartTotalAmount, cartItems } = useSelector(selectCarts);
@@ -18,15 +18,9 @@ export default function useHandleOrder() {
   const history = useHistory();
   const feeItem = feeItems ? feeItems : 0;
 
-  const handleOrder = (radio, disabled) => {
+  const handleOrderMomo = (radio, disabled) => {
     // nếu không đăng nhập thì báo cần đăng nhập
-    if (Object.values(userItems).length === 0) {
-      dispatch(ShowModalLogin(true));
-      toast.error(`You need to login`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else if (!cartItems[0] || !feeItems) {
+    if (!cartItems[0] || !feeItems) {
       toast.error(`You are not buying or payment method`, {
         position: "bottom-left",
         autoClose: 2000,
@@ -49,10 +43,10 @@ export default function useHandleOrder() {
         });
       }
       // thanh toán bằng ship cod
-      else if(disabled === true){
+      else if (disabled === true) {
         return history.push("/result")
       }
     }
   };
-  return { handleOrder }
+  return { handleOrderMomo }
 }

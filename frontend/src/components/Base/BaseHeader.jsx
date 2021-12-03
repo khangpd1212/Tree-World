@@ -18,8 +18,8 @@ function BaseHeader() {
   const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
   const [show, handleShow] = useState(false);
+  const dispatch = useDispatch();
 
-  const dispath = useDispatch();
   const { userItems } = useSelector(selectUsers);
   const { catalogList } = useSelector(selectCatalogs);
 
@@ -37,7 +37,6 @@ function BaseHeader() {
   const onClose = () => {
     setVisible(false);
   };
-  // modal login
 
   useEffect(() => {
     window.addEventListener("scroll", transitionNavBar);
@@ -45,8 +44,6 @@ function BaseHeader() {
       window.removeEventListener("scroll", transitionNavBar);
     };
   });
-  const dispatch = useDispatch();
-
   return (
     <Header
       className={show ? "bg__change" : ""}
@@ -130,7 +127,9 @@ function BaseHeader() {
                 <LinkRoute to={"/cart"}>Cart</LinkRoute>
               </div>
               <div>
-                <LinkRoute to={"/payment"}>Payment</LinkRoute>
+                <LinkRoute to={"/payment"}>
+                  Payment
+                </LinkRoute>
               </div>
               <div>
                 <LinkRoute to={"/admin"}>Admin</LinkRoute>
@@ -138,7 +137,7 @@ function BaseHeader() {
               {Object.values(userItems).length === 0 ? (
                 <div
                   className="div__login"
-                  onClick={() => dispath(ShowModalLogin(true))}
+                  onClick={() => dispatch(ShowModalLogin(true))}
                 >
                   Login
                 </div>

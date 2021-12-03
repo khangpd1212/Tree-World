@@ -1,5 +1,5 @@
 import { Radio, Space } from "antd";
-import useHandleOrder from "hooks/useHandleOrder";
+import useOrderMomo from "hooks/useOrderMomo";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { selectFee } from "redux/service/fee";
 export default function PaymentMethod() {
   const { feeItems } = useSelector(selectFee);
   const { cartTotalAmount } = useSelector(selectCarts);
-  const { handleOrder } = useHandleOrder();
+  const { handleOrderMomo } = useOrderMomo();
 
   const [radio, setRadio] = useState(1);
   const [disabled, setDisabled] = useState(true);
@@ -122,7 +122,10 @@ export default function PaymentMethod() {
             <span>back</span>
           </Link>
         </div>
-        <button className="order__button" onClick={() => handleOrder(radio, disabled)}>
+        <button
+          className="order__button"
+          onClick={() => handleOrderMomo(radio, disabled)}
+        >
           Order now
         </button>
       </div>

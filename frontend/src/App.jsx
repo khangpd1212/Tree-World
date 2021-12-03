@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { AdminLayout, BaseLayout, AnotherLayout } from "components/Layout";
-
 function App() {
   return (
     <BrowserRouter>

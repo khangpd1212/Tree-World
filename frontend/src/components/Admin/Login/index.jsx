@@ -82,18 +82,6 @@ export default function LoginAdmin({ visible, onCreate, onCancel }) {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
           </Form.Item>
-
-          {/* <Form.Item>
-            <Button
-              block
-              size="large"
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Log in
-            </Button>
-          </Form.Item> */}
         </Form>
       </Modal>
     </>

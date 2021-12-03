@@ -1,5 +1,5 @@
 import { EnvironmentFilled, RightOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchAddress, getAddress, selectAddress } from "redux/address";
@@ -29,18 +29,10 @@ export default function AddressPayment() {
 
   // show default address
   const handleShowDefaultAddress = () => {
-    if (Object.values(userItems).length === 0) {
-      dispatch(ShowModalLogin(true));
-      toast.error(`You need to login`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else {
-      dispatch(ShowModalLogin(false));
-      dispatch(ShowModalDefaultAddress(true));
-    }
+    dispatch(ShowModalLogin(false));
+    dispatch(ShowModalDefaultAddress(true));
   };
-  
+
   //handle default address
   const handleDefaultAddress = () => {
     let dataAddress = {};
@@ -48,7 +40,6 @@ export default function AddressPayment() {
     const compareAddress = addressList.find(
       (item) => item.content === addressChild
     );
-    console.log(compareAddress);
     // so sanh address
     if (textAddress.length < 1 || compareAddress) {
       toast.error(`You can't choose this address anymore`, {

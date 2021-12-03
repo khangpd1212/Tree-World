@@ -51,8 +51,7 @@ export default function ModalEdit({
     selected &&
     catalogList.find((f) => f._id === selected.catalog_id);
   const dispatch = useDispatch();
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
+  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   const onFinish = (values) => {
     console.log(values);
     if (imgBase64 !== "") {

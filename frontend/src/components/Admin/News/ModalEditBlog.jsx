@@ -38,10 +38,10 @@ export default function ModalEditBlog({
   selected,
   setSelected,
 }) {
-  const { userItems } = useSelector((state) => state.userState);
+  const { adminItems } = useSelector((state) => state.userState);
   const [imgBase64, setImgBase64] = useState("");
   const dispatch = useDispatch();
-  const token = userItems.isAdmin ? userItems.accessToken : null;
+  const token = adminItems.isAdmin ? adminItems.accessToken : null;
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");

@@ -26,7 +26,6 @@ const formItemLayout = {
   },
 };
 
-
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -45,8 +44,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const onFinish = (values) => {
     requests.addProduct(token, values, imgBase64).then((res) => {

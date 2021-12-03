@@ -1,14 +1,11 @@
-import { Modal, Select, Button, Form, Input } from "antd";
-import {
-  selectModals,
-  onOkDefaultAddress,
-  onCancelDefaultAddress,
-  ShowModalAddress,
-} from "redux/modal";
+import { Button, Form, Input, Modal, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAddress } from "redux/address";
-import { selectUsers } from "redux/user";
 import { showTextAddress } from "redux/address/province";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  onCancelDefaultAddress, selectModals, ShowModalAddress
+} from "redux/modal";
+import { selectUsers } from "redux/user";
 export default function DefaultAddress() {
   const { Option } = Select;
   const { isShowDefaultAddress } = useSelector(selectModals);

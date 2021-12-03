@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs } from "redux/blog";
 import { requests } from "utils/axios";
+import { validations } from "utils/validation";
 
 const formItemLayout = {
   labelCol: {
@@ -53,12 +54,29 @@ export default function ModalEditBlog({
   });
 
   const onFinish = (values) => {
-    // console.log(imgBase64, previewImage, previewTitle, previewVisible);
-    if (imgBase64 !== "") {
-      // console.log(values, imgBase64);
-      requests
-        .editBlog(token, { ...values, image: imgBase64 }, selected._id)
-        .then((res) => {
+    if (
+      !validations.checkBlankSpace(values.title) ||
+      !validations.checkBlankSpace(values.content)
+    ) {
+      toast.error("You are not allowed text only white space");
+    } else {
+      // console.log(imgBase64, previewImage, previewTitle, previewVisible);
+      if (imgBase64 !== "") {
+        // console.log(values, imgBase64);
+        requests
+          .editBlog(token, { ...values, image: imgBase64 }, selected._id)
+          .then((res) => {
+            console.log(res);
+            if (res.status) {
+              dispatch(fetchBlogs());
+              setVisible(false);
+              toast.success(`Update successfully!`);
+            } else {
+              toast.error("Failed");
+            }
+          });
+      } else {
+        requests.editBlog(token, values, selected._id).then((res) => {
           console.log(res);
           if (res.status) {
             dispatch(fetchBlogs());
@@ -67,18 +85,8 @@ export default function ModalEditBlog({
           } else {
             toast.error("Failed");
           }
-        }); 
-    } else {
-      requests.editBlog(token, values, selected._id).then((res) => {
-        console.log(res);
-        if (res.status) {
-          dispatch(fetchBlogs());
-          setVisible(false);
-          toast.success(`Update successfully!`);
-        } else {
-          toast.error("Failed");
-        }
-      });
+        });
+      }
     }
   };
   const onFinishFailed = (err) => {

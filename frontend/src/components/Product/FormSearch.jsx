@@ -6,15 +6,25 @@ import { useDispatch } from "react-redux";
 import { setSearchStatus } from "redux/layout";
 import { searchProducts } from "redux/product";
 import { useHistory } from "react-router";
+import { validations } from "utils/validation";
+import { toast } from "react-toastify";
 const { Search } = Input;
 function FormSearch() {
   const dispatch = useDispatch();
   const history = useHistory();
+
   const onSearch = (value) => {
-    console.log(value);
-    dispatch(setSearchStatus(value));
-    dispatch(searchProducts({ keyword: value }));
-    history.push(`/product/?keyword=${value}`);
+    if (validations.checkNull(value)) {
+      if (validations.checkBlankSpace(value)) {
+        dispatch(setSearchStatus(value.trim()));
+        dispatch(searchProducts({ keyword: value.trim() }));
+        history.push(`/product/?keyword=${value}`);
+      } else {
+        toast.error("You're allowed text only space");
+      }
+    } else {
+      toast.error("Please text your keyword");
+    }
   };
   const [isModalVisible, setIsModalVisible] = useState(false);
 

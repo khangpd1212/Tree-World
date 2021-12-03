@@ -3,7 +3,6 @@ import {
   createSlice,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
-import { toast } from "react-toastify"
 
 const initialState = {
   userList: [],
@@ -77,7 +76,6 @@ const userSlice = createSlice({
       state.userItems = action.payload;
       state.loading = "loaded";
     });
-
     builder.addCase(fetchGetUser.fulfilled, (state, action) => {
       state.userList = action.payload;
       state.loading = "loaded";
@@ -87,8 +85,6 @@ const userSlice = createSlice({
       state.adminItems = action.payload;
       state.loading = "loaded";
     });
-
-
   },
 });
 export const selectUsers = (state) => state.userState;

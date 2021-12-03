@@ -10,7 +10,7 @@ import {
   Home,
   Payment,
   Product,
-  Users,
+  About,
 } from "pages";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,7 +84,7 @@ export default function BaseLayout() {
         <Content>
           <div className="head">
             <Route path="/" exact component={Home} />
-            <Route path="/users" exact component={Users} />
+            <Route path="/about" exact component={About} />
             <Route path="/product" exact component={Product} />
             <Route path="/product/:catalog" exact component={Product} />
             <Route path="/detail" exact component={Detail} />

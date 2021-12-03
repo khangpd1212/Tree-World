@@ -36,6 +36,7 @@
   font-family: "SVNNewton";
   src: local("SVNNewton"), url(../fonts/SVN-Newton.ttf) format("opentype");
 }
+
 @font-face {
   font-family: "SVNSwashington";
   src: local("SVNSwashington"),
@@ -47,8 +48,12 @@
   src: local("SVNSwashington"), url(../fonts/SVN-Swashington.otf) format("opentype");
 }
 
-$font-SVNSwahington: "SVNSwashington";
+@font-face {
+  font-family: "SFUCenturySchoolbookBTBoldCondensed";
+  src: local("SFUCenturySchoolbookBTBoldCondensed"), url(../fonts/SFUCenturySchoolbookBTBoldCondensed.TTF) format("opentype");
+}
 
+$font-SFUCenturySchool: "SFUCenturySchoolbookBTBoldCondensed";
 $font-SFRMeta: "SFUMetaCaps";
 $font-SFUHelveticaLight: "SFUHelveticaLight";
 $font-SFUToledoBold: "SFUToledoBold";

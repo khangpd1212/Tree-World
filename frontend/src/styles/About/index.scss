@@ -1,0 +1,247 @@
+.about {
+  padding: 0px 5vw;
+
+  .aboutTitle {
+
+    padding: 0 200px;
+
+    .welcomeImg {
+      width: 362px;
+      margin: 0 auto;
+      padding-top: 30px;
+      padding-bottom: 5px;
+    }
+
+    &__content {
+      font-family: "SFUHelveticaLight";
+      font-size: 18px;
+      text-align: center;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    &__Btn {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 0;
+
+      .watchNews,
+      .seeProduct {
+        border: none;
+        background-color: #2E2C2C;
+        color: aliceblue;
+        font-size: 15px;
+        padding: 5px 12px;
+      }
+    }
+  }
+
+  .aboutAlbum {
+    &__title {
+      display: flex;
+      width: 100%;
+      margin: 30px;
+
+      &--left {
+        width: 31%;
+        height: 2.5px;
+        margin: 5vh;
+        background-color: #4F4B4B;
+        position: relative;
+      }
+
+      &--center {
+        padding: 0 20px;
+        font-weight: 500;
+        font-size: 48px;
+        color: #4F4B4B;
+        font-family: "SVNNewton";
+        line-height: 70px;
+      }
+
+      &--right {
+        width: 31%;
+        height: 2.5px;
+        margin: 5vh;
+        background-color: #4F4B4B;
+        position: relative;
+      }
+    }
+
+    &__album {
+      display: flex;
+      justify-content: space-between;
+
+
+      .leftItem {
+        &--top {
+          display: flex;
+          height: 140px;
+
+          .left {
+            width: 331px;
+          }
+
+          .right {
+            width: 307px;
+            margin-left: 20px;
+          }
+        }
+
+        &--center {
+          display: flex;
+          height: 130px;
+
+          .left {
+            width: 331px;
+            margin-top: 16px;
+
+          }
+
+          .right {
+            width: 307px;
+            margin-left: 20px;
+            margin-top: 16px;
+          }
+        }
+
+        &--bottom {
+          width: 658px;
+          margin-top: 36px;
+        }
+      }
+
+      .centerItem {
+        width: 261px;
+
+        .top {
+          height: 83px;
+        }
+
+        .bottom {
+          margin-top: 20px;
+          height: 425px;
+        }
+      }
+
+      .rightItem {
+        .top {
+          width: 407px;
+          height: 170px;
+        }
+
+        .center {
+          width: 407px;
+          height: 185px;
+          margin-top: 21px;
+        }
+
+        .bottom {
+          width: 407px;
+          height: 132px;
+          margin-top: 20px;
+        }
+      }
+    }
+
+    &__button {
+      text-align: center;
+      margin-top: 30px;
+      position: relative;
+
+      .albumBtn {
+        color: #2E2C2C;
+        font-size: 16px;
+        padding: 4px 12px 7px 12px;
+        margin-bottom: 5px;
+        border: 1px solid #2E2C2C;
+      }
+
+      .downOutIcon {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        top: 50px;
+        font-size: 10px;
+      }
+    }
+  }
+
+  .aboutUpdates {
+    &__title {
+      display: flex;
+      width: 100%;
+      margin: 50px 0;
+
+      &--left {
+        width: 34%;
+        height: 2.5px;
+        margin: 5vh;
+        background-color: #4F4B4B;
+        position: relative;
+      }
+
+      &--center {
+        padding: 0 20px;
+        font-weight: 500;
+        font-size: 48px;
+        color: #4F4B4B;
+        font-family: "SVNNewton";
+        line-height: 70px;
+      }
+
+      &--right {
+        width: 34%;
+        height: 2.5px;
+        margin: 5vh;
+        background-color: #4F4B4B;
+        position: relative;
+      }
+    }
+
+    &__content {
+      padding: 0 200px;
+
+      .month {
+        margin-top: -15px;
+        font-family: "SFUCenturySchoolbookBTBoldCondensed";
+        font-size: 50px;
+
+        .day {
+          font-size: 100px;
+          margin-top: -50px;
+        }
+      }
+
+      .title {
+        width: 300px;
+        font-size: 42px;
+        color: #E39C1D;
+        line-height: 50px;
+        font-family: "SVNNewton";
+      }
+
+      .content {
+        margin-top: 6px;
+        width: 200px;
+        font-size: 19px;
+        font-family: "SFUHelveticaLight";
+      }
+
+      .top__content {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .center__content{
+        display: flex;
+        justify-content: space-between;
+      }
+      .third__content{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}

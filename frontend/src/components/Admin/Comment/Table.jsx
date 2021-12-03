@@ -8,7 +8,7 @@ import { requests } from 'utils/axios';
 
 
 export default function TableComment() {
-    const token = localStorage.getItem("token")
+    const token = JSON.parse(localStorage.getItem("tokenAdmin"));
     const dispatch = useDispatch()
 
     function confirm(id) {

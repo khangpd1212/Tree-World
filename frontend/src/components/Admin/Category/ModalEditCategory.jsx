@@ -1,8 +1,6 @@
-import { Button, Form, Modal, Select, Switch, Input } from "antd";
-import React, { useState } from "react";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector, useEffect } from "react-redux";
+import { Button, Form, Input, Modal, Select } from "antd";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchCatalogs, selectCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
@@ -27,8 +25,7 @@ export default function ModalEdit({
   const { catalogList } = useSelector(selectCatalogs);
 
   const dispatch = useDispatch();
-  const userItems = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItems.accessToken;
+  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   console.log(selected);
   const onFinish = (values) => {
     if (!validations.checkBlankSpace(values.catalog_name)) {

@@ -1,12 +1,10 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { AdminLayout, BaseLayout, AnotherLayout } from "components/Layout";
-
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={BaseLayout} />
-        <Route path="/users" exact component={BaseLayout} />
         <Route path="/product" exact component={BaseLayout} />
         <Route path="/product/:catalog" exact component={BaseLayout} />
         <Route path="/detail" exact component={BaseLayout} />

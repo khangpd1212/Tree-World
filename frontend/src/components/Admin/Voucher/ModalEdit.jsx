@@ -21,8 +21,7 @@ export default function ModalEdit({ visible, setVisible, selected, setSelected }
   const { voucherList } = useSelector(selectVouchers);
 
   const dispatch = useDispatch()
-  const userItems = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItems.accessToken;
+  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   console.log(selected)
   const onFinish = (values) => {
     requests

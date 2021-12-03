@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Modal, Tag } from "antd";
 import IconPassword from "components/utils/IconPassword";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchLogin } from "redux/user";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import {
-  selectModals,
-  ShowModalLogin,
-  onCancelLogin,
-  ShowModalSignUp,
+  onCancelLogin, selectModals,
+  ShowModalLogin, ShowModalSignUp
 } from "redux/modal";
+import { fetchLogin,selectUsers } from "redux/user";
 import "styles/Login/LoginDesktop.scss";
 
 function LoginDesktop() {
@@ -18,6 +17,7 @@ function LoginDesktop() {
   const { isDirty, isValid, errors } = formState;
   const dispatch = useDispatch();
   const { isShowLogin } = useSelector(selectModals);
+  const { userItems } = useSelector(selectUsers);
 
   const handleShowPass = () => {
     setPasswordShown(!passwordShown);
@@ -29,9 +29,16 @@ function LoginDesktop() {
   };
   const onSubmit = (data) => {
     dispatch(fetchLogin(data));
-    dispatch(ShowModalLogin(false));
-    resetField("username");
-    resetField("password");
+    if (Object.values(userItems).length !== 0) {
+      dispatch(ShowModalLogin(false));
+      resetField("username");
+      resetField("password");
+    } else {
+      toast.error(`Login is error`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+    }
   };
   const handleCancel = () => {
     dispatch(onCancelLogin(false));

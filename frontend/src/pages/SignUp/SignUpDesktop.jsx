@@ -1,15 +1,12 @@
 import { Modal, Tag } from "antd";
+import IconPassword from "components/utils/IconPassword";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchRegister } from "redux/user";
-import IconPassword from "components/utils/IconPassword";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  ShowModalLogin,
-  selectModals,
-  ShowModalSignUp,
-  onCancelSignUp,
+  onCancelSignUp, selectModals, ShowModalLogin, ShowModalSignUp
 } from "redux/modal";
+import { fetchRegister } from "redux/user";
 import { patterns, validations } from "utils/validation";
 import { toast } from "react-toastify";
 

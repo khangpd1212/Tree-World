@@ -27,8 +27,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(filterProducts(filterOptions));
   }, [dispatch, filterOptions]);
-  console.log(filterProduct);
-  console.log(filterOptions);
+
   return (
     <div id="Home">
       <Banner />

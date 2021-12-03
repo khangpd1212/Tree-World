@@ -43,15 +43,17 @@ export default function TableDetail(props) {
       title: "Color",
       dataIndex: "pickColor",
       key: "pickColor",
-      render: (record) => (
+      render: (record) =>
         record === "#ffff" || record === "white" ? (
-          <Tag style={{ color: "black" }} color={{ record }}>
+          <Tag
+            style={{ color: "black", borderColor: "#00000014" }}
+            color={{ record }}
+          >
             {record}
           </Tag>
         ) : (
           <Tag color={record}>{record}</Tag>
-        )
-      ),
+        ),
     },
     {
       title: "Price",

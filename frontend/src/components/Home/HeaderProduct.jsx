@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "antd";
-import "../../styles/Home/HeaderProduct.scss";
+import "styles/Home/HeaderProduct.scss";
 import { useDispatch } from "react-redux";
 import { setFilterStatus } from "redux/layout";
 import { setBestSeller, setHot, sortDefault } from "redux/filter";

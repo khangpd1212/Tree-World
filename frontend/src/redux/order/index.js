@@ -1,6 +1,7 @@
 import axios from "utils/axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+
 const initialState = {
    orderList: [],
 }
@@ -53,10 +54,10 @@ export const updateOrders = createAsyncThunk(
    "UPDATE_ORDER_STATUS",
    async (data, thunkAPI) => {
       try {
-         let userItem = JSON.parse(localStorage.getItem("userItems"));
+         let token = JSON.parse(localStorage.getItem("token"));
          await axios.put(`order/${data.id}`, { status: data.status }, {
             headers: {
-               'Authorization': 'Bearer ' + userItem.accessToken
+             'Authorization': 'Bearer ' + token
             }
          });
       } catch (error) {

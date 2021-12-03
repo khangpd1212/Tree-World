@@ -25,7 +25,7 @@ export default function ModalAddCategory({ visible, setVisible }) {
     if (!validations.checkBlankSpace(values.catalog_name)) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.addCatalog(token, values, userItems._id).then((res) => {
+      requests.addCatalog(token, values, adminItems._id).then((res) => {
         if (res.catalog.status) {
           dispatch(fetchCatalogs());
           form.resetFields();

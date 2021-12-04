@@ -6,13 +6,11 @@ import { selectCarts } from "redux/cart";
 import { ShowModalLogin } from "redux/modal";
 import { fetchMomo } from "redux/order";
 import { selectFee } from "redux/service/fee";
-import { selectUsers } from "redux/user";
 
 export default function useOrderMomo() {
   const { textAddress } = useSelector(selectProvince);
   const { feeItems } = useSelector(selectFee);
   const { cartTotalAmount, cartItems } = useSelector(selectCarts);
-  const { userItems } = useSelector(selectUsers);
 
   const dispatch = useDispatch();
   const history = useHistory();

@@ -5,39 +5,23 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchLoginAdmin, onRemoveAdmin, selectUsers } from "redux/user";
-import { toast } from "react-toastify";
 import useAutoLogin from "hooks/useAutoLogin";
-import useAuth from "hooks/useAuth";
+import { encoded } from "utils/encoded";
 export default function Profile() {
   const dispatch = useDispatch();
-  const [state, setState] = useState(false);
+
   const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const { adminItems } = useSelector(selectUsers);
   const { autoLogin } = useAutoLogin();
-  const { isAdmin, id } = useAuth();
-  console.log(adminItems);
+  const { adminItems } = useSelector(selectUsers);
+
   const handleLogout = () => {
     dispatch(onRemoveAdmin());
-    setState(true);
-  };
-  const handleShowLogin = () => {
     setIsOpenLogin(true);
   };
 
-  const handleCreate = (values) => {
-    dispatch(fetchLoginAdmin(values));
-    if (Object.values(adminItems).length !== 0) {
-      setIsOpenLogin(false);
-    } else {
-      setIsOpenLogin(true);
-      toast.error(`Login is error`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    }
-  };
-  const handleCancel = () => {
-    if (Object.values(adminItems).length !== 0) {
+  const handleCreate = async (values) => {
+    const response = await dispatch(fetchLoginAdmin(values));
+    if (Object.values(response.payload).length !== 0) {
       setIsOpenLogin(false);
     } else {
       setIsOpenLogin(true);
@@ -45,9 +29,12 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    if (Object.values(adminItems).length !== 0) {
-      autoLogin(id, isAdmin);
+    const tokenAdminLocal = localStorage.getItem("tokenAdmin");
+    const tokenAdmin = tokenAdminLocal && encoded.encodedAdmin(tokenAdminLocal);
+
+    if (tokenAdmin) {
       setIsOpenLogin(false);
+      autoLogin(tokenAdmin.id, tokenAdmin.isAdmin);
     } else {
       setIsOpenLogin(true);
     }
@@ -55,15 +42,9 @@ export default function Profile() {
 
   const menu = (
     <Menu>
-      {state ? (
-        <Menu.Item key="1" onClick={handleShowLogin}>
-          <div>Login</div>
-        </Menu.Item>
-      ) : (
-        <Menu.Item key="2" onClick={handleLogout}>
-          <div>Logout</div>
-        </Menu.Item>
-      )}
+      <Menu.Item key="1" onClick={handleLogout}>
+        <div>Logout</div>
+      </Menu.Item>
       <Menu.Item key="3">
         <Link to="../">Client</Link>
       </Menu.Item>
@@ -75,7 +56,6 @@ export default function Profile() {
       <LoginAdmin
         visible={isOpenLogin}
         onCreate={handleCreate}
-        onCancel={handleCancel}
       />
 
       {/* profile */}

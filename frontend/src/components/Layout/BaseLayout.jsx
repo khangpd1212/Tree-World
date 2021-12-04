@@ -3,14 +3,13 @@ import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import {
-  Blog,
+  About, Blog,
   Cart,
   Contact,
   Detail,
   Home,
   Payment,
-  Product,
-  About,
+  Product
 } from "pages";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,20 +20,17 @@ import { getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
 import { fetchProducts } from "redux/product";
 import { fetchGetUser } from "redux/user";
-import { ShowModalLogin } from "redux/modal";
-import useAutoLogin from "hooks/useAutoLogin";
-import useAuth from "hooks/useAuth";
 import "styles/BaseLayout.scss";
 import "styles/global.scss";
 import "styles/handleDarkMode.scss";
+
 const { Content } = Layout;
 
 export default function BaseLayout() {
   const dispatch = useDispatch();
   const layout = useSelector((state) => state.layoutState.layoutStatus);
   const [themeState, setThemeState] = useState(false);
-  const { autoLogin } = useAutoLogin();
-  const { isAdmin, id } = useAuth()
+
 
   useEffect(() => {
     const getTheme = localStorage.getItem("Theme");
@@ -62,9 +58,7 @@ export default function BaseLayout() {
     dispatch(getAddress());
   }, [dispatch]);
 
-  useEffect(() => {
-      id && autoLogin(id, isAdmin);
-  }, [id]);
+
   return (
     <div className="root-base">
       <div className="theme-witch-wrapper">

@@ -3,6 +3,7 @@ import {
   createSlice,
   createAsyncThunk,
 } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   userList: [],
@@ -39,10 +40,22 @@ export const fetchLogin = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       let { data } = await axios.post("auth/login/", body);
-      data.isAdmin === false && localStorage.setItem("token", JSON.stringify(data.accessToken));
-      return data.isAdmin === false ? data : {};
+      if (data.isAdmin === false){
+        localStorage.setItem("token", JSON.stringify(data.accessToken));
+        return data;
+      }else{
+        toast.error(`Login is error`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+        return {};
+      }
     } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
+      toast.error(`Login is error`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+      return {};
     }
   }
 );
@@ -51,10 +64,22 @@ export const fetchLoginAdmin = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       let { data } = await axios.post("auth/login/", body);
-      data.isAdmin  === true && localStorage.setItem("tokenAdmin", JSON.stringify(data.accessToken))
-      return data.isAdmin === true ? data : {}
+      if (data.isAdmin === true) {
+        localStorage.setItem("tokenAdmin", JSON.stringify(data.accessToken));
+        return data;
+      } else {
+        toast.error(`Login is error`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+        return {};
+      }
     } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
+      toast.error(`Login is error`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+      return {};
     }
   }
 );

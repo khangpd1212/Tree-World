@@ -1,8 +1,8 @@
-import { Avatar, Badge, Divider, Drawer } from "antd";
+import { Avatar, Badge, Drawer } from "antd";
 import { useSelector } from "react-redux";
 import { selectUsers } from "redux/user";
 import ListOrder from "./ListOrder";
-import StepOrder from "./StepOrder";
+
 export default function DrawerOrder(props) {
   const { userItems } = useSelector(selectUsers);
   const title = (
@@ -37,8 +37,6 @@ export default function DrawerOrder(props) {
       headerStyle={{ padding: 20 }}
       drawerStyle={{ backgroundColor: "white" }}
     >
-      <StepOrder />
-      <Divider />
       <ListOrder />
     </Drawer>
   );

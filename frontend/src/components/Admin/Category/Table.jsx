@@ -11,24 +11,23 @@ export default function TableCategory() {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
   const dispatch = useDispatch();
-  const { userItems } = useSelector((state) => state.userState);
-  const token = userItems.accessToken;
+
   useEffect(() => {
     dispatch(fetchCatalogs());
   }, [dispatch]);
-  console.log(catalogList);
+
   const onEdit = (data) => {
     setSelected(data);
     setVisible(true);
   };
   const handleChangeStatus = (e, id) => {
-    requests.editCatalog(token, { status: e }, id).then((res) => {
-      console.log(res);
-
-      dispatch(fetchCatalogs());
-      toast.success(`Changed status`, {
-        autoClose: 2000,
-      });
+    requests.editCatalog({ status: e }, id).then((res) => {
+      if (res){
+         dispatch(fetchCatalogs());
+        toast.success(`Changed status`, {
+          autoClose: 2000,
+        });
+      }
     });
   };
   const columns = [

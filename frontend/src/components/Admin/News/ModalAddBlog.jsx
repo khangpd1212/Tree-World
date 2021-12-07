@@ -35,7 +35,7 @@ export default function ModalAddBlog({ visible, setVisible }) {
   const { adminItems } = useSelector((state) => state.userState);
   const [imgBase64, setImgBase64] = useState("");
   const dispatch = useDispatch();
-  const token = adminItems.isAdmin ? adminItems.accessToken : null;
+
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -53,7 +53,7 @@ export default function ModalAddBlog({ visible, setVisible }) {
     ) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.addBlog(token, blog, imgBase64, adminItems._id).then((res) => {
+      requests.addBlog(blog, imgBase64, adminItems._id).then((res) => {
         console.log(res);
         if (res.status) {
           dispatch(fetchBlogs());

@@ -4,6 +4,7 @@ const instance = axios.create({
   baseURL: "http://localhost:8800/",
 });
 
+const token = JSON.parse(localStorage.getItem("tokenAdmin"));
 export const requests = {
   async fetchAllProduct() {
     const { data } = await instance.get("/product");
@@ -13,7 +14,7 @@ export const requests = {
     const { data } = await instance.get("/product/" + id);
     return data;
   },
-  async editProduct(token, body, id) {
+  async editProduct( body, id) {
     const config = {
       method: "put",
       url: "/product/" + id,
@@ -25,7 +26,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async addProduct(token, body, img) {
+  async addProduct(body, img) {
     console.log("img", img);
     const config = {
       method: "post",
@@ -44,7 +45,7 @@ export const requests = {
     }
     return Promise.reject();
   },
-  async deleteProduct(token, id) {
+  async deleteProduct(id) {
     const config = {
       method: "delete",
       url: "/product/" + id,
@@ -61,7 +62,7 @@ export const requests = {
     const { data } = await instance.get("/catalog");
     return data;
   },
-  async addCatalog(token, body) {
+  async addCatalog(body) {
     const config = {
       method: "post",
       url: "/catalog/",
@@ -74,7 +75,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async editCatalog(token, body, id) {
+  async editCatalog(body, id) {
     const config = {
       method: "put",
       url: `/catalog/${id}`,
@@ -88,7 +89,7 @@ export const requests = {
     return data;
   },
   //voucher
-  async addVoucher(token, body) {
+  async addVoucher(body) {
     const config = {
       method: "post",
       url: "/voucher/",
@@ -101,7 +102,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async editVoucher(token, body, id) {
+  async editVoucher(body, id) {
     const config = {
       method: "put",
       url: `/voucher/${id}`,
@@ -116,7 +117,7 @@ export const requests = {
   },
 
   //blog
-  async addBlog(token, body, img, id) {
+  async addBlog(body, img, id) {
     const config = {
       method: "post",
       url: "/blog/",
@@ -134,6 +135,20 @@ export const requests = {
     return data;
   },
 
+  async editBlog(body, id) {
+    const config = {
+      method: "put",
+      url: `/blog/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+
   async getAddressByUser(idUser) {
     const config = {
       method: 'get',
@@ -142,11 +157,10 @@ export const requests = {
     const { data } = await instance(config)
     return data
   },
-
-  async editBlog(token, body, id) {
+  async editUser(body, id) {
     const config = {
       method: "put",
-      url: `/blog/${id}`,
+      url: `/user/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

@@ -8,11 +8,10 @@ import { requests } from 'utils/axios';
 
 
 export default function TableComment() {
-    const token = JSON.parse(localStorage.getItem("tokenAdmin"));
     const dispatch = useDispatch()
 
     function confirm(id) {
-        requests.deleteProduct(token, id)
+        requests.deleteProduct(id)
             .then(res => {
                 dispatch(fetchGetComment())
                 message.success('delete success')

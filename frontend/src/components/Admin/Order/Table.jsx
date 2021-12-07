@@ -41,6 +41,9 @@ export default function TableOrder() {
         autoClose: 2000,
       });
     });
+    setTimeout(() => {
+      dispatch(getOrders());
+    }, 2000);
   };
 
   // const onChange = (pagination, filters, sorter, extra) => {

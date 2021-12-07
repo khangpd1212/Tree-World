@@ -1,15 +1,15 @@
 import React from 'react'
 import { Col, Row } from "antd";
 import { InfoCircleFilled } from '@ant-design/icons';
-import Button from '../../components/utils/Button';
-import "../../styles/Home/Recommend.scss"
+import Button from 'components/utils/Button';
+import "styles/Home/Recommend.scss"
 export default function RecommendHome() {
    return (
       <Row className="section_hot container_home" align="middle">
          <Col lg={11} xl={12}>
             <Row align="middle" className="section_hot__left">
                <Col className="section_hot__img" xs={24} sm={15} lg={16} xl={12}>
-                  <img srcSet="./images/section3.png" alt="img_plots" />
+                  <img src="./images/section3.png" alt="img_plots" />
                </Col>
                <Col className="section_hot__card" xs={0} sm={9} lg={8} xl={12}>
                   <div className="card--top card__flex">

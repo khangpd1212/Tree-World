@@ -1,6 +1,5 @@
 // user
 export { default as Home } from "./Home";
-export { default as Users } from "./Users";
 export { default as Product } from "./Product";
 export { default as Detail } from "./Detail";
 export { default as LoginMobile } from "./Login/LoginMobile";

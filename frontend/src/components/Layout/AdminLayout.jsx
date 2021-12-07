@@ -39,7 +39,7 @@ export default function AdminLayout() {
     dispatch(getOrderDetail());
     dispatch(getAddress());
     dispatch(fetchGetVoucher());
-
+    dispatch(fetchCatalogs());
   }, [dispatch]);
 
   return (

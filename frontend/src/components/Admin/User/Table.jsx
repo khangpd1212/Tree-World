@@ -1,5 +1,4 @@
-import { Button, message, Popconfirm, Space, Table, Switch } from 'antd';
-import { useEffect } from 'react';
+import { message, Switch, Table } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetUser, selectUsers } from 'redux/user';

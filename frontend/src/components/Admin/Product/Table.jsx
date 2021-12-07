@@ -1,27 +1,18 @@
-import { Button, Image, message, Popconfirm, Space, Switch, Table } from "antd";
+import { Button, Image, Space, Switch, Table, Tag } from "antd";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { fetchProducts, selectProducts } from "redux/product";
+import { selectProducts } from "redux/product";
 import { requests } from "utils/axios";
-import ModalAddProduct from "./ModalAddProduct";
 import ModalEdit from "./ModalEdit";
 
 export default function TableProducts() {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
-  const dispatch = useDispatch();
+  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
+  
   const { productList } = useSelector(selectProducts);
 
-  function confirm(id) {
-    requests.deleteProduct(token, id).then((res) => {
-      dispatch(fetchProducts());
-      message.success("Delete success");
-    });
-  }
   const handleChangeStatus = (e, id) => {
     requests.editProduct(token, { status: e }, id).then((res) => {
       toast.success(`Status update success`, {
@@ -54,6 +45,19 @@ export default function TableProducts() {
       title: "Color",
       dataIndex: "color",
       key: "color",
+      render: (record) =>
+        record.map((item) =>
+          item === "#ffff" || item === "white" ? (
+            <Tag
+              style={{ color: "black", borderColor: "#00000014" }}
+              color={{ item }}
+            >
+              {item}
+            </Tag>
+          ) : (
+            <Tag color={item}>{item}</Tag>
+          )
+        ),
     },
     {
       title: "Price ($)",

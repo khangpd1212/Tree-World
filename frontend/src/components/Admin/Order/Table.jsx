@@ -13,6 +13,7 @@ export default function TableOrder() {
   const [dataOrder, setDataOrder] = useState([]);
   const dispatch = useDispatch();
   const { convertISO } = useConvertISO();
+
   useEffect(() => {
     const orderMap = orderList.map((item) => {
       return {
@@ -28,7 +29,7 @@ export default function TableOrder() {
     setDataOrder(orderMap);
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [orderList]);
-  console.log(dataOrder);
+
   useEffect(() => {
     dispatch(getOrders());
   }, [dispatch]);
@@ -46,9 +47,6 @@ export default function TableOrder() {
     }, 2000);
   };
 
-  // const onChange = (pagination, filters, sorter, extra) => {
-  //   console.log("params", pagination, filters, sorter, extra);
-  // }
   const columns = [
     {
       title: "Name",
@@ -60,6 +58,7 @@ export default function TableOrder() {
       title: "Date",
       dataIndex: "orderDate",
       key: "orderDate",
+      sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
     },
     {
       title: "Address",
@@ -125,13 +124,11 @@ export default function TableOrder() {
       <Table
         loading={loaded}
         columns={columns}
-        // rowKey={(record) => record.login.uuid}
         expandable={{
           expandedRowRender: (record) => <TableDetail id={record.key} />,
         }}
         scroll={{ y: 800 }}
         dataSource={dataOrder}
-        // onChange={handleTableChange}
       />
     </>
   );

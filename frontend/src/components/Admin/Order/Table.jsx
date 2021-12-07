@@ -38,6 +38,9 @@ export default function TableOrder() {
       position: "top-right",
       autoClose: 2000,
     });
+    setTimeout(() => {
+      dispatch(getOrders());
+    }, 2000);
   };
 
   const columns = [

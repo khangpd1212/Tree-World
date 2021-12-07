@@ -70,7 +70,7 @@ export const requests = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
     return data;
@@ -97,7 +97,7 @@ export const requests = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
     return data;
@@ -131,7 +131,7 @@ export const requests = {
         id_user: id,
       },
     };
-   const { data } = await instance(config);
+    const { data } = await instance(config);
     return data;
   },
 
@@ -151,16 +151,29 @@ export const requests = {
 
   async getAddressByUser(idUser) {
     const config = {
-      method: 'get',
+      method: "get",
       url: `/address/?idUser=${idUser}`,
     };
-    const { data } = await instance(config)
-    return data
+    const { data } = await instance(config);
+    return data;
   },
   async editUser(body, id) {
     const config = {
       method: "put",
       url: `/user/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async addComment(token, body) {
+    const config = {
+      method: "post",
+      url: "/comment/",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

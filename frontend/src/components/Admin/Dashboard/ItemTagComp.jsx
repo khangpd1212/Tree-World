@@ -1,5 +1,4 @@
-
-import "../../../styles/Admin/Dashboard/TagComp.scss";
+import "styles/Admin/Dashboard/TagComp.scss";
 export default function ItemTagComp(props) {
    return (
       <div className="tag" 

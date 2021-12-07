@@ -12,13 +12,12 @@ export default function News() {
   const { Column } = Table;
   const dispatch = useDispatch();
   const { blogList } = useSelector(selectBlogs);
-  const { userItems } = useSelector((state) => state.userState);
-  const token = userItems.accessToken;
+
   const [openAddBlog, setOpenAddBlog] = useState(false);
   const [selected, setSelected] = useState({});
   const [visible, setVisible] = useState(false);
   const handleChangeStatus = (e, id) => {
-    requests.editBlog(token, { status: e }, id).then((res) => {
+    requests.editBlog({ status: e }, id).then((res) => {
       console.log(res);
       if (res.status) {
         dispatch(fetchBlogs());

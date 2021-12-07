@@ -6,20 +6,14 @@ import { requests } from "utils/axios";
 // import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
+  const dispatch = useDispatch();
 
-    const token = JSON.parse(localStorage.getItem("tokenAdmin"));
-    const dispatch = useDispatch()
-
-    function confirm(id) {
-        requests.deleteProduct(token, id)
-            .then(res => {
-                dispatch(fetchGetComment())
-                message.success('delete success')
-            })
-    }
-
-
- 
+  function confirm(id) {
+    requests.deleteProduct(id).then((res) => {
+      dispatch(fetchGetComment());
+      message.success("delete success");
+    });
+  }
 
   const columns = [
     {

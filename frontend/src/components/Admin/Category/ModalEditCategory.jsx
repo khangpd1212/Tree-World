@@ -1,12 +1,11 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { fetchCatalogs, selectCatalogs } from "redux/catalog";
+import { fetchCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
 import { validations } from "utils/validation";
 
-const { Option } = Select;
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -20,20 +19,15 @@ export default function ModalEdit({
   visible,
   setVisible,
   selected,
-  setSelected,
 }) {
-  const { catalogList } = useSelector(selectCatalogs);
-
   const dispatch = useDispatch();
-  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
-  console.log(selected);
+
   const onFinish = (values) => {
     if (!validations.checkBlankSpace(values.catalog_name)) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.editCatalog(token, values, selected._id).then((res) => {
-        console.log(res);
-        if (res.updatedCatalog.status) {
+      requests.editCatalog(values, selected._id).then((res) => {
+        if (res.updatedCatalog) {
           dispatch(fetchCatalogs());
           setVisible(false);
           toast.success(`Update successfully!`);

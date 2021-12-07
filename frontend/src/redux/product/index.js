@@ -75,16 +75,13 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     //FETCH
     builder.addCase(fetchProducts.pending, (state) => {
-      state.productList = [];
-      state.loading = "loading";
+      return { ...state, loading: "loading" };
     });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.productList = action.payload;
-      state.loading = "loaded";
+      return { ...state, loading: "loaded", productList: action.payload };
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
-      state.error = action.error.message;
-      state.loading = "error";
+      return { ...state, loading: "error", error: action.error.message };
     });
     //FILTER
     builder.addCase(filterProducts.pending, (state) => {

@@ -4,9 +4,7 @@ import { useEffect } from "react";
 export default function StepOrder({ status }) {
   const { Step } = Steps;
   const [current, setCurrent] = useState(0);
-  const onChangeStep = (current) => {
-    setCurrent(current);
-  };
+
   useEffect(() => {
     if (status === "Pending") {
       setCurrent(0);

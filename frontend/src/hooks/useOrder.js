@@ -47,6 +47,7 @@ export default function useOrder() {
       id_product: item.product._id,
       quantity: item.quantity,
       inventory: item.product.inventory,
+      sold: item.product.sold,
     }))
 
     let dataOrder = [data_order, data_detail, data_inventory];

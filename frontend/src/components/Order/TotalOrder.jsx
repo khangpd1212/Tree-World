@@ -18,7 +18,6 @@ export default function TotalOrder(data) {
       )
     );
   }, []);
-  console.log(data);
   return (
     <Space direction="vertical" size={[0, 14]} style={{ width: "100%" }}>
       <Row justify="space-between" align="center">

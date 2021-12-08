@@ -55,7 +55,9 @@ router.put("/:id", verify, async (req, res) => {
       );
       if (!updatedComment)
         throw new Error("Something went wrong with updating comment");
-      res.status(200).json({ message: "update successfully", updatedComment });
+      res
+        .status(200)
+        .json({ message: "update successfully", status: true, updatedComment });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

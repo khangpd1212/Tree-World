@@ -22,7 +22,9 @@ export default function Home() {
   const { filterStatus } = useSelector((state) => state.layoutState);
   const filterOptions = useSelector((state) => state.filterState);
   const { loading } = useSelector(selectProducts);
-
+  const showFilterProduct = filterProduct.filter(
+    (item) => item.status === true
+  );
   const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
   useEffect(() => {
     dispatch(filterProducts(filterOptions));
@@ -35,7 +37,7 @@ export default function Home() {
         <HeaderProduct />
 
         {loading === "loaded" ? (
-          <SliderProduct products={filterProduct} />
+          <SliderProduct products={showFilterProduct} />
         ) : (
           <div className="spinner--loading">
             <Spin indicator={antIcon} />

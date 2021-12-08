@@ -42,10 +42,10 @@ export default function Profile() {
 
   const menu = (
     <Menu>
-      <Menu.Item key="1" onClick={handleLogout}>
+      <Menu.Item key="1" onClick={handleLogout} style={{ padding: "8px 20px" }}>
         <div>Logout</div>
       </Menu.Item>
-      <Menu.Item key="3">
+      <Menu.Item key="2" style={{ padding: "8px 20px" }}>
         <Link to="../">Client</Link>
       </Menu.Item>
     </Menu>

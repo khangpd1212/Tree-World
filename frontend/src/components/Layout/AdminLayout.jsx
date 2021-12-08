@@ -29,7 +29,7 @@ export default function AdminLayout() {
     dispatch(fetchBlogs());
     dispatch(fetchGetVoucher());
     dispatch(fetchProducts());
-    // dispatch(getOrders());
+    dispatch(getOrders());
     dispatch(fetchCatalogs());
     dispatch(getOrderDetail());
   }, [dispatch]);

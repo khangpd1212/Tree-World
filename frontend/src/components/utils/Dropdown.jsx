@@ -24,11 +24,11 @@ export default function DropdownOverlay() {
   }
   const menu = (
     <Menu>
-      <Menu.Item key="1" onClick={showDrawer}>
+      <Menu.Item key="1" onClick={showDrawer} style={{ padding: "8px 20px" }}>
         <div>My order</div>
       </Menu.Item>
       <DrawerOrder onClose={onClose} visible={visible} />
-      <Menu.Item key="2" onClick={handleLogout}>
+      <Menu.Item key="2" onClick={handleLogout} style={{ padding: "8px 20px" }}>
         <div>Logout</div>
       </Menu.Item>
     </Menu>

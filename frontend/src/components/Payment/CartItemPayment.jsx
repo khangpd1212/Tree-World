@@ -85,12 +85,8 @@ export default function CartItemPayment() {
                   align="middle"
                 >
                   <Col className="main__list--color">
-                    {cartItem.pickColor === "#ffff" ||
-                    cartItem.pickColor === "white" ? (
-                      <Tag
-                        style={{ color: "black" }}
-                        color={cartItem.pickColor}
-                      >
+                    {cartItem.pickColor === "white" ? (
+                      <Tag style={{ color: "black", borderColor: "#00000014" }}>
                         {cartItem.pickColor}
                       </Tag>
                     ) : (

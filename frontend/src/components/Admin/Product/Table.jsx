@@ -52,7 +52,11 @@ export default function TableProducts() {
             record.map((item) =>
               item === "#ffff" || item === "white" ? (
                 <Tag
-                  style={{ color: "black", borderColor: "#00000014" }}
+                  style={{
+                    marginTop: 10,
+                    color: "black",
+                    borderColor: "#00000014",
+                  }}
                 >
                   {item}
                 </Tag>
@@ -72,12 +76,14 @@ export default function TableProducts() {
           dataIndex="status"
           key="status"
           render={(value, record) => (
-            <Switch
-              defaultChecked={record.status}
-              onChange={(e) => {
-                handleChangeStatus(e, record._id);
-              }}
-            />
+            (
+              <Switch
+                checked={record.status}
+                onChange={(e) => {
+                  handleChangeStatus(e, record._id);
+                }}
+              />
+            )
           )}
         />
         <Column

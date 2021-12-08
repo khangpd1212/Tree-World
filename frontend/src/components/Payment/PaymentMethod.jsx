@@ -13,17 +13,23 @@ export default function PaymentMethod() {
 
   const [radio, setRadio] = useState(1);
   const [disabled, setDisabled] = useState(true);
+  const [disabledLocal, setDisabledLocal] = useState(() =>(
+    localStorage.getItem("checkDisabledMethod")
+  ))
 
   const onChangeRadio = (e) => {
     setRadio(e.target.value);
   };
   const handleBtnMethod = (value) => {
-    setDisabled(value);
+    localStorage.setItem("checkDisabledMethod", value);
+    setDisabledLocal(value)
   };
   useEffect(() => {
+    disabledLocal === "cod" ? setDisabled(true) : setDisabled(false);
+
     let cod = document.getElementById("cod");
     let wallet = document.getElementById("wallet");
-    if (disabled === false) {
+    if (disabledLocal === "wallet") {
       wallet.style.outline = "1px solid #d64848";
       wallet.style.color = "#d64848";
       cod.style.outline = "1px solid #898989";
@@ -34,7 +40,8 @@ export default function PaymentMethod() {
       wallet.style.outline = "1px solid #898989";
       wallet.style.color = "#898989";
     }
-  }, [disabled]);
+  }, [disabledLocal]);
+  
   return (
     <div className="method">
       <div className="method__top">
@@ -43,14 +50,14 @@ export default function PaymentMethod() {
           <button
             id="wallet"
             className="method__top--btn"
-            onClick={() => handleBtnMethod(false)}
+            onClick={() => handleBtnMethod("wallet")}
           >
             Electronic Wallet
           </button>
           <button
             id="cod"
             className="method__top--btn"
-            onClick={() => handleBtnMethod(true)}
+            onClick={() => handleBtnMethod("cod")}
           >
             Cod
           </button>

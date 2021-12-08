@@ -87,8 +87,6 @@ export default function ModalAddBlog({ visible, setVisible }) {
     setFileList(info.fileList);
     const hash = await getBase64(info.file.originFileObj);
     setImgBase64(hash);
-    console.log(info);
-    console.log(previewImage, previewVisible);
   };
   const [form] = Form.useForm();
 

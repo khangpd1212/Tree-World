@@ -65,7 +65,7 @@ export default function TableVoucher() {
       key: "status",
       render: (text, record) => (
         <Switch
-          defaultChecked={record.status}
+          checked={record.status}
           onChange={(e) => {
             handleChangeStatus(e, record._id);
           }}

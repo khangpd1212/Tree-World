@@ -9,6 +9,7 @@ import {
   Button,
   Input,
   Rate,
+  Tooltip,
 } from "antd";
 import useConvertISO from "hooks/useConvertISO";
 import { useEffect, useState } from "react";
@@ -78,12 +79,26 @@ export default function ListOrder() {
   console.log(orderUser);
   const description = (description, quantity, color) => (
     <>
-      <span style={{ display: "block" }}>Description: {description}</span>
+      <Tooltip
+        color="#3e8c7e"
+        placement="leftTop"
+        title={`Description: ${description}`}
+      >
+        <span
+          style={{
+            display: "block",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            width: "80%",
+          }}
+        >
+          Description: {description}
+        </span>
+      </Tooltip>
       <p>Quantity: {quantity}</p>
-      {color === "#ffff" || color === "white" ? (
-        <Tag style={{ color: "black" }} color={color}>
-          {color}
-        </Tag>
+      {color === "white" ? (
+        <Tag style={{ color: "black", borderColor: "#00000014" }}>{color}</Tag>
       ) : (
         <Tag color={color}>{color}</Tag>
       )}

@@ -33,6 +33,11 @@
         font-size: 15px;
         padding: 5px 12px;
       }
+
+      .watchNews:hover,
+      .seeProduct:hover {
+        background-color: #000;
+      }
     }
   }
 
@@ -72,6 +77,7 @@
       display: flex;
       justify-content: space-between;
 
+      
 
       .leftItem {
         &--top {
@@ -157,6 +163,11 @@
         border: 1px solid #2E2C2C;
       }
 
+      .albumBtn:hover {
+        background-color: #2E2C2C;
+        color: aliceblue;
+      }
+
       .downOutIcon {
         position: absolute;
         right: 0;
@@ -234,11 +245,12 @@
         justify-content: space-between;
       }
 
-      .center__content{
+      .center__content {
         display: flex;
         justify-content: space-between;
       }
-      .third__content{
+
+      .third__content {
         display: flex;
         justify-content: space-between;
       }

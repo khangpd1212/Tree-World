@@ -3,23 +3,29 @@ import { message, Space, Table, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetComment, selectComment } from "redux/comment";
 import { requests } from "utils/axios";
+import { toast } from "react-toastify";
 // import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
+  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
+  const dispatch = useDispatch();
 
-    const token = JSON.parse(localStorage.getItem("tokenAdmin"));
-    const dispatch = useDispatch()
-
-    function confirm(id) {
-        requests.deleteProduct(token, id)
-            .then(res => {
-                dispatch(fetchGetComment())
-                message.success('delete success')
-            })
-    }
-
-
- 
+  function confirm(id) {
+    requests.deleteProduct(token, id).then((res) => {
+      dispatch(fetchGetComment());
+      message.success("delete success");
+    });
+  }
+  const handleChangeStatus = (e, id) => {
+    requests.editComment(token, { status: e }, id).then((res) => {
+      if (res.status) {
+        dispatch(fetchGetComment());
+        toast.success("Changed successfully", {
+          autoClose: 2000,
+        });
+      }
+    });
+  };
 
   const columns = [
     {
@@ -45,7 +51,14 @@ export default function TableComment() {
     {
       title: "Status",
       key: "status",
-      render: (text, record) => <Switch defaultChecked={true} />,
+      render: (text, record) => (
+        <Switch
+          defaultChecked={record.status}
+          onChange={(e) => {
+            handleChangeStatus(e, record._id);
+          }}
+        />
+      ),
     },
   ];
 

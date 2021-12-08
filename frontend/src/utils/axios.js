@@ -183,6 +183,19 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
+  async editComment(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/comment/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
 };
 
 export const imgbbClient = axios.create({

@@ -287,9 +287,7 @@ export default function ModalEdit({
         <Form.Item label="Description">
           <Form.Item
             name="description"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            noStyle
+            hasFeedback
             rules={[
               {
                 required: true,

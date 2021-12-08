@@ -8,6 +8,7 @@ import {
   Upload,
   InputNumber,
   Image,
+  Tag,
 } from "antd";
 import React, { useState } from "react";
 import { useCallback } from "react";
@@ -126,6 +127,40 @@ export default function ModalEdit({
     }
   }, []);
 
+  const tagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return value === "white" ? (
+      <Tag
+        style={{ color: "black", borderColor: "#00000014" }}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    ) : (
+      <Tag
+        color={value}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    );
+  };
+  const options = [
+    { value: "white" },
+    { value: "green" },
+    { value: "orange" },
+    { value: "black" },
+  ];
   const FromEdit = useCallback(() => {
     return (
       <Form
@@ -237,11 +272,16 @@ export default function ModalEdit({
           </Modal>
         </Form.Item>
         <Form.Item name="color" label="Color" hasFeedback>
-          <Input
-            placeholder={selected.color}
+          <Select
+            mode="multiple"
+            showArrow
+            tagRender={tagRender}
             defaultValue={selected.color}
             value={selected.color}
+            style={{ width: "100%" }}
+            options={options}
           />
+          ,
         </Form.Item>
 
         <Form.Item label="Description">

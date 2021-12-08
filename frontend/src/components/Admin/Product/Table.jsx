@@ -53,7 +53,6 @@ export default function TableProducts() {
               item === "#ffff" || item === "white" ? (
                 <Tag
                   style={{ color: "black", borderColor: "#00000014" }}
-                  color={{ item }}
                 >
                   {item}
                 </Tag>

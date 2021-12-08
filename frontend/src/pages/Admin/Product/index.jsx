@@ -18,6 +18,3 @@ export default function ProductAdmin() {
         </>
     )
 }
-function onChange(checked) {
-    console.log(`switch to ${checked}`);
-}

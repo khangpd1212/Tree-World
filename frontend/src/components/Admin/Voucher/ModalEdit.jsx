@@ -1,13 +1,11 @@
-import { Button, Form, Modal, Select, Switch, Input } from 'antd';
-import React, { useState } from 'react';
-import { useCallback } from 'react';
+import { Button, DatePicker, Form, Input, InputNumber, Modal } from "antd";
+import useConvertISO from "hooks/useConvertISO";
+import moment from "moment";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector, useEffect } from 'react-redux';
 import { toast } from "react-toastify";
-import { fetchGetVoucher, selectVouchers } from 'redux/voucher';
-import { requests } from 'utils/axios';
-
-const { Option } = Select;
+import { fetchGetVoucher } from "redux/voucher";
+import { requests } from "utils/axios";
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -17,113 +15,163 @@ const formItemLayout = {
   },
 };
 
-export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
-  const { voucherList } = useSelector(selectVouchers);
+export default function ModalEdit({
+  visible,
+  setVisible,
+  selected,
+  setSelected,
+}) {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-  const userItems = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItems.accessToken;
-  console.log(selected)
+  const dateFormat = "DD/MM/YYYY HH:mm:ss";
+  const { convertISO } = useConvertISO();
+
   const onFinish = (values) => {
-    requests
-      .editVoucher(token, values, selected._id)
-      .then((res) => {
-        console.log(res);
-        if (res.updatedVoucher.status) {
-          dispatch(fetchGetVoucher());
-          setVisible(false);
-          toast.success(`Update successfully!`);
-        } else {
-          toast.error("Failed");
-        }
-      });
+    requests.editVoucher(values, selected._id).then((res) => {
+      if (res.updatedVoucher) {
+        dispatch(fetchGetVoucher());
+        setVisible(false);
+        toast.success(`Update successfully!`);
+      } else {
+        toast.error("Failed");
+      }
+    });
   };
 
+  function disabledDate(current) {
+    return current && current < moment().endOf("day");
+  }
 
   const FromEdit = useCallback(() => {
-    return <Form
-      name="validate_other"
-      {...formItemLayout}
-      onFinish={onFinish}
-      initialValues={{
-        'voucherCode': selected.voucherCode,
-        'percent': selected.percent,
-        'createDate': selected.createDate,
-        'expiryDate': selected.expiryDate,
-        'maximum': selected.maximum,
-        'status': selected.status ?? false,
-      }}
-    >
-      <Form.Item
-        name="voucherCode"
-        label="Voucher Code"
-        hasFeedback
-        placeholder="Catalog"
-      >
-        <Input defaultValue={selected.voucherCode} />
-      </Form.Item>
-      <Form.Item
-        name="percent"
-        label="Percent (%)"
-        hasFeedback
-        placeholder="percent"
-      >
-        <Input defaultValue={selected.percent} />
-      </Form.Item>
-      <Form.Item
-        name="createDate"
-        label="Create Date"
-        hasFeedback
-        placeholder="createDate"
-      >
-        <Input defaultValue={selected.createDate} />
-      </Form.Item>
-      <Form.Item
-        name="expiryDate"
-        label="Expiry Date"
-        hasFeedback
-        placeholder="expiryDate"
-      >
-        <Input defaultValue={selected.expiryDate} />
-      </Form.Item>
-      <Form.Item
-        name="maximum"
-        label="Maximum"
-        hasFeedback
-        placeholder="maximum"
-      >
-        <Input defaultValue={selected.maximum} />
-      </Form.Item>
-
-      <Form.Item
-        wrapperCol={{
-          span: 12,
-          offset: 6,
+    return (
+      <Form
+        name="validate_other"
+        {...formItemLayout}
+        onFinish={onFinish}
+        initialValues={{
+          voucherCode: selected.voucherCode,
+          percent: selected.percent,
+          createDate: moment(convertISO(selected.createDate), dateFormat),
+          expiryDate: moment(convertISO(selected.expiryDate), dateFormat),
+          maximum: selected.maximum,
+          status: selected.status ?? false,
         }}
       >
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button onClick={() => setVisible(false)}>
-          Cancel
-        </Button>
-      </Form.Item>
-    </Form>
-  }, [selected, setVisible])
+        <Form.Item
+          name="voucherCode"
+          label="Voucher Code"
+          hasFeedback
+          placeholder="Catalog"
+          rules={[
+            {
+              required: true,
+              message: "Please input voucher code!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="percent"
+          label="Percent (%)"
+          hasFeedback
+          placeholder="percent"
+          rules={[
+            {
+              required: true,
+              message: "Please input percent!",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+        <Form.Item
+          name="createDate"
+          label="Create Date"
+          hasFeedback
+          rules={[
+            {
+              type: "object",
+              required: true,
+              message: "Please select create date!",
+            },
+          ]}
+        >
+          <DatePicker
+            showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }}
+            disabledDate={disabledDate}
+            format={dateFormat}
+          />
+        </Form.Item>
+        <Form.Item
+          name="expiryDate"
+          label="Expiry Date"
+          hasFeedback
+          rules={[
+            {
+              type: "object",
+              required: true,
+              message: "Please select expiry date!",
+            },
+          ]}
+        >
+          <DatePicker
+            showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }}
+            disabledDate={disabledDate}
+            format={dateFormat}
+          />
+        </Form.Item>
+        <Form.Item
+          name="maximum"
+          label="Maximum"
+          hasFeedback
+          placeholder="maximum"
+          rules={[
+            {
+              required: true,
+              message: "Please input maximum!",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
 
-  return <>
-    <Modal
-      title="Edit Voucher"
-      centered
-      visible={visible}
-      onOk={() => setVisible(false)}
-      onCancel={() => setVisible(false)}
-      footer={false}
-      width="50%"
-      className="edit-voucher"
-    >
-      <FromEdit />
-    </Modal>
-  </>
+        <Form.Item
+          wrapperCol={{
+            span: 12,
+            offset: 6,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <Button
+            onClick={() => {
+              setVisible(false);
+              setSelected({});
+            }}
+          >
+            Cancel
+          </Button>
+        </Form.Item>
+      </Form>
+    );
+  }, [selected, setVisible]);
 
+  return (
+    <>
+      <Modal
+        title="Edit Voucher"
+        centered
+        visible={visible}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
+        footer={false}
+        width="50%"
+        className="edit-voucher"
+      >
+        <FromEdit />
+      </Modal>
+    </>
+  );
 }

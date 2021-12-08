@@ -1,14 +1,13 @@
-import { Modal, Select, Button, Form, Input } from "antd";
-import {
-  selectModals,
-  onOkDefaultAddress,
-  onCancelDefaultAddress,
-  ShowModalAddress,
-} from "redux/modal";
+import { Button, Form, Input, Modal, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { selectAddress } from "redux/address";
-import { selectUsers } from "redux/user";
 import { showTextAddress } from "redux/address/province";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  onCancelDefaultAddress, selectModals, ShowModalAddress
+} from "redux/modal";
+import { selectUsers } from "redux/user";
+import { patterns, validations } from "utils/validation";
 export default function DefaultAddress() {
   const { Option } = Select;
   const { isShowDefaultAddress } = useSelector(selectModals);
@@ -27,22 +26,18 @@ export default function DefaultAddress() {
   const handleCreate = (values) => {
     localStorage.setItem(
       "address",
-      JSON.stringify(
-        {
-          ...values,
-          district_id: addressRender[0].district_id,
-          ward_code: addressRender[0].ward_code,
-        },
-      )
+      JSON.stringify({
+        ...values,
+        district_id: addressRender[0].district_id,
+        ward_code: addressRender[0].ward_code,
+      })
     );
     dispatch(
-      showTextAddress(
-        {
-          ...values,
-          district_id: addressRender[0].district_id,
-          ward_code: addressRender[0].ward_code,
-        },
-      )
+      showTextAddress({
+        ...values,
+        district_id: addressRender[0].district_id,
+        ward_code: addressRender[0].ward_code,
+      })
     );
     dispatch(onCancelDefaultAddress(false));
   };
@@ -54,16 +49,18 @@ export default function DefaultAddress() {
       onCancel={() => dispatch(onCancelDefaultAddress(false))}
       footer={
         <>
-          <Button onClick={showAddress}>
-            New Address
-          </Button>
+          <Button onClick={showAddress}>New Address</Button>
           <Button
             onClick={() => {
               form
                 .validateFields()
                 .then((values) => {
-                  form.resetFields();
-                  handleCreate(values);
+                  if (!validations.checkBlankSpace(values.name)) {
+                    toast.error("You are not allowed text only white space");
+                  } else {
+                    form.resetFields();
+                    handleCreate(values);
+                  }
                 })
                 .catch((info) => {
                   console.log("Validate Failed:", info);
@@ -97,9 +94,13 @@ export default function DefaultAddress() {
               required: true,
               message: "Please input your phone!",
             },
+            {
+              pattern: patterns.phonePattern,
+              message: "Wrong phone number format",
+            },
           ]}
         >
-          <Input type="number" placeholder="Input phone" />
+          <Input type="tel" placeholder="Input phone" />
         </Form.Item>
         <Form.Item
           label="Address"

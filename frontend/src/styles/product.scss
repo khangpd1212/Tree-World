@@ -529,7 +529,7 @@
       &--img {
         margin-bottom: 5px;
         overflow: hidden;
-        height: 25vw;
+        height: 18vw;
         @include tablet1 {
           height: 35vw;
         }
@@ -537,6 +537,7 @@
           height: 50vw;
         }
         img {
+          object-fit: cover;
           transition: all 0.4s;
         }
       }

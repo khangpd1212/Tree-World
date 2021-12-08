@@ -5,7 +5,7 @@ const verify = require("../middlewares/verify");
 // orderDate: { $exists: 1 },
 router.get("/", async (req, res) => {
   try {
-    const orders = await Order.find().sort({orderDate: -1,});
+    const orders = await Order.find().sort({ orderDate: -1 });
     if (!orders) throw new Error("No items");
     res.status(200).json(orders);
   } catch (error) {
@@ -26,15 +26,8 @@ router.get("/:id", async (req, res) => {
 //user is not allowed create, update or delete
 //CREATE
 router.post("/", async (req, res) => {
-  const {
-    username,
-    address,
-    status,
-    phoneNumber,
-    toTal,
-    idUser,
-    idVoucher
-  } = req.body;
+  const { username, address, status, phoneNumber, toTal, idUser, idVoucher } =
+    req.body;
 
   const newOrder = new Order({
     username,
@@ -43,7 +36,7 @@ router.post("/", async (req, res) => {
     phoneNumber,
     toTal,
     idUser,
-    idVoucher
+    idVoucher,
   });
   try {
     const order = await newOrder.save();
@@ -52,30 +45,25 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-
 });
 
 //UPDATE
 router.put("/:id", verify, async (req, res) => {
-  if (req.user.isAdmin) {
-    try {
-      const updatedOrder = await Order.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body,
-        },
-        {
-          new: true,
-        }
-      );
-      if (!updatedOrder)
-        throw new Error("Something went wrong with updating order");
-      res.status(200).json({ message: "update successfully", updatedOrder });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  } else {
-    res.status(403).json({ message: "You are not allowed" });
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+      }
+    );
+    if (!updatedOrder)
+      throw new Error("Something went wrong with updating order");
+    res.status(200).json({ message: "update successfully", updatedOrder });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 

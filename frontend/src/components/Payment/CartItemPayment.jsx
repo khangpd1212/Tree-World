@@ -30,8 +30,7 @@ export default function CartItemPayment() {
   useEffect(() => {
     requests.getAddressByUser(userItems._id).then((result) => {
       let addressLast = result.slice(-1)[0];
-      let addressLocal = JSON.parse(localStorage.getItem("address"));
-      if (Object.keys(addressLocal).length === 0) {
+      if (Object.keys(textAddress).length === 0) {
         dispatch(
           showTextAddress({
             address: addressLast && addressLast.content,

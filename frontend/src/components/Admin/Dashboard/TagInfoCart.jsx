@@ -1,16 +1,13 @@
 import {
-  UserOutlined,
-  ShoppingCartOutlined,
-  PercentageOutlined,
+  PercentageOutlined, ShoppingCartOutlined, UserOutlined
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { selectUsers } from "redux/user";
-import "../../../styles/Admin/Dashboard/TagInfoCart.scss";
+import "styles/Admin/Dashboard/TagInfoCart.scss";
 export default function TagInfoCart() {
   const { userList } = useSelector(selectUsers);
   const { orderList } = useSelector((state) => state.orderState);
   const user = userList && userList.filter((item) => !item.isAdmin);
-  console.log(user);
 
   return (
     <div className="tag_outline">

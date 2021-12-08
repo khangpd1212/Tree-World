@@ -1,32 +1,27 @@
-import { Button, Image, message, Popconfirm, Space, Switch, Table } from "antd";
+import { Button, Image, Space, Switch, Table, Tag } from "antd";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchProducts, selectProducts } from "redux/product";
 import { requests } from "utils/axios";
-import ModalAddProduct from "./ModalAddProduct";
 import ModalEdit from "./ModalEdit";
 
 export default function TableProducts() {
+  const { Column } = Table;
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
+
   const dispatch = useDispatch();
   const { productList } = useSelector(selectProducts);
 
-  function confirm(id) {
-    requests.deleteProduct(token, id).then((res) => {
-      dispatch(fetchProducts());
-      message.success("Delete success");
-    });
-  }
   const handleChangeStatus = (e, id) => {
-    requests.editProduct(token, { status: e }, id).then((res) => {
-      toast.success(`Status update success`, {
-        autoClose: 2000,
-      });
+    requests.editProduct({ status: e }, id).then((res) => {
+      if (res.status) {
+        dispatch(fetchProducts());
+        toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
+          autoClose: 2000,
+        });
+      }
     });
   };
 
@@ -34,72 +29,70 @@ export default function TableProducts() {
     setSelected(data);
     setVisible(true);
   };
-  const columns = [
-    {
-      title: "Image URL",
-      dataIndex: "image",
-      key: "image",
-      render: (value, record) => (
-        <Space size="middle">
-          <Image width={100} src={value} />
-        </Space>
-      ),
-    },
-    {
-      title: "Product Name",
-      dataIndex: "product_name",
-      key: "product_name",
-    },
-    {
-      title: "Color",
-      dataIndex: "color",
-      key: "color",
-    },
-    {
-      title: "Price ($)",
-      dataIndex: "price",
-      key: "price",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: "Inventory",
-      dataIndex: "inventory",
-      key: "inventory",
-    },
-
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (value, record) => (
-        <Switch
-          defaultChecked={record.status}
-          onChange={(e) => {
-            handleChangeStatus(e, record._id);
-          }}
-        />
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Button type="primary" onClick={() => onEdit(record)}>
-            Edit
-          </Button>
-        </Space>
-      ),
-    },
-  ];
 
   return (
     <>
-      <Table columns={columns} dataSource={productList} />
+      <Table dataSource={productList}>
+        <Column
+          title="Image"
+          dataIndex="image"
+          key="image"
+          render={(text, record) => <Image src={record.image} width="150px" />}
+        />
+        <Column
+          title="Product Name"
+          dataIndex="product_name"
+          key="product_name"
+        />
+        <Column
+          title="Color"
+          dataIndex="color"
+          key="color"
+          render={(record) =>
+            record.map((item) =>
+              item === "#ffff" || item === "white" ? (
+                <Tag
+                  style={{ color: "black", borderColor: "#00000014" }}
+                  color={{ item }}
+                >
+                  {item}
+                </Tag>
+              ) : (
+                <div style={{ marginTop: 10 }}>
+                  <Tag color={item}>{item}</Tag>
+                </div>
+              )
+            )
+          }
+        />
+        <Column title="Description" dataIndex="description" key="description" />
+        <Column title="Price ($)" dataIndex="price" key="price" />
+        <Column title="Inventory" dataIndex="inventory" key="inventory" />
+        <Column
+          title="Status"
+          dataIndex="status"
+          key="status"
+          render={(value, record) => (
+            <Switch
+              defaultChecked={record.status}
+              onChange={(e) => {
+                handleChangeStatus(e, record._id);
+              }}
+            />
+          )}
+        />
+        <Column
+          title="Action"
+          key="action"
+          render={(text, record) => (
+            <Space size="middle">
+              <Button type="primary" onClick={() => onEdit(record)}>
+                Edit
+              </Button>
+            </Space>
+          )}
+        />
+      </Table>
       <ModalEdit
         visible={visible}
         setVisible={setVisible}

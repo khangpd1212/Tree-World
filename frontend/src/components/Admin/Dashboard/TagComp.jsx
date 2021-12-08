@@ -14,7 +14,10 @@ export default function TagComp() {
   const cancelOrder =
     orderList && orderList.filter((item) => item.status === "Cancelled");
   const completeOrder =
-    orderList && orderList.filter((item) => item.status === "Completed");
+    orderList &&
+    orderList.filter(
+      (item) => item.status === "Completed" || item.status === "Reviewed"
+    );
   const total =
     completeOrder.length > 0
       ? completeOrder.length > 1

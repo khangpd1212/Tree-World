@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs } from "redux/blog";
 import { requests } from "utils/axios";
-
+import { validations } from "utils/validation";
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -32,10 +32,10 @@ function getBase64(file) {
   });
 }
 export default function ModalAddBlog({ visible, setVisible }) {
-  const { userItems } = useSelector((state) => state.userState);
+  const { adminItems } = useSelector((state) => state.userState);
   const [imgBase64, setImgBase64] = useState("");
   const dispatch = useDispatch();
-  const token = userItems.isAdmin ? userItems.accessToken : null;
+
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -47,18 +47,25 @@ export default function ModalAddBlog({ visible, setVisible }) {
   });
   const onFinish = (values) => {
     // console.log(imgBase64);
-    requests.addBlog(token, blog, imgBase64, userItems._id).then((res) => {
-      console.log(res);
-      if (res.status) {
-        dispatch(fetchBlogs());
-        form.resetFields();
-        setFileList([]);
-        setVisible(false);
-        toast.success("Add new blog succesfully!");
-      } else {
-        toast.error("Failed");
-      }
-    });
+    if (
+      !validations.checkBlankSpace(values.title) ||
+      !validations.checkBlankSpace(values.content)
+    ) {
+      toast.error("You are not allowed text only white space");
+    } else {
+      requests.addBlog(blog, imgBase64, adminItems._id).then((res) => {
+        console.log(res);
+        if (res.status) {
+          dispatch(fetchBlogs());
+          form.resetFields();
+          setFileList([]);
+          setVisible(false);
+          toast.success("Add new blog succesfully!");
+        } else {
+          toast.error("Failed");
+        }
+      });
+    }
   };
   const onFinishFailed = (err) => {
     toast.error(`Failed: ${err}`);

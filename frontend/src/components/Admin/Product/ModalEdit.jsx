@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { selectCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
 import { requests } from "utils/axios";
+import { validations } from "utils/validation";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -46,39 +47,49 @@ export default function ModalEdit({
   const { catalogList } = useSelector(selectCatalogs);
   const [imgBase64, setImgBase64] = useState("");
   const [fileList, setFileList] = useState([]);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   let catalogSeleted =
     catalogList &&
     selected &&
     catalogList.find((f) => f._id === selected.catalog_id);
   const dispatch = useDispatch();
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
+
   const onFinish = (values) => {
-    console.log(values);
-    if (imgBase64 !== "") {
-      requests
-        .editProduct(token, { ...values, image: imgBase64 }, selected._id)
-        .then((res) => {
-          if (res.status) {
-            dispatch(fetchProducts());
-            setVisible(false);
-            toast.success("Update product success");
-          } else {
-            toast.error("Fail!!");
-          }
-        })
-        .catch((err) => toast.warning(err));
+    if (
+      !validations.checkBlankSpace(values.product_name) ||
+      !validations.checkBlankSpace(values.description) ||
+      !validations.checkBlankSpace(values.color)
+    ) {
+      toast.error("You are not allowed text only white space");
     } else {
-      requests
-        .editProduct(token, values, selected._id)
-        .then((res) => {
-          if (res.status) {
-            dispatch(fetchProducts());
-            setVisible(false);
-            toast.success("Update product success");
-          }
-        })
-        .catch((err) => toast.warning(err));
+      if (imgBase64 !== "") {
+        requests
+          .editProduct({ ...values, image: imgBase64 }, selected._id)
+          .then((res) => {
+            console.log(res);
+            if (res.updatedProduct) {
+              dispatch(fetchProducts());
+              setVisible(false);
+              toast.success("Update product success");
+            } else {
+              toast.error("Fail!!");
+            }
+          })
+          .catch((err) => toast.warning(err));
+      } else {
+        requests
+          .editProduct(values, selected._id)
+          .then((res) => {
+            if (res.updatedProduct) {
+              dispatch(fetchProducts());
+              setVisible(false);
+              toast.success("Update product success");
+            }
+          })
+          .catch((err) => toast.warning(err));
+      }
     }
   };
 
@@ -91,10 +102,29 @@ export default function ModalEdit({
     });
   }
 
-  const handleChange = async (info) => {
-    const hash = await getBase64(info.file.originFileObj);
-    setImgBase64(hash);
-  };
+  const handleCancel = () => setPreviewVisible(false);
+  const handlePreview = useCallback(async (file) => {
+    setPreviewVisible(true);
+
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  }, []);
+
+  const handleChange = useCallback(async (info) => {
+    if (info.file.status === "uploading") {
+      info.file.status = "done";
+    }
+    if (info.file.status === "done") {
+      const hash = await getBase64(info.file.originFileObj);
+      setImgBase64(hash);
+      setFileList(info.fileList);
+    }
+  }, []);
 
   const FromEdit = useCallback(() => {
     return (
@@ -114,7 +144,17 @@ export default function ModalEdit({
           color: selected.color,
         }}
       >
-        <Form.Item name="product_name" label="Product Name" hasFeedback>
+        <Form.Item
+          name="product_name"
+          label="Product Name"
+          rules={[
+            {
+              required: true,
+              message: "Please input product name!",
+            },
+          ]}
+          hasFeedback
+        >
           <Input
             placeholder={selected.product_name}
             defaultValue={selected.product_name}
@@ -140,16 +180,34 @@ export default function ModalEdit({
           </Select>
         </Form.Item>
 
-        <Form.Item name="inventory" label="Iventory" valuePropName="isHot">
-          <Form.Item name="inventory" noStyle>
+        <Form.Item label="Iventory" valuePropName="isHot">
+          <Form.Item
+            name="inventory"
+            noStyle
+            rules={[
+              {
+                required: true,
+                message: "Please input inventory!",
+              },
+            ]}
+          >
             <InputNumber min={1} defaultValue={selected.inventory} />
           </Form.Item>
           <span className="ant-form-text"> Price:</span>
-          <Form.Item name="price" noStyle>
+          <Form.Item
+            name="price"
+            noStyle
+            rules={[
+              {
+                required: true,
+                message: "Please input price!",
+              },
+            ]}
+          >
             <InputNumber min={1} defaultValue={selected.price} />
           </Form.Item>
         </Form.Item>
-        
+
         <Form.Item
           label="Image"
           valuePropName="fileList"
@@ -160,6 +218,7 @@ export default function ModalEdit({
             listType="picture-card"
             fileList={fileList}
             onChange={handleChange}
+            onPreview={handlePreview}
           >
             {fileList.length >= 1 ? null : (
               <div>
@@ -168,6 +227,14 @@ export default function ModalEdit({
               </div>
             )}
           </Upload>
+          <Modal
+            visible={previewVisible}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          </Modal>
         </Form.Item>
         <Form.Item name="color" label="Color" hasFeedback>
           <Input
@@ -180,9 +247,13 @@ export default function ModalEdit({
         <Form.Item label="Description">
           <Form.Item
             name="description"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            noStyle
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Please input description!",
+              },
+            ]}
           >
             <Input.TextArea defaultValue={selected.description} />
           </Form.Item>
@@ -197,11 +268,25 @@ export default function ModalEdit({
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
-          <Button onClick={() => setVisible(false)}>Cancel</Button>
+          <Button
+            onClick={() => {
+              setVisible(false);
+              setSelected({});
+            }}
+          >
+            Cancel
+          </Button>
         </Form.Item>
       </Form>
     );
-  }, [selected, imgBase64]);
+  }, [
+    selected,
+    imgBase64,
+    fileList,
+    previewImage,
+    previewTitle,
+    previewVisible,
+  ]);
 
   return (
     <>

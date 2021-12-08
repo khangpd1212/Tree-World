@@ -73,10 +73,6 @@ export const cartSlice = createSlice({
     },
     clearCart: (state, action) => {
       state.cartItems = [];
-      toast.error(`Cart cleared`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     getTotals: (state, action) => {

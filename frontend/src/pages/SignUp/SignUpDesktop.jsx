@@ -1,18 +1,17 @@
 import { Modal, Tag } from "antd";
-import { useState } from "react"
-import { useForm } from "react-hook-form";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchRegister } from "redux/user";
 import IconPassword from "components/utils/IconPassword";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  ShowModalLogin,
-  selectModals,
-  ShowModalSignUp,
-  onCancelSignUp,
+  onCancelSignUp, selectModals, ShowModalLogin, ShowModalSignUp
 } from "redux/modal";
+import { fetchRegister } from "redux/user";
+import { patterns, validations } from "utils/validation";
+import { toast } from "react-toastify";
 
 export default function SignUpDesktop() {
-   const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
   const {
     register,
     handleSubmit,
@@ -20,7 +19,7 @@ export default function SignUpDesktop() {
   } = useForm();
   const dispatch = useDispatch();
   const { isShowSignUp } = useSelector(selectModals);
-  
+
   const handleShowPass = () => {
     setPasswordShown(!passwordShown);
   };
@@ -29,9 +28,21 @@ export default function SignUpDesktop() {
     dispatch(ShowModalLogin(true));
   };
   const onSubmit = (data) => {
-    dispatch(fetchRegister(data));
-    dispatch(ShowModalSignUp(false));
-    dispatch(ShowModalLogin(true));
+    if (
+      !validations.checkBlankSpace(data.username) ||
+      !validations.checkBlankSpace(data.password)
+    ) {
+      toast.error("You are not allowed text only white space");
+    } else {
+      dispatch(fetchRegister(data));
+      toast.success("Sign up successfully!!!", {
+        autoClose: 2000,
+      });
+      setTimeout(() => {
+        dispatch(ShowModalSignUp(false));
+        dispatch(ShowModalLogin(true));
+      }, 2500);
+    }
   };
   const handleCancel = () => {
     dispatch(onCancelSignUp(false));
@@ -77,7 +88,11 @@ export default function SignUpDesktop() {
             </div>
             <div>
               <input
-                {...register("phone_number", { required: true })}
+                {...register("phone_number", {
+                  required: true,
+                  type: "regexp",
+                  pattern: new RegExp(patterns.phonePattern),
+                })}
                 className="content-login_input"
                 type="tel"
                 id="phoneNumber"
@@ -88,16 +103,20 @@ export default function SignUpDesktop() {
                   color="error"
                   style={{ paddingBottom: "2px", fontSize: "14px" }}
                 >
-                  Please input your phone
+                  Error phone number
                 </Tag>
               )}
             </div>
           </div>
           <div className="wrapper_input">
             <input
-              {...register("email", { required: true })}
+              {...register("email", {
+                required: true,
+                type: "regexp",
+                pattern: new RegExp(patterns.emailPattern),
+              })}
               className="content-login_input"
-              type="email"
+              type="text"
               id="email"
               placeholder="Email*"
             />
@@ -106,7 +125,7 @@ export default function SignUpDesktop() {
                 color="error"
                 style={{ paddingBottom: "2px", fontSize: "14px" }}
               >
-                Please input your email
+                Error email
               </Tag>
             )}
           </div>

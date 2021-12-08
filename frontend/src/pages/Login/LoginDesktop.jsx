@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Modal, Tag } from "antd";
 import IconPassword from "components/utils/IconPassword";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchLogin } from "redux/user";
+import useAutoLogin from "hooks/useAutoLogin";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  onCancelLogin,
   selectModals,
   ShowModalLogin,
-  onCancelLogin,
-  ShowModalSignUp,
+  ShowModalSignUp
 } from "redux/modal";
+import { fetchLogin } from "redux/user";
 import "styles/Login/LoginDesktop.scss";
-
+import { encoded } from "utils/encoded";
 function LoginDesktop() {
   const [passwordShown, setPasswordShown] = useState(false);
   const { register, handleSubmit, formState, resetField } = useForm();
-  const { isDirty, isValid, errors } = formState;
+  const { errors } = formState;
   const dispatch = useDispatch();
   const { isShowLogin } = useSelector(selectModals);
+  const { autoLogin } = useAutoLogin();
 
   const handleShowPass = () => {
     setPasswordShown(!passwordShown);
@@ -27,16 +29,28 @@ function LoginDesktop() {
     dispatch(ShowModalSignUp(true));
     dispatch(ShowModalLogin(false));
   };
-  const onSubmit = (data) => {
-    dispatch(fetchLogin(data));
-    dispatch(ShowModalLogin(false));
+
+  const onSubmit = async (data) => {
+    const response = await dispatch(fetchLogin(data));
+    if (Object.values(response.payload).length !== 0) {
+      dispatch(ShowModalLogin(false));
+    } else {
+      dispatch(ShowModalLogin(true));
+    }
     resetField("username");
     resetField("password");
   };
   const handleCancel = () => {
     dispatch(onCancelLogin(false));
   };
-
+  useEffect(() => {
+    let tokenUserLocal = localStorage.getItem("token");
+    const token = tokenUserLocal && encoded.encodedUser(tokenUserLocal);
+    if (token) {
+      dispatch(ShowModalLogin(false));
+      autoLogin(token.id, token.isAdmin);
+    }
+  }, []);
   return (
     <Modal
       width={"38vw"}

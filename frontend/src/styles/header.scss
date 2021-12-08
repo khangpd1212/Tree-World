@@ -151,7 +151,12 @@ body {
       padding-top: 15px !important;
       padding-bottom: 15px !important;
       width: 100%;
-
+      transition: all 0.2s ease;
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      
       @include tablet {
         padding-left: 25px !important;
         padding-right: 25px !important;
@@ -161,7 +166,6 @@ body {
 
       &.bg__change {
         background: $light-color !important;
-        transition: all 0.6s ease;
       }
 
       .logo {

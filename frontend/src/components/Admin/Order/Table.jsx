@@ -1,25 +1,26 @@
 import { Select, Table, Tooltip } from "antd";
-import useConvertISO from "hooks/useConvertISO";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { getOrders, selectOrders, updateOrders } from "redux/order";
+import { selectOrders, updateOrders } from "redux/order";
 import TableDetail from "./TableDetail";
 
 export default function TableOrder() {
+  const dateFormat = "DD/MM/YYYY HH:mm:ss";
   const { Option } = Select;
   const { orderList, loading } = useSelector(selectOrders);
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(true);
   const [dataOrder, setDataOrder] = useState([]);
-  const dispatch = useDispatch();
-  const { convertISO } = useConvertISO();
 
   useEffect(() => {
     const orderMap = orderList.map((item) => {
       return {
         key: item._id,
+        _id: item._id,
         username: item.username,
-        orderDate: convertISO(item.orderDate),
+        orderDate: moment(item.orderDate).format(dateFormat),
         address: item.address,
         phoneNumber: item.phoneNumber,
         toTal: item.toTal,
@@ -30,21 +31,13 @@ export default function TableOrder() {
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [orderList]);
 
-  useEffect(() => {
-    dispatch(getOrders());
-  }, [dispatch]);
-
-  const handleStatusChange = (id, status) => {
+  const handleStatusChange = async (id, status) => {
     const dataStatus = { id: id, status: status };
-    dispatch(updateOrders(dataStatus)).then((res) => {
-      toast.success(`Status update success`, {
-        position: "top-right",
-        autoClose: 2000,
-      });
+    await dispatch(updateOrders(dataStatus));
+    toast.success(`Status update success`, {
+      position: "top-right",
+      autoClose: 2000,
     });
-    setTimeout(() => {
-      dispatch(getOrders());
-    }, 2000);
   };
 
   const columns = [
@@ -57,7 +50,9 @@ export default function TableOrder() {
     {
       title: "Date",
       dataIndex: "orderDate",
-      key: "orderDate",
+      render: (orderDate) => (
+        <>{moment(orderDate).format(dateFormat)}</>
+      ),
       sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
     },
     {
@@ -105,12 +100,13 @@ export default function TableOrder() {
       ],
       render: (status, record) => (
         <Select
-          onChange={(status) => handleStatusChange(record.key, status)}
+          onChange={(status) => handleStatusChange(record._id, status)}
           style={{ width: "100%" }}
           defaultValue={status}
         >
           <Option value="Pending">Pending</Option>
           <Option value="Awaiting Payment">Awaiting Payment</Option>
+          <Option value="Payment Success">Payment Success</Option>
           <Option value="Awaiting Shipment">Awaiting Shipment</Option>
           <Option value="Shipped">Shipped</Option>
           <Option value="Completed">Completed</Option>
@@ -125,7 +121,7 @@ export default function TableOrder() {
         loading={loaded}
         columns={columns}
         expandable={{
-          expandedRowRender: (record) => <TableDetail id={record.key} />,
+          expandedRowRender: (record) => <TableDetail id={record._id} />,
         }}
         scroll={{ y: 800 }}
         dataSource={dataOrder}

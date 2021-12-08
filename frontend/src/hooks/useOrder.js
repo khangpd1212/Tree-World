@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectProvince } from "redux/address/province";
-import { clearCart, getTotals, selectCarts } from "redux/cart";
+import { getTotals, selectCarts, clearCart } from "redux/cart";
 import { fetchOrders } from "redux/order";
 import { fetchFee } from "redux/service/fee";
 
@@ -29,11 +29,6 @@ export default function useOrder() {
     const getFee = await dispatch(fetchFee(objectNew));
     const fee = Math.round(getFee.payload / 10000);
 
-    const data_detail = cartItems.map((item) => ({
-      id_product: item.product._id,
-      quantity: item.quantity,
-      color: item.pickColor,
-    }));
     const data_order = {
       username: textAddress.name,
       address: textAddress.province ? addressChild : textAddress.address,
@@ -43,8 +38,20 @@ export default function useOrder() {
       idUser: userItem._id,
       idVoucher: 1,
     };
-    let dataOrder = [data_order, data_detail];
+    const data_detail = cartItems.map((item) => ({
+      id_product: item.product._id,
+      quantity: item.quantity,
+      color: item.pickColor,
+    }));
+    const data_inventory = cartItems.map(item => ({
+      id_product: item.product._id,
+      quantity: item.quantity,
+      inventory: item.product.inventory,
+    }))
+
+    let dataOrder = [data_order, data_detail, data_inventory];
     
+    // nếu momo thanh toán thành công hoặc thanh toán bằng ship cod
     if (resultCode == 0 || !resultCode) {
       const response = await dispatch(fetchOrders(dataOrder));
       dispatch(clearCart());

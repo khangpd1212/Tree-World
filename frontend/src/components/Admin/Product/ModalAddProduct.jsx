@@ -5,9 +5,7 @@ import {
   Input,
   InputNumber,
   Modal,
-  Select,
-  Switch,
-  Upload,
+  Select, Upload
 } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +13,7 @@ import { toast } from "react-toastify";
 import { selectCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
 import { requests } from "utils/axios";
+import { validations } from "utils/validation";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -44,20 +43,26 @@ export default function ModalAddProduct({ visible, setVisible }) {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
 
-  const token = JSON.parse(localStorage.getItem("token"));
-
   const onFinish = (values) => {
-    requests.addProduct(token, values, imgBase64).then((res) => {
-      if (res.status) {
-        dispatch(fetchProducts());
-        form.resetFields();
-        setFileList([]);
-        setVisible(false);
-        toast.success("Add new product succesfully!");
-      } else {
-        toast.error("Failed");
-      }
-    });
+      if (
+      !validations.checkBlankSpace(values.product_name) ||
+      !validations.checkBlankSpace(values.description) ||
+      !validations.checkBlankSpace(values.color)
+    ) {
+      toast.error("You are not allowed text only white space");
+    } else {
+      requests.addProduct(values, imgBase64).then((res) => {
+        if (res.status) {
+          dispatch(fetchProducts());
+          form.resetFields();
+          setFileList([]);
+          setVisible(false);
+          toast.success("Add new product succesfully!");
+        } else {
+          toast.error("Failed");
+        }
+      });
+    }
   };
 
   const handleCancel = () => setPreviewVisible(false);
@@ -168,7 +173,6 @@ export default function ModalAddProduct({ visible, setVisible }) {
             <Upload
               name="logo"
               listType="picture"
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               listType="picture-card"
               fileList={fileList}
               onChange={handleChange}

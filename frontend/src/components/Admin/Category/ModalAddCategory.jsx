@@ -1,6 +1,6 @@
 import { Button, Form, Input, Modal, Switch } from "antd";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
@@ -16,17 +16,15 @@ const formItemLayout = {
 };
 
 export default function ModalAddCategory({ visible, setVisible }) {
-    const { adminItems } = useSelector((state) => state.userState);
     const dispatch = useDispatch();
-    const token = adminItems.isAdmin ? adminItems.accessToken : null;
     const [form] = Form.useForm();
 
   const onFinish = (values) => {
     if (!validations.checkBlankSpace(values.catalog_name)) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.addCatalog(token, values, adminItems._id).then((res) => {
-        if (res.catalog.status) {
+      requests.addCatalog(values).then((res) => {
+        if (res.catalog) {
           dispatch(fetchCatalogs());
           form.resetFields();
           setVisible(false);

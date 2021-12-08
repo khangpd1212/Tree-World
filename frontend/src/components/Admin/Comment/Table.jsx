@@ -7,15 +7,19 @@ import { toast } from "react-toastify";
 // import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
+
   const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   const dispatch = useDispatch();
 
   function confirm(id) {
     requests.deleteProduct(token, id).then((res) => {
+
+
       dispatch(fetchGetComment());
       message.success("delete success");
     });
   }
+
   const handleChangeStatus = (e, id) => {
     requests.editComment(token, { status: e }, id).then((res) => {
       if (res.status) {
@@ -26,6 +30,7 @@ export default function TableComment() {
       }
     });
   };
+
 
   const columns = [
     {

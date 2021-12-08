@@ -1,8 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Image, Input, Modal, Switch, Upload } from "antd";
-import React, { useState } from "react";
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Form, Image, Input, Modal, Upload } from "antd";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs } from "redux/blog";
 import { requests } from "utils/axios";
@@ -39,19 +38,13 @@ export default function ModalEditBlog({
   selected,
   setSelected,
 }) {
-  const { adminItems } = useSelector((state) => state.userState);
   const [imgBase64, setImgBase64] = useState("");
   const dispatch = useDispatch();
-  const token = adminItems.isAdmin ? adminItems.accessToken : null;
+
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([]);
-  const [blog, setBlog] = useState({
-    title: selected.title,
-    content: selected.content,
-    status: selected.status,
-  });
 
   const onFinish = (values) => {
     if (
@@ -60,11 +53,9 @@ export default function ModalEditBlog({
     ) {
       toast.error("You are not allowed text only white space");
     } else {
-      // console.log(imgBase64, previewImage, previewTitle, previewVisible);
       if (imgBase64 !== "") {
-        // console.log(values, imgBase64);
         requests
-          .editBlog(token, { ...values, image: imgBase64 }, selected._id)
+          .editBlog({ ...values, image: imgBase64 }, selected._id)
           .then((res) => {
             console.log(res);
             if (res.status) {
@@ -76,8 +67,7 @@ export default function ModalEditBlog({
             }
           });
       } else {
-        requests.editBlog(token, values, selected._id).then((res) => {
-          console.log(res);
+        requests.editBlog(values, selected._id).then((res) => {
           if (res.status) {
             dispatch(fetchBlogs());
             setVisible(false);
@@ -105,6 +95,7 @@ export default function ModalEditBlog({
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   }, []);
+  
   const handleChange = useCallback(async (info) => {
     if (info.file.status === "uploading") {
       info.file.status = "done";

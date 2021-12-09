@@ -9,7 +9,7 @@ import {
   StarFilled,
   TwitterCircleFilled,
 } from "@ant-design/icons";
-import { Col, Radio, Row } from "antd";
+import { Avatar, Col, Radio, Rate, Row } from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
 import SliderProductComp from "components/Home/SliderProductComp";
 import FormSearch from "components/Product/FormSearch";
@@ -23,6 +23,7 @@ import { setLayoutStatus } from "redux/layout";
 import { ShowModalLogin } from "redux/modal";
 import { detailProduct, selectProducts } from "redux/product";
 import { selectUsers } from "redux/user";
+import { selectComment } from "redux/comment"
 import "styles/detail.scss";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
@@ -50,7 +51,9 @@ export default function Detail() {
   console.log(product);
 
   console.log(color);
-
+  const {commentList} = useSelector(selectComment)
+  const comment = commentList.filter(cmt => cmt.idProduct === id)
+  console.log(comment)
   const settings = {
     dots: true,
     infinite: true,
@@ -245,102 +248,35 @@ export default function Detail() {
             <Button>Comment</Button>
           </div> */}
           <div className="commnet">
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
+            {comment && comment.length>0?(
+              commentList && comment && comment.map((item, index)=>(
+                <div key={index} className="itemComment">
+                <div className="avt_name">
+                  <div>
+                    <Avatar
+                      size="large"
+                      src="https://joeschmoe.io/api/v1/random"
+                      className="avt"
+                    />
+                  </div>
+                  <div className="name">
+                    <h3>{item.nameUser}</h3>
+                    <div className="star">
+                      <Rate disabled defaultValue={item.star}></Rate>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
+                <div className="textCommnet">
+                  <h4>
+                    {item.content}
+                  </h4>
                 </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
+                <div className="hritemComment"></div>
               </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
-              </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
-              </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
+              )
+              )
+            ):(<><p>No commnent !!!!!!!</p></>)}
+            
           </div>
         </Col>
         <Col className="voucher" xs={24} sm={8}>

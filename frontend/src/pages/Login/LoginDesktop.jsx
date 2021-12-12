@@ -13,13 +13,17 @@ import {
 import { fetchLogin } from "redux/user";
 import "styles/Login/LoginDesktop.scss";
 import { encoded } from "utils/encoded";
+import SocialLogin from "./SocialLogin";
+
 function LoginDesktop() {
   const [passwordShown, setPasswordShown] = useState(false);
+  const { autoLogin } = useAutoLogin();
+  
   const { register, handleSubmit, formState, resetField } = useForm();
   const { errors } = formState;
+
   const dispatch = useDispatch();
   const { isShowLogin } = useSelector(selectModals);
-  const { autoLogin } = useAutoLogin();
 
   const handleShowPass = () => {
     setPasswordShown(!passwordShown);
@@ -33,10 +37,13 @@ function LoginDesktop() {
   const showFormForget = () => {
     dispatch(ShowModalForget(true));
     dispatch(ShowModalLogin(false));
-  }
+  };
+
+  const handleCancel = () => {
+    dispatch(ShowModalLogin(false));
+  };
 
   const onSubmit = async (data) => {
-
     const response = await dispatch(fetchLogin(data));
 
     if (Object.values(response.payload).length !== 0) {
@@ -48,10 +55,6 @@ function LoginDesktop() {
     resetField("password");
   };
 
-  const handleCancel = () => {
-    dispatch(ShowModalLogin(false));
-  };
-
   useEffect(() => {
     let tokenUserLocal = localStorage.getItem("token");
     const token = tokenUserLocal && encoded.encodedUser(tokenUserLocal);
@@ -60,6 +63,7 @@ function LoginDesktop() {
       autoLogin(token.id, token.isAdmin);
     }
   }, []);
+
   return (
     <>
       <Modal
@@ -129,7 +133,11 @@ function LoginDesktop() {
           <div className="wrapper-remember_forgot">
             <div className="wrapper-checkbox">
               <input type="checkbox" id="login_checkbox" name="remember" />
-              <label htmlFor="login_checkbox" className="label-checkbox">
+              <label
+                htmlFor="login_checkbox"
+                className="label-checkbox"
+                checked
+              >
                 Remember
               </label>
             </div>
@@ -142,20 +150,7 @@ function LoginDesktop() {
           </button>
         </form>
         <div className="footer-login">
-          <div className="icon-login">
-            <div>
-              <img src="../../images/icon-fb_login.png" alt="icon-fb_login" />
-            </div>
-            <div>
-              <img
-                src="../../images/icon-twitter_login.png"
-                alt="icon-twitter_login"
-              />
-            </div>
-            <div>
-              <img src="../../images/icon-gg_login.png" alt="icon-gg_login" />
-            </div>
-          </div>
+          <SocialLogin/>
           <div className="add-account">
             <div onClick={handleShowSignUp}>Create account</div>
           </div>

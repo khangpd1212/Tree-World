@@ -37,6 +37,11 @@ Thumbs.db
 *.exe
 *.war
 
+#env
+.env
+.env.production
+.env.staging
+
 # Large media files
 *.mp4
 *.tiff

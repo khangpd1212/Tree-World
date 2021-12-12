@@ -37,7 +37,6 @@ export const fetchLogin = createAsyncThunk("LOGIN", async (body, thunkAPI) => {
       localStorage.setItem("token", JSON.stringify(data.accessToken));
       return data;
     } else {
-
       toast.error(`Login is error`, {
         position: "bottom-left",
         autoClose: 2000,
@@ -54,7 +53,7 @@ export const fetchLogin = createAsyncThunk("LOGIN", async (body, thunkAPI) => {
 });
 export const fetchLoginAdmin = createAsyncThunk(
   "LOGIN_ADMIN",
-  async (body, thunkAPI) => {
+  async (body) => {
     try {
       let { data } = await axios.post("auth/login/", body);
       if (data.isAdmin === true) {

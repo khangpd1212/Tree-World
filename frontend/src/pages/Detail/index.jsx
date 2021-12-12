@@ -22,11 +22,19 @@ import { addItemToCart } from "redux/cart";
 import { setLayoutStatus } from "redux/layout";
 import { ShowModalLogin } from "redux/modal";
 import { detailProduct, selectProducts } from "redux/product";
-import { selectUsers } from "redux/user";
-import { selectComment } from "redux/comment"
+import user, {
+  fetchGetUser,
+  fetchLogin,
+  selectUsers,
+  loadVoucher,
+} from "redux/user";
+import { selectComment } from "redux/comment";
+import { selectVouchers } from "redux/voucher";
+import moment from "moment";
 import "styles/detail.scss";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
+import { requests } from "utils/axios";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -40,6 +48,11 @@ export default function Detail() {
   const [color, setColor] = useState(null);
   const { userItems } = useSelector(selectUsers);
   const { productList } = useSelector(selectProducts);
+  const showProduct = productList.filter((item) => item.status === true);
+  const { voucherList } = useSelector(selectVouchers);
+  const showVoucher = voucherList.filter((item) => item.status === true);
+
+  const dateFormat = "DD/MM/YYYY";
   useEffect(() => {
     if (id) {
       dispatch(detailProduct(id));
@@ -51,11 +64,12 @@ export default function Detail() {
   console.log(product);
 
   console.log(color);
-  const {commentList} = useSelector(selectComment)
-  const comment = commentList.filter(cmt => cmt.idProduct === id)
-  console.log(comment)
+  const { commentList } = useSelector(selectComment);
+  const comment = commentList.filter((cmt) => cmt.idProduct === id);
+  let arrVoucher = userItems.id_voucher;
+
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -68,7 +82,7 @@ export default function Detail() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -106,6 +120,46 @@ export default function Detail() {
       dispatch(
         addItemToCart({ product: product, quantity: qty, pickColor: color })
       );
+    }
+  };
+  const handleSaveVoucher = (id) => {
+    if (Object.values(userItems).length === 0) {
+      dispatch(ShowModalLogin(true));
+      toast.error(`You need to login`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+    } else {
+      dispatch(ShowModalLogin(false));
+
+      let voucher = voucherList.filter((item) => item._id === id);
+
+      arrVoucher = Object.assign([], arrVoucher);
+
+      if (
+        moment().format(dateFormat) >
+        moment(voucher[0].expiryDate).format(dateFormat)
+      ) {
+        toast.warning("This voucher is out of date", {
+          autoClose: 2000,
+        });
+      } else {
+        if (arrVoucher.includes(id)) {
+          toast.warning("You have already saved this voucher");
+        } else {
+          arrVoucher.push(id);
+          requests.editUser(
+            userItems.accessToken,
+            { id_voucher: arrVoucher },
+            userItems._id
+          );
+          dispatch(loadVoucher(arrVoucher));
+          dispatch(fetchGetUser());
+          toast.success("This voucher has been saved", {
+            autoClose: 2000,
+          });
+        }
+      }
     }
   };
   return (
@@ -204,25 +258,26 @@ export default function Detail() {
             </p>
           </div>
           <div className="footerInfor">
-            <div>
-              <button className="btn" onClick={handleAddToCart}>
-                {" "}
-                <ShoppingCartOutlined className="Cart" />
-                ADD TO CART
-              </button>
-              <button className="btn">BUY NOW</button>
-            </div>
+            {product.inventory > 0 ? (
+              <div>
+                <button className="btn" onClick={handleAddToCart}>
+                  {" "}
+                  <ShoppingCartOutlined className="Cart" />
+                  ADD TO CART
+                </button>
+                <button className="btn">BUY NOW</button>
+              </div>
+            ) : (
+              <div>
+                <button className="btn">SOLD OUT</button>
+              </div>
+            )}
           </div>
         </Col>
         {/* thong tin san pham  */}
         <Col className="textD" xs={24}>
           <div className="hrtext"></div>
           <span>{product.description}</span>
-          <ul>
-            <li>+ Dolor sit amet et dolore magna.</li>
-            <li>+ Consectetur adipiscing elit, sed do eiusmod tempor.</li>
-            <li>+ 1914 translation by H. Rackham.</li>
-          </ul>
         </Col>
         <Col className="proCmt" xs={24}>
           <div className="hrCmt"></div>
@@ -248,60 +303,61 @@ export default function Detail() {
             <Button>Comment</Button>
           </div> */}
           <div className="commnet">
-            {comment && comment.length>0?(
-              commentList && comment && comment.map((item, index)=>(
+            {comment && comment.length > 0 ? (
+              commentList &&
+              comment &&
+              comment.map((item, index) => (
                 <div key={index} className="itemComment">
-                <div className="avt_name">
-                  <div>
-                    <Avatar
-                      size="large"
-                      src="https://joeschmoe.io/api/v1/random"
-                      className="avt"
-                    />
-                  </div>
-                  <div className="name">
-                    <h3>{item.nameUser}</h3>
-                    <div className="star">
-                      <Rate disabled defaultValue={item.star}></Rate>
+                  <div className="avt_name">
+                    <div>
+                      <Avatar
+                        size="large"
+                        src="https://joeschmoe.io/api/v1/random"
+                        className="avt"
+                      />
+                    </div>
+                    <div className="name">
+                      <h3>{item.nameUser}</h3>
+                      <div className="star">
+                        <Rate disabled defaultValue={item.star}></Rate>
+                      </div>
                     </div>
                   </div>
+                  <div className="textCommnet">
+                    <h4>{item.content}</h4>
+                  </div>
+                  <div className="hritemComment"></div>
                 </div>
-                <div className="textCommnet">
-                  <h4>
-                    {item.content}
-                  </h4>
-                </div>
-                <div className="hritemComment"></div>
-              </div>
-              )
-              )
-            ):(<><p>No commnent !!!!!!!</p></>)}
-            
+              ))
+            ) : (
+              <>
+                <p>No commnent !!!!!!!</p>
+              </>
+            )}
           </div>
         </Col>
         <Col className="voucher" xs={24} sm={8}>
           <div>
             <p>SHOP DISCOUNT</p>
-            <div className="voucherItem">
-              <div className="voucherMain">
-                <h4>15% off</h4>
-                <p>maximum $5.00</p>
-                <h5>20/09/2021-15/10/2021</h5>
-              </div>
-              <div className="voucherAdd">
-                <button>SAVE</button>
-              </div>
-            </div>
-            <div className="voucherItem">
-              <div className="voucherMain">
-                <h4>15% off</h4>
-                <p>maximum $5.00</p>
-                <h5>20/09/2021-15/10/2021</h5>
-              </div>
-              <div className="voucherAdd">
-                <button>SAVE</button>
-              </div>
-            </div>
+            {voucherList &&
+              showVoucher.map((item, index) => (
+                <div className="voucherItem" key={index}>
+                  <div className="voucherMain">
+                    <h4>{item.percent}% off</h4>
+                    <p>{item.voucherCode}</p>
+                    <p>maximum ${item.maximum}</p>
+                    <h5>
+                      {moment(item.createDate).format(dateFormat)} -{" "}
+                      {moment(item.expiryDate).format(dateFormat)}
+                    </h5>
+                  </div>
+                  <div className="voucherAdd">
+                    <button onClick={() => handleSaveVoucher(item._id)}>
+                      SAVE
+                    </button>
+                  </div>
+                </div>
+              ))}
           </div>
           <div className="hotSelling">
             <p>HOT SELLING</p>
@@ -320,7 +376,7 @@ export default function Detail() {
           <div>
             <Slider className="h_product-main" {...settings}>
               {productList &&
-                productList.map((productItem, index) => (
+                showProduct.map((productItem, index) => (
                   <SliderProductComp key={index} product={productItem} />
                 ))}
             </Slider>

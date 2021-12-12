@@ -28,6 +28,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  id_voucher: {
+    type: [String],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

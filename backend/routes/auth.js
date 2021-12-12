@@ -16,6 +16,10 @@ router.post("/register", async (req, res) => {
     ).toString(),
   });
   try {
+    const checkEmail = await User.findOne({ email: req.body.email })
+    if (checkEmail) {
+      return res.status(403).json({ message: "Email already exists" })
+    }
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (error) {
@@ -59,7 +63,7 @@ router.post("/reset-password", async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "5d" }
     );
-    if(user.token === '') {      
+    if (user.token === '') {
       await User.findByIdAndUpdate(
         user._id,
         {

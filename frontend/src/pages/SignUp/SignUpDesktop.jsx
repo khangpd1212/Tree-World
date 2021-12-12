@@ -3,12 +3,11 @@ import IconPassword from "components/utils/IconPassword";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectModals, ShowModalLogin, ShowModalSignUp
-} from "redux/modal";
+import { selectModals, ShowModalLogin, ShowModalSignUp } from "redux/modal";
 import { fetchRegister } from "redux/user";
 import { patterns, validations } from "utils/validation";
 import { toast } from "react-toastify";
+import { requests } from "utils/axios";
 
 export default function SignUpDesktop() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -34,14 +33,20 @@ export default function SignUpDesktop() {
     ) {
       toast.error("You are not allowed text only white space");
     } else {
-      dispatch(fetchRegister(data));
-      toast.success("Sign up successfully!!!", {
-        autoClose: 2000,
-      });
-      setTimeout(() => {
-        dispatch(ShowModalSignUp(false));
-        dispatch(ShowModalLogin(true));
-      }, 2500);
+      requests.fetchRegister(data).then(
+        () => {
+          toast.success("Sign up successfully!!!", {
+            autoClose: 2000,
+          });
+          dispatch(ShowModalSignUp(false));
+          dispatch(ShowModalLogin(true));
+        },
+        (err) => {
+          toast.error(err.response.data.message, {
+            autoClose: 2000,
+          });
+        }
+      );
     }
   };
   const handleCancel = () => {
@@ -60,7 +65,11 @@ export default function SignUpDesktop() {
       <div name="form_in_modal">
         <div className="img-login">
           <img src="../logo.png" alt="tree-world-logo" className="logo-login" />
-          <img src="../images/bg_login.png" alt="bg-login" className="bg-login" />
+          <img
+            src="../images/bg_login.png"
+            alt="bg-login"
+            className="bg-login"
+          />
         </div>
         <h1 className="title-login">Join Us!</h1>
         <form

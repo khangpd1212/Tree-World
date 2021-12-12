@@ -223,6 +223,18 @@ export const requests = {
     };
     const { data } = await instance(config);
     return data
+  },
+  async fetchRegister(body) {
+    const config = {
+      method: "post",
+      url: `auth/register`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body
+    };
+    const { data } = await instance(config);
+    return data
   }
 };
 

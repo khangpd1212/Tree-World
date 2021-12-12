@@ -10,6 +10,7 @@ import {
   ShowModalLogin,
 } from "redux/modal";
 import { selectUsers } from "redux/user";
+import { requests } from "utils/axios";
 import { BtnOutlineBlue, BtnOutlineGray } from "../utils/Button";
 import DefaultAddress from "./DefaultAddress";
 import ModalAddress from "./ModalAddress";
@@ -35,37 +36,37 @@ export default function AddressPayment() {
 
   //handle default address
   const handleDefaultAddress = () => {
-    let dataAddress = {};
+    requests.getAddressByUser(userItems._id).then((result) => {
+      const compareAddress = result.find(
+        (item) => item.content == addressChild
+      );
+      // so sanh address
+      if (textAddress.length < 1 || compareAddress) {
+        toast.error(`You can't choose this address anymore`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+      } else if (textAddress.length < 1 && compareAddress) {
+        toast.error(`You can't choose this address anymore`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+      } else {
+        const dataAddress = {
+          idUser: userItems._id,
+          content: addressChild,
+          district_id: textAddress.district_id,
+          ward_code: textAddress.ward_code,
+        };
 
-    const compareAddress = addressList.find(
-      (item) => item.content === addressChild
-    );
-    // so sanh address
-    if (textAddress.length < 1 || compareAddress) {
-      toast.error(`You can't choose this address anymore`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else if (textAddress.length < 1 && compareAddress) {
-      toast.error(`You can't choose this address anymore`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else {
-      dataAddress = {
-        idUser: userItems._id,
-        content: addressChild,
-        district_id: textAddress.district_id,
-        ward_code: textAddress.ward_code,
-      };
-
-      dispatch(fetchAddress(dataAddress));
-      dispatch(getAddress());
-      toast.success(`You have successfully selected defaults`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    }
+        dispatch(fetchAddress(dataAddress));
+        dispatch(getAddress());
+        toast.success(`You have successfully selected defaults`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+      }
+    });
   };
 
   // handle tạo address mới

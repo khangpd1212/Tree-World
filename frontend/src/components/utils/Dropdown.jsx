@@ -4,6 +4,7 @@ import DrawerOrder from "components/Order/DrawerOrder";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { onRemoveUser } from "redux/user";
+import { onRemoveAddress } from "redux/address/province";
 import { useHistory } from "react-router-dom";
 export default function DropdownOverlay() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export default function DropdownOverlay() {
   };
   const handleLogout = () => {
     dispatch(onRemoveUser())
-    localStorage.removeItem("address");
+    dispatch(onRemoveAddress());
     history.push("/");
   }
   const menu = (

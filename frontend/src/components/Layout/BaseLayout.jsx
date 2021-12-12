@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router-dom";
 import { getAddress } from "redux/address";
 import { fetchCatalogs } from "redux/catalog";
+import { fetchGetComment } from "redux/comment";
 import { getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
 import { fetchProducts } from "redux/product";
@@ -60,6 +61,8 @@ export default function BaseLayout() {
     dispatch(getOrders());
     dispatch(getOrderDetail());
     dispatch(getAddress());
+    dispatch(fetchGetComment());
+
   }, [dispatch]);
 
 

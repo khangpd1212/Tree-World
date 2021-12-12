@@ -35,6 +35,7 @@ import "styles/detail.scss";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import { requests } from "utils/axios";
+import { selectOrders } from "redux/order";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ export default function Detail() {
   const showProduct = productList.filter((item) => item.status === true);
   const { voucherList } = useSelector(selectVouchers);
   const showVoucher = voucherList.filter((item) => item.status === true);
+  const { orderList } = useSelector(selectOrders);
 
   const dateFormat = "DD/MM/YYYY";
   useEffect(() => {
@@ -59,7 +61,6 @@ export default function Detail() {
     } else {
       history.push("/");
     }
-    product.color && setColor(product.color[0]);
   }, [dispatch, id, history]);
   console.log(product);
 
@@ -116,10 +117,16 @@ export default function Detail() {
         autoClose: 2000,
       });
     } else {
-      dispatch(ShowModalLogin(false));
-      dispatch(
-        addItemToCart({ product: product, quantity: qty, pickColor: color })
-      );
+      if (color === null) {
+        toast.warning("You have not chosen color", {
+          autoClose: 2000,
+        });
+      } else {
+        dispatch(ShowModalLogin(false));
+        dispatch(
+          addItemToCart({ product: product, quantity: qty, pickColor: color })
+        );
+      }
     }
   };
   const handleSaveVoucher = (id) => {
@@ -131,35 +138,47 @@ export default function Detail() {
       });
     } else {
       dispatch(ShowModalLogin(false));
-
-      let voucher = voucherList.filter((item) => item._id === id);
-
-      arrVoucher = Object.assign([], arrVoucher);
-
-      if (
-        moment().format(dateFormat) >
-        moment(voucher[0].expiryDate).format(dateFormat)
-      ) {
-        toast.warning("This voucher is out of date", {
+      const order_userID = orderList.filter((x) =>
+        userItems._id.includes(x.idUser)
+      );
+      const orderHaveVoucher = order_userID.filter(
+        (i) => i.activatedVoucher === true
+      );
+      if (orderHaveVoucher.map((x) => x.idVoucher).indexOf(id) > -1) {
+        toast.warning("You had used this voucher before", {
           autoClose: 2000,
         });
       } else {
-        if (arrVoucher.includes(id)) {
-          toast.warning("You have already saved this voucher");
-        } else {
-          arrVoucher.push(id);
-          requests.editUser(
-            userItems.accessToken,
-            { id_voucher: arrVoucher },
-            userItems._id
-          );
-          dispatch(loadVoucher(arrVoucher));
-          dispatch(fetchGetUser());
-          toast.success("This voucher has been saved", {
+        let voucher = voucherList.filter((item) => item._id === id);
+
+        arrVoucher = Object.assign([], arrVoucher);
+
+        if (
+          moment().format(dateFormat) >
+          moment(voucher[0].expiryDate).format(dateFormat)
+        ) {
+          toast.warning("This voucher is out of date", {
             autoClose: 2000,
           });
+        } else {
+          if (arrVoucher.includes(id)) {
+            toast.warning("You have already saved this voucher");
+          } else {
+            arrVoucher.push(id);
+            requests.editUser(
+              userItems.accessToken,
+              { id_voucher: arrVoucher },
+              userItems._id
+            );
+            dispatch(loadVoucher(arrVoucher));
+            dispatch(fetchGetUser());
+            toast.success("This voucher has been saved", {
+              autoClose: 2000,
+            });
+          }
         }
       }
+      // console.log(orderHaveVoucher.map((x) => x.idVoucher).indexOf(id));
     }
   };
   return (
@@ -203,7 +222,7 @@ export default function Detail() {
             <div className="color">
               <p>color</p>
               <Radio.Group
-                defaultValue={product.color && product.color[0]}
+                defaultValue={color}
                 onChange={(e) => {
                   setColor(e.target.value);
                 }}

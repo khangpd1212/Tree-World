@@ -13,17 +13,6 @@ const initialState = {
   error: "",
 }
 
-export const fetchRegister = createAsyncThunk(
-  "REGISTER",
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.post("auth/register", data);
-      return await response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
-    }
-  }
-);
 export const fetchGetUser = createAsyncThunk(
   "USER",
   async (_, thunkAPI) => {
@@ -40,10 +29,10 @@ export const fetchLogin = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       let { data } = await axios.post("auth/login/", body);
-      if (data.isAdmin === false){
+      if (data.isAdmin === false) {
         localStorage.setItem("token", JSON.stringify(data.accessToken));
         return data;
-      }else{
+      } else {
         toast.error(`Login is error`, {
           position: "bottom-left",
           autoClose: 2000,

@@ -1,8 +1,6 @@
 import { MenuOutlined } from "@ant-design/icons";
 import { Anchor, Button, Col, Drawer, Layout, Menu, Row } from "antd";
 import DropdownOverlay from "components/utils/Dropdown";
-import LoginDesktop from "pages/Login/LoginDesktop";
-import SignUpDesktop from "pages/SignUp/SignUpDesktop";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as LinkRoute } from "react-router-dom";
@@ -243,8 +241,6 @@ function BaseHeader() {
           </div>
         </Col>
       </Row>
-      <LoginDesktop />
-      <SignUpDesktop />
     </Header>
   );
 }

@@ -31,7 +31,11 @@ export const provinceSlice = createSlice({
    reducers: {
       showTextAddress: (state, action) => {
          state.textAddress = action.payload
-      }
+      },
+      onRemoveAddress: (state) => {
+        state.textAddress = {}
+        localStorage.removeItem("address");
+      },
    },
    extraReducers: (builder) => {
       builder.addCase(fetchProvince.pending, (state) => {
@@ -58,6 +62,6 @@ export const selectProvince= createSelector(
    (state) => state
 );
 
-export const { showTextAddress } = provinceSlice.actions;
+export const { showTextAddress, onRemoveAddress } = provinceSlice.actions;
 
 export default provinceSlice.reducer

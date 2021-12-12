@@ -3,13 +3,14 @@ import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
 import {
-  About, Blog,
+  About,
+  Blog,
   Cart,
   Contact,
   Detail,
   Home,
   Payment,
-  Product
+  Product,
 } from "pages";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,7 @@ import { getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
 import { fetchProducts } from "redux/product";
 import { fetchGetUser } from "redux/user";
+import { fetchGetVoucher } from "redux/voucher";
 import "styles/BaseLayout.scss";
 import "styles/global.scss";
 import "styles/handleDarkMode.scss";
@@ -31,7 +33,6 @@ export default function BaseLayout() {
   const dispatch = useDispatch();
   const layout = useSelector((state) => state.layoutState.layoutStatus);
   const [themeState, setThemeState] = useState(false);
-
 
   useEffect(() => {
     const getTheme = localStorage.getItem("Theme");
@@ -58,9 +59,8 @@ export default function BaseLayout() {
     dispatch(getOrderDetail());
     dispatch(getAddress());
     dispatch(fetchGetComment());
-
+    dispatch(fetchGetVoucher());
   }, [dispatch]);
-
 
   return (
     <div className="root-base">

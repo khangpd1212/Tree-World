@@ -5,24 +5,33 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectCarts } from "redux/cart";
 import { selectFee } from "redux/service/fee";
-
+import { selectUsers } from "redux/user";
+import { selectVouchers } from "redux/voucher";
 export default function PaymentMethod() {
+  const { userItems } = useSelector(selectUsers);
   const { feeItems } = useSelector(selectFee);
   const { cartTotalAmount } = useSelector(selectCarts);
   const { handleOrderMomo } = useOrderMomo();
 
   const [radio, setRadio] = useState(1);
   const [disabled, setDisabled] = useState(true);
-  const [disabledLocal, setDisabledLocal] = useState(() =>(
+  const [disabledLocal, setDisabledLocal] = useState(() =>
     localStorage.getItem("checkDisabledMethod")
-  ))
+  );
+
+  const arrVoucher = Object.assign([], userItems.id_voucher);
+  const { voucherList } = useSelector(selectVouchers);
+  const vouchers = arrVoucher.map((item) =>
+    Object.assign({}, voucherList.filter((i) => i._id === item)[0])
+  );
+  console.log(vouchers);
 
   const onChangeRadio = (e) => {
     setRadio(e.target.value);
   };
   const handleBtnMethod = (value) => {
     localStorage.setItem("checkDisabledMethod", value);
-    setDisabledLocal(value)
+    setDisabledLocal(value);
   };
   useEffect(() => {
     disabledLocal === "cod" ? setDisabled(true) : setDisabled(false);
@@ -41,7 +50,7 @@ export default function PaymentMethod() {
       wallet.style.color = "#898989";
     }
   }, [disabledLocal]);
-  
+
   return (
     <div className="method">
       <div className="method__top">

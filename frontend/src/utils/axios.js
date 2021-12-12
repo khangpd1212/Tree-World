@@ -14,7 +14,7 @@ export const requests = {
     const { data } = await instance.get("/product/" + id);
     return data;
   },
-  async editProduct( body, id) {
+  async editProduct(body, id) {
     const config = {
       method: "put",
       url: "/product/" + id,
@@ -157,7 +157,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async editUser(body, id) {
+  async editUser(token, body, id) {
     const config = {
       method: "put",
       url: `/user/${id}`,

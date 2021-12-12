@@ -1,8 +1,5 @@
 import axios from "utils/axios";
-import {
-  createSlice,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -11,7 +8,7 @@ const initialState = {
   userItems: {},
   loading: "idle",
   error: "",
-}
+};
 
 export const fetchRegister = createAsyncThunk(
   "REGISTER",
@@ -24,41 +21,35 @@ export const fetchRegister = createAsyncThunk(
     }
   }
 );
-export const fetchGetUser = createAsyncThunk(
-  "USER",
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get("user/");
-      return await response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
-    }
+export const fetchGetUser = createAsyncThunk("USER", async (_, thunkAPI) => {
+  try {
+    const response = await axios.get("user/");
+    return await response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ error: error.message });
   }
-);
-export const fetchLogin = createAsyncThunk(
-  "LOGIN",
-  async (body, thunkAPI) => {
-    try {
-      let { data } = await axios.post("auth/login/", body);
-      if (data.isAdmin === false){
-        localStorage.setItem("token", JSON.stringify(data.accessToken));
-        return data;
-      }else{
-        toast.error(`Login is error`, {
-          position: "bottom-left",
-          autoClose: 2000,
-        });
-        return {};
-      }
-    } catch (error) {
+});
+export const fetchLogin = createAsyncThunk("LOGIN", async (body, thunkAPI) => {
+  try {
+    let { data } = await axios.post("auth/login/", body);
+    if (data.isAdmin === false) {
+      localStorage.setItem("token", JSON.stringify(data.accessToken));
+      return data;
+    } else {
       toast.error(`Login is error`, {
         position: "bottom-left",
         autoClose: 2000,
       });
       return {};
     }
+  } catch (error) {
+    toast.error(`Login is error`, {
+      position: "bottom-left",
+      autoClose: 2000,
+    });
+    return {};
   }
-);
+});
 export const fetchLoginAdmin = createAsyncThunk(
   "LOGIN_ADMIN",
   async (body, thunkAPI) => {
@@ -88,13 +79,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     onRemoveUser: (state, action) => {
-      localStorage.removeItem('token');
-      state.userItems = {}
+      localStorage.removeItem("token");
+      state.userItems = {};
     },
     onRemoveAdmin: (state, action) => {
-      localStorage.removeItem('tokenAdmin');
-      state.adminItems = {}
-    }
+      localStorage.removeItem("tokenAdmin");
+      state.adminItems = {};
+    },
+    loadVoucher: (state, action) => {
+      state.userItems = { ...state.userItems, id_voucher: action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
@@ -113,5 +107,5 @@ const userSlice = createSlice({
   },
 });
 export const selectUsers = (state) => state.userState;
-export const { onRemoveUser, onRemoveAdmin } = userSlice.actions
+export const { onRemoveUser, onRemoveAdmin, loadVoucher } = userSlice.actions;
 export default userSlice.reducer;

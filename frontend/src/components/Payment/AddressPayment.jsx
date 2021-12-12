@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { fetchAddress, getAddress, selectAddress } from "redux/address";
 import { selectProvince, showTextAddress } from "redux/address/province";
 import {
-  onCancelAddress,
   ShowModalDefaultAddress,
+  ShowModalAddress,
   ShowModalLogin,
 } from "redux/modal";
 import { selectUsers } from "redux/user";
@@ -71,7 +71,7 @@ export default function AddressPayment() {
   // handle tạo address mới
   const onCreate = (values) => {
     dispatch(showTextAddress(values));
-    dispatch(onCancelAddress(false));
+    dispatch(ShowModalAddress(false));
   };
 
   return (

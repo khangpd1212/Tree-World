@@ -2,7 +2,8 @@
 export { default as Home } from "./Home";
 export { default as Product } from "./Product";
 export { default as Detail } from "./Detail";
-export { default as LoginMobile } from "./Login/LoginMobile";
+export { default as LoginDesktop } from "./Login/LoginDesktop";
+export { default as ForgetPassword } from "./Login/ForgetPassword";
 export { default as SignUpDesktop } from "./SignUp/SignUpDesktop";
 export { default as Cart } from "./Cart";
 export { default as Contact } from "./Contact";

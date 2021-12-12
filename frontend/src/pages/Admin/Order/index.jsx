@@ -9,6 +9,3 @@ export default function OrderAdmin() {
     </>
   )
 }
-function onChange(checked) {
-  console.log(`switch to ${checked}`);
-}

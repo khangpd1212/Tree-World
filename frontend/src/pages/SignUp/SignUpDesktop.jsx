@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  onCancelSignUp, selectModals, ShowModalLogin, ShowModalSignUp
+  selectModals, ShowModalLogin, ShowModalSignUp
 } from "redux/modal";
 import { fetchRegister } from "redux/user";
 import { patterns, validations } from "utils/validation";
@@ -45,7 +45,7 @@ export default function SignUpDesktop() {
     }
   };
   const handleCancel = () => {
-    dispatch(onCancelSignUp(false));
+    dispatch(ShowModalSignUp(false));
   };
   return (
     <Modal
@@ -59,8 +59,8 @@ export default function SignUpDesktop() {
     >
       <div name="form_in_modal">
         <div className="img-login">
-          <img src="/logo.png" alt="tree-world-logo" className="logo-login" />
-          <img src="images/bg_login.png" alt="bg-login" className="bg-login" />
+          <img src="../logo.png" alt="tree-world-logo" className="logo-login" />
+          <img src="../images/bg_login.png" alt="bg-login" className="bg-login" />
         </div>
         <h1 className="title-login">Join Us!</h1>
         <form
@@ -156,18 +156,18 @@ export default function SignUpDesktop() {
         </form>
         <div className="footer-login">
           <div className="icon-login">
-            <a href="#">
-              <img src="images/icon-fb_login.png" alt="icon-fb_login" />
-            </a>
-            <a href="#">
+            <div>
+              <img src="../images/icon-fb_login.png" alt="icon-fb_login" />
+            </div>
+            <div>
               <img
-                src="images/icon-twitter_login.png"
+                src="../images/icon-twitter_login.png"
                 alt="icon-twitter_login"
               />
-            </a>
-            <a href="#">
-              <img src="images/icon-gg_login.png" alt="icon-gg_login" />
-            </a>
+            </div>
+            <div>
+              <img src="../images/icon-gg_login.png" alt="icon-gg_login" />
+            </div>
           </div>
           <div className="add-account">
             <div onClick={handleShowLogin}>Get Started</div>

@@ -1,13 +1,14 @@
-import { Space, Table, Switch, Button, Image } from "antd";
+import { Button, Image, Space, Switch, Table } from "antd";
 import ModalAddBlog from "components/Admin/News/ModalAddBlog";
 import ModalEditBlog from "components/Admin/News/ModalEditBlog";
 import BtnAdd from "components/BtnAdd";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs, selectBlogs } from "redux/blog";
 import { requests } from "utils/axios";
+import moment from "moment";
+
 export default function News() {
   const { Column } = Table;
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ export default function News() {
   const [visible, setVisible] = useState(false);
   const handleChangeStatus = (e, id) => {
     requests.editBlog({ status: e }, id).then((res) => {
-      console.log(res);
       if (res.status) {
         dispatch(fetchBlogs());
         toast.success(`Changed "${res.updatedBlog.title}" status`, {
@@ -43,7 +43,14 @@ export default function News() {
         />
 
         <Column title="Title" dataIndex="title" key="title" />
-        <Column title="Date" dataIndex="create_date" key="create_date" />
+        <Column
+          title="Date"
+          dataIndex="create_date"
+          key="create_date"
+          render={(create_date) => (
+            <>{moment(create_date).format("DD/MM/YYYY HH:mm:ss")}</>
+          )}
+        />
         <Column title="Content" dataIndex="content" key="content" />
         <Column
           title="Status"

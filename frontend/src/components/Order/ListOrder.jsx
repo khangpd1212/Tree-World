@@ -76,7 +76,7 @@ export default function ListOrder() {
 
     setOrderUser(myOrder);
   }, [orderList, userItems]);
-  console.log(orderUser);
+
   const description = (description, quantity, color) => (
     <>
       <Tooltip
@@ -288,12 +288,12 @@ export default function ListOrder() {
       </Collapse>
       <Divider />
       <Pagination
+        simple
         style={{ textAlign: "right" }}
         current={currentPage}
         defaultPageSize={numEachPage}
         onChange={handleChangePage}
         total={orderUser.length}
-        showTotal={(total) => `Total ${total} items`}
       />
     </>
   );

@@ -26,7 +26,7 @@ export const fetchGetUser = createAsyncThunk(
 );
 export const fetchLogin = createAsyncThunk(
   "LOGIN",
-  async (body, thunkAPI) => {
+  async (body) => {
     try {
       let { data } = await axios.post("auth/login/", body);
       if (data.isAdmin === false) {
@@ -50,7 +50,7 @@ export const fetchLogin = createAsyncThunk(
 );
 export const fetchLoginAdmin = createAsyncThunk(
   "LOGIN_ADMIN",
-  async (body, thunkAPI) => {
+  async (body) => {
     try {
       let { data } = await axios.post("auth/login/", body);
       if (data.isAdmin === true) {
@@ -83,7 +83,7 @@ const userSlice = createSlice({
     onRemoveAdmin: (state, action) => {
       localStorage.removeItem('tokenAdmin');
       state.adminItems = {}
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchLogin.fulfilled, (state, action) => {
@@ -102,5 +102,5 @@ const userSlice = createSlice({
   },
 });
 export const selectUsers = (state) => state.userState;
-export const { onRemoveUser, onRemoveAdmin } = userSlice.actions
+export const { onRemoveUser, onRemoveAdmin, onLoginAuth } = userSlice.actions
 export default userSlice.reducer;

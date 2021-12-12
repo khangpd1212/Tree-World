@@ -70,7 +70,7 @@ export default function Product() {
               total={
                 filterStatus
                   ? showFilterProduct.length
-                  : searchStatus.length
+                  : searchStatus
                   ? showSearchProduct.length
                   : showProduct.length
               }
@@ -89,7 +89,7 @@ export default function Product() {
                   total={
                     filterStatus
                       ? showFilterProduct.length
-                      : searchStatus.length
+                      : searchStatus
                       ? showSearchProduct.length
                       : showProduct.length
                   }

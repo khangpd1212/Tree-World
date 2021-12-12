@@ -16,6 +16,7 @@ export const requests = {
     const { data } = await instance.get("/product/" + id);
     return data;
   },
+
   async editProduct( body, id) {
     console.log(tokenAdmin)
     const checkToken = tokenAdmin ? tokenAdmin : token
@@ -161,7 +162,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async editUser(body, id) {
+  async editUser(token, body, id) {
     const config = {
       method: "put",
       url: `/user/${id}`,

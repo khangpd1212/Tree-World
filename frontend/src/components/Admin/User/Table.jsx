@@ -1,7 +1,9 @@
-import { Table } from "antd";
+import { Table, Switch } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUser, selectUsers } from "redux/user";
+import { requests } from "utils/axios";
+import { toast } from "react-toastify";
 
 export default function TableUser() {
   const dispatch = useDispatch();
@@ -10,6 +12,17 @@ export default function TableUser() {
   useEffect(() => {
     dispatch(fetchGetUser());
   }, [dispatch]);
+
+  const handleChangeStatus = (e, id) => {
+    requests.editUser({ status: e }, id).then((res) => {
+      if (res.updatedVoucher) {
+        dispatch(fetchGetUser());
+        toast.success(`Changed "${res.updatedUser.voucherCode}" status`, {
+          autoClose: 2000,
+        });
+      }
+    });
+  };
 
   const columns = [
     {
@@ -31,6 +44,18 @@ export default function TableUser() {
       title: "Address",
       dataIndex: "address",
       key: "address",
+    },
+    {
+      title: "Status",
+      key: "status",
+      render: (text, record) => (
+        <Switch
+          checked={record.status}
+          onChange={(e) => {
+            handleChangeStatus(e, record._id);
+          }}
+        />
+      ),
     },
   ];
 

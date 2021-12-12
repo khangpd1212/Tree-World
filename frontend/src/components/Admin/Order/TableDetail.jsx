@@ -80,7 +80,7 @@ export default function TableDetail(props) {
       pickColor: item.pickColor,
       price: item.price,
       quantity: item.quantity,
-      subTotal: item.quantity + item.price,
+      subTotal: item.quantity * item.price,
     };
   });
 

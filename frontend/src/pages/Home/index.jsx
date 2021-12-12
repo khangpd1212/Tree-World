@@ -7,7 +7,7 @@ import Banner from "components/Home/Banner";
 import SliderProduct from "components/Home/SliderProduct";
 import RecommendHome from "components/Home/RecommendHome";
 import HeaderProduct from "components/Home/HeaderProduct";
-import Button from "../../components/utils/Button";
+import Button from "components/utils/Button";
 import BlogHome from "components/Home/BlogHome";
 import { useEffect } from "react";
 import { filterProducts, selectProducts } from "redux/product";
@@ -17,9 +17,7 @@ import { Spin } from "antd";
 export default function Home() {
   const dispatch = useDispatch();
   dispatch(setLayoutStatus(false));
-  const { productList } = useSelector(selectProducts);
   const { filterProduct } = useSelector(selectProducts);
-  const { filterStatus } = useSelector((state) => state.layoutState);
   const filterOptions = useSelector((state) => state.filterState);
   const { loading } = useSelector(selectProducts);
   const showFilterProduct = filterProduct.filter(

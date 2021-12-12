@@ -10,6 +10,7 @@ const initialState = {
   error: "",
 };
 
+
 export const fetchRegister = createAsyncThunk(
   "REGISTER",
   async (data, thunkAPI) => {
@@ -36,6 +37,7 @@ export const fetchLogin = createAsyncThunk("LOGIN", async (body, thunkAPI) => {
       localStorage.setItem("token", JSON.stringify(data.accessToken));
       return data;
     } else {
+
       toast.error(`Login is error`, {
         position: "bottom-left",
         autoClose: 2000,

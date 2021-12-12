@@ -15,8 +15,13 @@ function App() {
         <Route path="/payment" exact component={BaseLayout} />
         <Route path="/contact" exact component={BaseLayout} />
         <Route path="/order" exact component={BaseLayout} />
+        <Route path="/reset-password" exact component={BaseLayout} />
+
+        {/* another layout */}
         <Route path="/result" exact component={AnotherLayout} />
         <Route path="/login" exact component={AnotherLayout} />
+
+        {/* admin */}
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/dashboard" component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />

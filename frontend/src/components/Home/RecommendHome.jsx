@@ -9,7 +9,7 @@ export default function RecommendHome() {
          <Col lg={11} xl={12}>
             <Row align="middle" className="section_hot__left">
                <Col className="section_hot__img" xs={24} sm={15} lg={16} xl={12}>
-                  <img src="./images/section3.png" alt="img_plots" />
+                  <img src="../images/section3.png" alt="img_plots" />
                </Col>
                <Col className="section_hot__card" xs={0} sm={9} lg={8} xl={12}>
                   <div className="card--top card__flex">

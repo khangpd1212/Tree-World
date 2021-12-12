@@ -5,7 +5,6 @@ import useOrder from "hooks/useOrder";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { encoded } from "utils/encoded";
-
 export default function ResultPayment() {
   const { handleOrder, resultCode } = useOrder();
   const { autoLogin } = useAutoLogin();
@@ -13,7 +12,6 @@ export default function ResultPayment() {
   const [orderId, setOrderId] = useState("");
 
   const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
-
   useEffect(() => {
     let tokenUserLocal = localStorage.getItem("token");
     const token = tokenUserLocal && encoded.encodedUser(tokenUserLocal);

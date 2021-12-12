@@ -11,6 +11,10 @@ import {
   Home,
   Payment,
   Product,
+  LoginDesktop,
+  SignUpDesktop,
+  ForgetPassword,
+
 } from "pages";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,7 +84,11 @@ export default function BaseLayout() {
         <BaseHeader />
         <Content>
           <div className="head">
+            <LoginDesktop />
+            <SignUpDesktop />
+            <ForgetPassword />
             <Route path="/" exact component={Home} />
+            <Route path="/reset-password" exact component={Home} />
             <Route path="/about" exact component={About} />
             <Route path="/product" exact component={Product} />
             <Route path="/product/:catalog" exact component={Product} />

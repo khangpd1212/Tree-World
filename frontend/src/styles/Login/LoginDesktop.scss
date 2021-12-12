@@ -98,7 +98,7 @@
   .wrapper_input {
     margin-bottom: 2.5vw;
   }
-  .input_flex{
+  .input_flex {
     display: flex;
     gap: 10px;
   }
@@ -148,6 +148,7 @@
   }
 
   .login-forget {
+    cursor: pointer;
     color: #bfdad5;
   }
 }
@@ -163,10 +164,9 @@
 
   .icon-login {
     display: flex;
-
-    a {
-      padding-right: 10px;
-
+    gap: 10px;
+    div {
+      cursor: pointer;
       img {
         width: 1.5vw;
       }

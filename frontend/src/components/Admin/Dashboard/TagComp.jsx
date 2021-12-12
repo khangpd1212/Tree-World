@@ -21,9 +21,10 @@ export default function TagComp() {
   const total =
     completeOrder.length > 0
       ? completeOrder.length > 1
-        ? completeOrder.reduce((prev, current) => prev.toTal + current.toTal)
+        ? completeOrder.reduce((prev, current) => prev + current.toTal, 0)
         : completeOrder[0].toTal
       : 0;
+
   return (
     <div className="wrapper__tag">
       <ItemTagComp

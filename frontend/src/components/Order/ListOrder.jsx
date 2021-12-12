@@ -56,6 +56,9 @@ export default function ListOrder() {
       orderDate: convertISO(o1.orderDate),
       id: o1._id,
       status: o1.status,
+      activatedVoucher: o1.activatedVoucher,
+      idVoucher: o1.idVoucher,
+      total: o1.toTal,
       orderDetail: orderDetailList.filter((o2) => o1._id == o2.id_order),
     }));
 
@@ -64,6 +67,9 @@ export default function ListOrder() {
       orderDate: o1.orderDate,
       id: o1.id,
       status: o1.status,
+      activatedVoucher: o1.activatedVoucher,
+      idVoucher: o1.idVoucher,
+      total: o1.total,
       product: o1.orderDetail.map((o2) =>
         Object.assign(
           {},
@@ -180,7 +186,14 @@ export default function ListOrder() {
                   key={keyOrder}
                   itemLayout="horizontal"
                   dataSource={itemOrder.product}
-                  footer={<TotalOrder order={itemOrder.product} />}
+                  footer={
+                    <TotalOrder
+                      order={itemOrder.product}
+                      activate={itemOrder.activatedVoucher}
+                      idVoucher={itemOrder.idVoucher}
+                      total={itemOrder.total}
+                    />
+                  }
                   renderItem={(itemChild) => (
                     <List.Item>
                       <List.Item.Meta

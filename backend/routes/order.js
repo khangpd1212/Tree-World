@@ -26,8 +26,16 @@ router.get("/:id", async (req, res) => {
 //user is not allowed create, update or delete
 //CREATE
 router.post("/", async (req, res) => {
-  const { username, address, status, phoneNumber, toTal, idUser, idVoucher } =
-    req.body;
+  const {
+    username,
+    address,
+    activatedVoucher,
+    status,
+    phoneNumber,
+    toTal,
+    idUser,
+    idVoucher,
+  } = req.body;
 
   const newOrder = new Order({
     username,
@@ -37,6 +45,7 @@ router.post("/", async (req, res) => {
     toTal,
     idUser,
     idVoucher,
+    activatedVoucher,
   });
   try {
     const order = await newOrder.save();

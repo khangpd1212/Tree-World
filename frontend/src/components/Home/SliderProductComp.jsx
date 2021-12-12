@@ -33,7 +33,7 @@ export default function SliderProductComp(props) {
   return (
     <div className="h_product-flex">
       <div className="h_product-flex_hover">
-        <Link to={`detail/${prod._id}`}>
+        <Link to={`/detail/${prod._id}`}>
           <img src={prod.image[0]} alt="img_product" />
         </Link>
         <div className="h_product-flex_icon">

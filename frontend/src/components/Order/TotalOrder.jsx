@@ -25,7 +25,8 @@ export default function TotalOrder(data) {
         }
       )
     );
-  }, []);
+  }, [data]);
+
   return (
     <>
       {data.activate ? (

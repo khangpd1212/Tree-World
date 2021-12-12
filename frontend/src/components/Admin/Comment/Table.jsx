@@ -1,9 +1,9 @@
-import { message, Space, Table, Switch } from "antd";
-// import { useState } from 'react';
+import { message, Switch, Table } from "antd";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { fetchGetComment, selectComment } from "redux/comment";
 import { requests } from "utils/axios";
-import { toast } from "react-toastify";
 // import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
@@ -21,7 +21,7 @@ export default function TableComment() {
   }
 
   const handleChangeStatus = (e, id) => {
-    requests.editComment(token, { status: e }, id).then((res) => {
+    requests.editComment({ status: e }, id).then((res) => {
       if (res.status) {
         dispatch(fetchGetComment());
         toast.success("Changed successfully", {
@@ -52,6 +52,7 @@ export default function TableComment() {
       title: "Date",
       dataIndex: "date",
       key: "date",
+      render: (date) => <>{moment(date).format("DD/MM/YYYY HH:mm:ss")}</>,
     },
     {
       title: "Status",

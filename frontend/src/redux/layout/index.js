@@ -5,6 +5,7 @@ const initialState = {
   filterStatus: false,
   searchStatus: false,
   keyword: null,
+  filterCmt: false,
 };
 
 const layoutSlice = createSlice({
@@ -28,6 +29,7 @@ const layoutSlice = createSlice({
         filterStatus: false,
         searchStatus: false,
         keyword: null,
+        filterCmt: false,
       };
     },
     setSearchStatus: (state, action) => {
@@ -38,6 +40,9 @@ const layoutSlice = createSlice({
         keyword: action.payload,
       };
     },
+    setFilterCmt: (state) => {
+      return { ...state, filterCmt: true };
+    },
   },
 });
 
@@ -46,5 +51,6 @@ export const {
   setFilterStatus,
   setDefaultStatus,
   setSearchStatus,
+  setFilterCmt,
 } = layoutSlice.actions;
 export default layoutSlice.reducer;

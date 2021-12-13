@@ -20,13 +20,14 @@ export default function TableOrder() {
         key: item._id,
         _id: item._id,
         username: item.username,
-        orderDate: moment(item.orderDate).format(dateFormat),
+        orderDate:item.orderDate,
         address: item.address,
         phoneNumber: item.phoneNumber,
         toTal: item.toTal,
         status: item.status,
       };
     });
+
     setDataOrder(orderMap);
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [orderList]);

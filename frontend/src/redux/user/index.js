@@ -44,7 +44,7 @@ export const fetchLogin = createAsyncThunk("LOGIN", async (body, thunkAPI) => {
       return {};
     }
   } catch (error) {
-    toast.error(`Login is error`, {
+    toast.error(error.response.data, {
       position: "bottom-left",
       autoClose: 2000,
     });

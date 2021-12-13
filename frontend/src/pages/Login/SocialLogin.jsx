@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
-import {
-  ShowModalLogin
-} from "redux/modal";
+import { ShowModalLogin } from "redux/modal";
 import { fetchGetUser, fetchLogin } from "redux/user";
 import { requests } from "utils/axios";
 export default function SocialLogin() {
@@ -22,8 +20,11 @@ export default function SocialLogin() {
     );
 
     if (findEmail) {
-      dispatch(ShowModalLogin(false));
-      return dispatch(fetchLogin(body));
+      return dispatch(fetchLogin(body)).then((res) => {
+        if (Object.values(res.payload).length > 0) {
+          dispatch(ShowModalLogin(false));
+        }
+      });
     }
 
     requests.fetchRegister(body).then(() => {

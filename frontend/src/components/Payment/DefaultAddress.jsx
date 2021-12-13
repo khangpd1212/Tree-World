@@ -4,7 +4,9 @@ import { toast } from "react-toastify";
 import { selectAddress } from "redux/address";
 import { showTextAddress } from "redux/address/province";
 import {
-  ShowModalDefaultAddress, selectModals, ShowModalAddress
+  ShowModalDefaultAddress,
+  selectModals,
+  ShowModalAddress,
 } from "redux/modal";
 import { selectUsers } from "redux/user";
 import { patterns, validations } from "utils/validation";
@@ -42,8 +44,8 @@ export default function DefaultAddress() {
     dispatch(ShowModalDefaultAddress(false));
   };
   const handleCancel = () => {
-    dispatch(ShowModalDefaultAddress(false))
-  }
+    dispatch(ShowModalDefaultAddress(false));
+  };
   const [form] = Form.useForm();
   return (
     <Modal
@@ -76,7 +78,13 @@ export default function DefaultAddress() {
         </>
       }
     >
-      <Form layout="vertical" form={form} name="form_in_modal" size="large">
+      <Form
+        layout="vertical"
+        form={form}
+        name="form_in_modal"
+        size="large"
+        initialValues={{ name: userItems.username }}
+      >
         <Form.Item
           label="Name"
           name="name"
@@ -87,7 +95,7 @@ export default function DefaultAddress() {
             },
           ]}
         >
-          <Input placeholder="Input name" />
+          <Input placeholder="Input name" defaultValue={userItems.username} />
         </Form.Item>
         <Form.Item
           name="phone"

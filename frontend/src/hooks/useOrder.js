@@ -4,33 +4,33 @@ import { getTotals, selectCarts, clearCart } from "redux/cart";
 import { fetchOrders } from "redux/order";
 import { fetchFee } from "redux/service/fee";
 import { fetchGetUser, loadVoucher } from "redux/user";
-import { selectVouchers } from "redux/voucher";
 import { requests } from "utils/axios";
 
 export default function useOrder() {
   const { textAddress } = useSelector(selectProvince);
   const { cartItems } = useSelector(selectCarts);
   const dispatch = useDispatch();
-  const { voucherList } = useSelector(selectVouchers);
+
 
   const queryParams = new URLSearchParams(window.location.search);
   const resultCode = queryParams.get("resultCode");
 
-  const handleOrder = async (userItem) => {
+  const handleOrder = async (userItem, voucherList) => {
+
     let addressChild = textAddress.province
       ? `${textAddress.street}, ${textAddress.ward}, ${textAddress.district}, ${textAddress.province}`
-      : "";
+      : textAddress.address;
 
-    let addressLocal = JSON.parse(localStorage.getItem("address"));
     let objectNew = {
-      service_id: addressLocal.service_id,
-      district_id: addressLocal.district_id,
-      ward_code: addressLocal.ward_code,
+      service_id: textAddress.service_id,
+      district_id: textAddress.district_id,
+      ward_code: textAddress.ward_code,
     };
     const getTotal = await dispatch(getTotals());
     const total = getTotal.payload.total;
     const getFee = await dispatch(fetchFee(objectNew));
     const fee = Math.round(getFee.payload / 10000);
+
     // voucher
     const arrVoucher = Object.assign([], userItem.id_voucher);
 
@@ -40,7 +40,7 @@ export default function useOrder() {
             Object.assign({}, voucherList.filter((i) => i._id === item)[0])
           )
         : [];
-
+    console.log(vouchers)
     const discounts =
       vouchers && vouchers.length > 0
         ? vouchers.map((item) =>
@@ -56,6 +56,7 @@ export default function useOrder() {
             )
           )
         : [];
+
     const currentDiscount =
       discounts && discounts.length > 0
         ? discounts.reduce((prev, current) =>
@@ -68,7 +69,7 @@ export default function useOrder() {
       arrVoucher && arrVoucher.length > 0
         ? {
             username: textAddress.name,
-            address: textAddress.province ? addressChild : textAddress.address,
+            address: addressChild,
             phoneNumber: textAddress.phone,
             toTal: total + fee - currentDiscount.value,
             status: resultCode == 0 ? "Payment Success" : "Pending",
@@ -78,7 +79,7 @@ export default function useOrder() {
           }
         : {
             username: textAddress.name,
-            address: textAddress.province ? addressChild : textAddress.address,
+            address: addressChild,
             phoneNumber: textAddress.phone,
             toTal: total + fee,
             status: resultCode == 0 ? "Payment Success" : "Pending",
@@ -95,7 +96,7 @@ export default function useOrder() {
       inventory: item.product.inventory,
       sold: item.product.sold,
     }));
-    const index = arrVoucher.indexOf(currentDiscount.idVoucher);
+    const index = arrVoucher.indexOf(currentDiscount?.idVoucher);
     if (index > -1) {
       arrVoucher.splice(index, 1);
     }
@@ -108,12 +109,12 @@ export default function useOrder() {
     if (resultCode == 0 || !resultCode) {
       const response = await dispatch(fetchOrders(dataOrder));
       dispatch(clearCart());
-      requests.editUser(userItem.accessToken, data_user, userItem._id);
+      requests.editUser(data_user, userItem._id);
       dispatch(loadVoucher(arrVoucher));
       dispatch(fetchGetUser());
       return response.payload;
     } else {
-      return;
+      return "No id order";
     }
   };
 

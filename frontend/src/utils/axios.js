@@ -6,6 +6,7 @@ const instance = axios.create({
 
 const tokenAdmin = JSON.parse(localStorage.getItem("tokenAdmin"));
 const token = JSON.parse(localStorage.getItem("token"));
+const checkToken = tokenAdmin ? tokenAdmin : token
 
 export const requests = {
   async fetchAllProduct() {
@@ -18,8 +19,6 @@ export const requests = {
   },
 
   async editProduct( body, id) {
-    console.log(tokenAdmin)
-    const checkToken = tokenAdmin ? tokenAdmin : token
     const config = {
       method: "put",
       url: "/product/" + id,
@@ -28,7 +27,6 @@ export const requests = {
       },
       data: body,
     };
-    console.log(config)
     const { data } = await instance(config);
     return data;
   },
@@ -162,13 +160,13 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async editUser(token, body, id) {
+  async editUser(body, id) {
     const config = {
       method: "put",
       url: `/user/${id}`,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenAdmin}`,
+        Authorization: `Bearer ${checkToken}`,
       },
       data: body,
     };

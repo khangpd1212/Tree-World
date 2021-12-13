@@ -10,13 +10,13 @@ import { selectFee } from "redux/service/fee";
 export default function useOrderMomo() {
   const { textAddress } = useSelector(selectProvince);
   const { feeItems } = useSelector(selectFee);
-  const { cartTotalAmount, cartItems } = useSelector(selectCarts);
+  const { cartItems } = useSelector(selectCarts);
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const feeItem = feeItems ? feeItems : 0;
 
-  const handleOrderMomo = (radio, disabled) => {
+  const handleOrderMomo = (radio, disabled, total) => {
+
     // nếu không đăng nhập thì báo cần đăng nhập
     if (!cartItems[0] || !feeItems) {
       toast.error(`You are not buying or payment method`, {
@@ -29,7 +29,7 @@ export default function useOrderMomo() {
       // lấy data order detail
       const data_momo = {
         id_order: new Date().getTime(),
-        toTal: cartTotalAmount.total + feeItem,
+        toTal: total,
         extraData: `username=${textAddress.name}&phoneNumber=${textAddress.phone}&address=${textAddress.address}`,
         orderInfo: "TreeWorld",
       };

@@ -3,9 +3,13 @@ import { Button, Result, Spin } from "antd";
 import useAutoLogin from "hooks/useAutoLogin";
 import useOrder from "hooks/useOrder";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchGetVoucher } from "redux/voucher";
 import { encoded } from "utils/encoded";
 export default function ResultPayment() {
+  const dispatch = useDispatch();
+
   const { handleOrder, resultCode } = useOrder();
   const { autoLogin } = useAutoLogin();
 
@@ -20,7 +24,10 @@ export default function ResultPayment() {
     if (token) {
       autoLogin(token.id, token.isAdmin).then((res) => {
         const userItem = res.payload;
-        handleOrder(userItem).then((res) => setOrderId(res));
+        dispatch(fetchGetVoucher()).then((res) => {
+          const voucherList = res.payload;
+          handleOrder(userItem, voucherList).then((res) => setOrderId(res));
+        });
       });
     }
   }, []);
@@ -35,7 +42,7 @@ export default function ResultPayment() {
               ? "Order Successfully"
               : "Please buy again"
           }
-          subTitle={orderId ? `Order number: ${orderId}` : null}
+          subTitle={`Order number: ${orderId}`}
           extra={[
             <Link to="/product" key="1">
               <Button type="primary" key="buy">

@@ -47,7 +47,6 @@ export default function Detail() {
   const { product } = useSelector(selectProducts);
   const { filterCmt } = useSelector((state) => state.layoutState);
 
-  console.log(id);
   const [qty, setQty] = useState(1);
   const [color, setColor] = useState(null);
   const { userItems } = useSelector(selectUsers);
@@ -66,9 +65,7 @@ export default function Detail() {
       history.push("/");
     }
   }, [dispatch, id, history]);
-  console.log(product);
 
-  console.log(color);
   const { commentList } = useSelector(selectComment);
   const { filterCommentList } = useSelector(selectComment);
   const comment = commentList.filter((cmt) => cmt.idProduct === id);
@@ -160,7 +157,7 @@ export default function Detail() {
         let voucher = voucherList.filter((item) => item._id === id);
 
         arrVoucher = Object.assign([], arrVoucher);
-
+        console.log(arrVoucher);
         if (
           moment().format(dateFormat) >
           moment(voucher[0].expiryDate).format(dateFormat)
@@ -173,16 +170,20 @@ export default function Detail() {
             toast.warning("You have already saved this voucher");
           } else {
             arrVoucher.push(id);
-            requests.editUser(
-              userItems.accessToken,
-              { id_voucher: arrVoucher },
-              userItems._id
-            );
-            dispatch(loadVoucher(arrVoucher));
-            dispatch(fetchGetUser());
-            toast.success("This voucher has been saved", {
-              autoClose: 2000,
-            });
+            requests
+              .editUser({ id_voucher: arrVoucher }, userItems._id)
+              .then(() => {
+                dispatch(loadVoucher(arrVoucher));
+                dispatch(fetchGetUser());
+                toast.success("This voucher has been saved", {
+                  autoClose: 2000,
+                });
+              })
+              .catch((error) =>
+                toast.error(error.response.data.message, {
+                  autoClose: 2000,
+                })
+              );
           }
         }
       }

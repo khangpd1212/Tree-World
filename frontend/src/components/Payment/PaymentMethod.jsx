@@ -75,7 +75,11 @@ export default function PaymentMethod() {
       wallet.style.color = "#898989";
     }
   }, [disabledLocal]);
-
+  console.log(currentDiscount);
+  const total =
+    cartTotalAmount.total +
+    feeItems -
+    (currentDiscount ? currentDiscount.value : 0);
   return (
     <div className="method">
       <div className="method__top">
@@ -154,9 +158,7 @@ export default function PaymentMethod() {
             </div>
             <div className="total__payment title-submenu">
               <span className="total__title">Total Payment:</span>
-              <span className="total">
-                ${cartTotalAmount.total + feeItems - currentDiscount.value}
-              </span>
+              <span className="total">${total}</span>
             </div>
           </div>
         ) : (
@@ -172,7 +174,7 @@ export default function PaymentMethod() {
 
             <div className="total__payment title-submenu">
               <span className="total__title">Total Payment:</span>
-              <span className="total">${cartTotalAmount.total + feeItems}</span>
+              <span className="total">${total}</span>
             </div>
           </div>
         )}
@@ -185,7 +187,7 @@ export default function PaymentMethod() {
         </div>
         <button
           className="order__button"
-          onClick={() => handleOrderMomo(radio, disabled)}
+          onClick={() => handleOrderMomo(radio, disabled, total)}
         >
           Order now
         </button>

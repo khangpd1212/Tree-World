@@ -43,6 +43,7 @@ export default function TableProducts() {
           title="Product Name"
           dataIndex="product_name"
           key="product_name"
+          sorter={(a, b) => a.product_name.localeCompare(b.product_name)}
         />
         <Column
           title="Color"
@@ -69,21 +70,29 @@ export default function TableProducts() {
           }
         />
         <Column title="Description" dataIndex="description" key="description" />
-        <Column title="Price ($)" dataIndex="price" key="price" />
-        <Column title="Inventory" dataIndex="inventory" key="inventory" />
+        <Column
+          title="Price ($)"
+          dataIndex="price"
+          key="price"
+          sorter={(a, b) => a.price - b.price}
+        />
+        <Column
+          title="Inventory"
+          dataIndex="inventory"
+          key="inventory"
+          sorter={(a, b) => a.inventory - b.inventory}
+        />
         <Column
           title="Status"
           dataIndex="status"
           key="status"
           render={(value, record) => (
-            (
-              <Switch
-                checked={record.status}
-                onChange={(e) => {
-                  handleChangeStatus(e, record._id);
-                }}
-              />
-            )
+            <Switch
+              checked={record.status}
+              onChange={(e) => {
+                handleChangeStatus(e, record._id);
+              }}
+            />
           )}
         />
         <Column

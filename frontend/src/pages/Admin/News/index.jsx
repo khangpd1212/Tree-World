@@ -42,7 +42,12 @@ export default function News() {
           render={(text, record) => <Image src={record.image} width="150px" />}
         />
 
-        <Column title="Title" dataIndex="title" key="title" />
+        <Column
+          title="Title"
+          dataIndex="title"
+          key="title"
+          sorter={(a, b) => a.title.localeCompare(b.title)}
+        />
         <Column
           title="Date"
           dataIndex="create_date"
@@ -50,6 +55,7 @@ export default function News() {
           render={(create_date) => (
             <>{moment(create_date).format("DD/MM/YYYY HH:mm:ss")}</>
           )}
+          sorter={(a, b) => new Date(a.create_date) - new Date(b.create_date)}
         />
         <Column title="Content" dataIndex="content" key="content" />
         <Column

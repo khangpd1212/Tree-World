@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    max: 64
+    max: 64,
   },
   email: {
     type: String,
@@ -18,11 +18,11 @@ const UserSchema = new mongoose.Schema({
   },
   phone_number: {
     type: String,
-    default: '',
+    default: "",
   },
   token: {
     type: String,
-    default: '',
+    default: "",
   },
   isAdmin: {
     type: Boolean,
@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema({
   id_voucher: {
     type: [String],
     default: [],
+  },
+  status: {
+    type: Boolean,
+    default: true,
   },
 });
 

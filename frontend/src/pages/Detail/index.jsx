@@ -2,6 +2,7 @@ import {
   CheckCircleFilled,
   FacebookFilled,
   InstagramFilled,
+  LoadingOutlined,
   MessageFilled,
   ShoppingCartOutlined,
   SkypeFilled,
@@ -9,7 +10,7 @@ import {
   StarFilled,
   TwitterCircleFilled,
 } from "@ant-design/icons";
-import { Avatar, Col, Radio, Rate, Row } from "antd";
+import { Avatar, Col, Radio, Rate, Row, Spin } from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
 import SliderProductComp from "components/Home/SliderProductComp";
 import FormSearch from "components/Product/FormSearch";
@@ -19,7 +20,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { toast } from "react-toastify";
 import { addItemToCart } from "redux/cart";
-import { setLayoutStatus } from "redux/layout";
+import { setDefaultStatus, setFilterCmt, setLayoutStatus } from "redux/layout";
 import { ShowModalLogin } from "redux/modal";
 import { detailProduct, selectProducts } from "redux/product";
 import user, {
@@ -28,7 +29,7 @@ import user, {
   selectUsers,
   loadVoucher,
 } from "redux/user";
-import { selectComment } from "redux/comment";
+import { selectComment, filterComment, fetchGetComment } from "redux/comment";
 import { selectVouchers } from "redux/voucher";
 import moment from "moment";
 import "styles/detail.scss";
@@ -36,6 +37,7 @@ import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import { requests } from "utils/axios";
 import { selectOrders } from "redux/order";
+import CommentComp from "components/Detail/CommentComp";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -43,6 +45,7 @@ export default function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const { product } = useSelector(selectProducts);
+  const { filterCmt } = useSelector((state) => state.layoutState);
 
   const [qty, setQty] = useState(1);
   const [color, setColor] = useState(null);
@@ -52,6 +55,7 @@ export default function Detail() {
   const { voucherList } = useSelector(selectVouchers);
   const showVoucher = voucherList.filter((item) => item.status === true);
   const { orderList } = useSelector(selectOrders);
+  const { loading } = useSelector(selectComment);
 
   const dateFormat = "DD/MM/YYYY";
   useEffect(() => {
@@ -63,7 +67,11 @@ export default function Detail() {
   }, [dispatch, id, history]);
 
   const { commentList } = useSelector(selectComment);
+  const { filterCommentList } = useSelector(selectComment);
   const comment = commentList.filter((cmt) => cmt.idProduct === id);
+  const filterComments = filterCommentList.filter(
+    (cmt) => cmt.idProduct === id
+  );
   let arrVoucher = userItems.id_voucher;
 
   const settings = {
@@ -182,6 +190,12 @@ export default function Detail() {
       // console.log(orderHaveVoucher.map((x) => x.idVoucher).indexOf(id));
     }
   };
+  const handleFilterComment = (star) => {
+    dispatch(setFilterCmt());
+    dispatch(filterComment(star));
+  };
+  const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
+
   return (
     <div className="detail">
       <BreadCrumb page="product" item={product} />
@@ -306,16 +320,52 @@ export default function Detail() {
           <div className="contaistar">
             <div className="numberStar">
               {" "}
-              <p>4.9/5</p>
+              <p>
+                {Math.round(
+                  (comment.reduce((prev, current) => prev + current.star, 0) /
+                    comment.length) *
+                    1000
+                ) / 1000}
+                /5
+              </p>
             </div>
             <div className="btnStar">
-              <button>ALL</button>
-              <button>5 STAR (750)</button>
-              <button>4 STAR (58)</button>
-              <button>3 STAR (13)</button>
-              <button>2 STAR (5)</button>
-              <button>1 STAR (2)</button>
-              <button>ALL COMMENT (616)</button>
+              <button onClick={() => dispatch(setDefaultStatus())}>ALL</button>
+              <button
+                onClick={() => {
+                  handleFilterComment(5);
+                }}
+              >
+                5 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(4);
+                }}
+              >
+                4 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(3);
+                }}
+              >
+                3 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(2);
+                }}
+              >
+                2 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(1);
+                }}
+              >
+                1 STAR
+              </button>
             </div>
           </div>
           {/* <div className="input__comment">
@@ -323,36 +373,12 @@ export default function Detail() {
             <Button>Comment</Button>
           </div> */}
           <div className="commnet">
-            {comment && comment.length > 0 ? (
-              commentList &&
-              comment &&
-              comment.map((item, index) => (
-                <div key={index} className="itemComment">
-                  <div className="avt_name">
-                    <div>
-                      <Avatar
-                        size="large"
-                        src="https://joeschmoe.io/api/v1/random"
-                        className="avt"
-                      />
-                    </div>
-                    <div className="name">
-                      <h3>{item.nameUser}</h3>
-                      <div className="star">
-                        <Rate disabled defaultValue={item.star}></Rate>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="textCommnet">
-                    <h4>{item.content}</h4>
-                  </div>
-                  <div className="hritemComment"></div>
-                </div>
-              ))
+            {loading === "loaded" ? (
+              <CommentComp comments={filterCmt ? filterComments : comment} />
             ) : (
-              <>
-                <p>No commnent !!!!!!!</p>
-              </>
+              <div className="spinner--loading">
+                <Spin indicator={antIcon} />
+              </div>
             )}
           </div>
         </Col>

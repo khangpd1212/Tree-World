@@ -7,14 +7,11 @@ import { requests } from "utils/axios";
 // import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
-
   const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   const dispatch = useDispatch();
 
   function confirm(id) {
     requests.deleteProduct(token, id).then((res) => {
-
-
       dispatch(fetchGetComment());
       message.success("delete success");
     });
@@ -31,17 +28,18 @@ export default function TableComment() {
     });
   };
 
-
   const columns = [
     {
       title: "Name",
       dataIndex: "nameUser",
       key: "nameUser",
+      sorter: (a, b) => a.nameUser.localeCompare(b.nameUser),
     },
     {
       title: "Star",
       dataIndex: "star",
       key: "star",
+      sorter: (a, b) => a.star - b.star,
     },
     {
       title: "Content",
@@ -53,6 +51,7 @@ export default function TableComment() {
       dataIndex: "date",
       key: "date",
       render: (date) => <>{moment(date).format("DD/MM/YYYY HH:mm:ss")}</>,
+      sorter: (a, b) => new Date(a.date) - new Date(b.date),
     },
     {
       title: "Status",

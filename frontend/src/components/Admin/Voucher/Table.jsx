@@ -33,11 +33,13 @@ export default function TableVoucher() {
       title: "Voucher Code",
       dataIndex: "voucherCode",
       key: "voucherCode",
+      sorter: (a, b) => a.voucherCode.localeCompare(b.voucherCode),
     },
     {
       title: "Percent (%)",
       dataIndex: "percent",
       key: "percent",
+      sorter: (a, b) => a.percent - b.percent,
     },
     {
       title: "Created_Date",
@@ -46,6 +48,7 @@ export default function TableVoucher() {
       render: (createDate) => (
         <>{moment(createDate).format("DD/MM/YYYY HH:mm:ss")}</>
       ),
+      sorter: (a, b) => new Date(a.createDate) - new Date(b.createDate),
     },
     {
       title: "Expiry_Date",
@@ -54,11 +57,13 @@ export default function TableVoucher() {
       render: (expiryDate) => (
         <>{moment(expiryDate).format("DD/MM/YYYY HH:mm:ss")}</>
       ),
+      sorter: (a, b) => new Date(a.expiryDate) - new Date(b.expiryDate),
     },
     {
       title: "Maximum ($)",
       dataIndex: "maximum",
       key: "maximum",
+      sorter: (a, b) => a.maximum - b.maximum,
     },
     {
       title: "Status",

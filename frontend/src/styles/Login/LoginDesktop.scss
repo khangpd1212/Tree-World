@@ -164,12 +164,8 @@
 
   .icon-login {
     display: flex;
-    gap: 10px;
-    div {
-      cursor: pointer;
-      img {
-        width: 1.5vw;
-      }
+    img {
+      width: 1.5vw;
     }
   }
 

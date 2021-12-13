@@ -11,6 +11,30 @@ router.get("/", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+//filter
+router.get("/filter", async (req, res) => {
+  const star = req.query.star;
+  const match = {};
+  //sort
+  let sort = { _id: -1 };
+
+  let comments = [];
+  if (star) {
+    match.star = Number(star);
+  }
+
+  try {
+    comments = await Comment.aggregate([
+      {
+        $match: match,
+      },
+      { $sort: sort },
+    ]);
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
 // get comment by id
 router.get("/:id", async (req, res) => {
   try {

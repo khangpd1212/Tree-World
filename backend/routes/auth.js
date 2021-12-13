@@ -16,9 +16,9 @@ router.post("/register", async (req, res) => {
     ).toString(),
   });
   try {
-    const checkEmail = await User.findOne({ email: req.body.email })
+    const checkEmail = await User.findOne({ email: req.body.email });
     if (checkEmail) {
-      return res.status(403).json({ message: "Email already exists" })
+      return res.status(403).json({ message: "Email already exists" });
     }
     const user = await newUser.save();
     res.status(200).json(user);
@@ -32,7 +32,8 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     !user && res.status(403).json("Username is not found");
-
+    !user.status &&
+      res.status(403).json("You can't login with this account anymore");
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
     originalPassword !== req.body.password &&
@@ -52,18 +53,18 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/reset-password", async (req, res) => {
-  const email = req.body.email
+  const email = req.body.email;
   try {
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email: email });
     if (!user || user.isAdmin === true) {
-      res.status(403).json({ message: "User with this email does not exist." })
+      res.status(403).json({ message: "User with this email does not exist." });
     }
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
       process.env.SECRET_KEY,
       { expiresIn: "5d" }
     );
-    if (user.token === '') {
+    if (user.token === "") {
       await User.findByIdAndUpdate(
         user._id,
         {
@@ -74,7 +75,7 @@ router.post("/reset-password", async (req, res) => {
         }
       );
     }
-    const link = `${process.env.BASE_URL_CLIENT}/reset-password/?id=${user._id}&token=${token}`
+    const link = `${process.env.BASE_URL_CLIENT}/reset-password/?id=${user._id}&token=${token}`;
 
     await sendMail(user.email, "Password reset", user.username, link);
     res.status(200).json({ message: "Please check your email" });
@@ -90,7 +91,8 @@ router.post("/reset-password/:userId/:token", async (req, res) => {
       token: req.params.token,
     });
 
-    if (!user) return res.status(400).json({ message: "Invalid link or expired" });
+    if (!user)
+      return res.status(400).json({ message: "Invalid link or expired" });
 
     const password = CryptoJS.AES.encrypt(
       req.body.password,
@@ -99,7 +101,7 @@ router.post("/reset-password/:userId/:token", async (req, res) => {
     await User.findByIdAndUpdate(
       user._id,
       {
-        $set: { token: '', password: password },
+        $set: { token: "", password: password },
       },
       {
         new: true,
@@ -110,6 +112,5 @@ router.post("/reset-password/:userId/:token", async (req, res) => {
     res.status(500).json(error);
   }
 });
-
 
 module.exports = router;

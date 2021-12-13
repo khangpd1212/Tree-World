@@ -22,19 +22,21 @@ export default function TableCategory() {
   };
   const handleChangeStatus = (e, id) => {
     requests.editCatalog({ status: e }, id).then((res) => {
-      if (res){
-         dispatch(fetchCatalogs());
+      if (res) {
+        dispatch(fetchCatalogs());
         toast.success(`Changed status`, {
           autoClose: 2000,
         });
       }
     });
   };
+
   const columns = [
     {
       title: "Name",
       dataIndex: "catalog_name",
       key: "catalog_name",
+      sorter: (a, b) => a.catalog_name.localeCompare(b.catalog_name),
     },
     {
       title: "Status",

@@ -29,6 +29,7 @@ export default function TableUser() {
       title: "Name",
       dataIndex: "username",
       key: "username",
+      sorter: (a, b) => a.username.localeCompare(b.username),
     },
     {
       title: "Email",

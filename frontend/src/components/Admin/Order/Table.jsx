@@ -45,7 +45,7 @@ export default function TableOrder() {
       title: "Name",
       dataIndex: "username",
       key: "username",
-      sorter: (a, b) => a.username.length - b.username.length,
+      sorter: (a, b) => a.username.localeCompare(b.username),
     },
     {
       title: "Date",

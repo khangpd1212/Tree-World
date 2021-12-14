@@ -6,7 +6,7 @@ const instance = axios.create({
 
 const tokenAdmin = JSON.parse(localStorage.getItem("tokenAdmin"));
 const token = JSON.parse(localStorage.getItem("token"));
-const checkToken = tokenAdmin ? tokenAdmin : token
+const checkToken = tokenAdmin ? tokenAdmin : token;
 
 export const requests = {
   async fetchAllProduct() {
@@ -18,7 +18,7 @@ export const requests = {
     return data;
   },
 
-  async editProduct( body, id) {
+  async editProduct(body, id) {
     const config = {
       method: "put",
       url: "/product/" + id,
@@ -179,7 +179,7 @@ export const requests = {
       url: "/comment/",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenAdmin}`,
+        Authorization: `Bearer ${token}`,
       },
       data: body,
     };
@@ -206,10 +206,10 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
-    return data
+    return data;
   },
   async fetchNewPassword(id, token, body) {
     const config = {
@@ -218,10 +218,10 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
-    return data
+    return data;
   },
   async fetchRegister(body) {
     const config = {
@@ -230,11 +230,11 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
-    return data
-  }
+    return data;
+  },
 };
 
 export const imgbbClient = axios.create({

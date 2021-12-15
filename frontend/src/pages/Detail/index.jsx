@@ -321,11 +321,16 @@ export default function Detail() {
             <div className="numberStar">
               {" "}
               <p>
-                {Math.round(
-                  (comment.reduce((prev, current) => prev + current.star, 0) /
-                    comment.length) *
-                    1000
-                ) / 1000}
+                {comment && comment.length > 0
+                  ? Math.round(
+                      (comment.reduce(
+                        (prev, current) => prev + current.star,
+                        0
+                      ) /
+                        comment.length) *
+                        1000
+                    ) / 1000
+                  : 0}
                 /5
               </p>
             </div>

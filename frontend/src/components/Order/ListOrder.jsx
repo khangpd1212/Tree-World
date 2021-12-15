@@ -151,7 +151,7 @@ export default function ListOrder() {
         content: values.content,
       };
       console.log(data);
-      requests.addComment(userItems.accessToken, data).then((res) => {
+      requests.addComment(data).then((res) => {
         console.log(res);
       });
     });

@@ -184,7 +184,7 @@ export const requests = {
       url: "/comment/",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenAdmin}`,
+        Authorization: `Bearer ${token}`,
       },
       data: body,
     };
@@ -211,10 +211,10 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
-    return data
+    return data;
   },
   async fetchNewPassword(id, token, body) {
     const config = {
@@ -223,10 +223,10 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
-    return data
+    return data;
   },
   async fetchRegister(body) {
     const config = {
@@ -235,11 +235,11 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
       },
-      data: body
+      data: body,
     };
     const { data } = await instance(config);
-    return data
-  }
+    return data;
+  },
 };
 
 export const imgbbClient = axios.create({

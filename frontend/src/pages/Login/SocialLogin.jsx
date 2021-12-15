@@ -34,22 +34,23 @@ export default function SocialLogin() {
     });
   };
   const responseFacebook = async (response) => {
-    if (response.name === undefined && response.accessToken === undefined) {
-      return;
-    }
-    const body = {
-      user: {
-        name: response.name,
-      },
-      token: response.accessToken,
-    };
-    console.log(body);
+    // if (response.name === undefined && response.accessToken === undefined) {
+    //   return;
+    // }
+    // const body = {
+    //   user: {
+    //     name: response.name,
+    //   },
+    //   token: response.accessToken,
+    // };
+    console.log(response);
   };
   return (
     <>
       <div className="icon-login">
         <FacebookLogin
-          appId="288725263209126"
+          language="en_US"
+          appId="938714423387147"
           autoLoad={false}
           fields="name,email,picture"
           callback={responseFacebook}

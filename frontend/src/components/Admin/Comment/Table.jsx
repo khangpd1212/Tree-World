@@ -1,21 +1,39 @@
-import { message, Switch, Table } from "antd";
+import { Switch, Table } from "antd";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import { fetchGetComment, selectComment } from "redux/comment";
 import { requests } from "utils/axios";
-// import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
-  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
-  const dispatch = useDispatch();
+  
+  const [loaded, setLoaded] = useState(true);
+  const [dataComment, setDataComment] = useState([]);
 
-  function confirm(id) {
-    requests.deleteProduct(token, id).then((res) => {
-      dispatch(fetchGetComment());
-      message.success("delete success");
+  const dispatch = useDispatch();
+  const { commentList, loading } = useSelector(selectComment);
+
+  useEffect(() => {
+    dispatch(fetchGetComment());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const commentMap = commentList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        nameUser: item.nameUser,
+        star: item.star,
+        content: item.content,
+        date: item.date,
+        status: item.status,
+      };
     });
-  }
+
+    setDataComment(commentMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [commentList]);
 
   const handleChangeStatus = (e, id) => {
     requests.editComment({ status: e }, id).then((res) => {
@@ -58,7 +76,7 @@ export default function TableComment() {
       key: "status",
       render: (text, record) => (
         <Switch
-          checked={record.status}
+          defaultChecked={record.status}
           onChange={(e) => {
             handleChangeStatus(e, record._id);
           }}
@@ -67,17 +85,11 @@ export default function TableComment() {
     },
   ];
 
-  const { commentList } = useSelector(selectComment);
-  console.log(commentList);
+
+
   return (
     <>
-      <Table columns={columns} dataSource={commentList} />
-      {/* <ModalEdit
-            visible={visible}
-            setVisible={setVisible}
-            selected={selected}
-            setSelected={setSelected}
-        /> */}
+      <Table columns={columns} dataSource={dataComment} loading={loaded}/>
     </>
   );
 }

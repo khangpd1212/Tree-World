@@ -1,8 +1,9 @@
-import { Button, Image, Space, Switch, Table, Tag } from "antd";
-import { useState } from "react";
+import { Button, Image, Space, Switch, Table, Tag, Tooltip } from "antd";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchProducts, selectProducts } from "redux/product";
+import { fetchCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
 import ModalEdit from "./ModalEdit";
 
@@ -10,18 +11,44 @@ export default function TableProducts() {
   const { Column } = Table;
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
+  const [loaded, setLoaded] = useState(true);
+  const [productData, setProductData] = useState([]);
 
   const dispatch = useDispatch();
-  const { productList } = useSelector(selectProducts);
+  const { productList, loading } = useSelector(selectProducts);
 
-  const handleChangeStatus = (e, id) => {
+  useEffect(() => {
+    dispatch(fetchProducts());
+    dispatch(fetchCatalogs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const productMap = productList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        image: item.image,
+        product_name: item.product_name,
+        catalog_id: item.catalog_id,
+        color: item.color,
+        description: item.description,
+        price: item.price,
+        inventory: item.inventory,
+        sold: item.sold,
+        status: item.status,
+      };
+    });
+    setProductData(productMap);
+    !productData ? setLoaded(true) : setLoaded(false);
+  }, [productList]);
+
+  const handleChangeStatus = async (e, id) => {
     requests.editProduct({ status: e }, id).then((res) => {
-      if (res.status) {
-        dispatch(fetchProducts());
-        toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
-          autoClose: 2000,
-        });
-      }
+      dispatch(fetchProducts());
+      productData ? setLoaded(true) : setLoaded(false);
+      toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
+        autoClose: 2000,
+      });
     });
   };
 
@@ -32,7 +59,7 @@ export default function TableProducts() {
 
   return (
     <>
-      <Table dataSource={productList}>
+      <Table dataSource={productData} loading={loaded}>
         <Column
           title="Image"
           dataIndex="image"
@@ -49,6 +76,7 @@ export default function TableProducts() {
           title="Color"
           dataIndex="color"
           key="color"
+          width={100}
           render={(record) =>
             record.map((item) =>
               item === "#ffff" || item === "white" ? (
@@ -69,26 +97,47 @@ export default function TableProducts() {
             )
           }
         />
-        <Column title="Description" dataIndex="description" key="description" />
+        <Column
+          title="Description"
+          dataIndex="description"
+          key="description"
+          ellipsis={{
+            showTitle: false,
+          }}
+          render={(description) => (
+            <Tooltip placement="topLeft" title={description}>
+              {description}
+            </Tooltip>
+          )}
+        />
         <Column
           title="Price ($)"
           dataIndex="price"
           key="price"
+          width={100}
           sorter={(a, b) => a.price - b.price}
         />
         <Column
           title="Inventory"
           dataIndex="inventory"
           key="inventory"
+          width={100}
           sorter={(a, b) => a.inventory - b.inventory}
         />
         <Column
+          title="Sold"
+          dataIndex="sold"
+          key="sold"
+          width={80}
+          sorter={(a, b) => a.sold - b.sold}
+        />
+        <Column
           title="Status"
-          dataIndex="status"
-          key="status"
+          key="id"
+          width={100}
           render={(value, record) => (
             <Switch
-              checked={record.status}
+              defaultChecked={record.status}
               onChange={(e) => {
                 handleChangeStatus(e, record._id);
               }}
@@ -98,6 +147,7 @@ export default function TableProducts() {
         <Column
           title="Action"
           key="action"
+          width={100}
           render={(text, record) => (
             <Space size="middle">
               <Button type="primary" onClick={() => onEdit(record)}>

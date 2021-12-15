@@ -7,14 +7,30 @@ import { requests } from "utils/axios";
 import ModalEdit from "./ModalEditCategory";
 
 export default function TableCategory() {
-  const { catalogList } = useSelector(selectCatalogs);
+  const { catalogList, loading } = useSelector(selectCatalogs);
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
+  const [loaded, setLoaded] = useState(true);
+  const [dataCatalog, setDataCatalog] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCatalogs());
   }, [dispatch]);
+
+  useEffect(() => {
+    const catalogMap = catalogList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        catalog_name: item.catalog_name,
+        status: item.status,
+      };
+    });
+
+    setDataCatalog(catalogMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [catalogList]);
 
   const onEdit = (data) => {
     setSelected(data);
@@ -43,7 +59,7 @@ export default function TableCategory() {
       key: "status",
       render: (text, record) => (
         <Switch
-          checked={record.status}
+          defaultChecked={record.status}
           onChange={(e) => {
             handleChangeStatus(e, record._id);
           }}
@@ -65,7 +81,7 @@ export default function TableCategory() {
 
   return (
     <>
-      <Table columns={columns} dataSource={catalogList} />
+      <Table columns={columns} dataSource={dataCatalog} loading={loaded} />
       <ModalEdit
         visible={visible}
         setVisible={setVisible}

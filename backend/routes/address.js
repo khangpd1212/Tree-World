@@ -18,17 +18,6 @@ router.get("/", async (req, res) => {
    }
 });
 
-// get address by order id
-router.get("/a", async (req, res) => {
-   const { idUser } = req.body;
-   try {
-      
-      if (!addresses) throw new Error("No items");
-      res.status(200).json(addresses);
-   } catch (error) {
-      res.status(400).json({ message: error.message });
-   }
-});
 
 // get address by id
 router.get("/:id", async (req, res) => {

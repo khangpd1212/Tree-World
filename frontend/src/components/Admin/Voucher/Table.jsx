@@ -1,6 +1,6 @@
 import { Button, Space, Switch, Table } from "antd";
 import moment from "moment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchGetVoucher, selectVouchers } from "redux/voucher";
@@ -8,15 +8,39 @@ import { requests } from "utils/axios";
 import ModalEdit from "./ModalEdit";
 
 export default function TableVoucher() {
-  const { voucherList } = useSelector(selectVouchers);
+  const { voucherList, loading } = useSelector(selectVouchers);
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
+  const [loaded, setLoaded] = useState(true);
+  const [dataVoucher, setDataVoucher] = useState([]);
   const dispatch = useDispatch();
 
   const onEdit = (data) => {
     setSelected(data);
     setVisible(true);
   };
+  
+  useEffect(() => {
+    dispatch(fetchGetVoucher());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const voucherMap = voucherList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        voucherCode: item.voucherCode,
+        percent: item.percent,
+        createDate: item.createDate,
+        expiryDate: item.expiryDate,
+        maximum: item.maximum,
+        status: item.status,
+      };
+    });
+
+    setDataVoucher(voucherMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [voucherList]);
 
   const handleChangeStatus = (e, id) => {
     requests.editVoucher({ status: e }, id).then((res) => {
@@ -70,7 +94,7 @@ export default function TableVoucher() {
       key: "status",
       render: (text, record) => (
         <Switch
-          checked={record.status}
+          defaultChecked={record.status}
           onChange={(e) => {
             handleChangeStatus(e, record._id);
           }}
@@ -92,7 +116,7 @@ export default function TableVoucher() {
 
   return (
     <>
-      <Table columns={columns} dataSource={voucherList} />
+      <Table columns={columns} dataSource={dataVoucher} loading={loaded} />
       <ModalEdit
         visible={visible}
         setVisible={setVisible}

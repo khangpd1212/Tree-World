@@ -4,12 +4,15 @@ import CartItemPayment from "components/Payment/CartItemPayment";
 import PaymentMethod from "components/Payment/PaymentMethod";
 import VoucherPayment from "components/Payment/VoucherPayment";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { selectCarts } from "redux/cart";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { ShowModalLogin } from "redux/modal";
 import "styles/payment.scss";
 export default function Payment() {
   const dispatch = useDispatch();
+  const { cartItems } = useSelector(selectCarts);
+
   let token = JSON.parse(localStorage.getItem("token"));
   if (!token) {
     dispatch(ShowModalLogin(true));
@@ -26,8 +29,12 @@ export default function Payment() {
       <BreadCrumb className="breadcrumb" page="Payment" />
       <AddressPayment />
       <CartItemPayment />
-      <VoucherPayment />
-      <PaymentMethod />
+      {cartItems.length > 0 ? (
+        <>
+          <VoucherPayment />
+          <PaymentMethod />
+        </>
+      ) : null}
     </div>
   );
 }

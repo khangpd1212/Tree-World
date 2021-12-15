@@ -58,12 +58,15 @@ export default function PaymentMethod() {
     localStorage.setItem("checkDisabledMethod", value);
     setDisabledLocal(value);
   };
+
   useEffect(() => {
-    disabledLocal === "cod" ? setDisabled(true) : setDisabled(false);
+    disabledLocal === "cod" || disabledLocal === null
+      ? setDisabled(true)
+      : setDisabled(false);
 
     let cod = document.getElementById("cod");
     let wallet = document.getElementById("wallet");
-    if (disabledLocal === "wallet") {
+    if (disabledLocal && disabledLocal === "wallet") {
       wallet.style.outline = "1px solid #d64848";
       wallet.style.color = "#d64848";
       cod.style.outline = "1px solid #898989";
@@ -75,7 +78,7 @@ export default function PaymentMethod() {
       wallet.style.color = "#898989";
     }
   }, [disabledLocal]);
-  console.log(currentDiscount);
+
   const total =
     cartTotalAmount.total +
     feeItems -

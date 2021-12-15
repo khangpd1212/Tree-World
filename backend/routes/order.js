@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Order = require("../models/Order");
 const verify = require("../middlewares/verify");
 
-// orderDate: { $exists: 1 },
 router.get("/", async (req, res) => {
   try {
     const orders = await Order.find().sort({ orderDate: -1 });

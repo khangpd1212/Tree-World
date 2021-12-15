@@ -21,7 +21,6 @@ export default function useOrderMomo() {
     if (!cartItems[0] || !feeItems) {
       toast.error(`You are not buying or payment method`, {
         position: "bottom-left",
-        autoClose: 2000,
       });
     } else {
       dispatch(ShowModalLogin(false));

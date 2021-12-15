@@ -95,7 +95,7 @@ export default function DefaultAddress() {
             },
           ]}
         >
-          <Input placeholder="Input name" defaultValue={userItems.username} />
+          <Input placeholder="Input name"/>
         </Form.Item>
         <Form.Item
           name="phone"

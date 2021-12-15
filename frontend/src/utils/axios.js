@@ -6,7 +6,6 @@ const instance = axios.create({
 
 const tokenAdmin = JSON.parse(localStorage.getItem("tokenAdmin"));
 const token = JSON.parse(localStorage.getItem("token"));
-const checkToken = tokenAdmin ? tokenAdmin : token;
 
 export const requests = {
   async fetchAllProduct() {
@@ -18,7 +17,8 @@ export const requests = {
     return data;
   },
 
-  async editProduct(body, id) {
+  async editProduct( body, id) {
+    const checkToken = tokenAdmin ? tokenAdmin : token
     const config = {
       method: "put",
       url: "/product/" + id,
@@ -120,6 +120,10 @@ export const requests = {
   },
 
   //blog
+  async getBlogLimit(count, skip) {
+    const { data } = await instance.get(`/blog/?limit=${count}&skip=${skip}`);
+    return data;
+  },
   async addBlog(body, img, id) {
     const config = {
       method: "post",
@@ -161,6 +165,7 @@ export const requests = {
     return data;
   },
   async editUser(body, id) {
+    const checkToken = tokenAdmin ? tokenAdmin : token;
     const config = {
       method: "put",
       url: `/user/${id}`,

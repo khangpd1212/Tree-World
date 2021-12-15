@@ -40,7 +40,7 @@ export default function useOrder() {
             Object.assign({}, voucherList.filter((i) => i._id === item)[0])
           )
         : [];
-    console.log(vouchers)
+
     const discounts =
       vouchers && vouchers.length > 0
         ? vouchers.map((item) =>

@@ -1,5 +1,5 @@
 import axios from "utils/axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -107,6 +107,14 @@ const userSlice = createSlice({
     });
   },
 });
-export const selectUsers = (state) => state.userState;
+export const selectUsers = createSelector(
+  (state) => ({
+    userList: state.userState.userList,
+    userItems: state.userState.userItems,
+    adminItems: state.userState.adminItems,
+    loading: state.userState.loading,
+  }),
+  (state) => state
+)
 export const { onRemoveUser, onRemoveAdmin, loadVoucher } = userSlice.actions;
 export default userSlice.reducer;

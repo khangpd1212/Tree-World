@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs } from "redux/blog";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
 import { validations } from "utils/validation";
+
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -32,7 +34,9 @@ function getBase64(file) {
   });
 }
 export default function ModalAddBlog({ visible, setVisible }) {
-  const { adminItems } = useSelector((state) => state.userState);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+
   const [imgBase64, setImgBase64] = useState("");
   const dispatch = useDispatch();
 
@@ -46,14 +50,13 @@ export default function ModalAddBlog({ visible, setVisible }) {
     status: true,
   });
   const onFinish = (values) => {
-    // console.log(imgBase64);
     if (
       !validations.checkBlankSpace(values.title) ||
       !validations.checkBlankSpace(values.content)
     ) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.addBlog(blog, imgBase64, adminItems._id).then((res) => {
+      requests.addBlog(token, blog, imgBase64, adminItems._id).then((res) => {
         console.log(res);
         if (res.status) {
           dispatch(fetchBlogs());

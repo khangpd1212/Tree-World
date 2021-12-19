@@ -2,17 +2,20 @@ import { Button, Image, Space, Switch, Table } from "antd";
 import ModalAddBlog from "components/Admin/News/ModalAddBlog";
 import ModalEditBlog from "components/Admin/News/ModalEditBlog";
 import BtnAdd from "components/BtnAdd";
-import { useState, useEffect } from "react";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs, selectBlogs } from "redux/blog";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
-import moment from "moment";
 
 export default function News() {
   const { Column } = Table;
   const dispatch = useDispatch();
   const { blogList, loading } = useSelector(selectBlogs);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
   const [openAddBlog, setOpenAddBlog] = useState(false);
   const [selected, setSelected] = useState({});
@@ -20,16 +23,6 @@ export default function News() {
   const [dataBlog, setDataBlog] = useState([]);
   const [loaded, setLoaded] = useState(true);
 
-  const handleChangeStatus = (e, id) => {
-    requests.editBlog({ status: e }, id).then((res) => {
-      if (res.status) {
-        dispatch(fetchBlogs());
-        toast.success(`Changed "${res.updatedBlog.title}" status`, {
-          autoClose: 2000,
-        });
-      }
-    });
-  };
   useEffect(() => {
     dispatch(fetchBlogs());
   }, [dispatch]);
@@ -50,6 +43,17 @@ export default function News() {
     setDataBlog(blogMap);
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [blogList]);
+  
+  const handleChangeStatus = (e, id) => {
+    requests.editBlog(token, { status: e }, id).then((res) => {
+      if (res.status) {
+        dispatch(fetchBlogs());
+        toast.success(`Changed "${res.updatedBlog.title}" status`, {
+          autoClose: 2000,
+        });
+      }
+    });
+  };
 
   const onEdit = (data) => {
     setSelected(data);

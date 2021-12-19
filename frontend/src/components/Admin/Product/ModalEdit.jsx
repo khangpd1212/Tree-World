@@ -1,20 +1,15 @@
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
-  Form,
-  Input,
-  Modal,
-  Select,
-  Upload,
-  InputNumber,
-  Image,
-  Tag,
+  Form, Image, Input, InputNumber, Modal,
+  Select, Tag, Upload
 } from "antd";
-import React, { useState, useMemo, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { selectCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
 import { validations } from "utils/validation";
 
@@ -44,6 +39,9 @@ export default function ModalEdit({
   setSelected,
 }) {
   const { catalogList } = useSelector(selectCatalogs);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+
   const [imgBase64, setImgBase64] = useState("");
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -66,7 +64,7 @@ export default function ModalEdit({
     } else {
       if (imgBase64 !== "") {
         requests
-          .editProduct({ ...values, image: imgBase64 }, selected._id)
+          .editProduct(token, { ...values, image: imgBase64 }, selected._id)
           .then((res) => {
             if (res.updatedProduct) {
               dispatch(fetchProducts());
@@ -79,7 +77,7 @@ export default function ModalEdit({
           .catch((err) => toast.warning(err));
       } else {
         requests
-          .editProduct(values, selected._id)
+          .editProduct(token, values, selected._id)
           .then((res) => {
             if (res.updatedProduct) {
               dispatch(fetchProducts());

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import { fetchGetComment, selectComment } from "redux/comment";
 import { requests } from "utils/axios";
+import { selectUsers } from "redux/user";
 
 export default function TableComment() {
   
@@ -13,6 +14,8 @@ export default function TableComment() {
 
   const dispatch = useDispatch();
   const { commentList, loading } = useSelector(selectComment);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
   useEffect(() => {
     dispatch(fetchGetComment());
@@ -35,8 +38,8 @@ export default function TableComment() {
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [commentList]);
 
-  const handleChangeStatus = (e, id) => {
-    requests.editComment({ status: e }, id).then((res) => {
+  const handleChangeStatus = async (e, id) => {
+    requests.editComment(token, { status: e }, id).then((res) => {
       if (res.status) {
         dispatch(fetchGetComment());
         toast.success("Changed successfully", {

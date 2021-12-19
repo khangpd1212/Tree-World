@@ -1,10 +1,12 @@
 import { Button, DatePicker, Form, Input, InputNumber, Modal } from "antd";
 import moment from "moment";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { selectUsers } from "redux/user";
 import { fetchGetVoucher } from "redux/voucher";
 import { requests } from "utils/axios";
+
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -16,13 +18,15 @@ const formItemLayout = {
 
 export default function ModalAddCVoucher({ visible, setVisible }) {
   const dispatch = useDispatch();
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
   const [form] = Form.useForm();
 
   const dateFormat = "DD/MM/YYYY HH:mm:ss";
 
   const onFinish = (values) => {
-    requests.addVoucher(values).then((res) => {
+    requests.addVoucher(token, values).then((res) => {
       if (res.voucher.status) {
         dispatch(fetchGetVoucher());
         form.resetFields();

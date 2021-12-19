@@ -6,7 +6,6 @@ import {
   VoucherAdmin
 } from "pages";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Route } from "react-router-dom";
 import "styles/admin.scss";
 import HeaderAdmin from "../Admin/HeaderAdmin";
@@ -15,9 +14,6 @@ const { Content } = Layout;
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-
-
 
   return (
     <div className="root-admin">

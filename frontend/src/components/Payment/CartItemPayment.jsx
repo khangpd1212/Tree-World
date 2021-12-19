@@ -19,11 +19,6 @@ export default function CartItemPayment() {
   const [serviceDefault, setServiceDefault] = useState({});
   
   useEffect(() => {
-    dispatch(fetchService(textAddress.district_id));
-    dispatch(fetchFee(textAddress));
-  }, [textAddress]);
-
-  useEffect(() => {
     dispatch(getTotals());
   }, [cartItems]);
 
@@ -34,6 +29,7 @@ export default function CartItemPayment() {
       if (Object.keys(textAddress).length === 0) {
         dispatch(
           showTextAddress({
+            _id: addressLast && addressLast._id,
             address: addressLast && addressLast.content,
             district_id: addressLast && addressLast.district_id,
             ward_code: addressLast && addressLast.ward_code,
@@ -49,8 +45,15 @@ export default function CartItemPayment() {
   }, [userItems]);
 
   useEffect(() => {
+    dispatch(fetchService(textAddress.district_id));
+    dispatch(fetchFee(textAddress));
+  }, [textAddress]);
+
+  useEffect(() => {
     setServiceDefault(
-      serviceItems.find((item) => item.service_id == textAddress.service_id)
+      serviceItems && serviceItems.find
+        ((item) => item.service_id == textAddress.service_id
+      )
     );
   }, [serviceItems]);
 

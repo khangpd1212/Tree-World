@@ -1,9 +1,10 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Image, Input, Modal, Upload } from "antd";
 import React, { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs } from "redux/blog";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
 import { validations } from "utils/validation";
 
@@ -38,9 +39,11 @@ export default function ModalEditBlog({
   selected,
   setSelected,
 }) {
-  const [imgBase64, setImgBase64] = useState("");
   const dispatch = useDispatch();
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
+  const [imgBase64, setImgBase64] = useState("");
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -55,7 +58,7 @@ export default function ModalEditBlog({
     } else {
       if (imgBase64 !== "") {
         requests
-          .editBlog({ ...values, image: imgBase64 }, selected._id)
+          .editBlog(token, { ...values, image: imgBase64 }, selected._id)
           .then((res) => {
             console.log(res);
             if (res.status) {
@@ -67,7 +70,7 @@ export default function ModalEditBlog({
             }
           });
       } else {
-        requests.editBlog(values, selected._id).then((res) => {
+        requests.editBlog(token, values, selected._id).then((res) => {
           if (res.status) {
             dispatch(fetchBlogs());
             setVisible(false);

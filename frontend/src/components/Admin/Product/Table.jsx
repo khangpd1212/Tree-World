@@ -1,9 +1,10 @@
 import { Button, Image, Space, Switch, Table, Tag, Tooltip } from "antd";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { fetchProducts, selectProducts } from "redux/product";
 import { fetchCatalogs } from "redux/catalog";
+import { fetchProducts, selectProducts } from "redux/product";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
 import ModalEdit from "./ModalEdit";
 
@@ -14,6 +15,9 @@ export default function TableProducts() {
   const [loaded, setLoaded] = useState(true);
   const [productData, setProductData] = useState([]);
 
+  
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
   const dispatch = useDispatch();
   const { productList, loading } = useSelector(selectProducts);
 
@@ -38,14 +42,15 @@ export default function TableProducts() {
         status: item.status,
       };
     });
+    // console.log(1)
     setProductData(productMap);
-    !productData ? setLoaded(true) : setLoaded(false);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [productList]);
 
   const handleChangeStatus = async (e, id) => {
-    requests.editProduct({ status: e }, id).then((res) => {
+    requests.editProduct(token, { status: e }, id).then((res) => {
+      console.log(2)
       dispatch(fetchProducts());
-      productData ? setLoaded(true) : setLoaded(false);
       toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
         autoClose: 2000,
       });
@@ -133,7 +138,7 @@ export default function TableProducts() {
         />
         <Column
           title="Status"
-          key="id"
+          key="_id"
           width={100}
           render={(value, record) => (
             <Switch

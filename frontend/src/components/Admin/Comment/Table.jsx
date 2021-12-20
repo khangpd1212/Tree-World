@@ -1,27 +1,42 @@
-import { message, Space, Table, Switch } from "antd";
-// import { useState } from 'react';
+import { Switch, Table } from "antd";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify";
 import { fetchGetComment, selectComment } from "redux/comment";
 import { requests } from "utils/axios";
-import { toast } from "react-toastify";
-// import ModalEdit from './ModalEdit';
 
 export default function TableComment() {
+  
+  const [loaded, setLoaded] = useState(true);
+  const [dataComment, setDataComment] = useState([]);
 
-  const token = JSON.parse(localStorage.getItem("tokenAdmin"));
   const dispatch = useDispatch();
+  const { commentList, loading } = useSelector(selectComment);
 
-  function confirm(id) {
-    requests.deleteProduct(token, id).then((res) => {
+  useEffect(() => {
+    dispatch(fetchGetComment());
+  }, [dispatch]);
 
-
-      dispatch(fetchGetComment());
-      message.success("delete success");
+  useEffect(() => {
+    const commentMap = commentList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        nameUser: item.nameUser,
+        star: item.star,
+        content: item.content,
+        date: item.date,
+        status: item.status,
+      };
     });
-  }
+
+    setDataComment(commentMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [commentList]);
 
   const handleChangeStatus = (e, id) => {
-    requests.editComment(token, { status: e }, id).then((res) => {
+    requests.editComment({ status: e }, id).then((res) => {
       if (res.status) {
         dispatch(fetchGetComment());
         toast.success("Changed successfully", {
@@ -31,17 +46,18 @@ export default function TableComment() {
     });
   };
 
-
   const columns = [
     {
       title: "Name",
       dataIndex: "nameUser",
       key: "nameUser",
+      sorter: (a, b) => a.nameUser.localeCompare(b.nameUser),
     },
     {
       title: "Star",
       dataIndex: "star",
       key: "star",
+      sorter: (a, b) => a.star - b.star,
     },
     {
       title: "Content",
@@ -52,6 +68,8 @@ export default function TableComment() {
       title: "Date",
       dataIndex: "date",
       key: "date",
+      render: (date) => <>{moment(date).format("DD/MM/YYYY HH:mm:ss")}</>,
+      sorter: (a, b) => new Date(a.date) - new Date(b.date),
     },
     {
       title: "Status",
@@ -67,17 +85,11 @@ export default function TableComment() {
     },
   ];
 
-  const { commentList } = useSelector(selectComment);
-  console.log(commentList);
+
+
   return (
     <>
-      <Table columns={columns} dataSource={commentList} />
-      {/* <ModalEdit
-            visible={visible}
-            setVisible={setVisible}
-            selected={selected}
-            setSelected={setSelected}
-        /> */}
+      <Table columns={columns} dataSource={dataComment} loading={loaded}/>
     </>
   );
 }

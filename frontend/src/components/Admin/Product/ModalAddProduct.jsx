@@ -1,12 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Select, Upload
-} from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select, Upload, Tag } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -23,6 +16,15 @@ const formItemLayout = {
   wrapperCol: {
     span: 14,
   },
+};
+
+const normFile = (e) => {
+  console.log(`lits`, e.fileLis);
+  if (Array.isArray(e)) {
+    return e;
+  }
+
+  return e && e.fileList;
 };
 
 function getBase64(file) {
@@ -44,10 +46,9 @@ export default function ModalAddProduct({ visible, setVisible }) {
   const [previewTitle, setPreviewTitle] = useState("");
 
   const onFinish = (values) => {
-      if (
+    if (
       !validations.checkBlankSpace(values.product_name) ||
-      !validations.checkBlankSpace(values.description) ||
-      !validations.checkBlankSpace(values.color)
+      !validations.checkBlankSpace(values.description)
     ) {
       toast.error("You are not allowed text only white space");
     } else {
@@ -85,6 +86,31 @@ export default function ModalAddProduct({ visible, setVisible }) {
     setImgBase64(hash);
   };
 
+  // color tag
+  const tagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+
+    return value === "white" ? (
+      <Tag
+        style={{ color: "black", borderColor: "#00000014" }}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    ) : (
+      <Tag
+        color={value}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    );
+  };
+
   const [form] = Form.useForm();
 
   return (
@@ -104,6 +130,10 @@ export default function ModalAddProduct({ visible, setVisible }) {
           name="validate_other"
           {...formItemLayout}
           onFinish={onFinish}
+          initialValues={{
+            inventory: 1,
+            price: 1,
+          }}
         >
           <Form.Item
             name="product_name"
@@ -116,7 +146,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Please input product name" />
           </Form.Item>
           <Form.Item
             name="catalog_id"
@@ -129,7 +159,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               },
             ]}
           >
-            <Select>
+            <Select placeholder="Please select catalog">
               {catalogList &&
                 catalogList
                   .filter((f) => f.status)
@@ -151,7 +181,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
                 },
               ]}
             >
-              <InputNumber min={1} initialvalues={0} />
+              <InputNumber min={1} defaultValue={1} />
             </Form.Item>
             <span className="ant-form-text"> Price:</span>
             <Form.Item
@@ -165,14 +195,17 @@ export default function ModalAddProduct({ visible, setVisible }) {
                 },
               ]}
             >
-              <InputNumber min={1} initialvalues={0} />
+              <InputNumber min={1} defaultValue={0} />
             </Form.Item>
           </Form.Item>
 
-          <Form.Item hasFeedback label="Image" valuePropName="fileList">
+          <Form.Item
+            hasFeedback
+            label="Image"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+          >
             <Upload
-              name="logo"
-              listType="picture"
               listType="picture-card"
               fileList={fileList}
               onChange={handleChange}
@@ -201,11 +234,23 @@ export default function ModalAddProduct({ visible, setVisible }) {
             rules={[
               {
                 required: true,
-                message: "Please input color!",
+                message: "Please select product colors!",
+                type: "array",
               },
             ]}
           >
-            <Input />
+            <Select
+              placeholder="Please input colors"
+              mode="multiple"
+              showArrow
+              tagRender={tagRender}
+              style={{ width: "100%" }}
+            >
+              <Option value="white">white</Option>
+              <Option value="green">green</Option>
+              <Option value="orange">orange</Option>
+              <Option value="black">black</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -218,7 +263,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               },
             ]}
           >
-            <Input.TextArea showCount />
+            <Input.TextArea placeholder="Please input description" showCount />
           </Form.Item>
 
           <Form.Item

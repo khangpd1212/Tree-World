@@ -5,6 +5,8 @@ import { requests } from "utils/axios";
 
 const initialState = {
   orderList: [],
+  loading: "idle",
+  error: "",
 }
 export const fetchOrders = createAsyncThunk(
   "POST_ORDER",
@@ -21,7 +23,7 @@ export const fetchOrders = createAsyncThunk(
         ));
 
       const updateProduct = await data[2].map((item) => (
-        requests.editProduct({inventory: item.inventory - item.quantity}, item.id_product)
+        requests.editProduct({inventory: item.inventory - item.quantity, sold: item.sold + item.quantity}, item.id_product)
       ))
 
       await Promise.all([postOrder, postOrderDetail, updateProduct])
@@ -67,6 +69,7 @@ export const updateOrders = createAsyncThunk(
           'Authorization': 'Bearer ' + token
         }
       });
+      return await response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
@@ -95,9 +98,9 @@ export const orderSlice = createSlice({
 
 export const selectOrders = createSelector(
   (state) => ({
+    loading: state.orderState.loading,
     orderList: state.orderState.orderList,
   }),
   (state) => state
 );
-export const { onStatusChange } = orderSlice.actions;
 export default orderSlice.reducer;

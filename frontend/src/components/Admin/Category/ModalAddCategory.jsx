@@ -72,10 +72,6 @@ export default function ModalAddCategory({ visible, setVisible }) {
             <Input />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" valuePropName="status">
-            <Switch defaultChecked={true} />
-          </Form.Item>
-
           <Form.Item
             wrapperCol={{
               span: 12,

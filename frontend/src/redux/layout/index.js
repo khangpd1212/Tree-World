@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import moment from "moment";
 const initialState = {
   layoutStatus: false,
   filterStatus: false,
   searchStatus: false,
   keyword: null,
+  filterCmt: false,
+  year: moment().format("YYYY"),
 };
 
 const layoutSlice = createSlice({
@@ -28,6 +30,7 @@ const layoutSlice = createSlice({
         filterStatus: false,
         searchStatus: false,
         keyword: null,
+        filterCmt: false,
       };
     },
     setSearchStatus: (state, action) => {
@@ -38,6 +41,12 @@ const layoutSlice = createSlice({
         keyword: action.payload,
       };
     },
+    setFilterCmt: (state) => {
+      return { ...state, filterCmt: true };
+    },
+    setYear: (state, action) => {
+      return { ...state, year: action.payload };
+    },
   },
 });
 
@@ -46,5 +55,7 @@ export const {
   setFilterStatus,
   setDefaultStatus,
   setSearchStatus,
+  setFilterCmt,
+  setYear,
 } = layoutSlice.actions;
 export default layoutSlice.reducer;

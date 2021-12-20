@@ -6,8 +6,8 @@ import { fetchDistrict, selectDistrict } from "redux/address/district";
 import { fetchProvince, selectProvince } from "redux/address/province";
 import { fetchWard, selectWard } from "redux/address/ward";
 import {
-  onCancelAddress,
   selectModals,
+  ShowModalAddress,
   ShowModalDefaultAddress,
 } from "redux/modal";
 import { patterns, validations } from "utils/validation";
@@ -27,10 +27,12 @@ export default function ModalAddress({ handleCreate }) {
   }, [dispatch]);
 
   const showDefaultAddress = () => {
-    dispatch(onCancelAddress(false));
+    dispatch(ShowModalAddress(false));
     dispatch(ShowModalDefaultAddress(true));
   };
-
+  const handleCancel = () => {
+    dispatch(ShowModalAddress(false));
+  }
   const handleProvinceChange = (key, value) => {
     dispatch(fetchDistrict(key));
     setAddress({ ...address, province: value.children });
@@ -80,7 +82,7 @@ export default function ModalAddress({ handleCreate }) {
           </Button>
         </>
       }
-      onCancel={() => dispatch(onCancelAddress(false))}
+      onCancel={handleCancel}
       width={600}
     >
       <Form layout="vertical" form={form} name="form_in_modal" size="large">

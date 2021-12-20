@@ -9,6 +9,7 @@ import {
   Button,
   Input,
   Rate,
+  Tooltip,
 } from "antd";
 import useConvertISO from "hooks/useConvertISO";
 import { useEffect, useState } from "react";
@@ -55,6 +56,9 @@ export default function ListOrder() {
       orderDate: convertISO(o1.orderDate),
       id: o1._id,
       status: o1.status,
+      activatedVoucher: o1.activatedVoucher,
+      idVoucher: o1.idVoucher,
+      total: o1.toTal,
       orderDetail: orderDetailList.filter((o2) => o1._id == o2.id_order),
     }));
 
@@ -63,6 +67,9 @@ export default function ListOrder() {
       orderDate: o1.orderDate,
       id: o1.id,
       status: o1.status,
+      activatedVoucher: o1.activatedVoucher,
+      idVoucher: o1.idVoucher,
+      total: o1.total,
       product: o1.orderDetail.map((o2) =>
         Object.assign(
           {},
@@ -75,15 +82,29 @@ export default function ListOrder() {
 
     setOrderUser(myOrder);
   }, [orderList, userItems]);
-  console.log(orderUser);
+
   const description = (description, quantity, color) => (
     <>
-      <span style={{ display: "block" }}>Description: {description}</span>
+      <Tooltip
+        color="#3e8c7e"
+        placement="leftTop"
+        title={`Description: ${description}`}
+      >
+        <span
+          style={{
+            display: "block",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            width: "80%",
+          }}
+        >
+          Description: {description}
+        </span>
+      </Tooltip>
       <p>Quantity: {quantity}</p>
-      {color === "#ffff" || color === "white" ? (
-        <Tag style={{ color: "black" }} color={color}>
-          {color}
-        </Tag>
+      {color === "white" ? (
+        <Tag style={{ color: "black", borderColor: "#00000014" }}>{color}</Tag>
       ) : (
         <Tag color={color}>{color}</Tag>
       )}
@@ -130,7 +151,7 @@ export default function ListOrder() {
         content: values.content,
       };
       console.log(data);
-      requests.addComment(userItems.accessToken, data).then((res) => {
+      requests.addComment(data).then((res) => {
         console.log(res);
       });
     });
@@ -165,7 +186,14 @@ export default function ListOrder() {
                   key={keyOrder}
                   itemLayout="horizontal"
                   dataSource={itemOrder.product}
-                  footer={<TotalOrder order={itemOrder.product} />}
+                  footer={
+                    <TotalOrder
+                      order={itemOrder.product}
+                      activate={itemOrder.activatedVoucher}
+                      idVoucher={itemOrder.idVoucher}
+                      total={itemOrder.total}
+                    />
+                  }
                   renderItem={(itemChild) => (
                     <List.Item>
                       <List.Item.Meta
@@ -273,12 +301,12 @@ export default function ListOrder() {
       </Collapse>
       <Divider />
       <Pagination
+        simple
         style={{ textAlign: "right" }}
         current={currentPage}
         defaultPageSize={numEachPage}
         onChange={handleChangePage}
         total={orderUser.length}
-        showTotal={(total) => `Total ${total} items`}
       />
     </>
   );

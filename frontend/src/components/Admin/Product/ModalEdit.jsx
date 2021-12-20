@@ -8,11 +8,10 @@ import {
   Upload,
   InputNumber,
   Image,
+  Tag,
 } from "antd";
-import React, { useState } from "react";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React, { useState, useMemo, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { selectCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
@@ -50,17 +49,18 @@ export default function ModalEdit({
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
+
   let catalogSeleted =
     catalogList &&
     selected &&
     catalogList.find((f) => f._id === selected.catalog_id);
   const dispatch = useDispatch();
-
+  
+  // handle submit
   const onFinish = (values) => {
     if (
       !validations.checkBlankSpace(values.product_name) ||
-      !validations.checkBlankSpace(values.description) ||
-      !validations.checkBlankSpace(values.color)
+      !validations.checkBlankSpace(values.description)
     ) {
       toast.error("You are not allowed text only white space");
     } else {
@@ -68,7 +68,6 @@ export default function ModalEdit({
         requests
           .editProduct({ ...values, image: imgBase64 }, selected._id)
           .then((res) => {
-            console.log(res);
             if (res.updatedProduct) {
               dispatch(fetchProducts());
               setVisible(false);
@@ -93,6 +92,7 @@ export default function ModalEdit({
     }
   };
 
+  // mã hóa ảnh
   function getBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -103,6 +103,7 @@ export default function ModalEdit({
   }
 
   const handleCancel = () => setPreviewVisible(false);
+  
   const handlePreview = useCallback(async (file) => {
     setPreviewVisible(true);
 
@@ -125,6 +126,31 @@ export default function ModalEdit({
       setFileList(info.fileList);
     }
   }, []);
+
+  // color tag
+  const tagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    
+    return value === "white" ? (
+      <Tag
+        style={{ color: "black", borderColor: "#00000014" }}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    ) : (
+      <Tag
+        color={value}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    );
+  };
 
   const FromEdit = useCallback(() => {
     return (
@@ -191,7 +217,7 @@ export default function ModalEdit({
               },
             ]}
           >
-            <InputNumber min={1} defaultValue={selected.inventory} />
+            <InputNumber min={0} defaultValue={selected.inventory} />
           </Form.Item>
           <span className="ant-form-text"> Price:</span>
           <Form.Item
@@ -236,17 +262,37 @@ export default function ModalEdit({
             <img alt="example" style={{ width: "100%" }} src={previewImage} />
           </Modal>
         </Form.Item>
-        <Form.Item name="color" label="Color" hasFeedback>
-          <Input
-            placeholder={selected.color}
+        <Form.Item
+          name="color"
+          label="Color"
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Please select product colors!",
+              type: "array",
+            },
+          ]}
+        >
+          <Select
+            mode="multiple"
+            showArrow
+            placeholder="Please select product colors"
+            tagRender={tagRender}
             defaultValue={selected.color}
-            value={selected.color}
-          />
+            style={{ width: "100%" }}
+          >
+            <Option value="white">white</Option>
+            <Option value="green">green</Option>
+            <Option value="orange">orange</Option>
+            <Option value="black">black</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item label="Description">
           <Form.Item
             name="description"
+            placeholder="Please input description"
             hasFeedback
             rules={[
               {

@@ -8,6 +8,7 @@ import { selectProducts } from "redux/product";
 
 export default function Cart() {
   const { productList } = useSelector(selectProducts);
+  const showProduct = productList.filter((item) => item.status === true);
   return (
     <div id="cart">
       <BreadCrumb className="breadcrumb" page="Cart" />
@@ -18,7 +19,7 @@ export default function Cart() {
       <CartTotal />
       <div className="suggest_product">
         <h1 className="suggest_product__heading">Suggest Product</h1>
-        <SliderProduct products={productList} />
+        <SliderProduct products={showProduct} />
       </div>
     </div>
   );

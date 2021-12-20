@@ -1,9 +1,10 @@
 import { Select, Table, Tooltip } from "antd";
 import moment from "moment";
+import { fetchProducts } from "redux/product";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { selectOrders, updateOrders } from "redux/order";
+import { getOrders, selectOrders, updateOrders } from "redux/order";
+import { getOrderDetail } from "redux/order_detail";
 import TableDetail from "./TableDetail";
 
 export default function TableOrder() {
@@ -20,24 +21,28 @@ export default function TableOrder() {
         key: item._id,
         _id: item._id,
         username: item.username,
-        orderDate: moment(item.orderDate).format(dateFormat),
+        orderDate: item.orderDate,
         address: item.address,
         phoneNumber: item.phoneNumber,
         toTal: item.toTal,
         status: item.status,
       };
     });
+
     setDataOrder(orderMap);
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [orderList]);
 
+  useEffect(() => {
+    dispatch(getOrders());
+    dispatch(fetchProducts());
+    dispatch(getOrderDetail());
+  }, [dispatch]);
+
   const handleStatusChange = async (id, status) => {
     const dataStatus = { id: id, status: status };
     await dispatch(updateOrders(dataStatus));
-    toast.success(`Status update success`, {
-      position: "top-right",
-      autoClose: 2000,
-    });
+    await dispatch(getOrders());
   };
 
   const columns = [
@@ -45,14 +50,12 @@ export default function TableOrder() {
       title: "Name",
       dataIndex: "username",
       key: "username",
-      sorter: (a, b) => a.username.length - b.username.length,
+      sorter: (a, b) => a.username.localeCompare(b.username),
     },
     {
       title: "Date",
       dataIndex: "orderDate",
-      render: (orderDate) => (
-        <>{moment(orderDate).format(dateFormat)}</>
-      ),
+      render: (orderDate) => <>{moment(orderDate).format(dateFormat)}</>,
       sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
     },
     {
@@ -91,11 +94,11 @@ export default function TableOrder() {
       filterSearch: true,
       filters: [
         { text: "Pending", value: "Pending" },
-        { text: "Awaiting Payment", value: "Awaiting Payment" },
         { text: "Payment Success", value: "Payment Success" },
         { text: "Awaiting Shipment", value: "Awaiting Shipment" },
         { text: "Shipped", value: "Shipped" },
         { text: "Completed", value: "Completed" },
+        { text: "Reviewed", value: "Reviewed" },
         { text: "Cancelled", value: "Cancelled" },
       ],
       render: (status, record) => (
@@ -105,11 +108,11 @@ export default function TableOrder() {
           defaultValue={status}
         >
           <Option value="Pending">Pending</Option>
-          <Option value="Awaiting Payment">Awaiting Payment</Option>
           <Option value="Payment Success">Payment Success</Option>
           <Option value="Awaiting Shipment">Awaiting Shipment</Option>
           <Option value="Shipped">Shipped</Option>
           <Option value="Completed">Completed</Option>
+          <Option value="Reviewed">Reviewed</Option>
           <Option value="Cancelled">Cancelled</Option>
         </Select>
       ),

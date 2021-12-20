@@ -7,14 +7,30 @@ import { requests } from "utils/axios";
 import ModalEdit from "./ModalEditCategory";
 
 export default function TableCategory() {
-  const { catalogList } = useSelector(selectCatalogs);
+  const { catalogList, loading } = useSelector(selectCatalogs);
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
+  const [loaded, setLoaded] = useState(true);
+  const [dataCatalog, setDataCatalog] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCatalogs());
   }, [dispatch]);
+
+  useEffect(() => {
+    const catalogMap = catalogList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        catalog_name: item.catalog_name,
+        status: item.status,
+      };
+    });
+
+    setDataCatalog(catalogMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [catalogList]);
 
   const onEdit = (data) => {
     setSelected(data);
@@ -22,19 +38,21 @@ export default function TableCategory() {
   };
   const handleChangeStatus = (e, id) => {
     requests.editCatalog({ status: e }, id).then((res) => {
-      if (res){
-         dispatch(fetchCatalogs());
+      if (res) {
+        dispatch(fetchCatalogs());
         toast.success(`Changed status`, {
           autoClose: 2000,
         });
       }
     });
   };
+
   const columns = [
     {
       title: "Name",
       dataIndex: "catalog_name",
       key: "catalog_name",
+      sorter: (a, b) => a.catalog_name.localeCompare(b.catalog_name),
     },
     {
       title: "Status",
@@ -63,7 +81,7 @@ export default function TableCategory() {
 
   return (
     <>
-      <Table columns={columns} dataSource={catalogList} />
+      <Table columns={columns} dataSource={dataCatalog} loading={loaded} />
       <ModalEdit
         visible={visible}
         setVisible={setVisible}

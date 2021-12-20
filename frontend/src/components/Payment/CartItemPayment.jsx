@@ -1,5 +1,5 @@
 import { Col, Form, Input, Row, Select, Tag } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProvince, showTextAddress } from "redux/address/province";
 import { getTotals, selectCarts } from "redux/cart";
@@ -16,7 +16,8 @@ export default function CartItemPayment() {
   const { feeItems } = useSelector(selectFee);
   const { serviceItems } = useSelector(selectService);
   const { userItems } = useSelector(selectUsers);
-
+  const [serviceDefault, setServiceDefault] = useState({});
+  
   useEffect(() => {
     dispatch(fetchService(textAddress.district_id));
     dispatch(fetchFee(textAddress));
@@ -47,9 +48,14 @@ export default function CartItemPayment() {
     });
   }, [userItems]);
 
-  const handleServiceChange = (key) => {
-    const objectNew = Object.assign({}, textAddress, { service_id: key });
-    dispatch(fetchFee(objectNew));
+  useEffect(() => {
+    setServiceDefault(
+      serviceItems.find((item) => item.service_id == textAddress.service_id)
+    );
+  }, [serviceItems]);
+
+  const handleServiceChange = (key, value) => {
+    const objectNew = Object.assign({}, textAddress, { service_id: value.key });
     dispatch(showTextAddress(objectNew));
   };
   return (
@@ -85,12 +91,8 @@ export default function CartItemPayment() {
                   align="middle"
                 >
                   <Col className="main__list--color">
-                    {cartItem.pickColor === "#ffff" ||
-                    cartItem.pickColor === "white" ? (
-                      <Tag
-                        style={{ color: "black" }}
-                        color={cartItem.pickColor}
-                      >
+                    {cartItem.pickColor === "white" ? (
+                      <Tag style={{ color: "black", borderColor: "#00000014" }}>
                         {cartItem.pickColor}
                       </Tag>
                     ) : (
@@ -143,10 +145,13 @@ export default function CartItemPayment() {
                     },
                   ]}
                 >
-                  <Select placeholder="Service" onChange={handleServiceChange}>
+                  <Select
+                    placeholder={serviceDefault?.short_name}
+                    onChange={handleServiceChange}
+                  >
                     {serviceItems &&
                       serviceItems.map((service) => (
-                        <Option key={service.service_id}>
+                        <Option key={service.service_id} value={service.short_name}>
                           {service.short_name}
                         </Option>
                       ))}

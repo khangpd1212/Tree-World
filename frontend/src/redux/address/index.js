@@ -59,8 +59,6 @@ export const addressSlice = createSlice({
 export const selectAddress = (state) => state.addressState.addressReducer;
 const addressReducer = addressSlice.reducer
 
-export const { getAddressbyUser } = addressSlice.actions
-
 export default combineReducers({
   provinceReducer,
   districtReducer,

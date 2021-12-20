@@ -2,6 +2,7 @@ import {
   CheckCircleFilled,
   FacebookFilled,
   InstagramFilled,
+  LoadingOutlined,
   MessageFilled,
   ShoppingCartOutlined,
   SkypeFilled,
@@ -9,7 +10,7 @@ import {
   StarFilled,
   TwitterCircleFilled,
 } from "@ant-design/icons";
-import { Col, Radio, Row } from "antd";
+import { Avatar, Col, Radio, Rate, Row, Spin } from "antd";
 import BreadCrumb from "components/Base/BreadCrumb";
 import SliderProductComp from "components/Home/SliderProductComp";
 import FormSearch from "components/Product/FormSearch";
@@ -19,13 +20,24 @@ import { useHistory, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { toast } from "react-toastify";
 import { addItemToCart } from "redux/cart";
-import { setLayoutStatus } from "redux/layout";
+import { setDefaultStatus, setFilterCmt, setLayoutStatus } from "redux/layout";
 import { ShowModalLogin } from "redux/modal";
 import { detailProduct, selectProducts } from "redux/product";
-import { selectUsers } from "redux/user";
+import user, {
+  fetchGetUser,
+  fetchLogin,
+  selectUsers,
+  loadVoucher,
+} from "redux/user";
+import { selectComment, filterComment, fetchGetComment } from "redux/comment";
+import { selectVouchers } from "redux/voucher";
+import moment from "moment";
 import "styles/detail.scss";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
+import { requests } from "utils/axios";
+import { selectOrders } from "redux/order";
+import CommentComp from "components/Detail/CommentComp";
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -33,26 +45,39 @@ export default function Detail() {
   const history = useHistory();
   const { id } = useParams();
   const { product } = useSelector(selectProducts);
+  const { filterCmt } = useSelector((state) => state.layoutState);
 
-  console.log(id);
   const [qty, setQty] = useState(1);
   const [color, setColor] = useState(null);
   const { userItems } = useSelector(selectUsers);
   const { productList } = useSelector(selectProducts);
+  const showProduct = productList.filter((item) => item.status === true);
+  const { voucherList } = useSelector(selectVouchers);
+  const showVoucher = voucherList.filter((item) => item.status === true);
+  const { orderList } = useSelector(selectOrders);
+  const { loading } = useSelector(selectComment);
+
+  const dateFormat = "DD/MM/YYYY";
   useEffect(() => {
     if (id) {
       dispatch(detailProduct(id));
     } else {
       history.push("/");
     }
-    product.color && setColor(product.color[0]);
   }, [dispatch, id, history]);
-  console.log(product);
 
-  console.log(color);
+  const { commentList } = useSelector(selectComment);
+  const { filterCommentList } = useSelector(selectComment);
+  const comment = commentList.filter((cmt) => cmt.idProduct === id);
+  const filterComments = filterCommentList.filter(
+    (cmt) => cmt.idProduct === id
+  );
+  const showComment = comment.filter((cmt) => cmt.status === true);
+  const showFilterComent = filterComments.filter((cmt) => cmt.status === true);
+  let arrVoucher = userItems.id_voucher;
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 3,
@@ -65,7 +90,7 @@ export default function Detail() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -99,12 +124,80 @@ export default function Detail() {
         autoClose: 2000,
       });
     } else {
-      dispatch(ShowModalLogin(false));
-      dispatch(
-        addItemToCart({ product: product, quantity: qty, pickColor: color })
-      );
+      if (color === null) {
+        toast.warning("You have not chosen color", {
+          autoClose: 2000,
+        });
+      } else {
+        dispatch(ShowModalLogin(false));
+        dispatch(
+          addItemToCart({ product: product, quantity: qty, pickColor: color })
+        );
+      }
     }
   };
+  const handleSaveVoucher = (id) => {
+    if (Object.values(userItems).length === 0) {
+      dispatch(ShowModalLogin(true));
+      toast.error(`You need to login`, {
+        position: "bottom-left",
+        autoClose: 2000,
+      });
+    } else {
+      dispatch(ShowModalLogin(false));
+      const order_userID = orderList.filter((x) =>
+        userItems._id.includes(x.idUser)
+      );
+      const orderHaveVoucher = order_userID.filter(
+        (i) => i.activatedVoucher === true
+      );
+      if (orderHaveVoucher.map((x) => x.idVoucher).indexOf(id) > -1) {
+        toast.warning("You had used this voucher before", {
+          autoClose: 2000,
+        });
+      } else {
+        let voucher = voucherList.filter((item) => item._id === id);
+
+        arrVoucher = Object.assign([], arrVoucher);
+        console.log(arrVoucher);
+        if (
+          moment().format(dateFormat) >
+          moment(voucher[0].expiryDate).format(dateFormat)
+        ) {
+          toast.warning("This voucher is out of date", {
+            autoClose: 2000,
+          });
+        } else {
+          if (arrVoucher.includes(id)) {
+            toast.warning("You have already saved this voucher");
+          } else {
+            arrVoucher.push(id);
+            requests
+              .editUser({ id_voucher: arrVoucher }, userItems._id)
+              .then(() => {
+                dispatch(loadVoucher(arrVoucher));
+                dispatch(fetchGetUser());
+                toast.success("This voucher has been saved", {
+                  autoClose: 2000,
+                });
+              })
+              .catch((error) =>
+                toast.error(error.response.data.message, {
+                  autoClose: 2000,
+                })
+              );
+          }
+        }
+      }
+      // console.log(orderHaveVoucher.map((x) => x.idVoucher).indexOf(id));
+    }
+  };
+  const handleFilterComment = (star) => {
+    dispatch(setFilterCmt());
+    dispatch(filterComment(star));
+  };
+  const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
+
   return (
     <div className="detail">
       <BreadCrumb page="product" item={product} />
@@ -146,7 +239,7 @@ export default function Detail() {
             <div className="color">
               <p>color</p>
               <Radio.Group
-                defaultValue={product.color && product.color[0]}
+                defaultValue={color}
                 onChange={(e) => {
                   setColor(e.target.value);
                 }}
@@ -201,25 +294,26 @@ export default function Detail() {
             </p>
           </div>
           <div className="footerInfor">
-            <div>
-              <button className="btn" onClick={handleAddToCart}>
-                {" "}
-                <ShoppingCartOutlined className="Cart" />
-                ADD TO CART
-              </button>
-              <button className="btn">BUY NOW</button>
-            </div>
+            {product.inventory > 0 ? (
+              <div>
+                <button className="btn" onClick={handleAddToCart}>
+                  {" "}
+                  <ShoppingCartOutlined className="Cart" />
+                  ADD TO CART
+                </button>
+                <button className="btn">BUY NOW</button>
+              </div>
+            ) : (
+              <div>
+                <button className="btn">SOLD OUT</button>
+              </div>
+            )}
           </div>
         </Col>
         {/* thong tin san pham  */}
         <Col className="textD" xs={24}>
           <div className="hrtext"></div>
           <span>{product.description}</span>
-          <ul>
-            <li>+ Dolor sit amet et dolore magna.</li>
-            <li>+ Consectetur adipiscing elit, sed do eiusmod tempor.</li>
-            <li>+ 1914 translation by H. Rackham.</li>
-          </ul>
         </Col>
         <Col className="proCmt" xs={24}>
           <div className="hrCmt"></div>
@@ -228,16 +322,57 @@ export default function Detail() {
           <div className="contaistar">
             <div className="numberStar">
               {" "}
-              <p>4.9/5</p>
+              <p>
+                {comment && comment.length > 0
+                  ? Math.round(
+                      (comment.reduce(
+                        (prev, current) => prev + current.star,
+                        0
+                      ) /
+                        comment.length) *
+                        1000
+                    ) / 1000
+                  : 0}
+                /5
+              </p>
             </div>
             <div className="btnStar">
-              <button>ALL</button>
-              <button>5 STAR (750)</button>
-              <button>4 STAR (58)</button>
-              <button>3 STAR (13)</button>
-              <button>2 STAR (5)</button>
-              <button>1 STAR (2)</button>
-              <button>ALL COMMENT (616)</button>
+              <button onClick={() => dispatch(setDefaultStatus())}>ALL</button>
+              <button
+                onClick={() => {
+                  handleFilterComment(5);
+                }}
+              >
+                5 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(4);
+                }}
+              >
+                4 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(3);
+                }}
+              >
+                3 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(2);
+                }}
+              >
+                2 STAR
+              </button>
+              <button
+                onClick={() => {
+                  handleFilterComment(1);
+                }}
+              >
+                1 STAR
+              </button>
             </div>
           </div>
           {/* <div className="input__comment">
@@ -245,133 +380,39 @@ export default function Detail() {
             <Button>Comment</Button>
           </div> */}
           <div className="commnet">
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
+            {loading === "loaded" ? (
+              <CommentComp
+                comments={filterCmt ? showFilterComent : showComment}
+              />
+            ) : (
+              <div className="spinner--loading">
+                <Spin indicator={antIcon} />
               </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
-              </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
-              </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
-            <div className="itemComment">
-              <div className="avt_name">
-                <div>
-                  <SmileFilled className="avt" />
-                </div>
-                <div className="name">
-                  <h3>tnu_yeulinhnhieu</h3>
-                  <div className="star">
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                    <StarFilled />
-                  </div>
-                </div>
-              </div>
-              <div className="textCommnet">
-                <h4>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-                  accusantium, labore nam obcaecati asperiores nihil officiis
-                  earum voluptate maiores sed?
-                </h4>
-              </div>
-              <div className="hritemComment"></div>
-            </div>
+            )}
           </div>
         </Col>
         <Col className="voucher" xs={24} sm={8}>
           <div>
             <p>SHOP DISCOUNT</p>
-            <div className="voucherItem">
-              <div className="voucherMain">
-                <h4>15% off</h4>
-                <p>maximum $5.00</p>
-                <h5>20/09/2021-15/10/2021</h5>
-              </div>
-              <div className="voucherAdd">
-                <button>SAVE</button>
-              </div>
-            </div>
-            <div className="voucherItem">
-              <div className="voucherMain">
-                <h4>15% off</h4>
-                <p>maximum $5.00</p>
-                <h5>20/09/2021-15/10/2021</h5>
-              </div>
-              <div className="voucherAdd">
-                <button>SAVE</button>
-              </div>
-            </div>
-          </div>
-          <div className="hotSelling">
-            <p>HOT SELLING</p>
-            <div className="img">
-              <img src="./images/product3.png" alt="" />
-            </div>
+            {voucherList &&
+              showVoucher.map((item, index) => (
+                <div className="voucherItem" key={index}>
+                  <div className="voucherMain">
+                    <h4>{item.percent}% off</h4>
+                    <p>{item.voucherCode}</p>
+                    <p>maximum ${item.maximum}</p>
+                    <h5>
+                      {moment(item.createDate).format(dateFormat)} -{" "}
+                      {moment(item.expiryDate).format(dateFormat)}
+                    </h5>
+                  </div>
+                  <div className="voucherAdd">
+                    <button onClick={() => handleSaveVoucher(item._id)}>
+                      SAVE
+                    </button>
+                  </div>
+                </div>
+              ))}
           </div>
         </Col>
 
@@ -384,7 +425,7 @@ export default function Detail() {
           <div>
             <Slider className="h_product-main" {...settings}>
               {productList &&
-                productList.map((productItem, index) => (
+                showProduct.map((productItem, index) => (
                   <SliderProductComp key={index} product={productItem} />
                 ))}
             </Slider>

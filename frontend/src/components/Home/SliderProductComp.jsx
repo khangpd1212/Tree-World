@@ -33,7 +33,7 @@ export default function SliderProductComp(props) {
   return (
     <div className="h_product-flex">
       <div className="h_product-flex_hover">
-        <Link to={`detail/${prod._id}`}>
+        <Link to={`/detail/${prod._id}`}>
           <img src={prod.image[0]} alt="img_product" />
         </Link>
         <div className="h_product-flex_icon">
@@ -41,14 +41,20 @@ export default function SliderProductComp(props) {
             <HeartFilled className="icon-card" />
           </div>
         </div>
-        <div className="h_product-flex_sidebar">
-          <div className="icon-cart icon_hidden" onClick={handleAddToCart}>
-            <ShoppingCartOutlined className="icon-card " />
+        {prod.inventory > 0 ? (
+          <div className="h_product-flex_sidebar">
+            <div className="icon-cart icon_hidden" onClick={handleAddToCart}>
+              <ShoppingCartOutlined className="icon-card " />
+            </div>
+            <div className="icon_hidden">
+              <ShoppingOutlined className="icon-card " />
+            </div>
           </div>
-          <div className="icon_hidden">
-            <ShoppingOutlined className="icon-card " />
+        ) : (
+          <div className="h_product-flex_sidebar">
+            <div className="icon_hidden">Sold out</div>
           </div>
-        </div>
+        )}
       </div>
       <div className="h_product-flex_content">
         <p>{prod.product_name}</p>

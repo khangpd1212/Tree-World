@@ -4,8 +4,20 @@ const verify = require("../middlewares/verify");
 
 //get blog
 router.get("/", async (req, res) => {
+  const requestCount = req.query.limit;
+  const requestSkip = req.query.skip;
   try {
-    const blogs = await Blog.find().sort({ create_date: -1 });
+    let blogs;
+    if (requestCount) {
+      blogs = await Blog.find().countDocuments().then(count => {
+        if (requestSkip > count) {
+          return
+        }
+        return Blog.find().sort({ create_date: -1 }).limit(Number(requestCount)).skip(Number(requestSkip));
+      })
+    } else {
+      blogs = await Blog.find().sort({ create_date: -1 });
+    }
     if (!blogs) throw new Error("No items");
     res.status(200).json(blogs);
   } catch (error) {
@@ -13,7 +25,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// get blog id
 router.get("/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);

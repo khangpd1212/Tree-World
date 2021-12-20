@@ -18,6 +18,3 @@ export default function CategoryAdmin() {
     </>
   )
 }
-function onChange(checked) {
-  console.log(`switch to ${checked}`);
-}

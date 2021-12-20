@@ -5,34 +5,19 @@ import {
   ProductAdmin, UserAdmin,
   VoucherAdmin
 } from "pages";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route } from "react-router-dom";
-import { fetchBlogs } from "redux/blog";
-import { fetchGetComment } from 'redux/comment';
-import { fetchGetVoucher } from "redux/voucher";
-import { fetchProducts } from "redux/product";
 import "styles/admin.scss";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
-import { getOrders } from "redux/order";
-import { getOrderDetail } from "redux/order_detail";
-import { fetchCatalogs } from "redux/catalog";
 const { Content } = Layout;
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchGetComment())
-    dispatch(fetchBlogs());
-    dispatch(fetchGetVoucher());
-    dispatch(fetchProducts());
-    // dispatch(getOrders());
-    dispatch(fetchCatalogs());
-    dispatch(getOrderDetail());
-  }, [dispatch]);
+
 
   return (
     <div className="root-admin">

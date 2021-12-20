@@ -375,10 +375,6 @@ export default function Detail() {
               </button>
             </div>
           </div>
-          {/* <div className="input__comment">
-            <Input.TextArea rows={5} placeholder="Writting your comment..." />
-            <Button>Comment</Button>
-          </div> */}
           <div className="commnet">
             {loading === "loaded" ? (
               <CommentComp

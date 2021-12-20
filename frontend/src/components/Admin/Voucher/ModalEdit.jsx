@@ -2,10 +2,12 @@ import { Button, DatePicker, Form, Input, InputNumber, Modal } from "antd";
 import useConvertISO from "hooks/useConvertISO";
 import moment from "moment";
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { selectUsers } from "redux/user";
 import { fetchGetVoucher } from "redux/voucher";
 import { requests } from "utils/axios";
+
 const formItemLayout = {
   labelCol: {
     span: 6,
@@ -22,12 +24,14 @@ export default function ModalEdit({
   setSelected,
 }) {
   const dispatch = useDispatch();
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
   const dateFormat = "DD/MM/YYYY HH:mm:ss";
   const { convertISO } = useConvertISO();
 
   const onFinish = (values) => {
-    requests.editVoucher(values, selected._id).then((res) => {
+    requests.editVoucher(token, values, selected._id).then((res) => {
       if (res.updatedVoucher) {
         dispatch(fetchGetVoucher());
         setVisible(false);

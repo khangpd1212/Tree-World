@@ -28,9 +28,9 @@ export default function Payment() {
     <div id="payment">
       <BreadCrumb className="breadcrumb" page="Payment" />
       <AddressPayment />
-      <CartItemPayment />
       {cartItems.length > 0 ? (
         <>
+          <CartItemPayment />
           <VoucherPayment />
           <PaymentMethod />
         </>

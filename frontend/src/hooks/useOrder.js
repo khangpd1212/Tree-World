@@ -95,6 +95,7 @@ export default function useOrder() {
       quantity: item.quantity,
       inventory: item.product.inventory,
       sold: item.product.sold,
+      token: userItem.accessToken,
     }));
     const index = arrVoucher.indexOf(currentDiscount?.idVoucher);
     if (index > -1) {
@@ -105,11 +106,12 @@ export default function useOrder() {
     };
     let dataOrder = [data_order, data_detail, data_inventory];
 
+    console.log(userItem)
     // nếu momo thanh toán thành công hoặc thanh toán bằng ship cod
     if (resultCode == 0 || !resultCode) {
       const response = await dispatch(fetchOrders(dataOrder));
       dispatch(clearCart());
-      requests.editUser(data_user, userItem._id);
+      requests.editUser(userItem.accessToken, data_user, userItem._id);
       dispatch(loadVoucher(arrVoucher));
       dispatch(fetchGetUser());
       return response.payload;

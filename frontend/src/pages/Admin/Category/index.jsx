@@ -5,16 +5,16 @@ import BtnAdd from "components/BtnAdd";
 import { useState } from "react";
 
 export default function CategoryAdmin() {
-  const [openAddCategory, setOpenAddCategory] = useState(false)
+  const [openAddCategory, setOpenAddCategory] = useState(false);
 
   return (
     <>
-      <BtnAdd page='product' setOpen={setOpenAddCategory} />
+      <BtnAdd page="product" setOpen={setOpenAddCategory} />
       <TableCategory />
       <ModalAddCategory
         visible={openAddCategory}
         setVisible={setOpenAddCategory}
       />
     </>
-  )
+  );
 }

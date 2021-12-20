@@ -5,9 +5,13 @@ import { toast } from "react-toastify";
 import { fetchCatalogs, selectCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
 import ModalEdit from "./ModalEditCategory";
+import { selectUsers } from "redux/user";
 
 export default function TableCategory() {
   const { catalogList, loading } = useSelector(selectCatalogs);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
   const [loaded, setLoaded] = useState(true);
@@ -36,8 +40,9 @@ export default function TableCategory() {
     setSelected(data);
     setVisible(true);
   };
+
   const handleChangeStatus = (e, id) => {
-    requests.editCatalog({ status: e }, id).then((res) => {
+    requests.editCatalog(token, { status: e }, id).then((res) => {
       if (res) {
         dispatch(fetchCatalogs());
         toast.success(`Changed status`, {

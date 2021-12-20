@@ -1,17 +1,22 @@
 import { Select, Table, Tooltip } from "antd";
 import moment from "moment";
-import { fetchProducts } from "redux/product";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders, selectOrders, updateOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
+import { fetchProducts } from "redux/product";
+import { selectUsers } from "redux/user";
 import TableDetail from "./TableDetail";
 
 export default function TableOrder() {
   const dateFormat = "DD/MM/YYYY HH:mm:ss";
   const { Option } = Select;
+
   const { orderList, loading } = useSelector(selectOrders);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
   const dispatch = useDispatch();
+
   const [loaded, setLoaded] = useState(true);
   const [dataOrder, setDataOrder] = useState([]);
 
@@ -40,7 +45,7 @@ export default function TableOrder() {
   }, [dispatch]);
 
   const handleStatusChange = async (id, status) => {
-    const dataStatus = { id: id, status: status };
+    const dataStatus = {token: token, id: id, status: status };
     await dispatch(updateOrders(dataStatus));
     await dispatch(getOrders());
   };

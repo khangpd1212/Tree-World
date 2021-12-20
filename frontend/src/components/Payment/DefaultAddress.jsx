@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 import { selectAddress } from "redux/address";
 import { showTextAddress } from "redux/address/province";
 import {
-  ShowModalDefaultAddress,
   selectModals,
   ShowModalAddress,
+  ShowModalDefaultAddress
 } from "redux/modal";
 import { selectUsers } from "redux/user";
 import { patterns, validations } from "utils/validation";
+
 export default function DefaultAddress() {
   const { Option } = Select;
   const { isShowDefaultAddress } = useSelector(selectModals);
@@ -25,6 +26,7 @@ export default function DefaultAddress() {
     dispatch(ShowModalDefaultAddress(false));
     dispatch(ShowModalAddress(true));
   };
+
   const handleCreate = (values) => {
     localStorage.setItem(
       "address",
@@ -43,6 +45,7 @@ export default function DefaultAddress() {
     );
     dispatch(ShowModalDefaultAddress(false));
   };
+
   const handleCancel = () => {
     dispatch(ShowModalDefaultAddress(false));
   };
@@ -95,7 +98,7 @@ export default function DefaultAddress() {
             },
           ]}
         >
-          <Input placeholder="Input name"/>
+          <Input placeholder="Input name" />
         </Form.Item>
         <Form.Item
           name="phone"
@@ -126,7 +129,9 @@ export default function DefaultAddress() {
           <Select style={{ width: "100%" }}>
             {addressRender &&
               addressRender.map((item) => (
-                <Option key={item.content}>{item.content}</Option>
+                <Option key={item.content}>
+                  {item.content}
+                </Option>
               ))}
           </Select>
         </Form.Item>

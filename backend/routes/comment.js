@@ -85,7 +85,8 @@ router.put("/:id", verify, async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  } else {
+  }
+  else {
     res.status(403).json({ message: "You are not allowed" });
   }
 });

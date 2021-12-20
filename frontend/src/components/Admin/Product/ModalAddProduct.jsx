@@ -1,10 +1,11 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Modal, Select, Upload, Tag } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select, Tag, Upload } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { selectCatalogs } from "redux/catalog";
 import { fetchProducts } from "redux/product";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
 import { validations } from "utils/validation";
 
@@ -38,6 +39,8 @@ function getBase64(file) {
 export default function ModalAddProduct({ visible, setVisible }) {
   const { catalogList } = useSelector(selectCatalogs);
   const dispatch = useDispatch();
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
   const [imgBase64, setImgBase64] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -52,7 +55,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
     ) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.addProduct(values, imgBase64).then((res) => {
+      requests.addProduct(token, values, imgBase64).then((res) => {
         if (res.status) {
           dispatch(fetchProducts());
           form.resetFields();

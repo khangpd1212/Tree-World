@@ -1,13 +1,15 @@
-import { Table, Switch } from "antd";
+import { Switch, Table } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { fetchGetUser, selectUsers } from "redux/user";
 import { requests } from "utils/axios";
-import { toast } from "react-toastify";
 
 export default function TableUser() {
   const dispatch = useDispatch();
-  const { userList, loading } = useSelector(selectUsers);
+  const { userList, loading, adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+
   const [loaded, setLoaded] = useState(true);
   const [dataUser, setDataUser] = useState([]);
 
@@ -32,7 +34,7 @@ export default function TableUser() {
   }, [userList]);
 
   const handleChangeStatus = (status, id) => {
-    requests.editUser({ status: status }, id).then((res) => {
+    requests.editUser(token, { status: status }, id).then((res) => {
       if (res.updatedUser) {
         dispatch(fetchGetUser());
         toast.success(`Changed "${res.updatedUser.username}" status`, {

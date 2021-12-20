@@ -23,7 +23,7 @@ export const fetchOrders = createAsyncThunk(
         ));
 
       const updateProduct = await data[2].map((item) => (
-        requests.editProduct({inventory: item.inventory - item.quantity, sold: item.sold + item.quantity}, item.id_product)
+        requests.editProduct(item.token, {inventory: item.inventory - item.quantity, sold: item.sold + item.quantity}, item.id_product)
       ))
 
       await Promise.all([postOrder, postOrderDetail, updateProduct])
@@ -63,10 +63,9 @@ export const updateOrders = createAsyncThunk(
   "UPDATE_ORDER_STATUS",
   async (data, thunkAPI) => {
     try {
-      let token = JSON.parse(localStorage.getItem("tokenAdmin"));
       const response = await axios.put(`order/${data.id}`, { status: data.status }, {
         headers: {
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + data.token
         }
       });
       return await response.data;

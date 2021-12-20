@@ -1,14 +1,18 @@
 import { Button, Space, Switch, Table } from "antd";
 import moment from "moment";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { selectUsers } from "redux/user";
 import { fetchGetVoucher, selectVouchers } from "redux/voucher";
 import { requests } from "utils/axios";
 import ModalEdit from "./ModalEdit";
 
 export default function TableVoucher() {
   const { voucherList, loading } = useSelector(selectVouchers);
+    const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
   const [loaded, setLoaded] = useState(true);
@@ -43,7 +47,7 @@ export default function TableVoucher() {
   }, [voucherList]);
 
   const handleChangeStatus = (e, id) => {
-    requests.editVoucher({ status: e }, id).then((res) => {
+    requests.editVoucher(token, { status: e }, id).then((res) => {
       if (res.updatedVoucher) {
         dispatch(fetchGetVoucher());
         toast.success(`Changed "${res.updatedVoucher.voucherCode}" status`, {

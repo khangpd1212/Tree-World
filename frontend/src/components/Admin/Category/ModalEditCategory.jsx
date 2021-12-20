@@ -1,10 +1,11 @@
 import { Button, Form, Input, Modal } from "antd";
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
 import { validations } from "utils/validation";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUsers } from "redux/user";
 
 const formItemLayout = {
   labelCol: {
@@ -21,12 +22,14 @@ export default function ModalEdit({
   selected,
 }) {
   const dispatch = useDispatch();
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
   const onFinish = (values) => {
     if (!validations.checkBlankSpace(values.catalog_name)) {
       toast.error("You are not allowed text only white space");
     } else {
-      requests.editCatalog(values, selected._id).then((res) => {
+      requests.editCatalog(token, values, selected._id).then((res) => {
         if (res.updatedCatalog) {
           dispatch(fetchCatalogs());
           setVisible(false);

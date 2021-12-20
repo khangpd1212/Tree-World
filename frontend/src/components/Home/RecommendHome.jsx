@@ -1,8 +1,9 @@
-import React from 'react'
-import { Col, Row } from "antd";
 import { InfoCircleFilled } from '@ant-design/icons';
+import { Col, Row } from "antd";
 import Button from 'components/utils/Button';
-import "styles/Home/Recommend.scss"
+import React from 'react';
+import { Link } from "react-router-dom";
+import "styles/Home/Recommend.scss";
 export default function RecommendHome() {
    return (
       <Row className="section_hot container_home" align="middle">
@@ -61,9 +62,9 @@ export default function RecommendHome() {
                         <span>sed do eiusmod tempor incididunt ut </span>
                      </div>
                   </div>
-                  <div className="desc__content--btn">
+                  <Link to="about" className="desc__content--btn">
                      <Button title="see more" />
-                  </div>
+                  </Link>
                </div>
             </div>
          </Col>

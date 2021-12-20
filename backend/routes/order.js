@@ -57,21 +57,46 @@ router.post("/", async (req, res) => {
 
 //UPDATE
 router.put("/:id", verify, async (req, res) => {
-  try {
-    const updatedOrder = await Order.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      {
-        new: true,
-      }
-    );
-    if (!updatedOrder)
-      throw new Error("Something went wrong with updating order");
-    res.status(200).json({ message: "update successfully", updatedOrder });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  if (req.user.isAdmin) {
+    try {
+      const updatedOrder = await Order.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        {
+          new: true,
+        }
+      );
+      if (!updatedOrder)
+        throw new Error("Something went wrong with updating order");
+      res.status(200).json({ message: "update successfully", updatedOrder });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  } else if (req.user.isAdmin === false) {
+    try {
+      const { status } = req.body;
+      const updatedOrder = await Order.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { status },
+        },
+        {
+          new: true,
+        }
+      );
+      if (!updatedOrder)
+        throw new Error("Something went wrong with updating order");
+      res
+        .status(200)
+        .json({ message: "update successfully", status: true, updatedOrder });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+  else {
+    res.status(403).json({ message: "You are not allowed" });
   }
 });
 

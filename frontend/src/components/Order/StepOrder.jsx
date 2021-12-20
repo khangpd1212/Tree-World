@@ -20,7 +20,6 @@ export default function StepOrder({ status }) {
       setCurrent(2);
     }
   }, [status]);
-  console.log(status);
   return (
     <Steps current={current} progressDot>
       <Step title="Pending" />

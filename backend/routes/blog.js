@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     let blogs;
     if (requestCount) {
       blogs = await Blog.find().countDocuments().then(count => {
-        if (requestSkip > count) {
+        if (requestSkip > count || blogStatus) {
           return
         }
         return Blog.find().sort({ create_date: -1 }).limit(Number(requestCount)).skip(Number(requestSkip));

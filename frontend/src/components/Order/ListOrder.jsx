@@ -1,20 +1,20 @@
 import {
+  Button,
   Collapse,
+  Divider,
   Form,
   Image,
-  List,
-  Tag,
-  Pagination,
-  Divider,
-  Button,
   Input,
+  List,
+  Pagination,
   Rate,
+  Tag,
   Tooltip,
 } from "antd";
 import useConvertISO from "hooks/useConvertISO";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchGetComment } from "redux/comment";
 import { getOrders, selectOrders, updateOrders } from "redux/order";
@@ -31,8 +31,8 @@ export default function ListOrder() {
   const { orderDetailList } = useSelector(selectOrderDetails);
   const { productList } = useSelector(selectProducts);
   const { orderList } = useSelector(selectOrders);
-  const [orderUser, setOrderUser] = useState([]);
 
+  const [orderUser, setOrderUser] = useState([]);
   const { convertISO } = useConvertISO();
   const numEachPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +44,8 @@ export default function ListOrder() {
   const dispatch = useDispatch();
   const [openModalReview, setOpenModalReview] = useState(false);
   const [form] = Form.useForm();
+  const token = userItems.accessToken;
+
   useEffect(() => {
     let myOrder = [];
 
@@ -119,7 +121,7 @@ export default function ListOrder() {
   };
 
   const handleReceived = (id) => {
-    const data = { id: id, status: "Completed" };
+    const data = { token: token, id: id, status: "Completed" };
     dispatch(updateOrders(data)).then((res) => {
       toast.success("Confirmed", {
         position: "bottom-left",
@@ -150,8 +152,7 @@ export default function ListOrder() {
         star: values.star,
         content: values.content,
       };
-      console.log(data);
-      requests.addComment(data).then((res) => {
+      requests.addComment(token, data).then((res) => {
         console.log(res);
       });
     });
@@ -159,7 +160,7 @@ export default function ListOrder() {
     toast.success("Reviewed!!!", {
       autoClose: 2000,
     });
-    dispatch(updateOrders({ id: values.idOrder, status: "Reviewed" }));
+    dispatch(updateOrders({token: token, id: values.idOrder, status: "Reviewed" }));
     form.resetFields();
     setOpenModalReview(false);
     dispatch(getOrders());
@@ -203,7 +204,11 @@ export default function ListOrder() {
                             src={itemChild.image && itemChild.image[0]}
                           />
                         }
-                        title={itemChild.product_name}
+                        title={
+                          <Link to={`/detail/${itemChild._id}`}>
+                            {itemChild.product_name}
+                          </Link>
+                        }
                         description={description(
                           itemChild.description,
                           itemChild.quantity,
@@ -242,6 +247,7 @@ export default function ListOrder() {
                       onFinish={onFinish}
                       initialValues={{
                         idOrder: itemOrder.id,
+                        star: 0,
                       }}
                     >
                       <Form.Item name="idOrder" hidden>

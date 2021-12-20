@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "styles/blog.scss";
-import BreadCrumb from "components/Base/BreadCrumb";
 import {
-  UserOutlined,
   CalendarOutlined,
-  CommentOutlined,
-  FolderViewOutlined,
-  HeartOutlined,
-  DownOutlined,
+  CommentOutlined, DownOutlined, FolderViewOutlined,
+  HeartOutlined, UserOutlined
 } from "@ant-design/icons";
-import { useSelector, useDispatch } from "react-redux";
-import { selectBlogs, fetchBlogs } from "redux/blog";
+import { List, Skeleton } from "antd";
+import BreadCrumb from "components/Base/BreadCrumb";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs, selectBlogs } from "redux/blog";
+import "styles/blog.scss";
 import { requests } from "utils/axios";
-import { Skeleton, List, Divider } from "antd";
 
 const count = 1;
 export default function Blog() {

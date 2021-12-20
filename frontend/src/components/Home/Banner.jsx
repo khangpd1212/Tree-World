@@ -1,7 +1,7 @@
-import {memo} from 'react'
 import { Col, Row } from "antd";
-import "styles/Home/Banner.scss"
+import { Link } from "react-router-dom";
 import Button from 'components/utils/Button';
+import "styles/Home/Banner.scss";
 function Banner() {
    return (
      <Row className="slider">
@@ -21,7 +21,9 @@ function Banner() {
              aliquip ex ea commodo consequat.
            </p>
          </div>
-         <Button title="see more" />
+         <Link to="product">
+           <Button title="see more" />
+         </Link>
        </Col>
      </Row>
    );

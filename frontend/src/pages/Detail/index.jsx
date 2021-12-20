@@ -72,6 +72,8 @@ export default function Detail() {
   const filterComments = filterCommentList.filter(
     (cmt) => cmt.idProduct === id
   );
+  const showComment = comment.filter((cmt) => cmt.status === true);
+  const showFilterComent = filterComments.filter((cmt) => cmt.status === true);
   let arrVoucher = userItems.id_voucher;
 
   const settings = {
@@ -375,7 +377,9 @@ export default function Detail() {
           </div>
           <div className="commnet">
             {loading === "loaded" ? (
-              <CommentComp comments={filterCmt ? filterComments : comment} />
+              <CommentComp
+                comments={filterCmt ? showFilterComent : showComment}
+              />
             ) : (
               <div className="spinner--loading">
                 <Spin indicator={antIcon} />
@@ -405,12 +409,6 @@ export default function Detail() {
                   </div>
                 </div>
               ))}
-          </div>
-          <div className="hotSelling">
-            <p>HOT SELLING</p>
-            <div className="img">
-              <img src="./images/product3.png" alt="" />
-            </div>
           </div>
         </Col>
 

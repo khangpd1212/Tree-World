@@ -9,7 +9,7 @@ export { default as Cart } from "./Cart";
 export { default as Contact } from "./Contact";
 export { default as Payment } from "./Payment";
 export { default as Blog } from "./Blog";
-export { default as About } from "./About"
+export { default as About } from "./About";
 
 // admin
 export { default as Panel } from "./Admin";

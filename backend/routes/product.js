@@ -118,9 +118,10 @@ router.post("/", verify, async (req, res) => {
 router.post("/search", async (req, res) => {
   const { keyword } = req.body;
   try {
-    await Product.search(keyword, function (err, data) {
-      res.status(200).json(data);
+    const products = await Product.find({
+      product_name: new RegExp(keyword, "gi"),
     });
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -147,17 +148,13 @@ router.put("/:id", verify, async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  } 
-  else if (req.user.isAdmin === false) {
+  } else if (req.user.isAdmin === false) {
     try {
-      const {
-        sold,
-        inventory,
-      } = req.body;
+      const { sold, inventory } = req.body;
       const updatedProduct = await Product.findByIdAndUpdate(
         req.params.id,
         {
-          $set: { sold, inventory},
+          $set: { sold, inventory },
         },
         {
           new: true,
@@ -171,8 +168,7 @@ router.put("/:id", verify, async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  } 
-  else {
+  } else {
     res.status(403).json({ message: "You are not allowed" });
   }
 });

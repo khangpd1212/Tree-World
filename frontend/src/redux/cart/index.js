@@ -38,7 +38,6 @@ export const cartSlice = createSlice({
         (item) => item.product._id === action.payload.product._id &&
           item.pickColor === action.payload.pickColor
       );
-      console.log(itemIndex)
       if (itemIndex >= 0){
         state.cartItems[itemIndex].quantity += 1;
       }
@@ -74,10 +73,6 @@ export const cartSlice = createSlice({
     },
     clearCart: (state, action) => {
       state.cartItems = [];
-      toast.error(`Cart cleared`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     getTotals: (state, action) => {
@@ -94,6 +89,7 @@ export const cartSlice = createSlice({
         }
       );
       state.cartTotalAmount = total;
+      action.payload = total;
     },
   },
 });

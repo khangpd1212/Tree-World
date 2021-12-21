@@ -32,9 +32,7 @@ export default function ButtonHome(props) {
       <button 
       type="submit" 
       className="btn btn-home"
-      onClick={
-         () => props.handleOnClick(props)
-      }>
+      >
          {props.title}
       </button>
    )

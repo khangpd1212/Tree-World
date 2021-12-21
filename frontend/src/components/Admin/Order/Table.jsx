@@ -1,49 +1,83 @@
-import { Button, message, Popconfirm, Space,Table } from "antd";
-import TableDetail from "./TableDetail";
+import { Select, Table, Tooltip } from "antd";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, selectOrders, deleteOrders } from "redux/order";
+import { getOrders, selectOrders, updateOrders } from "redux/order";
+import { getOrderDetail } from "redux/order_detail";
+import { fetchProducts } from "redux/product";
+import { selectUsers } from "redux/user";
+import TableDetail from "./TableDetail";
 
 export default function TableOrder() {
-  const { orderList } = useSelector(selectOrders);
-  const [data, setData] = useState([])
+  const dateFormat = "DD/MM/YYYY HH:mm:ss";
+  const { Option } = Select;
+
+  const { orderList, loading } = useSelector(selectOrders);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
   const dispatch = useDispatch();
 
+  const [loaded, setLoaded] = useState(true);
+  const [dataOrder, setDataOrder] = useState([]);
+
   useEffect(() => {
-    setData(orderList.map((item) => {
+    const orderMap = orderList.map((item) => {
       return {
         key: item._id,
+        _id: item._id,
         username: item.username,
         orderDate: item.orderDate,
         address: item.address,
         phoneNumber: item.phoneNumber,
         toTal: item.toTal,
-        status: item.status
-      }
-    }))
-  }, []);
+        status: item.status,
+      };
+    });
+
+    setDataOrder(orderMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [orderList]);
+
   useEffect(() => {
     dispatch(getOrders());
-  }, [dispatch])
-  function confirm(id) {
-    dispatch(deleteOrders(id))
-    message.success("Delete success");
-  }
+    dispatch(fetchProducts());
+    dispatch(getOrderDetail());
+  }, [dispatch]);
+
+  const handleStatusChange = async (id, status) => {
+    const dataStatus = {token: token, id: id, status: status };
+    await dispatch(updateOrders(dataStatus));
+    await dispatch(getOrders());
+  };
+
   const columns = [
     {
       title: "Name",
       dataIndex: "username",
       key: "username",
+      sorter: (a, b) => a.username.localeCompare(b.username),
     },
     {
       title: "Date",
       dataIndex: "orderDate",
-      key: "orderDate",
+      render: (orderDate) => <>{moment(orderDate).format(dateFormat)}</>,
+      sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
     },
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      onFilter: (value, record) => record.address.includes(value),
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ["descend", "ascend"],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (address) => (
+        <Tooltip placement="topLeft" title={address}>
+          {address}
+        </Tooltip>
+      ),
     },
     {
       title: "Phone Number",
@@ -54,39 +88,51 @@ export default function TableOrder() {
       title: "Total",
       dataIndex: "toTal",
       key: "toTal",
+      sorter: (a, b) => a.toTal - b.toTal,
+      width: 80,
     },
     {
-      title: "Status",
+      title: "Order Status",
       dataIndex: "status",
       key: "status",
-    },
-
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Popconfirm
-            placement="rightTop"
-            title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record.key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button>Delete</Button>
-          </Popconfirm>
-        </Space>
+      onFilter: (value, record) => record.status.startsWith(value),
+      filterSearch: true,
+      filters: [
+        { text: "Pending", value: "Pending" },
+        { text: "Payment Success", value: "Payment Success" },
+        { text: "Awaiting Shipment", value: "Awaiting Shipment" },
+        { text: "Shipped", value: "Shipped" },
+        { text: "Completed", value: "Completed" },
+        { text: "Reviewed", value: "Reviewed" },
+        { text: "Cancelled", value: "Cancelled" },
+      ],
+      render: (status, record) => (
+        <Select
+          onChange={(status) => handleStatusChange(record._id, status)}
+          style={{ width: "100%" }}
+          defaultValue={status}
+        >
+          <Option value="Pending">Pending</Option>
+          <Option value="Payment Success">Payment Success</Option>
+          <Option value="Awaiting Shipment">Awaiting Shipment</Option>
+          <Option value="Shipped">Shipped</Option>
+          <Option value="Completed">Completed</Option>
+          <Option value="Reviewed">Reviewed</Option>
+          <Option value="Cancelled">Cancelled</Option>
+        </Select>
       ),
     },
   ];
-return (
+  return (
     <>
       <Table
+        loading={loaded}
         columns={columns}
         expandable={{
-          expandedRowRender: (record) => <TableDetail id={record.key} />,
+          expandedRowRender: (record) => <TableDetail id={record._id} />,
         }}
-        dataSource={data}
+        scroll={{ y: 800 }}
+        dataSource={dataOrder}
       />
     </>
   );

@@ -1,36 +1,59 @@
-import { Button, Image, message, Popconfirm, Space, Switch, Table } from "antd";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { Button, Image, Space, Switch, Table, Tag, Tooltip } from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { fetchCatalogs } from "redux/catalog";
 import { fetchProducts, selectProducts } from "redux/product";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
-import ModalAddProduct from "./ModalAddProduct";
 import ModalEdit from "./ModalEdit";
 
 export default function TableProducts() {
+  const { Column } = Table;
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState({});
-  const userItem = JSON.parse(localStorage.getItem("userItems"));
-  const token = userItem ? userItem.accessToken : null;
-  const dispatch = useDispatch();
-  const { productList } = useSelector(selectProducts);
+  const [loaded, setLoaded] = useState(true);
+  const [productData, setProductData] = useState([]);
 
-  function confirm(id) {
-    requests.deleteProduct(token, id).then((res) => {
-      dispatch(fetchProducts());
-      message.success("Delete success");
+  
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+  const dispatch = useDispatch();
+  const { productList, loading } = useSelector(selectProducts);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+    dispatch(fetchCatalogs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const productMap = productList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        image: item.image,
+        product_name: item.product_name,
+        catalog_id: item.catalog_id,
+        color: item.color,
+        description: item.description,
+        price: item.price,
+        inventory: item.inventory,
+        sold: item.sold,
+        status: item.status,
+      };
     });
-  }
-  const handleChangeStatus = (e, id) => {
+    // console.log(1)
+    setProductData(productMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [productList]);
+
+  const handleChangeStatus = async (e, id) => {
     requests.editProduct(token, { status: e }, id).then((res) => {
-      console.log(res);
-      if (res.status) {
-        dispatch(fetchProducts());
-        toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
-          autoClose: 2000,
-        });
-      }
+      console.log(2)
+      dispatch(fetchProducts());
+      toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
+        autoClose: 2000,
+      });
     });
   };
 
@@ -38,66 +61,107 @@ export default function TableProducts() {
     setSelected(data);
     setVisible(true);
   };
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "product_name",
-      key: "product_name",
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-    },
-    {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (value, record) => (
-        <Space size="middle">
-          <Image width={100} src={value} />
-        </Space>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (value, record) => (
-        <Switch
-          defaultChecked={record.status}
-          onChange={(e) => {
-            handleChangeStatus(e, record._id);
-          }}
-        />
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Button type="primary" onClick={() => onEdit(record)}>
-            Edit
-          </Button>
-          <Popconfirm
-            placement="rightTop"
-            title={"Do you want delete this ?"}
-            onConfirm={() => confirm(record._id)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button>Delete</Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
 
   return (
     <>
-      <Table columns={columns} dataSource={productList} />
+      <Table dataSource={productData} loading={loaded}>
+        <Column
+          title="Image"
+          dataIndex="image"
+          key="image"
+          render={(text, record) => <Image src={record.image} width="150px" />}
+        />
+        <Column
+          title="Product Name"
+          dataIndex="product_name"
+          key="product_name"
+          sorter={(a, b) => a.product_name.localeCompare(b.product_name)}
+        />
+        <Column
+          title="Color"
+          dataIndex="color"
+          key="color"
+          width={100}
+          render={(record) =>
+            record.map((item) =>
+              item === "#ffff" || item === "white" ? (
+                <Tag
+                  style={{
+                    marginTop: 10,
+                    color: "black",
+                    borderColor: "#00000014",
+                  }}
+                >
+                  {item}
+                </Tag>
+              ) : (
+                <div style={{ marginTop: 10 }}>
+                  <Tag color={item}>{item}</Tag>
+                </div>
+              )
+            )
+          }
+        />
+        <Column
+          title="Description"
+          dataIndex="description"
+          key="description"
+          ellipsis={{
+            showTitle: false,
+          }}
+          render={(description) => (
+            <Tooltip placement="topLeft" title={description}>
+              {description}
+            </Tooltip>
+          )}
+        />
+        <Column
+          title="Price ($)"
+          dataIndex="price"
+          key="price"
+          width={100}
+          sorter={(a, b) => a.price - b.price}
+        />
+        <Column
+          title="Inventory"
+          dataIndex="inventory"
+          key="inventory"
+          width={100}
+          sorter={(a, b) => a.inventory - b.inventory}
+        />
+        <Column
+          title="Sold"
+          dataIndex="sold"
+          key="sold"
+          width={80}
+          sorter={(a, b) => a.sold - b.sold}
+        />
+        <Column
+          title="Status"
+          key="_id"
+          width={100}
+          render={(value, record) => (
+            <Switch
+              defaultChecked={record.status}
+              onChange={(e) => {
+                handleChangeStatus(e, record._id);
+              }}
+            />
+          )}
+        />
+        <Column
+          title="Action"
+          key="action"
+          width={100}
+          render={(text, record) => (
+            <Space size="middle">
+              <Button type="primary" onClick={() => onEdit(record)}>
+                Edit
+              </Button>
+            </Space>
+          )}
+        />
+      </Table>
       <ModalEdit
         visible={visible}
         setVisible={setVisible}

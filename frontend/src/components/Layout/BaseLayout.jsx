@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from "react";
-import "styles/BaseLayout.scss";
-import "../../styles/handleDarkMode.scss";
-import "styles/global.scss";
 import { Layout } from "antd";
 import Backtop from "components/Base/Backtop";
 import BaseFooter from "components/Base/BaseFooter";
 import BaseHeader from "components/Base/BaseHeader";
-import { Route } from "react-router-dom";
 import {
-  Home,
-  Users,
-  Product,
-  Cart,
-  Detail,
-  Contact,
-  Payment,
+  About,
   Blog,
-} from "../../pages";
+  Cart,
+  Contact,
+  Detail,
+  Home,
+  Payment,
+  Product,
+  LoginDesktop,
+  SignUpDesktop,
+  ForgetPassword,
+
+} from "pages";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "redux/product";
+import { Route } from "react-router-dom";
+import { getAddress } from "redux/address";
 import { fetchCatalogs } from "redux/catalog";
-import { fetchGetUser } from "redux/user";
+import { fetchGetComment } from "redux/comment";
 import { getOrders } from "redux/order";
 import { getOrderDetail } from "redux/order_detail";
-import { getAddress } from "redux/address";
+import { fetchProducts } from "redux/product";
+import { fetchGetUser } from "redux/user";
+import { fetchGetVoucher } from "redux/voucher";
+import "styles/BaseLayout.scss";
+import "styles/global.scss";
+import "styles/handleDarkMode.scss";
+
 const { Content } = Layout;
+
 export default function BaseLayout() {
   const dispatch = useDispatch();
   const layout = useSelector((state) => state.layoutState.layoutStatus);
@@ -54,6 +62,8 @@ export default function BaseLayout() {
     dispatch(getOrders());
     dispatch(getOrderDetail());
     dispatch(getAddress());
+    dispatch(fetchGetComment());
+    dispatch(fetchGetVoucher());
   }, [dispatch]);
 
   return (
@@ -74,8 +84,12 @@ export default function BaseLayout() {
         <BaseHeader />
         <Content>
           <div className="head">
+            <LoginDesktop />
+            <SignUpDesktop />
+            <ForgetPassword />
             <Route path="/" exact component={Home} />
-            <Route path="/users" exact component={Users} />
+            <Route path="/reset-password" exact component={Home} />
+            <Route path="/about" exact component={About} />
             <Route path="/product" exact component={Product} />
             <Route path="/product/:catalog" exact component={Product} />
             <Route path="/detail" exact component={Detail} />

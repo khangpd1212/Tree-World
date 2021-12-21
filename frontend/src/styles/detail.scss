@@ -184,6 +184,7 @@
       padding: 7px;
       margin-left: 30px;
       margin-top: 30px;
+      padding: 13px 17px;
     }
     .btn:hover {
       background-color: $forth-color;
@@ -268,7 +269,6 @@
   }
   .voucher {
     background-color: white;
-    height: 250px;
     width: 100%;
     margin-left: 40px;
     border: 1px solid $boder-color;
@@ -288,6 +288,7 @@
         .avt {
           font-size: 48px;
           color: $forth-color;
+          background-color: $forth-color;
           margin: 10px 10px 0 10px;
         }
         .name {
@@ -321,7 +322,6 @@
     }
   }
   .voucher {
-    height: 350px;
     .voucherItem {
       display: flex;
       margin: auto auto 20px;

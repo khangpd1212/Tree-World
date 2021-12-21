@@ -12,7 +12,8 @@ export const getOrderDetail = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.message });
     }
-  });
+  }
+);
 export const orderDetailSlice = createSlice({
   name: "order_detail",
   initialState,

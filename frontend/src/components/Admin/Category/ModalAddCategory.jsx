@@ -1,86 +1,94 @@
-import { Button, Form, Input, Modal, Switch} from 'antd';
-import React, { useCallback, useState } from 'react';
+import { Button, Form, Input, Modal } from "antd";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { selectCatalogs } from 'redux/catalog';
-import { fetchProducts } from "redux/product";
+import { fetchCatalogs } from "redux/catalog";
 import { requests } from "utils/axios";
-
+import { selectUsers } from "redux/user";
+import { validations } from "utils/validation";
 
 const formItemLayout = {
-    labelCol: {
-        span: 6,
-    },
-    wrapperCol: {
-        span: 14,
-    },
+  labelCol: {
+    span: 6,
+  },
+  wrapperCol: {
+    span: 14,
+  },
 };
 
 export default function ModalAddCategory({ visible, setVisible }) {
-    const { catalogList } = useSelector(selectCatalogs);
-    const [imgBase64, setImgBase64] = useState("")
-    const dispatch = useDispatch()
-    const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
-    const onFinish = (values) => {
-        requests.addProduct(token, values, imgBase64)
-            .then(res => {
-                console.log(res);
-                dispatch(fetchProducts())
-                setVisible(false)
-                toast.success("Add new product succesfully!")
-            })
-    };
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
+  const onFinish = (values) => {
+    if (!validations.checkBlankSpace(values.catalog_name)) {
+      toast.error("You are not allowed text only white space");
+    } else {
+      requests.addCatalog(token, values).then((res) => {
+        if (res.catalog) {
+          dispatch(fetchCatalogs());
+          form.resetFields();
+          setVisible(false);
+          toast.success("Add new category succesfully!");
+        } else {
+          toast.error("Failed");
+        }
+      });
+    }
+  };
+  const onFinishFailed = (err) => {
+    toast.error(`Failed: ${err}`);
+  };
 
-
-    const FromEdit = useCallback(() => {
-
-        return <Form
-            name="validate_other"
-            {...formItemLayout}
-            onFinish={onFinish}
+  return (
+    <>
+      <Modal
+        title="Add Category"
+        centered
+        visible={visible}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
+        footer={false}
+        width="50%"
+        className="edit-category"
+      >
+        <Form
+          form={form}
+          name="validate_other"
+          {...formItemLayout}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-            <Form.Item
-                name="category_name"
-                label="Category Name"
-                hasFeedback
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item name="status" label="Status" valuePropName="status">
-                <Switch defaultChecked={true} />
-            </Form.Item>
+          <Form.Item
+            name="catalog_name"
+            label="Category Name"
+            rules={[
+              {
+                required: true,
+                message: "Please input category name!",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input />
+          </Form.Item>
 
-            <Form.Item
-                wrapperCol={{
-                    span: 12,
-                    offset: 6,
-                }}
-            >
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-                <Button onClick={() => setVisible(false)}>
-                    Cancel
-                </Button>
-            </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              span: 12,
+              offset: 6,
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button onClick={() => setVisible(false)}>Cancel</Button>
+          </Form.Item>
         </Form>
-    }, [catalogList, imgBase64])
-
-    return <>
-        <Modal
-            title="Add Category"
-            centered
-            visible={visible}
-            onOk={() => setVisible(false)}
-            onCancel={() => setVisible(false)}
-            footer={false}
-            width="50%"
-            className="edit-product"
-        >
-            <FromEdit />
-        </Modal>
+      </Modal>
     </>
-
+  );
 }

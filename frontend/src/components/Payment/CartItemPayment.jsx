@@ -1,7 +1,7 @@
 import { Col, Form, Input, Row, Select, Tag } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProvince } from "redux/address/province";
+import { selectProvince, showTextAddress } from "redux/address/province";
 import { getTotals, selectCarts } from "redux/cart";
 import { fetchFee, selectFee } from "redux/service/fee";
 import { fetchService, selectService } from "redux/service/service";
@@ -16,22 +16,50 @@ export default function CartItemPayment() {
   const { feeItems } = useSelector(selectFee);
   const { serviceItems } = useSelector(selectService);
   const { userItems } = useSelector(selectUsers);
-
-  useEffect(() => {
-    requests.getAddressByUser(userItems._id).then((result) => {
-      let addressLast = result.slice(-1)[0];
-      dispatch(fetchService(addressLast && addressLast.district_id));
-    });
-  }, [textAddress, userItems]);
-
+  const [serviceDefault, setServiceDefault] = useState({});
+  
   useEffect(() => {
     dispatch(getTotals());
   }, [cartItems]);
 
-  const handleServiceChange = (key) => {
-    const objectNew = Object.assign({}, textAddress, { service_id: key });
-    dispatch(fetchFee(objectNew));
-    sessionStorage.setItem("address", JSON.stringify(objectNew));
+    // address từ db
+  useEffect(() => {
+    requests.getAddressByUser(userItems._id).then((result) => {
+      let addressLast = result.slice(-1)[0];
+      if (Object.keys(textAddress).length === 0) {
+        dispatch(
+          showTextAddress({
+            _id: addressLast && addressLast._id,
+            address: addressLast && addressLast.content,
+            district_id: addressLast && addressLast.district_id,
+            ward_code: addressLast && addressLast.ward_code,
+            name: userItems && userItems.username,
+            phone: userItems && userItems.phone_number,
+            service_id: textAddress.service_id && textAddress.service_id,
+          })
+        );
+      } else {
+        return;
+      }
+    });
+  }, [userItems]);
+
+  useEffect(() => {
+    dispatch(fetchService(textAddress.district_id));
+    dispatch(fetchFee(textAddress));
+  }, [textAddress]);
+
+  useEffect(() => {
+    setServiceDefault(
+      serviceItems && serviceItems.find
+        ((item) => item.service_id == textAddress.service_id
+      )
+    );
+  }, [serviceItems]);
+
+  const handleServiceChange = (key, value) => {
+    const objectNew = Object.assign({}, textAddress, { service_id: value.key });
+    dispatch(showTextAddress(objectNew));
   };
   return (
     <div className="cartItemPayment">
@@ -66,12 +94,8 @@ export default function CartItemPayment() {
                   align="middle"
                 >
                   <Col className="main__list--color">
-                    {cartItem.pickColor === "#ffff" ||
-                    cartItem.pickColor === "white" ? (
-                      <Tag
-                        style={{ color: "black" }}
-                        color={cartItem.pickColor}
-                      >
+                    {cartItem.pickColor === "white" ? (
+                      <Tag style={{ color: "black", borderColor: "#00000014" }}>
                         {cartItem.pickColor}
                       </Tag>
                     ) : (
@@ -124,10 +148,13 @@ export default function CartItemPayment() {
                     },
                   ]}
                 >
-                  <Select placeholder="Service" onChange={handleServiceChange}>
+                  <Select
+                    placeholder={serviceDefault?.short_name}
+                    onChange={handleServiceChange}
+                  >
                     {serviceItems &&
                       serviceItems.map((service) => (
-                        <Option key={service.service_id}>
+                        <Option key={service.service_id} value={service.short_name}>
                           {service.short_name}
                         </Option>
                       ))}

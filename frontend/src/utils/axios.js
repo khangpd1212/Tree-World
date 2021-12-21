@@ -13,6 +13,7 @@ export const requests = {
     const { data } = await instance.get("/product/" + id);
     return data;
   },
+
   async editProduct(token, body, id) {
     const config = {
       method: "put",
@@ -25,8 +26,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async addProduct(token, body, img) {
-    console.log("img", img);
+  async addProduct(token,body, img) {
     const config = {
       method: "post",
       url: "/product/",
@@ -44,7 +44,7 @@ export const requests = {
     }
     return Promise.reject();
   },
-  async deleteProduct(token, id) {
+  async deleteProduct(token,id) {
     const config = {
       method: "delete",
       url: "/product/" + id,
@@ -61,8 +61,65 @@ export const requests = {
     const { data } = await instance.get("/catalog");
     return data;
   },
+  async addCatalog(token, body) {
+    const config = {
+      method: "post",
+      url: "/catalog/",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async editCatalog(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/catalog/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  //voucher
+  async addVoucher(token, body) {
+    const config = {
+      method: "post",
+      url: "/voucher/",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async editVoucher(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/voucher/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
 
   //blog
+  async getBlogLimit(count, skip) {
+    const { data } = await instance.get(`/blog/?limit=${count}&skip=${skip}`);
+    return data;
+  },
   async addBlog(token, body, img, id) {
     const config = {
       method: "post",
@@ -77,22 +134,10 @@ export const requests = {
         id_user: id,
       },
     };
-   const { data } = await instance(config);
+    const { data } = await instance(config);
     return data;
   },
 
-  async getAddressByUser(idUser) {
-    const config = {
-      method: 'get',
-      url: `/address/?idUser=${idUser}`,
-    };
-    const { data } = await instance(config)
-    return data
-  },
-
-
-
- 
   async editBlog(token, body, id) {
     const config = {
       method: "put",
@@ -100,6 +145,90 @@ export const requests = {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+
+  async getAddressByUser(idUser) {
+    const config = {
+      method: "get",
+      url: `/address/?idUser=${idUser}`,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async editUser(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/user/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async addComment(token, body) {
+    const config = {
+      method: "post",
+      url: "/comment/",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async editComment(token, body, id) {
+    const config = {
+      method: "put",
+      url: `/comment/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async fetchResetPassword(body) {
+    const config = {
+      method: "post",
+      url: `/auth/reset-password`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async fetchNewPassword(id, token, body) {
+    const config = {
+      method: "post",
+      url: `auth/reset-password/${id}/${token}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body,
+    };
+    const { data } = await instance(config);
+    return data;
+  },
+  async fetchRegister(body) {
+    const config = {
+      method: "post",
+      url: `auth/register`,
+      headers: {
+        "Content-Type": "application/json",
       },
       data: body,
     };
@@ -123,7 +252,6 @@ export const postImg = async (img) => {
     },
   };
   const { data } = await imgbbClient(config);
-  console.log("data imgbb", data);
   return data;
 };
 

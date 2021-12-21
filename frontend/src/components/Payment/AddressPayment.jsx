@@ -1,11 +1,13 @@
 import { EnvironmentFilled, RightOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchAddress, getAddress, selectAddress } from "redux/address";
 import { selectProvince, showTextAddress } from "redux/address/province";
 import {
-  onCancelAddress, ShowModalDefaultAddress, ShowModalLogin
+  ShowModalDefaultAddress,
+  ShowModalAddress,
+  ShowModalLogin,
 } from "redux/modal";
 import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
@@ -17,88 +19,65 @@ export default function AddressPayment() {
   const { userItems } = useSelector(selectUsers);
   const { textAddress } = useSelector(selectProvince);
   const { addressList } = useSelector(selectAddress);
-  const [address, setAddress] = useState({});
 
   let addressChild = textAddress.province
     ? `${textAddress.street}, ${textAddress.ward}, ${textAddress.district}, ${textAddress.province}`
-    : "";
+    : textAddress.address;
 
   useEffect(() => {
-    requests.getAddressByUser(userItems._id).then((result) => {
-      let addressLast = result.slice(-1)[0];
-      dispatch(
-        showTextAddress({
-          address: addressLast && addressLast.content,
-          district_id: addressLast && addressLast.district_id,
-          ward_code: addressLast && addressLast.ward_code,
-          name: userItems && userItems.username,
-          phone: userItems && userItems.phone_number,
-        })
-      );
-    });
-  }, [userItems]);
-  
-  useEffect(() => {
-    setAddress(textAddress);
-  });
+    localStorage.setItem("address", JSON.stringify(textAddress));
+  }, [textAddress]);
 
-  const handleDefaultAddress = () => {
-    let dataAddress = {};
-
-    const compareAddress = addressList.find(
-      (item) => item.content === textAddress.address
-    );
-
-    // so sanh address
-    if (textAddress.length < 1 || compareAddress) {
-      toast.error(`You can't choose this address anymore`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else if (textAddress.length < 1 && compareAddress) {
-      toast.error(`You can't choose this address anymore`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else {
-      dataAddress = {
-        idUser: userItems._id,
-        content: addressChild,
-        district_id: textAddress.district_id,
-        ward_code: textAddress.ward_code,
-      };
-
-      dispatch(fetchAddress(dataAddress));
-      dispatch(getAddress());
-      toast.success(`You have successfully selected defaults`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    }
-  };
-
+  // show default address
   const handleShowDefaultAddress = () => {
-    if (Object.values(userItems).length === 0) {
-      dispatch(ShowModalLogin(true));
-      toast.error(`You need to login`, {
-        position: "bottom-left",
-        autoClose: 2000,
-      });
-    } else {
-      dispatch(ShowModalLogin(false));
-      dispatch(ShowModalDefaultAddress(true));
-    }
+    dispatch(ShowModalLogin(false));
+    dispatch(ShowModalDefaultAddress(true));
   };
 
+  //handle default address
+  const handleDefaultAddress = () => {
+    requests.getAddressByUser(userItems._id).then((result) => {
+      const compareAddress = result.find(
+        (item) => item.content == addressChild
+      );
+      // so sanh address
+      if (textAddress.length < 1 || compareAddress) {
+        toast.error(`You can't choose this address anymore`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+      } else if (textAddress.length < 1 && compareAddress) {
+        toast.error(`You can't choose this address anymore`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+      } else {
+        const dataAddress = {
+          idUser: userItems._id,
+          content: addressChild,
+          district_id: textAddress.district_id,
+          ward_code: textAddress.ward_code,
+        };
+
+        dispatch(fetchAddress(dataAddress));
+        dispatch(getAddress());
+        toast.success(`You have successfully selected defaults`, {
+          position: "bottom-left",
+          autoClose: 2000,
+        });
+      }
+    });
+  };
+
+  // handle tạo address mới
   const onCreate = (values) => {
-    sessionStorage.setItem("address", JSON.stringify(values));
     dispatch(showTextAddress(values));
-    dispatch(onCancelAddress(false));
+    dispatch(ShowModalAddress(false));
   };
 
   return (
     <div className="address">
-      <img srcSet="./images/address.png" alt="address" />
+      <img src="./images/address.png" alt="address" />
       <div className="address__main">
         <div className="address__main--top">
           <p className="top__title">
@@ -108,9 +87,9 @@ export default function AddressPayment() {
         </div>
         <div className="address__main--bottom">
           <span className="bottom__content">
-            {address.name} - {address.phone}
+            {textAddress.name} - {textAddress.phone}
             <br />
-            {address.address ? address.address : addressChild}
+            {addressChild}
           </span>
           <div className="bottom__button">
             <BtnOutlineGray

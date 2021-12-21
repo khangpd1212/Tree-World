@@ -1,8 +1,5 @@
 import { Pagination } from "antd";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { selectProducts } from "redux/product";
 
 function PaginationComponent({ currentPage, total, pageSize, paginate }) {
   return (

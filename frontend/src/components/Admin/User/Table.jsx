@@ -1,87 +1,83 @@
-import { Button, message, Popconfirm, Space, Table } from 'antd';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchGetUser, selectUsers } from 'redux/user';
-import { requests } from 'utils/axios';
-// import ModalEdit from './ModalEdit';
-
-
+import { Switch, Table } from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { fetchGetUser, selectUsers } from "redux/user";
+import { requests } from "utils/axios";
 
 export default function TableUser() {
-    const [visible, setVisible] = useState(false)
-    const [selected, setSelected] = useState({})
-    const token = localStorage.getItem("token")
-    const dispatch = useDispatch()
-    function confirm(id) {
-        requests.deleteProduct(token, id)
-            .then(res => {
-                dispatch(fetchGetUser())
-                message.success('delete success')
-            })
-    }
+  const dispatch = useDispatch();
+  const { userList, loading, adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
-    const onEdit = (data) => {
-        setSelected(data)
-        setVisible(true)
-    }
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'username',
-            key: 'username',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: 'Password',
-            dataIndex: 'password',
-            key: 'password',
-        },
-        {
-            title: 'Phone_Number',
-            dataIndex: 'phone_number',
-            key: 'phone_number',
-        },
-       
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <Button
-                        type="primary"
-                        onClick={() => onEdit(record)}
-                    >
-                        Edit
-                    </Button>
-                    <Popconfirm
-                        placement="rightTop"
-                        title={"Do you want delete this ?"}
-                        onConfirm={() => confirm(record._id)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button>Delete</Button>
-                    </Popconfirm>
-                </Space>
-            ),
-        },
-    ];
+  const [loaded, setLoaded] = useState(true);
+  const [dataUser, setDataUser] = useState([]);
 
-    const { userList } = useSelector(selectUsers)
-    console.log(userList);
-    return <>
-        <Table columns={columns} dataSource={userList} />
-        {/* <ModalEdit
-            visible={visible}
-            setVisible={setVisible}
-            selected={selected}
-            setSelected={setSelected}
-        /> */}
+  useEffect(() => {
+    dispatch(fetchGetUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const userMap = userList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        username: item.username,
+        email: item.email,
+        phone_number: item.phone_number,
+        status: item.status,
+      };
+    });
+
+    setDataUser(userMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [userList]);
+
+  const handleChangeStatus = (status, id) => {
+    requests.editUser(token, { status: status }, id).then((res) => {
+      if (res.updatedUser) {
+        dispatch(fetchGetUser());
+        toast.success(`Changed "${res.updatedUser.username}" status`, {
+          autoClose: 2000,
+        });
+      }
+    });
+  };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "username",
+      key: "username",
+      sorter: (a, b) => a.username.localeCompare(b.username),
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Phone_Number",
+      dataIndex: "phone_number",
+      key: "phone_number",
+    },
+    {
+      title: "Status",
+      key: "status",
+      render: (text, record) => (
+        <Switch
+          defaultChecked={record.status}
+          onChange={(status) => {
+            handleChangeStatus(status, record._id);
+          }}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <Table columns={columns} loading={loaded} dataSource={dataUser} />
     </>
+  );
 }

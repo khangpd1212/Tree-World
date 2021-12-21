@@ -4,10 +4,13 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+    max: 64,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
+    lowercase: true,
   },
   password: {
     type: String,
@@ -15,11 +18,23 @@ const UserSchema = new mongoose.Schema({
   },
   phone_number: {
     type: String,
-    required: true,
+    default: "",
+  },
+  token: {
+    type: String,
+    default: "",
   },
   isAdmin: {
     type: Boolean,
     default: false,
+  },
+  id_voucher: {
+    type: [String],
+    default: [],
+  },
+  status: {
+    type: Boolean,
+    default: true,
   },
 });
 

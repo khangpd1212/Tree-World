@@ -1,12 +1,16 @@
 import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { fetchDistrict, selectDistrict } from "redux/address/district";
 import { fetchProvince, selectProvince } from "redux/address/province";
 import { fetchWard, selectWard } from "redux/address/ward";
 import {
-  onCancelAddress, selectModals, ShowModalDefaultAddress
+  selectModals,
+  ShowModalAddress,
+  ShowModalDefaultAddress,
 } from "redux/modal";
+import { patterns, validations } from "utils/validation";
 export default function ModalAddress({ handleCreate }) {
   const { Option } = Select;
 
@@ -23,10 +27,12 @@ export default function ModalAddress({ handleCreate }) {
   }, [dispatch]);
 
   const showDefaultAddress = () => {
-    dispatch(onCancelAddress(false));
+    dispatch(ShowModalAddress(false));
     dispatch(ShowModalDefaultAddress(true));
   };
-
+  const handleCancel = () => {
+    dispatch(ShowModalAddress(false));
+  }
   const handleProvinceChange = (key, value) => {
     dispatch(fetchDistrict(key));
     setAddress({ ...address, province: value.children });
@@ -56,8 +62,15 @@ export default function ModalAddress({ handleCreate }) {
               form
                 .validateFields()
                 .then((value) => {
-                  form.resetFields();
-                  handleCreate(Object.assign({}, value, address));
+                  if (
+                    !validations.checkBlankSpace(value.name) ||
+                    !validations.checkBlankSpace(value.street)
+                  ) {
+                    toast.error("You are not allowed text only white space");
+                  } else {
+                    form.resetFields();
+                    handleCreate(Object.assign({}, value, address));
+                  }
                 })
                 .catch((info) => {
                   console.log("Validate Failed:", info);
@@ -69,7 +82,7 @@ export default function ModalAddress({ handleCreate }) {
           </Button>
         </>
       }
-      onCancel={() => dispatch(onCancelAddress(false))}
+      onCancel={handleCancel}
       width={600}
     >
       <Form layout="vertical" form={form} name="form_in_modal" size="large">
@@ -98,9 +111,13 @@ export default function ModalAddress({ handleCreate }) {
                   required: true,
                   message: "Please input your phone!",
                 },
+                {
+                  pattern: patterns.phonePattern,
+                  message: "Wrong phone number format",
+                },
               ]}
             >
-              <Input type="number" placeholder="Input phone" />
+              <Input type="tel" placeholder="Input phone" />
             </Form.Item>
           </Col>
         </Row>
@@ -191,10 +208,7 @@ export default function ModalAddress({ handleCreate }) {
             },
           ]}
         >
-          <Input
-            placeholder="Input street"
-            value={address.street}
-          />
+          <Input placeholder="Input street" value={address.street} />
         </Form.Item>
       </Form>
     </Modal>

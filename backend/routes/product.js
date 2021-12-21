@@ -147,7 +147,32 @@ router.put("/:id", verify, async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  } else {
+  } 
+  else if (req.user.isAdmin === false) {
+    try {
+      const {
+        sold,
+        inventory,
+      } = req.body;
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: { sold, inventory},
+        },
+        {
+          new: true,
+        }
+      );
+      if (!updatedProduct)
+        throw new Error("Something went wrong with updating product");
+      res
+        .status(200)
+        .json({ message: "update successfully", status: true, updatedProduct });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  } 
+  else {
     res.status(403).json({ message: "You are not allowed" });
   }
 });

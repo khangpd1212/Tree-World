@@ -1,12 +1,10 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { AdminLayout, BaseLayout, LoginLayout } from "components/Layout";
-
+import { AdminLayout, BaseLayout, AnotherLayout } from "components/Layout";
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={BaseLayout} />
-        <Route path="/users" exact component={BaseLayout} />
         <Route path="/product" exact component={BaseLayout} />
         <Route path="/product/:catalog" exact component={BaseLayout} />
         <Route path="/detail" exact component={BaseLayout} />
@@ -17,7 +15,13 @@ function App() {
         <Route path="/payment" exact component={BaseLayout} />
         <Route path="/contact" exact component={BaseLayout} />
         <Route path="/order" exact component={BaseLayout} />
-        <Route path="/login" exact component={LoginLayout} />
+        <Route path="/reset-password" exact component={BaseLayout} />
+
+        {/* another layout */}
+        <Route path="/result" exact component={AnotherLayout} />
+        <Route path="/login" exact component={AnotherLayout} />
+
+        {/* admin */}
         <Route path="/admin" exact component={AdminLayout} />
         <Route path="/admin/dashboard" component={AdminLayout} />
         <Route path="/admin/users" component={AdminLayout} />

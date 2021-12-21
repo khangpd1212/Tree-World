@@ -1,14 +1,16 @@
-import { Modal, Select, Button, Form, Input } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { selectAddress } from "redux/address";
+import { showTextAddress } from "redux/address/province";
 import {
   selectModals,
-  onOkDefaultAddress,
-  onCancelDefaultAddress,
   ShowModalAddress,
+  ShowModalDefaultAddress
 } from "redux/modal";
-import { selectAddress } from "redux/address";
 import { selectUsers } from "redux/user";
-import { showTextAddress } from "redux/address/province";
-import { useSelector, useDispatch } from "react-redux";
+import { patterns, validations } from "utils/validation";
+
 export default function DefaultAddress() {
   const { Option } = Select;
   const { isShowDefaultAddress } = useSelector(selectModals);
@@ -21,49 +23,52 @@ export default function DefaultAddress() {
   );
 
   const showAddress = () => {
-    dispatch(onCancelDefaultAddress(false));
+    dispatch(ShowModalDefaultAddress(false));
     dispatch(ShowModalAddress(true));
   };
+
   const handleCreate = (values) => {
-    sessionStorage.setItem(
+    localStorage.setItem(
       "address",
-      JSON.stringify(
-        {
-          ...values,
-          district_id: addressRender[0].district_id,
-          ward_code: addressRender[0].ward_code,
-        },
-      )
+      JSON.stringify({
+        ...values,
+        district_id: addressRender[0].district_id,
+        ward_code: addressRender[0].ward_code,
+      })
     );
     dispatch(
-      showTextAddress(
-        {
-          ...values,
-          district_id: addressRender[0].district_id,
-          ward_code: addressRender[0].ward_code,
-        },
-      )
+      showTextAddress({
+        ...values,
+        district_id: addressRender[0].district_id,
+        ward_code: addressRender[0].ward_code,
+      })
     );
-    dispatch(onCancelDefaultAddress(false));
+    dispatch(ShowModalDefaultAddress(false));
+  };
+
+  const handleCancel = () => {
+    dispatch(ShowModalDefaultAddress(false));
   };
   const [form] = Form.useForm();
   return (
     <Modal
-      title="Title"
+      title="Choose My Address"
       visible={isShowDefaultAddress}
-      onCancel={() => dispatch(onCancelDefaultAddress(false))}
+      onCancel={handleCancel}
       footer={
         <>
-          <Button type="ghost" onClick={showAddress}>
-            Hand Input
-          </Button>
+          <Button onClick={showAddress}>New Address</Button>
           <Button
             onClick={() => {
               form
                 .validateFields()
                 .then((values) => {
-                  form.resetFields();
-                  handleCreate(values);
+                  if (!validations.checkBlankSpace(values.name)) {
+                    toast.error("You are not allowed text only white space");
+                  } else {
+                    form.resetFields();
+                    handleCreate(values);
+                  }
                 })
                 .catch((info) => {
                   console.log("Validate Failed:", info);
@@ -76,7 +81,13 @@ export default function DefaultAddress() {
         </>
       }
     >
-      <Form layout="vertical" form={form} name="form_in_modal" size="large">
+      <Form
+        layout="vertical"
+        form={form}
+        name="form_in_modal"
+        size="large"
+        initialValues={{ name: userItems.username }}
+      >
         <Form.Item
           label="Name"
           name="name"
@@ -97,9 +108,13 @@ export default function DefaultAddress() {
               required: true,
               message: "Please input your phone!",
             },
+            {
+              pattern: patterns.phonePattern,
+              message: "Wrong phone number format",
+            },
           ]}
         >
-          <Input type="number" placeholder="Input phone" />
+          <Input type="tel" placeholder="Input phone" />
         </Form.Item>
         <Form.Item
           label="Address"
@@ -114,7 +129,9 @@ export default function DefaultAddress() {
           <Select style={{ width: "100%" }}>
             {addressRender &&
               addressRender.map((item) => (
-                <Option key={item.content}>{item.content}</Option>
+                <Option key={item.content}>
+                  {item.content}
+                </Option>
               ))}
           </Select>
         </Form.Item>

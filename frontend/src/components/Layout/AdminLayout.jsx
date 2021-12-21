@@ -1,49 +1,19 @@
 import { Layout } from "antd";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Route } from "react-router-dom";
-import { fetchProducts } from "redux/product";
-import { fetchCatalogs } from "redux/catalog";
-import { fetchGetUser } from "redux/user";
-import { getOrders } from "redux/order";
-import { getOrderDetail } from "redux/order_detail";
-import { getAddress } from "redux/address";
-import { fetchGetVoucher } from "redux/voucher";
-import { fetchGetComment } from 'redux/comment';
-import "styles/admin.scss";
 import {
-  CategoryAdmin,
-  News,
+  CategoryAdmin, CommentAdmin, Dashboard, News,
   OrderAdmin,
-  ProductAdmin,
-  Dashboard,
-  UserAdmin,
-  VoucherAdmin,
-  CommentAdmin,
+  ProductAdmin, UserAdmin,
+  VoucherAdmin
 } from "pages";
+import React, { useState } from "react";
+import { Route } from "react-router-dom";
+import "styles/admin.scss";
 import HeaderAdmin from "../Admin/HeaderAdmin";
 import SideComponent from "../Admin/SideComponent";
-import { fetchBlogs } from "redux/blog";
 const { Content } = Layout;
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGetComment())
-    dispatch(fetchGetUser());
-    dispatch(fetchProducts());
-    dispatch(fetchCatalogs());
-
-    dispatch(fetchBlogs());
-
-    dispatch(getOrders());
-    dispatch(getOrderDetail());
-    dispatch(getAddress());
-    dispatch(fetchGetVoucher());
-
-  }, [dispatch]);
 
   return (
     <div className="root-admin">

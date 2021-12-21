@@ -1,13 +1,15 @@
-import { Drawer, Avatar, Badge, Divider } from "antd";
+import { Avatar, Badge, Drawer } from "antd";
+import { useSelector } from "react-redux";
+import { selectUsers } from "redux/user";
 import ListOrder from "./ListOrder";
-import StepOrder from "./StepOrder";
-import TotalOrder from "./TotalOrder";
-import { selectUsers } from "redux/user"
-import { useSelector } from "react-redux"
+
 export default function DrawerOrder(props) {
-  const {userItems} = useSelector(selectUsers);
+  const { userItems } = useSelector(selectUsers);
   const title = (
-    <div className="avatar-item" style={{display: "flex", alignItems: "center", gap: 14}}>
+    <div
+      className="avatar-item"
+      style={{ display: "flex", alignItems: "center", gap: 14 }}
+    >
       <Badge count={1}>
         <Avatar
           size="large"
@@ -20,7 +22,7 @@ export default function DrawerOrder(props) {
           }}
         />
       </Badge>
-      <div className="avatar-item__text" style={{fontSize: 14}}>
+      <div className="avatar-item__text" style={{ fontSize: 14 }}>
         <span>{userItems.username}</span>
       </div>
     </div>
@@ -35,11 +37,7 @@ export default function DrawerOrder(props) {
       headerStyle={{ padding: 20 }}
       drawerStyle={{ backgroundColor: "white" }}
     >
-      <StepOrder />
-      <Divider />
       <ListOrder />
-      <Divider />
-      <TotalOrder/>
     </Drawer>
   );
 }

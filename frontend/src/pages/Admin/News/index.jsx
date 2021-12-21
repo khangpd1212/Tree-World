@@ -1,25 +1,51 @@
-import { Space, Table, Switch, Button, Image } from "antd";
+import { Button, Image, Space, Switch, Table } from "antd";
 import ModalAddBlog from "components/Admin/News/ModalAddBlog";
 import ModalEditBlog from "components/Admin/News/ModalEditBlog";
 import BtnAdd from "components/BtnAdd";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBlogs, selectBlogs } from "redux/blog";
+import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
+
 export default function News() {
   const { Column } = Table;
   const dispatch = useDispatch();
-  const { blogList } = useSelector(selectBlogs);
-  const { userItems } = useSelector((state) => state.userState);
-  const token = userItems.accessToken;
+  const { blogList, loading } = useSelector(selectBlogs);
+  const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
+
   const [openAddBlog, setOpenAddBlog] = useState(false);
   const [selected, setSelected] = useState({});
   const [visible, setVisible] = useState(false);
+  const [dataBlog, setDataBlog] = useState([]);
+  const [loaded, setLoaded] = useState(true);
+
+  useEffect(() => {
+    dispatch(fetchBlogs());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const blogMap = blogList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        image: item.image,
+        title: item.title,
+        create_date: item.create_date,
+        content: item.content,
+        status: item.status,
+      };
+    });
+
+    setDataBlog(blogMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [blogList]);
+  
   const handleChangeStatus = (e, id) => {
     requests.editBlog(token, { status: e }, id).then((res) => {
-      console.log(res);
       if (res.status) {
         dispatch(fetchBlogs());
         toast.success(`Changed "${res.updatedBlog.title}" status`, {
@@ -28,6 +54,7 @@ export default function News() {
       }
     });
   };
+
   const onEdit = (data) => {
     setSelected(data);
     setVisible(true);
@@ -35,7 +62,7 @@ export default function News() {
   return (
     <>
       <BtnAdd page="new" setOpen={setOpenAddBlog} />
-      <Table dataSource={blogList}>
+      <Table dataSource={dataBlog} loading={loaded}>
         <Column
           title="Image"
           dataIndex="image"
@@ -43,8 +70,21 @@ export default function News() {
           render={(text, record) => <Image src={record.image} width="150px" />}
         />
 
-        <Column title="Title" dataIndex="title" key="title" />
-        <Column title="Date" dataIndex="create_date" key="create_date" />
+        <Column
+          title="Title"
+          dataIndex="title"
+          key="title"
+          sorter={(a, b) => a.title.localeCompare(b.title)}
+        />
+        <Column
+          title="Date"
+          dataIndex="create_date"
+          key="create_date"
+          render={(create_date) => (
+            <>{moment(create_date).format("DD/MM/YYYY HH:mm:ss")}</>
+          )}
+          sorter={(a, b) => new Date(a.create_date) - new Date(b.create_date)}
+        />
         <Column title="Content" dataIndex="content" key="content" />
         <Column
           title="Status"

@@ -27,14 +27,26 @@ export default function Product() {
   const { loading } = useSelector(selectProducts);
   const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
-
+  const [pageSize, setPageSize] = useState(12);
+  const showFilterProduct = filterProduct.filter(
+    (item) => item.status === true
+  );
+  const showSearchProduct = searchProduct.filter(
+    (item) => item.status === true
+  );
+  const showProduct = productList.filter((item) => item.status === true);
   //pagination
   const indexOfLast = currentPage * pageSize;
   const indexOfFirst = indexOfLast - pageSize;
-  const currentFilterProduct = filterProduct.slice(indexOfFirst, indexOfLast);
-  const currentProduct = productList.slice(indexOfFirst, indexOfLast);
-  const currentSearchProduct = searchProduct.slice(indexOfFirst, indexOfLast);
+  const currentFilterProduct = showFilterProduct.slice(
+    indexOfFirst,
+    indexOfLast
+  );
+  const currentProduct = showProduct.slice(indexOfFirst, indexOfLast);
+  const currentSearchProduct = showSearchProduct.slice(
+    indexOfFirst,
+    indexOfLast
+  );
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -57,10 +69,10 @@ export default function Product() {
             <Filter
               total={
                 filterStatus
-                  ? filterProduct.length
-                  : searchStatus.length
-                  ? searchProduct.length
-                  : productList.length
+                  ? showFilterProduct.length
+                  : searchStatus
+                  ? showSearchProduct.length
+                  : showProduct.length
               }
               currentPage={currentPage}
               pageSize={pageSize}
@@ -76,10 +88,10 @@ export default function Product() {
                 <PaginationComponent
                   total={
                     filterStatus
-                      ? filterProduct.length
-                      : searchStatus.length
-                      ? searchProduct.length
-                      : productList.length
+                      ? showFilterProduct.length
+                      : searchStatus
+                      ? showSearchProduct.length
+                      : showProduct.length
                   }
                   currentPage={currentPage}
                   pageSize={pageSize}

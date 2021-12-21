@@ -1,94 +1,132 @@
-import { Button, message, Popconfirm, Space, Table, Switch } from 'antd';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchGetVoucher, selectVouchers } from 'redux/voucher';
-import { requests } from 'utils/axios';
-// import ModalEdit from './ModalEdit';
-
-
+import { Button, Space, Switch, Table } from "antd";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { selectUsers } from "redux/user";
+import { fetchGetVoucher, selectVouchers } from "redux/voucher";
+import { requests } from "utils/axios";
+import ModalEdit from "./ModalEdit";
 
 export default function TableVoucher() {
-    const [visible, setVisible] = useState(false)
-    const [selected, setSelected] = useState({})
-    const token = localStorage.getItem("token")
-    const dispatch = useDispatch()
-    function confirm(id) {
-        requests.deleteProduct(token, id)
-            .then(res => {
-                dispatch(fetchGetVoucher())
-                message.success('delete success')
-            })
-    }
+  const { voucherList, loading } = useSelector(selectVouchers);
+    const { adminItems } = useSelector(selectUsers);
+  const token = adminItems.accessToken;
 
-    const onEdit = (data) => {
-        setSelected(data)
-        setVisible(true)
-    }
-    const columns = [
-        {
-            title: 'Percent',
-            dataIndex: 'percent',
-            key: 'percent',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: 'Created_Date',
-            dataIndex: 'createDate',
-            key: 'createDate',
-        },
-        {
-            title: 'Expiry_Date',
-            dataIndex: 'expiryDate',
-            key: 'expiryDate',
-        },
-        {
-            title: 'Maximum',
-            dataIndex: 'maximum',
-            key: 'maximum',
-        },
-        {
-            title: 'Status',
-            key: 'status',
-            render: (text, record) => (
-                <Switch defaultChecked={true} />
-            )
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState({});
+  const [loaded, setLoaded] = useState(true);
+  const [dataVoucher, setDataVoucher] = useState([]);
+  const dispatch = useDispatch();
 
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <Button
-                        type="primary"
-                        onClick={() => onEdit(record)}
-                    >
-                        Edit
-                    </Button>
-                    <Popconfirm
-                        placement="rightTop"
-                        title={"Do you want delete this ?"}
-                        onConfirm={() => confirm(record._id)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button>Delete</Button>
-                    </Popconfirm>
-                </Space>
-            ),
-        },
-    ];
+  const onEdit = (data) => {
+    setSelected(data);
+    setVisible(true);
+  };
+  
+  useEffect(() => {
+    dispatch(fetchGetVoucher());
+  }, [dispatch]);
 
-    const { voucherList } = useSelector(selectVouchers)
-    console.log(voucherList);
-    return <>
-        <Table columns={columns} dataSource={voucherList} />
-        {/* <ModalEdit
-            visible={visible}
-            setVisible={setVisible}
-            selected={selected}
-            setSelected={setSelected}
-        /> */}
+  useEffect(() => {
+    const voucherMap = voucherList.map((item) => {
+      return {
+        key: item._id,
+        _id: item._id,
+        voucherCode: item.voucherCode,
+        percent: item.percent,
+        createDate: item.createDate,
+        expiryDate: item.expiryDate,
+        maximum: item.maximum,
+        status: item.status,
+      };
+    });
+
+    setDataVoucher(voucherMap);
+    loading === "loading" ? setLoaded(true) : setLoaded(false);
+  }, [voucherList]);
+
+  const handleChangeStatus = (e, id) => {
+    requests.editVoucher(token, { status: e }, id).then((res) => {
+      if (res.updatedVoucher) {
+        dispatch(fetchGetVoucher());
+        toast.success(`Changed "${res.updatedVoucher.voucherCode}" status`, {
+          autoClose: 2000,
+        });
+      }
+    });
+  };
+  const columns = [
+    {
+      title: "Voucher Code",
+      dataIndex: "voucherCode",
+      key: "voucherCode",
+      sorter: (a, b) => a.voucherCode.localeCompare(b.voucherCode),
+    },
+    {
+      title: "Percent (%)",
+      dataIndex: "percent",
+      key: "percent",
+      sorter: (a, b) => a.percent - b.percent,
+    },
+    {
+      title: "Created_Date",
+      dataIndex: "createDate",
+      key: "createDate",
+      render: (createDate) => (
+        <>{moment(createDate).format("DD/MM/YYYY HH:mm:ss")}</>
+      ),
+      sorter: (a, b) => new Date(a.createDate) - new Date(b.createDate),
+    },
+    {
+      title: "Expiry_Date",
+      dataIndex: "expiryDate",
+      key: "expiryDate",
+      render: (expiryDate) => (
+        <>{moment(expiryDate).format("DD/MM/YYYY HH:mm:ss")}</>
+      ),
+      sorter: (a, b) => new Date(a.expiryDate) - new Date(b.expiryDate),
+    },
+    {
+      title: "Maximum ($)",
+      dataIndex: "maximum",
+      key: "maximum",
+      sorter: (a, b) => a.maximum - b.maximum,
+    },
+    {
+      title: "Status",
+      key: "status",
+      render: (text, record) => (
+        <Switch
+          defaultChecked={record.status}
+          onChange={(e) => {
+            handleChangeStatus(e, record._id);
+          }}
+        />
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button type="primary" onClick={() => onEdit(record)}>
+            Edit
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <Table columns={columns} dataSource={dataVoucher} loading={loaded} />
+      <ModalEdit
+        visible={visible}
+        setVisible={setVisible}
+        selected={selected}
+        setSelected={setSelected}
+      />
     </>
+  );
 }

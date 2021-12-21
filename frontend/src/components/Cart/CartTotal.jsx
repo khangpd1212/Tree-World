@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCarts, getTotals } from 'redux/cart';
 import { useEffect } from "react";
 
-import "../../styles/Cart/CartTotal.scss";
+import "styles/Cart/CartTotal.scss";
 import { Link } from "react-router-dom";
 
 export default function CartTotal() {
    const { cartTotalAmount, cartItems } = useSelector(selectCarts);
-   const dispath = useDispatch();
+   const dispatch = useDispatch();
 
    useEffect(() => {
-      dispath(getTotals());
+      dispatch(getTotals());
    }, [cartItems]);
 
    return (

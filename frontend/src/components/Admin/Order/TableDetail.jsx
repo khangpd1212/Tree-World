@@ -1,11 +1,12 @@
-import { Tag, Table, Space, Image } from "antd";
-import { selectProducts } from "redux/product";
-import { selectOrderDetails } from "redux/order_detail";
+import { Image, Space, Table, Tag } from "antd";
 import { useSelector } from "react-redux";
+import { selectOrderDetails } from "redux/order_detail";
+import { selectProducts } from "redux/product";
 export default function TableDetail(props) {
 
   const { orderDetailList } = useSelector(selectOrderDetails);
   const { productList } = useSelector(selectProducts);
+
   let myOrder = [];
 
   // tìm kiếm danh sách order detail theo id order
@@ -19,7 +20,7 @@ export default function TableDetail(props) {
       { idOrder: o1._id },
       { quantity: o1.quantity },
       { pickColor: o1.color},
-      productList.filter((o2) => o1.id_product === o2._id)[0],
+      productList.find((o2) => o1.id_product === o2._id),
     ),
   );
 
@@ -43,16 +44,17 @@ export default function TableDetail(props) {
       title: "Color",
       dataIndex: "pickColor",
       key: "pickColor",
-      render: (record) => (
-        console.log(record),
+      render: (record) =>
         record === "#ffff" || record === "white" ? (
-          <Tag style={{ color: "black" }} color={{ record }}>
+          <Tag
+            style={{ color: "black", borderColor: "#00000014" }}
+            color={{ record }}
+          >
             {record}
           </Tag>
         ) : (
           <Tag color={record}>{record}</Tag>
-        )
-      ),
+        ),
     },
     {
       title: "Price",
@@ -78,7 +80,7 @@ export default function TableDetail(props) {
       pickColor: item.pickColor,
       price: item.price,
       quantity: item.quantity,
-      subTotal: item.quantity + item.price,
+      subTotal: item.quantity * item.price,
     };
   });
 

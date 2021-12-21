@@ -1,25 +1,23 @@
 import { MenuOutlined } from "@ant-design/icons";
-import { Layout, Anchor, Button, Drawer, Row, Col, Menu } from "antd";
-import React, { useEffect, useState } from "react";
-import { Link as LinkRoute } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { selectCatalogs } from "redux/catalog";
-import { ShowModalLogin } from "redux/modal";
-import "styles/header.scss";
+import { Anchor, Button, Col, Drawer, Layout, Menu, Row } from "antd";
 import DropdownOverlay from "components/utils/Dropdown";
-import LoginDesktop from "pages/Login/LoginDesktop";
-import SignUpDesktop from "pages/SignUp/SignUpDesktop";
-import { selectUsers } from "redux/user";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as LinkRoute } from "react-router-dom";
+import { selectCatalogs } from "redux/catalog";
 import { setCatalog, setDefault } from "redux/filter";
 import { setDefaultStatus, setFilterStatus } from "redux/layout";
+import { ShowModalLogin } from "redux/modal";
+import { selectUsers } from "redux/user";
+import "styles/header.scss";
 
 function BaseHeader() {
   const { Header } = Layout;
   const { SubMenu } = Menu;
   const [visible, setVisible] = useState(false);
   const [show, handleShow] = useState(false);
+  const dispatch = useDispatch();
 
-  const dispath = useDispatch();
   const { userItems } = useSelector(selectUsers);
   const { catalogList } = useSelector(selectCatalogs);
 
@@ -37,7 +35,6 @@ function BaseHeader() {
   const onClose = () => {
     setVisible(false);
   };
-  // modal login
 
   useEffect(() => {
     window.addEventListener("scroll", transitionNavBar);
@@ -45,8 +42,6 @@ function BaseHeader() {
       window.removeEventListener("scroll", transitionNavBar);
     };
   });
-  const dispatch = useDispatch();
-
   return (
     <Header
       className={show ? "bg__change" : ""}
@@ -130,7 +125,9 @@ function BaseHeader() {
                 <LinkRoute to={"/cart"}>Cart</LinkRoute>
               </div>
               <div>
-                <LinkRoute to={"/payment"}>Payment</LinkRoute>
+                <LinkRoute to={"/payment"}>
+                  Payment
+                </LinkRoute>
               </div>
               <div>
                 <LinkRoute to={"/admin"}>Admin</LinkRoute>
@@ -138,7 +135,7 @@ function BaseHeader() {
               {Object.values(userItems).length === 0 ? (
                 <div
                   className="div__login"
-                  onClick={() => dispath(ShowModalLogin(true))}
+                  onClick={() => dispatch(ShowModalLogin(true))}
                 >
                   Login
                 </div>
@@ -244,8 +241,6 @@ function BaseHeader() {
           </div>
         </Col>
       </Row>
-      <LoginDesktop />
-      <SignUpDesktop />
     </Header>
   );
 }

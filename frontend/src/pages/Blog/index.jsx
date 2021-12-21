@@ -78,7 +78,7 @@ export default function Blog() {
         <div className="ourblog">
           <div className="cloud">
             <img
-              src="./images/contact-mail-icon.png"
+              src="./images/cloudy-day.png"
               alt=""
               srcset=""
               className="cloud-img"
@@ -184,16 +184,16 @@ export default function Blog() {
                 <option value="audi">Audi</option>
               </select>
             </div>
-            <p>RECENT POSTS</p>
+            <p style={{fontWeight: 500}}>RECENT POSTS</p>
             <div className="posts-list">
               {blogList &&
                 blogList.map((item, key) => (
                   <div className="posts-list-1">
                     <h1>{key + 1}</h1>
                     <div className="posts-list-text">
-                      <p>{item.title}</p>
+                      <p className={key === 0 ? "main-color" : ""}>{item.title}</p>
                       <p>
-                        {moment(item.create_date).format("dddd, MMMM Do YYYY")}
+                        {moment(item.create_date).format("MMMM Do YYYY")}
                       </p>
                     </div>
                   </div>

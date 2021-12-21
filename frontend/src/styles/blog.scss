@@ -2,18 +2,26 @@
 #blog {
   margin: 0 5vw;
 }
-.cloud-img {
-  width: 300px;
+.cloud{
+  width: 170px;
+  .cloud-img {
+    width: 100%;
+    height: auto;
+  }
 }
+
 .ourblog {
   display: flex;
   gap: 100px;
   align-items: center;
   justify-content: center;
+  padding-bottom: 60px;
 }
 .our-text {
   h1 {
+    margin: 0;
     font-size: 120px;
+    color: #296a5d;
   }
 }
 .banner {
@@ -28,11 +36,16 @@
 .info {
   display: flex;
   gap: 20px;
+  color: #515253;
+  padding-bottom: 16px;
 }
 .icon-blog {
   display: flex;
+  align-items: center;
   gap: 10px;
-  align-items: baseline;
+  p{
+    margin: 0;
+  }
 }
 
 .content {
@@ -41,7 +54,21 @@
 }
 .posts-list-1 {
   display: flex;
+  align-items: center;
   gap: 10px;
+  .posts-list-text{
+    p{
+      margin: 0;
+      &:first-child{
+        font-weight: 500;
+      }
+    }
+    .main-color {
+      color: #e39c1d;
+      font-weight: 500;
+
+    }
+  }
 }
 .icon-down {
   cursor: pointer;
@@ -51,6 +78,8 @@
 .posts-list-1 {
   h1 {
     font-size: 50px;
+    margin: 0;
+    color: #515253;
   }
 }
 .content-left {
@@ -61,7 +90,17 @@
       border: none;
     }
     .title_content {
+      line-height: 0.8;
+      margin: 32px 0 10px 0;
       font-size: 40px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .content-text{
+      padding-right: 32px;
+      p{
+        font-weight: 500;
+      }
     }
   }
 }
@@ -69,10 +108,22 @@
 .content-img {
   margin-bottom: 30px;
 }
+#setting{
+  padding: 8px 16px;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  border: 1px solid black;
+}
 .default-setting {
   margin-top: 30px;
   margin-bottom: 50px;
 }
 .banner-5 {
   margin-bottom: 50px;
+}
+
+.subscribe__section--content{
+  h3{
+    text-transform: uppercase;
+  }
 }

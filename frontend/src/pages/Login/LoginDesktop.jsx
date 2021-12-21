@@ -8,7 +8,7 @@ import {
   selectModals,
   ShowModalForget,
   ShowModalLogin,
-  ShowModalSignUp
+  ShowModalSignUp,
 } from "redux/modal";
 import { fetchLogin } from "redux/user";
 import "styles/Login/LoginDesktop.scss";
@@ -18,8 +18,10 @@ import SocialLogin from "./SocialLogin";
 function LoginDesktop() {
   const [passwordShown, setPasswordShown] = useState(false);
   const { autoLogin } = useAutoLogin();
-  
-  const { register, handleSubmit, formState, resetField } = useForm();
+
+  const { register, handleSubmit, formState, resetField } = useForm({
+    defaultValues: { remember: true },
+  });
   const { errors } = formState;
 
   const dispatch = useDispatch();
@@ -132,12 +134,13 @@ function LoginDesktop() {
           </div>
           <div className="wrapper-remember_forgot">
             <div className="wrapper-checkbox">
-              <input type="checkbox" id="login_checkbox" name="remember" />
-              <label
-                htmlFor="login_checkbox"
-                className="label-checkbox"
-                checked
-              >
+              <input
+                type="checkbox"
+                id="login_checkbox"
+                name="remember"
+                {...register("remember")}
+              />
+              <label htmlFor="login_checkbox" className="label-checkbox">
                 Remember
               </label>
             </div>
@@ -150,7 +153,7 @@ function LoginDesktop() {
           </button>
         </form>
         <div className="footer-login">
-          <SocialLogin/>
+          <SocialLogin />
           <div className="add-account">
             <div onClick={handleShowSignUp}>Create account</div>
           </div>

@@ -1,39 +1,20 @@
-import { Col, Row, Tag } from "antd";
+import { Col, InputNumber, Row, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCarts,
-  btnDecrement,
-  btnIncrement,
-  removeCart,
-} from "redux/cart";
-import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
+import { changeQuantity, removeCart, selectCarts } from "redux/cart";
 import "styles/Cart/CartItem.scss";
 
 export default function CartItem() {
   const { cartItems } = useSelector(selectCarts);
-  const dispath = useDispatch();
-  const [, setstate] = useState(cartItems);
+  const dispatch = useDispatch();
 
-  const handleDecrement = (cartItems) => {
-    dispath(btnDecrement(cartItems));
+  const handleRemoveCart = (cartItem) => {
+    dispatch(removeCart(cartItem));
   };
-  const handleIncrement = (cartItems) => {
-    dispath(btnIncrement(cartItems));
+  const handleChange = (value, cartItem) => {
+    const data = { setQuantity: value, cartItem };
+    dispatch(changeQuantity(data));
   };
-  const handleRemoveCart = (cartItems) => {
-    dispath(removeCart(cartItems));
-  };
-  const handleChange = (e) => {
-    return e.target.value;
-  };
-  // re-render
-  useEffect(() => {
-    setstate(cartItems);
-    return () => {
-      setstate([]);
-    };
-  }, [cartItems]);
 
   return (
     <div className="cart__product">
@@ -58,8 +39,9 @@ export default function CartItem() {
         cartItems.map((cartItem, index) => (
           <Row key={index} className="cart__product--main" align="middle">
             <Col span={10} className="main__img">
-              <input type="checkbox" />
-              <img src={cartItem.product.image[0]} alt="" />
+              <Link to={`detail/${cartItem.product._id}`}>
+                <img src={cartItem.product.image[0]} alt="image_product_cart" />
+              </Link>
               <h2>{cartItem.product.product_name}</h2>
             </Col>
             <Col span={14}>
@@ -81,28 +63,12 @@ export default function CartItem() {
                   <span>${cartItem.product.price}</span>
                 </Col>
                 <Col>
-                  <div className="btn-sl">
-                    <button
-                      className="btn-decrement"
-                      onClick={() => handleDecrement(cartItem)}
-                    >
-                      -
-                    </button>
-
-                    <input
-                      name="quantity"
-                      type="number"
-                      onChange={handleChange}
-                      value={cartItem.quantity}
-                    />
-
-                    <button
-                      className="btn-increment"
-                      onClick={() => handleIncrement(cartItem)}
-                    >
-                      +
-                    </button>
-                  </div>
+                  <InputNumber
+                    min={1}
+                    max={100}
+                    defaultValue={cartItem.quantity}
+                    onChange={(e) => handleChange(e, cartItem)}
+                  />
                 </Col>
                 <Col className="main__list--total">
                   <span>${cartItem.product.price * cartItem.quantity}</span>

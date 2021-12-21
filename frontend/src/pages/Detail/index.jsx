@@ -208,7 +208,7 @@ export default function Detail() {
           <img src={product.image && product.image[0]} alt="" />
 
           {/* hinh lien quan */}
-          <Col className="image">
+          {/* <Col className="image">
             <div className="imageCon">
               <img src="/images/sp1.png" alt="" />
             </div>
@@ -218,7 +218,7 @@ export default function Detail() {
             <div className="imageCon">
               <img src="/images/sp1.png" alt="" />
             </div>
-          </Col>
+          </Col> */}
         </Col>
         {/* thong tin san pham */}
         <Col className="infor" xs={24} sm={12}>

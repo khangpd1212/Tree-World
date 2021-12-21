@@ -6,7 +6,6 @@ import { getTotals, selectCarts } from "redux/cart";
 import { fetchFee, selectFee } from "redux/service/fee";
 import { fetchService, selectService } from "redux/service/service";
 import { selectUsers } from "redux/user";
-import { requests } from "utils/axios";
 export default function CartItemPayment() {
   const { Option } = Select;
   const { TextArea } = Input;
@@ -15,34 +14,11 @@ export default function CartItemPayment() {
   const { cartTotalAmount, cartItems } = useSelector(selectCarts);
   const { feeItems } = useSelector(selectFee);
   const { serviceItems } = useSelector(selectService);
-  const { userItems } = useSelector(selectUsers);
   const [serviceDefault, setServiceDefault] = useState({});
-  
+
   useEffect(() => {
     dispatch(getTotals());
   }, [cartItems]);
-
-    // address từ db
-  useEffect(() => {
-    requests.getAddressByUser(userItems._id).then((result) => {
-      let addressLast = result.slice(-1)[0];
-      if (Object.keys(textAddress).length === 0) {
-        dispatch(
-          showTextAddress({
-            _id: addressLast && addressLast._id,
-            address: addressLast && addressLast.content,
-            district_id: addressLast && addressLast.district_id,
-            ward_code: addressLast && addressLast.ward_code,
-            name: userItems && userItems.username,
-            phone: userItems && userItems.phone_number,
-            service_id: textAddress.service_id && textAddress.service_id,
-          })
-        );
-      } else {
-        return;
-      }
-    });
-  }, [userItems]);
 
   useEffect(() => {
     dispatch(fetchService(textAddress.district_id));
@@ -51,9 +27,8 @@ export default function CartItemPayment() {
 
   useEffect(() => {
     setServiceDefault(
-      serviceItems && serviceItems.find
-        ((item) => item.service_id == textAddress.service_id
-      )
+      serviceItems &&
+        serviceItems.find((item) => item.service_id == textAddress.service_id)
     );
   }, [serviceItems]);
 
@@ -154,7 +129,10 @@ export default function CartItemPayment() {
                   >
                     {serviceItems &&
                       serviceItems.map((service) => (
-                        <Option key={service.service_id} value={service.short_name}>
+                        <Option
+                          key={service.service_id}
+                          value={service.short_name}
+                        >
                           {service.short_name}
                         </Option>
                       ))}

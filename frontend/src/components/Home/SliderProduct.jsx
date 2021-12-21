@@ -1,17 +1,14 @@
-import { useSelector, useDispatch } from "react-redux";
-import { fetchProducts, selectProducts } from "redux/product";
-import { useEffect } from "react";
-
-import "../../../node_modules/slick-carousel/slick/slick.css";
-import "../../../node_modules/slick-carousel/slick/slick-theme.css";
-import "../../styles/Home/SliderProduct.scss";
-
 import Slider from "react-slick";
+import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+import "../../../node_modules/slick-carousel/slick/slick.css";
+import "../../styles/Home/SliderProduct.scss";
 import SliderProductComp from "./SliderProductComp";
+
+
 
 export default function SliderProduct({ products }) {
   var settings = {
-    // autoplay: true,
+    autoplay: true,
     autoplaySpeed: 3000,
     infinite: true,
     speed: 500,

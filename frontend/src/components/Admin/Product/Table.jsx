@@ -42,14 +42,12 @@ export default function TableProducts() {
         status: item.status,
       };
     });
-    // console.log(1)
     setProductData(productMap);
     loading === "loading" ? setLoaded(true) : setLoaded(false);
   }, [productList]);
 
-  const handleChangeStatus = async (e, id) => {
+  const handleChangeStatus = (e, id) => {
     requests.editProduct(token, { status: e }, id).then((res) => {
-      console.log(2)
       dispatch(fetchProducts());
       toast.success(`Changed "${res.updatedProduct.product_name}" status`, {
         autoClose: 2000,

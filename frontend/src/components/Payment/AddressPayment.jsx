@@ -2,12 +2,10 @@ import { EnvironmentFilled, RightOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { fetchAddress, getAddress, selectAddress } from "redux/address";
+import { fetchAddress, getAddress } from "redux/address";
 import { selectProvince, showTextAddress } from "redux/address/province";
 import {
-  ShowModalDefaultAddress,
-  ShowModalAddress,
-  ShowModalLogin,
+  ShowModalAddress, ShowModalDefaultAddress, ShowModalLogin
 } from "redux/modal";
 import { selectUsers } from "redux/user";
 import { requests } from "utils/axios";
@@ -18,7 +16,6 @@ export default function AddressPayment() {
   const dispatch = useDispatch();
   const { userItems } = useSelector(selectUsers);
   const { textAddress } = useSelector(selectProvince);
-  const { addressList } = useSelector(selectAddress);
 
   let addressChild = textAddress.province
     ? `${textAddress.street}, ${textAddress.ward}, ${textAddress.district}, ${textAddress.province}`
@@ -34,6 +31,27 @@ export default function AddressPayment() {
     dispatch(ShowModalDefaultAddress(true));
   };
 
+  useEffect(() => {
+    requests.getAddressByUser(userItems._id).then((result) => {
+      let addressLast = result.slice(-1)[0];
+      if (Object.keys(textAddress).length === 0) {
+        dispatch(
+          showTextAddress({
+            _id: addressLast && addressLast._id,
+            address: addressLast && addressLast.content,
+            district_id: addressLast && addressLast.district_id,
+            ward_code: addressLast && addressLast.ward_code,
+            name: userItems && userItems.username,
+            phone: userItems && userItems.phone_number,
+            service_id: textAddress.service_id && textAddress.service_id,
+          })
+        );
+      } else {
+        return;
+      }
+    });
+  }, [userItems]);
+  
   //handle default address
   const handleDefaultAddress = () => {
     requests.getAddressByUser(userItems._id).then((result) => {

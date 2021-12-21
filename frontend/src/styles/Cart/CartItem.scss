@@ -103,73 +103,22 @@
     margin-left: 38px;
   }
 
-  .btn-sl {
-    background-color: #fcf8f8;
-    display: flex;
-
-    input {
-      width: 50px;
-      border-radius: unset;
-      text-align: center;
-      border: 1px solid black;
-      -webkit-border-radius: unset;
-      -moz-border-radius: unset;
-      -ms-border-radius: unset;
-      -o-border-radius: unset;
-
-      @include tablet-plus {
-        width: 40px;
-      }
-
-      &::-webkit-outer-spin-button {
-        display: none;
-      }
-
-      &::-webkit-inner-spin-button {
-        display: none;
-      }
-    }
-
-    .btn-increment {
-      border-radius: unset;
-      border: 1px solid black;
-      border-left: none;
-      padding: 5px 12px;
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-      -webkit-border-radius: unset;
-      -moz-border-radius: unset;
-      -ms-border-radius: unset;
-      -o-border-radius: unset;
-
-      @include tablet-plus {
-        padding: 3px 10px;
-      }
-    }
-
-    .btn-decrement {
-      border-radius: unset;
-      padding: 5px 12px;
-      border: 1px solid black;
-      border-right: none;
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      -webkit-border-radius: unset;
-      -moz-border-radius: unset;
-      -ms-border-radius: unset;
-      -o-border-radius: unset;
-
-      @include tablet-plus {
-        padding: 3px 10px;
-      }
-    }
-  }
-
   &--total {
     margin-right: 28px;
   }
 
   &--delete {
     margin-right: 10px;
+    .btn_remove{
+      width: 26px;
+      height: 28px;
+      line-height: 0;
+      border: none;
+      background-color: transparent;
+      &:hover{
+       background-color: $red-color;
+       color: white;
+     }
+    }
   }
 }

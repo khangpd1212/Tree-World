@@ -15,7 +15,7 @@ export default function SocialLogin() {
   const responseGoogle = async () => {
     const userList = await dispatch(fetchGetUser());
     googleAuthProvider.addScope(
-      "https://www.googleapis.com/auth/contacts.readonly"
+      "https://www.googleapis.com/auth/admin.directory.user.readonly"
     );
     signInWithPopup(auth, googleAuthProvider)
       .then((result) => {
@@ -23,6 +23,8 @@ export default function SocialLogin() {
         const body = {
           username: user.displayName,
           email: user.email,
+
+          
           password: process.env.REACT_APP_PASS,
         };
 

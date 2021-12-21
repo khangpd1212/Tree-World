@@ -32,7 +32,7 @@ const data = [
   return (
     <div style={{marginTop: "70px", fontSize: "26px"}}>
       <h1 style={{marginBottom: "40px"}}>Chart</h1>
-      <Line {...config} />
+      {/* <Line {...config} /> */}
     </div>
   );
 }

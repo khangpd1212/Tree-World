@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8800/",
+  baseURL: "https://treeworld.herokuapp.com/",
 });
 
 export const requests = {
@@ -26,7 +26,7 @@ export const requests = {
     const { data } = await instance(config);
     return data;
   },
-  async addProduct(token,body, img) {
+  async addProduct(token, body, img) {
     const config = {
       method: "post",
       url: "/product/",
@@ -44,7 +44,7 @@ export const requests = {
     }
     return Promise.reject();
   },
-  async deleteProduct(token,id) {
+  async deleteProduct(token, id) {
     const config = {
       method: "delete",
       url: "/product/" + id,

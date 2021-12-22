@@ -122,6 +122,10 @@ const productSlice = createSlice({
     builder.addCase(detailProduct.rejected, (state, action) => {
       return { ...state, loading: "error", error: action.error.message };
     });
+    //view
+    builder.addCase(viewProduct.fulfilled, (state) => {
+      return { ...state };
+    });
   },
 });
 export const selectProducts = createSelector(

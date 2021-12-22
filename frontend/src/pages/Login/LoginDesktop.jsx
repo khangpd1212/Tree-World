@@ -152,7 +152,7 @@ function LoginDesktop() {
           </button>
         </form>
         <div className="footer-login">
-          <SocialLogin />
+          {/* <SocialLogin /> */}
           <div className="add-account">
             <div onClick={handleShowSignUp}>Create account</div>
           </div>

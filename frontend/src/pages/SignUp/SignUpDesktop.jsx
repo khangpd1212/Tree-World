@@ -163,20 +163,6 @@ export default function SignUpDesktop() {
           </button>
         </form>
         <div className="footer-login">
-          <div className="icon-login">
-            <div>
-              <img src="../images/icon-fb_login.png" alt="icon-fb_login" />
-            </div>
-            <div>
-              <img
-                src="../images/icon-twitter_login.png"
-                alt="icon-twitter_login"
-              />
-            </div>
-            <div>
-              <img src="../images/icon-gg_login.png" alt="icon-gg_login" />
-            </div>
-          </div>
           <div className="add-account">
             <div onClick={handleShowLogin}>Get Started</div>
           </div>

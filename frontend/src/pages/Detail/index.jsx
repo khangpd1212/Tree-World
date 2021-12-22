@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import { addItemToCart } from "redux/cart";
 import { setDefaultStatus, setFilterCmt, setLayoutStatus } from "redux/layout";
 import { ShowModalLogin } from "redux/modal";
-import { detailProduct, selectProducts } from "redux/product";
+import { detailProduct, selectProducts, viewProduct } from "redux/product";
 import user, {
   fetchGetUser,
   fetchLogin,
@@ -61,6 +61,8 @@ export default function Detail() {
   useEffect(() => {
     if (id) {
       dispatch(detailProduct(id));
+      //view
+      dispatch(viewProduct(id));
     } else {
       history.push("/");
     }

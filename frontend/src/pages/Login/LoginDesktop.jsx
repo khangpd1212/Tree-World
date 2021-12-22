@@ -64,8 +64,7 @@ function LoginDesktop() {
       dispatch(ShowModalLogin(false));
       autoLogin(token.id, token.isAdmin);
     }
-  }, []);
-
+  }, [dispatch]);
   return (
     <>
       <Modal

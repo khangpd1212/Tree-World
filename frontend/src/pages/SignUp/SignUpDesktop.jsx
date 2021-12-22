@@ -3,11 +3,10 @@ import IconPassword from "components/utils/IconPassword";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { selectModals, ShowModalLogin, ShowModalSignUp } from "redux/modal";
-import { fetchRegister } from "redux/user";
-import { patterns, validations } from "utils/validation";
 import { toast } from "react-toastify";
+import { selectModals, ShowModalLogin, ShowModalSignUp } from "redux/modal";
 import { requests } from "utils/axios";
+import { patterns, validations } from "utils/validation";
 
 export default function SignUpDesktop() {
   const [passwordShown, setPasswordShown] = useState(false);

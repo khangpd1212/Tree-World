@@ -5,7 +5,6 @@ import { selectProvince, showTextAddress } from "redux/address/province";
 import { getTotals, selectCarts } from "redux/cart";
 import { fetchFee, selectFee } from "redux/service/fee";
 import { fetchService, selectService } from "redux/service/service";
-import { selectUsers } from "redux/user";
 export default function CartItemPayment() {
   const { Option } = Select;
   const { TextArea } = Input;
@@ -18,12 +17,12 @@ export default function CartItemPayment() {
 
   useEffect(() => {
     dispatch(getTotals());
-  }, [cartItems]);
+  }, [cartItems, dispatch]);
 
   useEffect(() => {
     dispatch(fetchService(textAddress.district_id));
     dispatch(fetchFee(textAddress));
-  }, [textAddress]);
+  }, [textAddress, dispatch]);
 
   useEffect(() => {
     setServiceDefault(

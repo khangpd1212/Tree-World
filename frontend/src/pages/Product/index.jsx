@@ -27,7 +27,7 @@ export default function Product() {
   const { loading } = useSelector(selectProducts);
   const antIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(12);
+  const [pageSize,] = useState(12);
   const showFilterProduct = filterProduct.filter(
     (item) => item.status === true
   );

@@ -93,7 +93,7 @@ function ForgetPassword() {
       setShowInputPass(false);
       unregister("password");
     }
-  }, [paramToken, paramId, register]);
+  }, [paramToken, paramId, unregister, dispatch]);
 
   const handleCancel = () => {
     dispatch(ShowModalForget(false));

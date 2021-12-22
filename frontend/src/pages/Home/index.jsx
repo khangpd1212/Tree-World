@@ -9,7 +9,6 @@ import Button from "components/utils/Button";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectBlogs } from "redux/blog";
 import { setLayoutStatus } from "redux/layout";
 import { filterProducts, selectProducts } from "redux/product";
 import "styles/button.scss";

@@ -10,18 +10,6 @@ const initialState = {
   error: "",
 };
 
-
-export const fetchRegister = createAsyncThunk(
-  "REGISTER",
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.post("auth/register", data);
-      return await response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
-    }
-  }
-);
 export const fetchGetUser = createAsyncThunk("USER", async (_, thunkAPI) => {
   try {
     const response = await axios.get("user/");

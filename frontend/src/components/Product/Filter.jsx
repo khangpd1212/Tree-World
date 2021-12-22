@@ -1,8 +1,7 @@
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Radio, Row, Select } from "antd";
-import React from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { setBestSeller, setHot, sortDefault, sortPrice } from "redux/filter";
 import { setFilterStatus } from "redux/layout";
 
@@ -10,8 +9,6 @@ const { Option } = Select;
 function Filter({ currentPage, total, pageSize, paginate }) {
   const dispatch = useDispatch();
   const [sort, setSort] = useState("default");
-  const [qty, setQty] = useState(1);
-  // const { page } = useSelector((state) => state.filterState);
 
   const changePrice = (value) => {
     console.log(value);

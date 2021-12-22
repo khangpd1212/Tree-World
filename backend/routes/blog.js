@@ -9,11 +9,11 @@ router.get("/", async (req, res) => {
   try {
     let blogs;
     if (requestCount) {
-      blogs = await Blog.find().countDocuments().then(count => {
+      blogs = await Blog.find({status: true}).countDocuments().then(count => {
         if (requestSkip > count) {
           return
         }
-        return Blog.find().sort({ create_date: -1 }).limit(Number(requestCount)).skip(Number(requestSkip));
+          return Blog.find({status: true}).sort({ create_date: -1 }).limit(Number(requestCount)).skip(Number(requestSkip));
       })
     } else {
       blogs = await Blog.find().sort({ create_date: -1 });

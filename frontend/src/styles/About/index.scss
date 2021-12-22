@@ -88,7 +88,6 @@
     &__album {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
       .leftItem {
         &--top {
           display: flex;
@@ -226,7 +225,7 @@
       &--center {
         font-weight: 500;
         font-size: 48px;
-        width: 100%;
+        width: 70%;
         text-align: center;
         color: #4f4b4b;
         font-family: "SVNNewton";

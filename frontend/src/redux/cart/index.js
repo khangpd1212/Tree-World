@@ -33,30 +33,12 @@ export const cartSlice = createSlice({
 
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
-    btnIncrement: (state, action) => {
+    changeQuantity: (state, action) => {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.product._id === action.payload.product._id &&
-          item.pickColor === action.payload.pickColor
+        (item) => item.product._id === action.payload.cartItem.product._id &&
+          item.pickColor === action.payload.cartItem.pickColor
       );
-      if (itemIndex >= 0){
-        state.cartItems[itemIndex].quantity += 1;
-      }
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-    },
-    btnDecrement: (state, action) => {
-      const itemIndex = state.cartItems.findIndex(
-        (item) => item.product._id === action.payload.product._id &&
-          item.pickColor === action.payload.pickColor
-      );
-      if (state.cartItems[itemIndex].quantity > 1) {
-        state.cartItems[itemIndex].quantity -= 1;
-      } else if (state.cartItems[itemIndex].quantity === 1) {
-        const itemIndex = state.cartItems.findIndex(
-          (item) => item.product._id === action.payload.product._id &&
-            item.pickColor === action.payload.pickColor
-        );
-        state.cartItems.splice(itemIndex, 1);
-      }
+      state.cartItems[itemIndex].quantity = action.payload.setQuantity;
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeCart: (state, action) => {
@@ -101,7 +83,7 @@ export const selectCarts = createSelector(
   (state) => state
 );
 
-export const { addItemToCart, btnIncrement, btnDecrement, removeCart, clearCart, getTotals } =
+export const { addItemToCart, changeQuantity, removeCart, clearCart, getTotals } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

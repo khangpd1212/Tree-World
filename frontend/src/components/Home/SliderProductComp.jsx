@@ -1,19 +1,18 @@
-import React from "react";
 import {
   HeartFilled,
   ShoppingCartOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { toast } from "react-toastify";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "redux/cart";
-import { selectUsers } from "redux/user";
-import { ShowModalLogin } from "redux/modal";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { addItemToCart } from "redux/cart";
+import { ShowModalLogin } from "redux/modal";
+import { selectUsers } from "redux/user";
 
 export default function SliderProductComp(props) {
   const { userItems } = useSelector(selectUsers);
-
   const prod = props.product;
   const dispatch = useDispatch();
   const handleAddToCart = () => {
@@ -26,7 +25,11 @@ export default function SliderProductComp(props) {
     } else {
       dispatch(ShowModalLogin(false));
       dispatch(
-        addItemToCart({ product: prod, quantity: 1, pickColor: prod.color[0] })
+        addItemToCart({
+          product: prod,
+          quantity: 1,
+          pickColor: prod.color[0],
+        })
       );
     }
   };
@@ -36,19 +39,16 @@ export default function SliderProductComp(props) {
         <Link to={`/detail/${prod._id}`}>
           <img src={prod.image[0]} alt="img_product" />
         </Link>
-        <div className="h_product-flex_icon">
-          <div className="icon-like">
-            <HeartFilled className="icon-card" />
-          </div>
-        </div>
         {prod.inventory > 0 ? (
           <div className="h_product-flex_sidebar">
             <div className="icon-cart icon_hidden" onClick={handleAddToCart}>
-              <ShoppingCartOutlined className="icon-card " />
+              <ShoppingCartOutlined className="icon-card" />
             </div>
-            <div className="icon_hidden">
-              <ShoppingOutlined className="icon-card " />
-            </div>
+            <Link to="payment">
+              <div onClick={handleAddToCart} className="icon_hidden">
+                <ShoppingOutlined className="icon-card" />
+              </div>
+            </Link>
           </div>
         ) : (
           <div className="h_product-flex_sidebar">

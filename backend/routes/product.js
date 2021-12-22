@@ -13,6 +13,26 @@ router.get("/", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+router.get("/view", async (req, res) => {
+  const id = req.query.id;
+  try {
+    const productbyId = await Product.findById(id);
+    const product = await Product.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          isHot: productbyId.isHot + 1,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
 // filter product
 router.get("/filter", async (req, res) => {
   const catalog = req.query.catalog;

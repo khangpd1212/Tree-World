@@ -68,6 +68,14 @@ export const detailProduct = createAsyncThunk(
     }
   }
 );
+export const viewProduct = createAsyncThunk("VIEW", async (id, thunkAPI) => {
+  try {
+    const response = await axios.get(`product/view?id=${id}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ error: error.message });
+  }
+});
 const productSlice = createSlice({
   name: "product",
   initialState,

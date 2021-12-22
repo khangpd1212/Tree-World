@@ -1,12 +1,11 @@
 import { SwapRightOutlined } from "@ant-design/icons";
 import { Col, Row } from "antd";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchBlogs } from "redux/blog";
 import "styles/Home/BlogHome.scss";
-import { fetchBlogs, selectBlogs } from "redux/blog";
 import { requests } from "utils/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 export default function BlogHome() {
   const [dataBlog, setDataBlog] = useState([]);
   const [firstBlog, setFirstBlog] = useState({});

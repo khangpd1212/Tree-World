@@ -15,7 +15,6 @@ export default function CartItem() {
     const data = { setQuantity: value, cartItem };
     dispatch(changeQuantity(data));
   };
-
   return (
     <div className="cart__product">
       <Row className="cart__product--title">
@@ -67,7 +66,7 @@ export default function CartItem() {
                     min={1}
                     max={100}
                     defaultValue={cartItem.quantity}
-                    onChange={(e) => handleChange(e, cartItem)}
+                    onChange={(value) => handleChange(value, cartItem)}
                   />
                 </Col>
                 <Col className="main__list--total">

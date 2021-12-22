@@ -64,8 +64,7 @@ function LoginDesktop() {
       dispatch(ShowModalLogin(false));
       autoLogin(token.id, token.isAdmin);
     }
-  }, []);
-
+  }, [dispatch]);
   return (
     <>
       <Modal
@@ -153,7 +152,7 @@ function LoginDesktop() {
           </button>
         </form>
         <div className="footer-login">
-          <SocialLogin />
+          {/* <SocialLogin /> */}
           <div className="add-account">
             <div onClick={handleShowSignUp}>Create account</div>
           </div>

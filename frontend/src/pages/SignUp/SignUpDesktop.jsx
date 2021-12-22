@@ -3,11 +3,10 @@ import IconPassword from "components/utils/IconPassword";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { selectModals, ShowModalLogin, ShowModalSignUp } from "redux/modal";
-import { fetchRegister } from "redux/user";
-import { patterns, validations } from "utils/validation";
 import { toast } from "react-toastify";
+import { selectModals, ShowModalLogin, ShowModalSignUp } from "redux/modal";
 import { requests } from "utils/axios";
+import { patterns, validations } from "utils/validation";
 
 export default function SignUpDesktop() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -164,20 +163,6 @@ export default function SignUpDesktop() {
           </button>
         </form>
         <div className="footer-login">
-          <div className="icon-login">
-            <div>
-              <img src="../images/icon-fb_login.png" alt="icon-fb_login" />
-            </div>
-            <div>
-              <img
-                src="../images/icon-twitter_login.png"
-                alt="icon-twitter_login"
-              />
-            </div>
-            <div>
-              <img src="../images/icon-gg_login.png" alt="icon-gg_login" />
-            </div>
-          </div>
           <div className="add-account">
             <div onClick={handleShowLogin}>Get Started</div>
           </div>

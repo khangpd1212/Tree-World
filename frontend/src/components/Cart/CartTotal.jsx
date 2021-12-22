@@ -12,7 +12,7 @@ export default function CartTotal() {
 
    useEffect(() => {
       dispatch(getTotals());
-   }, [cartItems]);
+   }, [cartItems, dispatch]);
 
    return (
       <div className="cart__total">

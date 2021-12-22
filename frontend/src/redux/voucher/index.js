@@ -1,9 +1,7 @@
-import axios from "../../utils/axios";
 import {
-    createSlice,
-    createAsyncThunk,
-    createSelector,
+  createAsyncThunk, createSlice
 } from "@reduxjs/toolkit";
+import axios from "../../utils/axios";
 
 const initialState = {
     voucherList: [],

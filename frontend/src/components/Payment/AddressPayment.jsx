@@ -50,7 +50,7 @@ export default function AddressPayment() {
         return;
       }
     });
-  }, [userItems]);
+  }, [userItems, dispatch, textAddress]);
   
   //handle default address
   const handleDefaultAddress = () => {

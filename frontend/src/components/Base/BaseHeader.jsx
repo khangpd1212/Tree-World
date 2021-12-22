@@ -124,14 +124,6 @@ function BaseHeader() {
               <div>
                 <LinkRoute to={"/cart"}>Cart</LinkRoute>
               </div>
-              <div>
-                <LinkRoute to={"/payment"}>
-                  Payment
-                </LinkRoute>
-              </div>
-              <div>
-                <LinkRoute to={"/admin"}>Admin</LinkRoute>
-              </div>
               {Object.values(userItems).length === 0 ? (
                 <div
                   className="div__login"
@@ -223,17 +215,9 @@ function BaseHeader() {
                     </LinkRoute>
                   </div>
                   <div className="navbar__menu">
-                    <LinkRoute to={"/payment"} onClick={onClose}>
-                      Payment
-                    </LinkRoute>
-                  </div>
-                  <div className="navbar__menu">
                     <LinkRoute to={"/login"} onClick={onClose}>
                       Login
                     </LinkRoute>
-                  </div>
-                  <div className="navbar__menu">
-                    <LinkRoute to={"/admin"}>Admin</LinkRoute>
                   </div>
                 </div>
               </Anchor>

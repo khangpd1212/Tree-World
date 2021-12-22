@@ -54,7 +54,7 @@ export default function BlogHome() {
                 <Col key={item._id}>
                   <div className="blog__flex bg-item_blog">
                     <div className="blog__img">
-                      <img srcSet="./images/section_news.png" alt="blog" />
+                      <img src={item.image} alt="blog" />
                     </div>
                     <div className="blog__flex--content">
                       <h1 className="blog__flex--heading font-title">

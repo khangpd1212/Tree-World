@@ -39,6 +39,7 @@ export default function TableProducts() {
         price: item.price,
         inventory: item.inventory,
         sold: item.sold,
+        isHot: item.isHot,
         status: item.status,
       };
     });
@@ -133,6 +134,13 @@ export default function TableProducts() {
           key="sold"
           width={80}
           sorter={(a, b) => a.sold - b.sold}
+        />
+        <Column
+          title="Hot"
+          dataIndex="isHot"
+          key="isHot"
+          width={80}
+          sorter={(a, b) => a.isHot - b.isHot}
         />
         <Column
           title="Status"

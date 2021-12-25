@@ -175,7 +175,11 @@ export default function Detail() {
           } else {
             arrVoucher.push(id);
             requests
-              .editUser({ id_voucher: arrVoucher }, userItems._id)
+              .editUser(
+                userItems.accessToken,
+                { id_voucher: arrVoucher },
+                userItems._id
+              )
               .then(() => {
                 dispatch(loadVoucher(arrVoucher));
                 dispatch(fetchGetUser());

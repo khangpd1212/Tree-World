@@ -17,8 +17,13 @@ router.post("/register", async (req, res) => {
   });
   try {
     const checkEmail = await User.findOne({ email: req.body.email });
+    const checkUser = await User.findOne({ username: req.body.username });
+
     if (checkEmail) {
       return res.status(403).json({ message: "Email already exists" });
+    }
+    if (checkUser) {
+      return res.status(403).json({ message: "Username already exists" });
     }
     const user = await newUser.save();
     res.status(200).json(user);

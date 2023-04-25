@@ -11,6 +11,9 @@ const addressRoute = require("./address");
 const blogRoute = require("./blog");
 const useRouter = (app) => {
   app
+    .get('/', function (req, res) {
+      res.send('Hello')
+    })
     .use("/voucher", voucherRoute)
     .use("/auth", authRoute)
     .use("/product", productRoute)

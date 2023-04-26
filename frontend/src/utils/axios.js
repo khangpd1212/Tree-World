@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://treeworld.herokuapp.com/",
+  baseURL: process.env.REACT_APP_BACKEND_URL,
 });
 
 export const requests = {

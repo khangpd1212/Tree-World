@@ -1,11 +1,11 @@
-import { Button, Space, Switch, Table } from "antd";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { fetchCatalogs, selectCatalogs } from "redux/catalog";
-import { requests } from "utils/axios";
-import ModalEdit from "./ModalEditCategory";
-import { selectUsers } from "redux/user";
+import { Button, Space, Switch, Table } from 'antd';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { fetchCatalogs, selectCatalogs } from 'redux/catalog';
+import { requests } from 'utils/axios';
+import ModalEdit from './ModalEditCategory';
+import { selectUsers } from 'redux/user';
 
 export default function TableCategory() {
   const { catalogList, loading } = useSelector(selectCatalogs);
@@ -29,11 +29,12 @@ export default function TableCategory() {
         _id: item._id,
         catalog_name: item.catalog_name,
         status: item.status,
+        slug: item.slug,
       };
     });
 
     setDataCatalog(catalogMap);
-    loading === "loading" ? setLoaded(true) : setLoaded(false);
+    loading === 'loading' ? setLoaded(true) : setLoaded(false);
   }, [catalogList]);
 
   const onEdit = (data) => {
@@ -54,14 +55,14 @@ export default function TableCategory() {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "catalog_name",
-      key: "catalog_name",
+      title: 'Name',
+      dataIndex: 'catalog_name',
+      key: 'catalog_name',
       sorter: (a, b) => a.catalog_name.localeCompare(b.catalog_name),
     },
     {
-      title: "Status",
-      key: "status",
+      title: 'Status',
+      key: 'status',
       render: (text, record) => (
         <Switch
           defaultChecked={record.status}
@@ -72,8 +73,8 @@ export default function TableCategory() {
       ),
     },
     {
-      title: "Action",
-      key: "action",
+      title: 'Action',
+      key: 'action',
       render: (text, record) => (
         <Space size="middle">
           <Button type="primary" onClick={() => onEdit(record)}>

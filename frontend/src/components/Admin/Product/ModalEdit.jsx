@@ -1,17 +1,13 @@
-import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Form, Image, Input, InputNumber, Modal,
-  Select, Tag, Upload
-} from "antd";
-import React, { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { selectCatalogs } from "redux/catalog";
-import { fetchProducts } from "redux/product";
-import { selectUsers } from "redux/user";
-import { requests } from "utils/axios";
-import { validations } from "utils/validation";
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Image, Input, InputNumber, Modal, Select, Tag, Upload } from 'antd';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { selectCatalogs } from 'redux/catalog';
+import { fetchProducts } from 'redux/product';
+import { selectUsers } from 'redux/user';
+import { requests } from 'utils/axios';
+import { validations } from 'utils/validation';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -32,46 +28,39 @@ const normFile = (e) => {
   return e && e.fileList;
 };
 
-export default function ModalEdit({
-  visible,
-  setVisible,
-  selected,
-  setSelected,
-}) {
+export default function ModalEdit({ visible, setVisible, selected, setSelected }) {
   const { catalogList } = useSelector(selectCatalogs);
   const { adminItems } = useSelector(selectUsers);
   const token = adminItems.accessToken;
 
-  const [imgBase64, setImgBase64] = useState("");
+  const [imgBase64, setImgBase64] = useState('');
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
 
   let catalogSeleted =
-    catalogList &&
-    selected &&
-    catalogList.find((f) => f._id === selected.catalog_id);
+    catalogList && selected && catalogList.find((f) => f._id === selected.catalog_id);
   const dispatch = useDispatch();
-  
+
   // handle submit
   const onFinish = (values) => {
     if (
       !validations.checkBlankSpace(values.product_name) ||
       !validations.checkBlankSpace(values.description)
     ) {
-      toast.error("You are not allowed text only white space");
+      toast.error('You are not allowed text only white space');
     } else {
-      if (imgBase64 !== "") {
+      if (imgBase64 !== '') {
         requests
           .editProduct(token, { ...values, image: imgBase64 }, selected._id)
           .then((res) => {
-            if (res.updatedProduct) {
+            if (res && res.updatedProduct) {
               dispatch(fetchProducts());
               setVisible(false);
-              toast.success("Update product success");
-            } else {
-              toast.error("Fail!!");
+              toast.success('Update product success');
+              // } else {
+              //   toast.error('Fail!!');
             }
           })
           .catch((err) => toast.warning(err));
@@ -79,10 +68,10 @@ export default function ModalEdit({
         requests
           .editProduct(token, values, selected._id)
           .then((res) => {
-            if (res.updatedProduct) {
+            if (res && res.updatedProduct) {
               dispatch(fetchProducts());
               setVisible(false);
-              toast.success("Update product success");
+              toast.success('Update product success');
             }
           })
           .catch((err) => toast.warning(err));
@@ -101,7 +90,7 @@ export default function ModalEdit({
   }
 
   const handleCancel = () => setPreviewVisible(false);
-  
+
   const handlePreview = useCallback(async (file) => {
     setPreviewVisible(true);
 
@@ -109,16 +98,14 @@ export default function ModalEdit({
       file.preview = await getBase64(file.originFileObj);
     }
     setPreviewImage(file.url || file.preview);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   }, []);
 
   const handleChange = useCallback(async (info) => {
-    if (info.file.status === "uploading") {
-      info.file.status = "done";
+    if (info.file.status === 'uploading') {
+      info.file.status = 'done';
     }
-    if (info.file.status === "done") {
+    if (info.file.status === 'done') {
       const hash = await getBase64(info.file.originFileObj);
       setImgBase64(hash);
       setFileList(info.fileList);
@@ -128,23 +115,17 @@ export default function ModalEdit({
   // color tag
   const tagRender = (props) => {
     const { label, value, closable, onClose } = props;
-    
-    return value === "white" ? (
+
+    return value === 'white' ? (
       <Tag
-        style={{ color: "black", borderColor: "#00000014" }}
+        style={{ color: 'black', borderColor: '#00000014', marginRight: 3 }}
         closable={closable}
         onClose={onClose}
-        style={{ marginRight: 3 }}
       >
         {label}
       </Tag>
     ) : (
-      <Tag
-        color={value}
-        closable={closable}
-        onClose={onClose}
-        style={{ marginRight: 3 }}
-      >
+      <Tag color={value} closable={closable} onClose={onClose} style={{ marginRight: 3 }}>
         {label}
       </Tag>
     );
@@ -166,6 +147,7 @@ export default function ModalEdit({
           status: selected.status ?? false,
           description: selected.description,
           color: selected.color,
+          slug: selected.slug,
         }}
       >
         <Form.Item
@@ -174,7 +156,7 @@ export default function ModalEdit({
           rules={[
             {
               required: true,
-              message: "Please input product name!",
+              message: 'Please input product name!',
             },
           ]}
           hasFeedback
@@ -186,21 +168,24 @@ export default function ModalEdit({
           />
         </Form.Item>
         <Form.Item
-          name="catalog_id"
-          label="Catalog Name"
+          name="slug"
+          label="SEO"
           hasFeedback
-          placeholder="Catalog"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter input',
+            },
+          ]}
         >
-          <Select
-            placeholder={catalogSeleted?.catalog_name}
-            defaultValue={selected.catalog_id}
-          >
+          <Input placeholder="Please enter input" defaultValue={selected.slug} />
+        </Form.Item>
+        <Form.Item name="catalog_id" label="Catalog Name" hasFeedback placeholder="Catalog">
+          <Select placeholder={catalogSeleted?.catalog_name} defaultValue={selected.catalog_id}>
             {catalogList &&
               catalogList
                 .filter((f) => f.status)
-                .map((cata) => (
-                  <Option value={cata._id}>{cata.catalog_name}</Option>
-                ))}
+                .map((cata) => <Option value={cata._id}>{cata.catalog_name}</Option>)}
           </Select>
         </Form.Item>
 
@@ -211,7 +196,7 @@ export default function ModalEdit({
             rules={[
               {
                 required: true,
-                message: "Please input inventory!",
+                message: 'Please input inventory!',
               },
             ]}
           >
@@ -224,7 +209,7 @@ export default function ModalEdit({
             rules={[
               {
                 required: true,
-                message: "Please input price!",
+                message: 'Please input price!',
               },
             ]}
           >
@@ -232,11 +217,7 @@ export default function ModalEdit({
           </Form.Item>
         </Form.Item>
 
-        <Form.Item
-          label="Image"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-        >
+        <Form.Item label="Image" valuePropName="fileList" getValueFromEvent={normFile}>
           <Image src={selected.image} width="120px" /> <br />
           <Upload
             listType="picture-card"
@@ -257,7 +238,7 @@ export default function ModalEdit({
             footer={null}
             onCancel={handleCancel}
           >
-            <img alt="example" style={{ width: "100%" }} src={previewImage} />
+            <img alt="example" style={{ width: '100%' }} src={previewImage} />
           </Modal>
         </Form.Item>
         <Form.Item
@@ -267,8 +248,8 @@ export default function ModalEdit({
           rules={[
             {
               required: true,
-              message: "Please select product colors!",
-              type: "array",
+              message: 'Please select product colors!',
+              type: 'array',
             },
           ]}
         >
@@ -278,7 +259,7 @@ export default function ModalEdit({
             placeholder="Please select product colors"
             tagRender={tagRender}
             defaultValue={selected.color}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           >
             <Option value="white">white</Option>
             <Option value="green">green</Option>
@@ -295,7 +276,7 @@ export default function ModalEdit({
             rules={[
               {
                 required: true,
-                message: "Please input description!",
+                message: 'Please input description!',
               },
             ]}
           >
@@ -323,14 +304,7 @@ export default function ModalEdit({
         </Form.Item>
       </Form>
     );
-  }, [
-    selected,
-    imgBase64,
-    fileList,
-    previewImage,
-    previewTitle,
-    previewVisible,
-  ]);
+  }, [selected, imgBase64, fileList, previewImage, previewTitle, previewVisible]);
 
   return (
     <>

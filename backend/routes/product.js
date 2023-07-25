@@ -1,19 +1,19 @@
-const router = require("express").Router();
-const Product = require("../models/Product");
-const verify = require("../middlewares/verify");
+const router = require('express').Router();
+const Product = require('../models/Product');
+const verify = require('../middlewares/verify');
 // get all products
 //link http://localhost:8800/product/ method get
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const products = await Product.find();
 
-    if (!products) throw new Error("No items");
+    if (!products) throw new Error('No items');
     res.status(200).json(products);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
-router.get("/view", async (req, res) => {
+router.get('/view', async (req, res) => {
   const id = req.query.id;
   try {
     const productbyId = await Product.findById(id);
@@ -34,7 +34,7 @@ router.get("/view", async (req, res) => {
   }
 });
 // filter product
-router.get("/filter", async (req, res) => {
+router.get('/filter', async (req, res) => {
   const catalog = req.query.catalog;
   const isNew = req.query.new;
   const bestSeller = req.query.sales;
@@ -53,7 +53,7 @@ router.get("/filter", async (req, res) => {
     match.catalog_id = catalog;
   }
   if (isNew) {
-    match.isNew = isNew.toLowerCase() === "true";
+    match.isNew = isNew.toLowerCase() === 'true';
   }
   if (priceMin && priceMax && parseFloat(priceMin) <= parseFloat(priceMax)) {
     match.price = {
@@ -63,13 +63,13 @@ router.get("/filter", async (req, res) => {
     };
   }
   if (bestSeller) {
-    sort = { sold: bestSeller.toLowerCase() === "true" ? -1 : 1 };
+    sort = { sold: bestSeller.toLowerCase() === 'true' ? -1 : 1 };
   }
   if (isHot) {
-    sort = { isHot: isHot.toLowerCase() === "true" ? -1 : 1 };
+    sort = { isHot: isHot.toLowerCase() === 'true' ? -1 : 1 };
   }
-  if (order && price.toLowerCase() === "true") {
-    sort = { price: order.toLowerCase() === "asc" ? 1 : -1 };
+  if (order && price.toLowerCase() === 'true') {
+    sort = { price: order.toLowerCase() === 'asc' ? 1 : -1 };
   }
 
   try {
@@ -85,10 +85,10 @@ router.get("/filter", async (req, res) => {
   }
 });
 // get product by id
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) throw new Error("This product is not found");
+    if (!product) throw new Error('This product is not found');
     res.status(200).json(product);
   } catch (error) {
     res.status(403).json({ message: error.message });
@@ -96,50 +96,46 @@ router.get("/:id", async (req, res) => {
 });
 
 // create product
-router.post("/", verify, async (req, res) => {
+router.post('/', verify, async (req, res) => {
   if (req.user.isAdmin) {
-    const {
-      product_name,
-      price,
-      description,
-      isNew,
-      catalog_id,
-      image,
-      inventory,
-      color,
-    } = req.body;
+    const { product_name, price, description, isNew, catalog_id, image, inventory, color, slug } =
+      req.body;
 
-    const newProduct = new Product({
-      product_name,
-      price,
-      description,
-      isNew,
-      catalog_id,
-      image,
-      inventory,
-      color,
-    });
+    const slugProd = await Product.findOne({ slug: slug });
+    if (slugProd) {
+      res.status(400).json({ message: 'The slug has been used for another product' });
+    } else {
+      const newProduct = new Product({
+        product_name,
+        price,
+        description,
+        isNew,
+        catalog_id,
+        image,
+        inventory,
+        color,
+        slug,
+      });
 
-    try {
-      const product = await newProduct.save();
-      if (!product) throw new Error("Something were wrong with saving product");
-      res
-        .status(200)
-        .json({ message: "Create successfully", status: true, product });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
+      try {
+        const product = await newProduct.save();
+        if (!product) throw new Error('Something were wrong with saving product');
+        res.status(200).json({ message: 'Create successfully', status: true, product });
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
     }
   } else {
-    res.status(500).json({ message: "You are not allowed" });
+    res.status(500).json({ message: 'You are not allowed' });
   }
 });
 
 //search
-router.post("/search", async (req, res) => {
+router.post('/search', async (req, res) => {
   const { keyword } = req.body;
   try {
     const products = await Product.find({
-      product_name: new RegExp(keyword, "gi"),
+      product_name: new RegExp(keyword, 'gi'),
     });
     res.status(200).json(products);
   } catch (error) {
@@ -148,25 +144,27 @@ router.post("/search", async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verify, async (req, res) => {
+router.put('/:id', verify, async (req, res) => {
   if (req.user.isAdmin) {
-    try {
-      const updatedProduct = await Product.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body,
-        },
-        {
-          new: true,
-        }
-      );
-      if (!updatedProduct)
-        throw new Error("Something went wrong with updating product");
-      res
-        .status(200)
-        .json({ message: "update successfully", status: true, updatedProduct });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
+    const slugProd = await Product.findOne({ slug: req.body.slug });
+    if (slugProd && slugProd._id.toString() !== req.params.id) {
+      res.status(400).json({ message: 'The slug has been used for another product' });
+    } else {
+      try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: req.body,
+          },
+          {
+            new: true,
+          }
+        );
+        if (!updatedProduct) throw new Error('Something went wrong with updating product');
+        res.status(200).json({ message: 'update successfully', status: true, updatedProduct });
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
     }
   } else if (req.user.isAdmin === false) {
     try {
@@ -180,30 +178,27 @@ router.put("/:id", verify, async (req, res) => {
           new: true,
         }
       );
-      if (!updatedProduct)
-        throw new Error("Something went wrong with updating product");
-      res
-        .status(200)
-        .json({ message: "update successfully", status: true, updatedProduct });
+      if (!updatedProduct) throw new Error('Something went wrong with updating product');
+      res.status(200).json({ message: 'update successfully', status: true, updatedProduct });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   } else {
-    res.status(403).json({ message: "You are not allowed" });
+    res.status(403).json({ message: 'You are not allowed' });
   }
 });
 
 //delete product
-router.delete("/:id", verify, async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
   if (req.user.isAdmin) {
     try {
       await Product.findByIdAndDelete(req.params.id);
-      res.status(200).json({ message: "The product has beeen deleted" });
+      res.status(200).json({ message: 'The product has beeen deleted' });
     } catch (error) {
       res.status(500).json(error);
     }
   } else {
-    res.status(403).json({ message: "You are not allowed" });
+    res.status(403).json({ message: 'You are not allowed' });
   }
 });
 

@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -6,50 +7,58 @@ const instance = axios.create({
 
 export const requests = {
   async fetchAllProduct() {
-    const { data } = await instance.get("/product");
+    const { data } = await instance.get('/product');
     return data;
   },
   async fetchProduct(id) {
-    const { data } = await instance.get("/product/" + id);
+    const { data } = await instance.get('/product/' + id);
     return data;
   },
 
   async editProduct(token, body, id) {
     const config = {
-      method: "put",
-      url: "/product/" + id,
+      method: 'put',
+      url: '/product/' + id,
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
       data: body,
     };
-    const { data } = await instance(config);
-    return data;
+    try {
+      const { data } = await instance(config);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message || 'Failed');
+    }
   },
   async addProduct(token, body, img) {
     const config = {
-      method: "post",
-      url: "/product/",
+      method: 'post',
+      url: '/product/',
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
       data: {
         ...body,
         image: img,
       },
     };
-    if (img !== "") {
-      const { data } = await instance(config);
-      return data;
+    if (img !== '') {
+      try {
+        const { data } = await instance(config);
+        return data;
+      } catch (error) {
+        toast.error(error.response.data.message || 'Failed');
+      }
     }
     return Promise.reject();
   },
   async deleteProduct(token, id) {
     const config = {
-      method: "delete",
-      url: "/product/" + id,
+      method: 'delete',
+      url: '/product/' + id,
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
     return instance(config)
@@ -58,42 +67,50 @@ export const requests = {
   },
   //catalog
   async fetchAllCatalog() {
-    const { data } = await instance.get("/catalog");
+    const { data } = await instance.get('/catalog');
     return data;
   },
   async addCatalog(token, body) {
     const config = {
-      method: "post",
-      url: "/catalog/",
+      method: 'post',
+      url: '/catalog/',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
     };
-    const { data } = await instance(config);
-    return data;
+    try {
+      const { data } = await instance(config);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message || 'Failed');
+    }
   },
   async editCatalog(token, body, id) {
     const config = {
-      method: "put",
+      method: 'put',
       url: `/catalog/${id}`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
     };
-    const { data } = await instance(config);
-    return data;
+    try {
+      const { data } = await instance(config);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message || 'Failed');
+    }
   },
   //voucher
   async addVoucher(token, body) {
     const config = {
-      method: "post",
-      url: "/voucher/",
+      method: 'post',
+      url: '/voucher/',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
@@ -103,10 +120,10 @@ export const requests = {
   },
   async editVoucher(token, body, id) {
     const config = {
-      method: "put",
+      method: 'put',
       url: `/voucher/${id}`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
@@ -122,10 +139,10 @@ export const requests = {
   },
   async addBlog(token, body, img, id) {
     const config = {
-      method: "post",
-      url: "/blog/",
+      method: 'post',
+      url: '/blog/',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: {
@@ -140,10 +157,10 @@ export const requests = {
 
   async editBlog(token, body, id) {
     const config = {
-      method: "put",
+      method: 'put',
       url: `/blog/${id}`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
@@ -154,7 +171,7 @@ export const requests = {
 
   async getAddressByUser(idUser) {
     const config = {
-      method: "get",
+      method: 'get',
       url: `/address/?idUser=${idUser}`,
     };
     const { data } = await instance(config);
@@ -162,10 +179,10 @@ export const requests = {
   },
   async editUser(token, body, id) {
     const config = {
-      method: "put",
+      method: 'put',
       url: `/user/${id}`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
@@ -175,10 +192,10 @@ export const requests = {
   },
   async addComment(token, body) {
     const config = {
-      method: "post",
-      url: "/comment/",
+      method: 'post',
+      url: '/comment/',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
@@ -188,10 +205,10 @@ export const requests = {
   },
   async editComment(token, body, id) {
     const config = {
-      method: "put",
+      method: 'put',
       url: `/comment/${id}`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       data: body,
@@ -201,10 +218,10 @@ export const requests = {
   },
   async fetchResetPassword(body) {
     const config = {
-      method: "post",
+      method: 'post',
       url: `/auth/reset-password`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -213,10 +230,10 @@ export const requests = {
   },
   async fetchNewPassword(id, token, body) {
     const config = {
-      method: "post",
+      method: 'post',
       url: `auth/reset-password/${id}/${token}`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -225,10 +242,10 @@ export const requests = {
   },
   async fetchRegister(body) {
     const config = {
-      method: "post",
+      method: 'post',
       url: `auth/register`,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       data: body,
     };
@@ -238,16 +255,15 @@ export const requests = {
 };
 
 export const imgbbClient = axios.create({
-  baseURL:
-    "https://api.imgbb.com/1/upload?key=403852fdf7303df5e119b675b814876f",
+  baseURL: 'https://api.imgbb.com/1/upload?key=403852fdf7303df5e119b675b814876f',
 });
 
 export const postImg = async (img) => {
   const config = {
-    method: "post",
-    url: "https://api.imgbb.com/1/upload",
+    method: 'post',
+    url: 'https://api.imgbb.com/1/upload',
     data: {
-      key: "403852fdf7303df5e119b675b814876f",
+      key: '403852fdf7303df5e119b675b814876f',
       image: img[0],
     },
   };

@@ -1,12 +1,12 @@
-import { Button, Image, Space, Switch, Table, Tag, Tooltip } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { fetchCatalogs } from "redux/catalog";
-import { fetchProducts, selectProducts } from "redux/product";
-import { selectUsers } from "redux/user";
-import { requests } from "utils/axios";
-import ModalEdit from "./ModalEdit";
+import { Button, Image, Space, Switch, Table, Tag, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { fetchCatalogs } from 'redux/catalog';
+import { fetchProducts, selectProducts } from 'redux/product';
+import { selectUsers } from 'redux/user';
+import { requests } from 'utils/axios';
+import ModalEdit from './ModalEdit';
 
 export default function TableProducts() {
   const { Column } = Table;
@@ -15,7 +15,6 @@ export default function TableProducts() {
   const [loaded, setLoaded] = useState(true);
   const [productData, setProductData] = useState([]);
 
-  
   const { adminItems } = useSelector(selectUsers);
   const token = adminItems.accessToken;
   const dispatch = useDispatch();
@@ -41,10 +40,11 @@ export default function TableProducts() {
         sold: item.sold,
         isHot: item.isHot,
         status: item.status,
+        slug: item.slug,
       };
     });
     setProductData(productMap);
-    loading === "loading" ? setLoaded(true) : setLoaded(false);
+    loading === 'loading' ? setLoaded(true) : setLoaded(false);
   }, [productList]);
 
   const handleChangeStatus = (e, id) => {
@@ -83,12 +83,12 @@ export default function TableProducts() {
           width={100}
           render={(record) =>
             record.map((item) =>
-              item === "#ffff" || item === "white" ? (
+              item === '#ffff' || item === 'white' ? (
                 <Tag
                   style={{
                     marginTop: 10,
-                    color: "black",
-                    borderColor: "#00000014",
+                    color: 'black',
+                    borderColor: '#00000014',
                   }}
                 >
                   {item}

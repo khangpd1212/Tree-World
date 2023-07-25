@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const CatalogSchema = new mongoose.Schema({
   catalog_name: {
@@ -9,6 +9,10 @@ const CatalogSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  slug: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model("Catalog", CatalogSchema);
+module.exports = mongoose.model('Catalog', CatalogSchema);

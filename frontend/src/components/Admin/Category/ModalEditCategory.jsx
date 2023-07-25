@@ -1,11 +1,11 @@
-import { Button, Form, Input, Modal } from "antd";
-import React, { useCallback } from "react";
-import { toast } from "react-toastify";
-import { fetchCatalogs } from "redux/catalog";
-import { requests } from "utils/axios";
-import { validations } from "utils/validation";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUsers } from "redux/user";
+import { Button, Form, Input, Modal } from 'antd';
+import React, { useCallback } from 'react';
+import { toast } from 'react-toastify';
+import { fetchCatalogs } from 'redux/catalog';
+import { requests } from 'utils/axios';
+import { validations } from 'utils/validation';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUsers } from 'redux/user';
 
 const formItemLayout = {
   labelCol: {
@@ -16,26 +16,22 @@ const formItemLayout = {
   },
 };
 
-export default function ModalEdit({
-  visible,
-  setVisible,
-  selected,
-}) {
+export default function ModalEdit({ visible, setVisible, selected }) {
   const dispatch = useDispatch();
   const { adminItems } = useSelector(selectUsers);
   const token = adminItems.accessToken;
 
   const onFinish = (values) => {
     if (!validations.checkBlankSpace(values.catalog_name)) {
-      toast.error("You are not allowed text only white space");
+      toast.error('You are not allowed text only white space');
     } else {
       requests.editCatalog(token, values, selected._id).then((res) => {
-        if (res.updatedCatalog) {
+        if (res && res.updatedCatalog) {
           dispatch(fetchCatalogs());
           setVisible(false);
           toast.success(`Update successfully!`);
-        } else {
-          toast.error("Failed");
+          // } else {
+          //   toast.error('Failed');
         }
       });
     }
@@ -50,6 +46,7 @@ export default function ModalEdit({
         initialValues={{
           catalog_name: selected.catalog_name,
           status: selected.status ?? false,
+          slug: selected.slug,
         }}
       >
         <Form.Item
@@ -60,13 +57,25 @@ export default function ModalEdit({
           rules={[
             {
               required: true,
-              message: "Please input category name!",
+              message: 'Please input category name!',
             },
           ]}
         >
           <Input defaultValue={selected.catalog_name} />
         </Form.Item>
-
+        <Form.Item
+          name="slug"
+          label="SEO"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter input',
+            },
+          ]}
+          hasFeedback
+        >
+          <Input defaultValue={selected.slug} />
+        </Form.Item>
         <Form.Item
           wrapperCol={{
             span: 12,

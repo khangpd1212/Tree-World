@@ -1,13 +1,13 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Modal, Select, Tag, Upload } from "antd";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { selectCatalogs } from "redux/catalog";
-import { fetchProducts } from "redux/product";
-import { selectUsers } from "redux/user";
-import { requests } from "utils/axios";
-import { validations } from "utils/validation";
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, InputNumber, Modal, Select, Tag, Upload } from 'antd';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { selectCatalogs } from 'redux/catalog';
+import { fetchProducts } from 'redux/product';
+import { selectUsers } from 'redux/user';
+import { requests } from 'utils/axios';
+import { validations } from 'utils/validation';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -42,28 +42,28 @@ export default function ModalAddProduct({ visible, setVisible }) {
   const { adminItems } = useSelector(selectUsers);
   const token = adminItems.accessToken;
 
-  const [imgBase64, setImgBase64] = useState("");
+  const [imgBase64, setImgBase64] = useState('');
   const [fileList, setFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
 
   const onFinish = (values) => {
     if (
       !validations.checkBlankSpace(values.product_name) ||
       !validations.checkBlankSpace(values.description)
     ) {
-      toast.error("You are not allowed text only white space");
+      toast.error('You are not allowed text only white space');
     } else {
       requests.addProduct(token, values, imgBase64).then((res) => {
-        if (res.status) {
+        if (res && res.status) {
           dispatch(fetchProducts());
           form.resetFields();
           setFileList([]);
           setVisible(false);
-          toast.success("Add new product succesfully!");
-        } else {
-          toast.error("Failed");
+          toast.success('Add new product succesfully!');
+          // } else {
+          //   toast.error('Failed');
         }
       });
     }
@@ -78,9 +78,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
       file.preview = await getBase64(file.originFileObj);
     }
     setPreviewImage(file.url || file.preview);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
   };
 
   const handleChange = async (info) => {
@@ -93,22 +91,16 @@ export default function ModalAddProduct({ visible, setVisible }) {
   const tagRender = (props) => {
     const { label, value, closable, onClose } = props;
 
-    return value === "white" ? (
+    return value === 'white' ? (
       <Tag
-        style={{ color: "black", borderColor: "#00000014" }}
+        style={{ color: 'black', borderColor: '#00000014', marginRight: 3 }}
         closable={closable}
         onClose={onClose}
-        style={{ marginRight: 3 }}
       >
         {label}
       </Tag>
     ) : (
-      <Tag
-        color={value}
-        closable={closable}
-        onClose={onClose}
-        style={{ marginRight: 3 }}
-      >
+      <Tag color={value} closable={closable} onClose={onClose} style={{ marginRight: 3 }}>
         {label}
       </Tag>
     );
@@ -145,11 +137,24 @@ export default function ModalAddProduct({ visible, setVisible }) {
             rules={[
               {
                 required: true,
-                message: "Please input product name!",
+                message: 'Please input product name!',
               },
             ]}
           >
             <Input placeholder="Please input product name" />
+          </Form.Item>
+          <Form.Item
+            name="slug"
+            label="SEO"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Please enter input',
+              },
+            ]}
+          >
+            <Input placeholder="Please enter input" />
           </Form.Item>
           <Form.Item
             name="catalog_id"
@@ -158,7 +163,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
             rules={[
               {
                 required: true,
-                message: "Please input catalog name!",
+                message: 'Please input catalog name!',
               },
             ]}
           >
@@ -166,9 +171,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               {catalogList &&
                 catalogList
                   .filter((f) => f.status)
-                  .map((cata) => (
-                    <Option key={cata._id}>{cata.catalog_name}</Option>
-                  ))}
+                  .map((cata) => <Option key={cata._id}>{cata.catalog_name}</Option>)}
             </Select>
           </Form.Item>
 
@@ -180,7 +183,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               rules={[
                 {
                   required: true,
-                  message: "Please input inventory!",
+                  message: 'Please input inventory!',
                 },
               ]}
             >
@@ -194,7 +197,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               rules={[
                 {
                   required: true,
-                  message: "Please input price!",
+                  message: 'Please input price!',
                 },
               ]}
             >
@@ -227,7 +230,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               footer={null}
               onCancel={handleCancel}
             >
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
+              <img alt="example" style={{ width: '100%' }} src={previewImage} />
             </Modal>
           </Form.Item>
           <Form.Item
@@ -237,8 +240,8 @@ export default function ModalAddProduct({ visible, setVisible }) {
             rules={[
               {
                 required: true,
-                message: "Please select product colors!",
-                type: "array",
+                message: 'Please select product colors!',
+                type: 'array',
               },
             ]}
           >
@@ -247,7 +250,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
               mode="multiple"
               showArrow
               tagRender={tagRender}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             >
               <Option value="white">white</Option>
               <Option value="green">green</Option>
@@ -262,7 +265,7 @@ export default function ModalAddProduct({ visible, setVisible }) {
             rules={[
               {
                 required: true,
-                message: "Please input description!",
+                message: 'Please input description!',
               },
             ]}
           >
